@@ -118,7 +118,7 @@ export const useStore = create<AppState>()(
             }
         }),
         {
-            name: 'formmaster-storage',
+            name: 'katachi-storage',
             partialize: (state) => ({
                 dailyStreak: state.dailyStreak,
                 lastLoginDate: state.lastLoginDate,

@@ -6,13 +6,13 @@ Here is the finalized, comprehensive Product Requirements Document (PRD) incorpo
 
 # Product Requirements Document (PRD)
 
-**Project Name:** FormMaster Japanese (Working Title)
+**Project Name:** Katachi (形)
 **Version:** 2.0 (Next.js Architecture)
 **Platform:** Mobile-First Web Application (PWA ready)
 
 ## 1. Product Overview
 
-FormMaster Japanese is a dynamic, Next.js-powered web application designed to help Japanese learners (JLPT N5 & N4) master verb and adjective conjugations. By offering customizable practice sessions, dual learning modes (Multiple Choice and Active Input), and a modular distractor engine that mimics common human errors, the app provides highly targeted grammar training. A built-in analytics dashboard tracks user performance to identify weak points over time.
+Katachi is a dynamic, Next.js-powered web application designed to help Japanese learners (JLPT N5 & N4) master verb and adjective conjugations. By offering customizable practice sessions, dual learning modes (Multiple Choice and Active Input), and a modular distractor engine that mimics common human errors, the app provides highly targeted grammar training. A built-in analytics dashboard tracks user performance to identify weak points over time.
 
 ## 2. Technical Stack
 

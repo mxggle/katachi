@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Katachi (形)
+
+Master Japanese conjugations with style. Katachi is a modern, beautiful, and effective tool for learning JLPT N5 & N4 grammar forms.
+
+## Features
+
+- **Practice Modes**: Choose between Multiple Choice for rapid recognition or Input Mode for active recall.
+- **Smart Distractors**: Our engine generates plausible mistakes based on common learner errors (e.g., Godan/Ichidan confusion).
+- **Beautiful Design**: A premium, "Zen" inspired aesthetic that makes studying a pleasure.
+- **Progress Tracking**: Keep track of your daily streaks and efficient analytics.
+- **Comprehensive Dictionary**: Covers essential verbs and adjectives for N5 and N4 levels.
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS 4
+- **State Management**: Zustand
+- **Fonts**: Outfit (Google Fonts)
+- **Icons**: Lucide React
 
 ## Getting Started
 
@@ -15,22 +33,3 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

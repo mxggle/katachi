@@ -9,8 +9,8 @@ const font = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "FormMaster Japanese | Master Conjugations",
-  description: "A premium tool for JLPT N5 & N4 grammar mastery",
+  title: "Katachi",
+  description: "Master Japanese Conjugations in style",
 };
 
 export const viewport: Viewport = {

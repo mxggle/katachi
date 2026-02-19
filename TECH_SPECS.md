@@ -1,4 +1,4 @@
-# Technical Specifications: FormMaster Japanese v2.0
+# Technical Specifications: Katachi v2.0
 
 ## 1. Data Schema (`dictionary.json`)
 

@@ -35,7 +35,7 @@ export default function Home() {
 
       {!activeSession && (
         <header className="px-5 pt-5 pb-2 flex justify-between items-center">
-          <span className="text-sm font-semibold text-zinc-500">形マスター</span>
+          <span className="text-sm font-semibold text-zinc-500">Katachi</span>
           <span className="text-sm text-zinc-500">
             🔥 <span className="text-amber-400 font-semibold">{dailyStreak}</span> 日連続
           </span>
@@ -60,7 +60,7 @@ function NavButton({ active, onClick, label, emoji }: { active: boolean; onClick
       className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 ${active
         ? 'bg-amber-500/15 text-amber-400'
         : 'text-zinc-600 active:text-zinc-400'
-      }`}
+        }`}
     >
       <span>{emoji}</span>
       <span>{label}</span>
