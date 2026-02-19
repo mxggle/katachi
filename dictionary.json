@@ -1,0 +1,1164 @@
+{
+  "version": "1.0",
+  "words": [
+    {
+      "id": "v_taberu",
+      "level": "N5",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "食べる",
+        "kana": "たべる",
+        "romaji": "taberu"
+      },
+      "meaning": "to eat",
+      "conjugations": {
+        "polite": "たべます",
+        "negative_plain": "たべない",
+        "negative_polite": "たべません",
+        "past_plain": "たべた",
+        "past_polite": "たべました",
+        "past_negative_plain": "たべなかった",
+        "past_negative_polite": "たべませんでした",
+        "te_form": "たべて",
+        "potential": "たべられる",
+        "passive": "たべられる",
+        "causative": "たべさせる",
+        "causative_passive": "たべさせられる",
+        "imperative": "たべろ",
+        "volitional": "たべよう",
+        "conditional_ba": "たべれば",
+        "conditional_tara": "たべたら"
+      }
+    },
+    {
+      "id": "v_nomu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "飲む",
+        "kana": "のむ",
+        "romaji": "nomu"
+      },
+      "meaning": "to drink",
+      "conjugations": {
+        "polite": "のみます",
+        "negative_plain": "のまない",
+        "negative_polite": "のみません",
+        "te_form": "のんで",
+        "past_plain": "のんだ",
+        "past_polite": "のみました",
+        "past_negative_plain": "のまなかった",
+        "past_negative_polite": "のみませんでした",
+        "potential": "のめる",
+        "passive": "のまれる",
+        "causative": "のませる",
+        "causative_passive": "のませられる",
+        "imperative": "のめ",
+        "volitional": "のもう",
+        "conditional_ba": "のめば",
+        "conditional_tara": "のんだら"
+      }
+    },
+    {
+      "id": "v_iku",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "行く",
+        "kana": "いく",
+        "romaji": "iku"
+      },
+      "meaning": "to go",
+      "conjugations": {
+        "polite": "いきます",
+        "negative_plain": "いかない",
+        "negative_polite": "いきません",
+        "te_form": "いって",
+        "past_plain": "いった",
+        "past_polite": "いきました",
+        "past_negative_plain": "いかなかった",
+        "past_negative_polite": "いきませんでした",
+        "potential": "いける",
+        "passive": "いかれる",
+        "causative": "いかせる",
+        "causative_passive": "いかせられる",
+        "imperative": "いけ",
+        "volitional": "いこう",
+        "conditional_ba": "いけば",
+        "conditional_tara": "いったら"
+      }
+    },
+    {
+      "id": "v_kuru",
+      "level": "N5",
+      "group": "kuru",
+      "dictionary_form": {
+        "kanji": "来る",
+        "kana": "くる",
+        "romaji": "kuru"
+      },
+      "meaning": "to come",
+      "conjugations": {
+        "polite": "きます",
+        "negative_plain": "こない",
+        "negative_polite": "きません",
+        "past_plain": "きた",
+        "past_polite": "きました",
+        "past_negative_plain": "こなかった",
+        "past_negative_polite": "きませんでした",
+        "te_form": "きて",
+        "potential": "こられる",
+        "passive": "こられる",
+        "causative": "こさせる",
+        "causative_passive": "こさせられる",
+        "imperative": "こい",
+        "volitional": "こよう",
+        "conditional_ba": "くれば",
+        "conditional_tara": "きたら"
+      }
+    },
+    {
+      "id": "v_suru",
+      "level": "N5",
+      "group": "suru",
+      "dictionary_form": {
+        "kanji": "する",
+        "kana": "する",
+        "romaji": "suru"
+      },
+      "meaning": "to do",
+      "conjugations": {
+        "polite": "します",
+        "negative_plain": "しない",
+        "negative_polite": "しません",
+        "past_plain": "した",
+        "past_polite": "しました",
+        "past_negative_plain": "しなかった",
+        "past_negative_polite": "しませんでした",
+        "te_form": "して",
+        "potential": "できる",
+        "passive": "される",
+        "causative": "させる",
+        "causative_passive": "させられる",
+        "imperative": "しろ",
+        "volitional": "しよう",
+        "conditional_ba": "すれば",
+        "conditional_tara": "したら"
+      }
+    },
+    {
+      "id": "v_kaku",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "書く",
+        "kana": "かく",
+        "romaji": "kaku"
+      },
+      "meaning": "to write",
+      "conjugations": {
+        "polite": "かきます",
+        "negative_plain": "かかない",
+        "negative_polite": "かきません",
+        "te_form": "かいて",
+        "past_plain": "かいた",
+        "past_polite": "かきました",
+        "past_negative_plain": "かかなかった",
+        "past_negative_polite": "かきませんでした",
+        "potential": "かける",
+        "passive": "かかれる",
+        "causative": "かかせる",
+        "causative_passive": "かかせられる",
+        "imperative": "かけ",
+        "volitional": "かこう",
+        "conditional_ba": "かけば",
+        "conditional_tara": "かいたら"
+      }
+    },
+    {
+      "id": "v_yomu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "読む",
+        "kana": "よむ",
+        "romaji": "yomu"
+      },
+      "meaning": "to read",
+      "conjugations": {
+        "polite": "よみます",
+        "negative_plain": "よまない",
+        "negative_polite": "よみません",
+        "te_form": "よんで",
+        "past_plain": "よんだ",
+        "past_polite": "よみました",
+        "past_negative_plain": "よまなかった",
+        "past_negative_polite": "よみませんでした",
+        "potential": "よめる",
+        "passive": "よまれる",
+        "causative": "よませる",
+        "causative_passive": "よませられる",
+        "imperative": "よめ",
+        "volitional": "よもう",
+        "conditional_ba": "よめば",
+        "conditional_tara": "よんだら"
+      }
+    },
+    {
+      "id": "v_hanasu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "話す",
+        "kana": "はなす",
+        "romaji": "hanasu"
+      },
+      "meaning": "to speak",
+      "conjugations": {
+        "polite": "はなします",
+        "negative_plain": "はなさない",
+        "negative_polite": "はなしません",
+        "te_form": "はなして",
+        "past_plain": "はなした",
+        "past_polite": "はなしました",
+        "past_negative_plain": "はなさなかった",
+        "past_negative_polite": "はなしませんでした",
+        "potential": "はなせる",
+        "passive": "はなされる",
+        "causative": "はなさせる",
+        "causative_passive": "はなさせられる",
+        "imperative": "はなせ",
+        "volitional": "はなそう",
+        "conditional_ba": "はなせば",
+        "conditional_tara": "はなしたら"
+      }
+    },
+    {
+      "id": "v_kiku",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "聞く",
+        "kana": "きく",
+        "romaji": "kiku"
+      },
+      "meaning": "to listen/ask",
+      "conjugations": {
+        "polite": "ききます",
+        "negative_plain": "きかない",
+        "negative_polite": "ききません",
+        "te_form": "きいて",
+        "past_plain": "きいた",
+        "past_polite": "ききました",
+        "past_negative_plain": "きかなかった",
+        "past_negative_polite": "ききませんでした",
+        "potential": "きける",
+        "passive": "きかれる",
+        "causative": "きかせる",
+        "causative_passive": "きかせられる",
+        "imperative": "きけ",
+        "volitional": "きこう",
+        "conditional_ba": "きけば",
+        "conditional_tara": "きいたら"
+      }
+    },
+    {
+      "id": "v_miru",
+      "level": "N5",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "見る",
+        "kana": "みる",
+        "romaji": "miru"
+      },
+      "meaning": "to see",
+      "conjugations": {
+        "polite": "みます",
+        "negative_plain": "みない",
+        "negative_polite": "みません",
+        "past_plain": "みた",
+        "past_polite": "みました",
+        "past_negative_plain": "みなかった",
+        "past_negative_polite": "みませんでした",
+        "te_form": "みて",
+        "potential": "みられる",
+        "passive": "みられる",
+        "causative": "みさせる",
+        "causative_passive": "みさせられる",
+        "imperative": "みろ",
+        "volitional": "みよう",
+        "conditional_ba": "みれば",
+        "conditional_tara": "みたら"
+      }
+    },
+    {
+      "id": "v_neru",
+      "level": "N5",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "寝る",
+        "kana": "ねる",
+        "romaji": "neru"
+      },
+      "meaning": "to sleep",
+      "conjugations": {
+        "polite": "ねます",
+        "negative_plain": "ねない",
+        "negative_polite": "ねません",
+        "past_plain": "ねた",
+        "past_polite": "ねました",
+        "past_negative_plain": "ねなかった",
+        "past_negative_polite": "ねませんでした",
+        "te_form": "ねて",
+        "potential": "ねられる",
+        "passive": "ねられる",
+        "causative": "ねさせる",
+        "causative_passive": "ねさせられる",
+        "imperative": "ねろ",
+        "volitional": "ねよう",
+        "conditional_ba": "ねれば",
+        "conditional_tara": "ねたら"
+      }
+    },
+    {
+      "id": "v_okiru",
+      "level": "N5",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "起きる",
+        "kana": "おきる",
+        "romaji": "okiru"
+      },
+      "meaning": "to wake up",
+      "conjugations": {
+        "polite": "おきます",
+        "negative_plain": "おきない",
+        "negative_polite": "おきません",
+        "past_plain": "おきた",
+        "past_polite": "おきました",
+        "past_negative_plain": "おきなかった",
+        "past_negative_polite": "おきませんでした",
+        "te_form": "おきて",
+        "potential": "おきられる",
+        "passive": "おきられる",
+        "causative": "おきさせる",
+        "causative_passive": "おきさせられる",
+        "imperative": "おきろ",
+        "volitional": "おきよう",
+        "conditional_ba": "おきれば",
+        "conditional_tara": "おきたら"
+      }
+    },
+    {
+      "id": "v_kaeru",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "帰る",
+        "kana": "かえる",
+        "romaji": "kaeru"
+      },
+      "meaning": "to return home",
+      "conjugations": {
+        "polite": "かえります",
+        "negative_plain": "かえらない",
+        "negative_polite": "かえりません",
+        "te_form": "かえって",
+        "past_plain": "かえった",
+        "past_polite": "かえりました",
+        "past_negative_plain": "かえらなかった",
+        "past_negative_polite": "かえりませんでした",
+        "potential": "かえれる",
+        "passive": "かえられる",
+        "causative": "かえらせる",
+        "causative_passive": "かえらせられる",
+        "imperative": "かえれ",
+        "volitional": "かえろう",
+        "conditional_ba": "かえれば",
+        "conditional_tara": "かえったら"
+      }
+    },
+    {
+      "id": "v_kau",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "買う",
+        "kana": "かう",
+        "romaji": "kau"
+      },
+      "meaning": "to buy",
+      "conjugations": {
+        "polite": "かいます",
+        "negative_plain": "かわない",
+        "negative_polite": "かいません",
+        "te_form": "かって",
+        "past_plain": "かった",
+        "past_polite": "かいました",
+        "past_negative_plain": "かわなかった",
+        "past_negative_polite": "かいませんでした",
+        "potential": "かえる",
+        "passive": "かわれる",
+        "causative": "かわせる",
+        "causative_passive": "かわせられる",
+        "imperative": "かえ",
+        "volitional": "かおう",
+        "conditional_ba": "かえば",
+        "conditional_tara": "かったら"
+      }
+    },
+    {
+      "id": "v_au",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "会う",
+        "kana": "あう",
+        "romaji": "au"
+      },
+      "meaning": "to meet",
+      "conjugations": {
+        "polite": "あいます",
+        "negative_plain": "あわない",
+        "negative_polite": "あいません",
+        "te_form": "あって",
+        "past_plain": "あった",
+        "past_polite": "あいました",
+        "past_negative_plain": "あわなかった",
+        "past_negative_polite": "あいませんでした",
+        "potential": "あえる",
+        "passive": "あわれる",
+        "causative": "あわせる",
+        "causative_passive": "あわせられる",
+        "imperative": "あえ",
+        "volitional": "あおう",
+        "conditional_ba": "あえば",
+        "conditional_tara": "あったら"
+      }
+    },
+    {
+      "id": "v_matsu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "待つ",
+        "kana": "まつ",
+        "romaji": "matsu"
+      },
+      "meaning": "to wait",
+      "conjugations": {
+        "polite": "まちます",
+        "negative_plain": "またない",
+        "negative_polite": "まちません",
+        "te_form": "まって",
+        "past_plain": "まった",
+        "past_polite": "まちました",
+        "past_negative_plain": "またなかった",
+        "past_negative_polite": "まちませんでした",
+        "potential": "まてる",
+        "passive": "またれる",
+        "causative": "またせる",
+        "causative_passive": "またせられる",
+        "imperative": "まて",
+        "volitional": "まとう",
+        "conditional_ba": "まてば",
+        "conditional_tara": "まったら"
+      }
+    },
+    {
+      "id": "v_motsu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "持つ",
+        "kana": "もつ",
+        "romaji": "motsu"
+      },
+      "meaning": "to hold",
+      "conjugations": {
+        "polite": "もちます",
+        "negative_plain": "もたない",
+        "negative_polite": "もちません",
+        "te_form": "もって",
+        "past_plain": "もった",
+        "past_polite": "もちました",
+        "past_negative_plain": "もたなかった",
+        "past_negative_polite": "もちませんでした",
+        "potential": "もてる",
+        "passive": "もたれる",
+        "causative": "もたせる",
+        "causative_passive": "もたせられる",
+        "imperative": "もて",
+        "volitional": "もとう",
+        "conditional_ba": "もてば",
+        "conditional_tara": "もったら"
+      }
+    },
+    {
+      "id": "v_shinu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "死ぬ",
+        "kana": "しぬ",
+        "romaji": "shinu"
+      },
+      "meaning": "to die",
+      "conjugations": {
+        "polite": "しにます",
+        "negative_plain": "しなない",
+        "negative_polite": "しにません",
+        "te_form": "しんで",
+        "past_plain": "しんだ",
+        "past_polite": "しにました",
+        "past_negative_plain": "しななかった",
+        "past_negative_polite": "しにませんでした",
+        "potential": "しねる",
+        "passive": "しなれる",
+        "causative": "しなせる",
+        "causative_passive": "しなせられる",
+        "imperative": "しね",
+        "volitional": "しのう",
+        "conditional_ba": "しねば",
+        "conditional_tara": "しんだら"
+      }
+    },
+    {
+      "id": "v_tobu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "飛ぶ",
+        "kana": "とぶ",
+        "romaji": "tobu"
+      },
+      "meaning": "to fly",
+      "conjugations": {
+        "polite": "とびます",
+        "negative_plain": "とばない",
+        "negative_polite": "とびません",
+        "te_form": "とんで",
+        "past_plain": "とんだ",
+        "past_polite": "とびました",
+        "past_negative_plain": "とばなかった",
+        "past_negative_polite": "とびませんでした",
+        "potential": "とべる",
+        "passive": "とばれる",
+        "causative": "とばせる",
+        "causative_passive": "とばせられる",
+        "imperative": "とべ",
+        "volitional": "とぼう",
+        "conditional_ba": "とべば",
+        "conditional_tara": "とんだら"
+      }
+    },
+    {
+      "id": "v_yobu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "呼ぶ",
+        "kana": "よぶ",
+        "romaji": "yobu"
+      },
+      "meaning": "to call",
+      "conjugations": {
+        "polite": "よびます",
+        "negative_plain": "よばない",
+        "negative_polite": "よびません",
+        "te_form": "よんで",
+        "past_plain": "よんだ",
+        "past_polite": "よびました",
+        "past_negative_plain": "よばなかった",
+        "past_negative_polite": "よびませんでした",
+        "potential": "よべる",
+        "passive": "よばれる",
+        "causative": "よばせる",
+        "causative_passive": "よばせられる",
+        "imperative": "よべ",
+        "volitional": "よぼう",
+        "conditional_ba": "よべば",
+        "conditional_tara": "よんだら"
+      }
+    },
+    {
+      "id": "v_oyogu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "泳ぐ",
+        "kana": "およぐ",
+        "romaji": "oyogu"
+      },
+      "meaning": "to swim",
+      "conjugations": {
+        "polite": "およぎます",
+        "negative_plain": "およがない",
+        "negative_polite": "およぎません",
+        "te_form": "およいで",
+        "past_plain": "およいだ",
+        "past_polite": "およぎました",
+        "past_negative_plain": "およがなかった",
+        "past_negative_polite": "およぎませんでした",
+        "potential": "およげる",
+        "passive": "およがれる",
+        "causative": "およがせる",
+        "causative_passive": "およがせられる",
+        "imperative": "およげ",
+        "volitional": "およごう",
+        "conditional_ba": "およげば",
+        "conditional_tara": "およいだら"
+      }
+    },
+    {
+      "id": "v_asobu",
+      "level": "N5",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "遊ぶ",
+        "kana": "あそぶ",
+        "romaji": "asobu"
+      },
+      "meaning": "to play",
+      "conjugations": {
+        "polite": "あそびます",
+        "negative_plain": "あそばない",
+        "negative_polite": "あそびません",
+        "te_form": "あそんで",
+        "past_plain": "あそんだ",
+        "past_polite": "あそびました",
+        "past_negative_plain": "あそばなかった",
+        "past_negative_polite": "あそびませんでした",
+        "potential": "あそべる",
+        "passive": "あそばれる",
+        "causative": "あそばせる",
+        "causative_passive": "あそばせられる",
+        "imperative": "あそべ",
+        "volitional": "あそぼう",
+        "conditional_ba": "あそべば",
+        "conditional_tara": "あそんだら"
+      }
+    },
+    {
+      "id": "a_takai",
+      "level": "N5",
+      "group": "i-adj",
+      "dictionary_form": {
+        "kanji": "高い",
+        "kana": "たかい",
+        "romaji": "takai"
+      },
+      "meaning": "expensive/high",
+      "conjugations": {
+        "polite": "たかいです",
+        "negative_plain": "たかくない",
+        "negative_polite": "たかくないです",
+        "past_plain": "たかかった",
+        "past_polite": "たかかったです",
+        "past_negative_plain": "たかくなかった",
+        "past_negative_polite": "たかくなかったです",
+        "te_form": "たかくて"
+      }
+    },
+    {
+      "id": "a_yasui",
+      "level": "N5",
+      "group": "i-adj",
+      "dictionary_form": {
+        "kanji": "安い",
+        "kana": "やすい",
+        "romaji": "yasui"
+      },
+      "meaning": "cheap",
+      "conjugations": {
+        "polite": "やすいです",
+        "negative_plain": "やすくない",
+        "negative_polite": "やすくないです",
+        "past_plain": "やすかった",
+        "past_polite": "やすかったです",
+        "past_negative_plain": "やすくなかった",
+        "past_negative_polite": "やすくなかったです",
+        "te_form": "やすくて"
+      }
+    },
+    {
+      "id": "a_ookii",
+      "level": "N5",
+      "group": "i-adj",
+      "dictionary_form": {
+        "kanji": "大きい",
+        "kana": "おおきい",
+        "romaji": "ookii"
+      },
+      "meaning": "big",
+      "conjugations": {
+        "polite": "おおきいです",
+        "negative_plain": "おおきくない",
+        "negative_polite": "おおきくないです",
+        "past_plain": "おおきかった",
+        "past_polite": "おおきかったです",
+        "past_negative_plain": "おおきくなかった",
+        "past_negative_polite": "おおきくなかったです",
+        "te_form": "おおきくて"
+      }
+    },
+    {
+      "id": "a_chiisai",
+      "level": "N5",
+      "group": "i-adj",
+      "dictionary_form": {
+        "kanji": "小さい",
+        "kana": "ちいさい",
+        "romaji": "chiisai"
+      },
+      "meaning": "small",
+      "conjugations": {
+        "polite": "ちいさいです",
+        "negative_plain": "ちいさくない",
+        "negative_polite": "ちいさくないです",
+        "past_plain": "ちいさかった",
+        "past_polite": "ちいさかったです",
+        "past_negative_plain": "ちいさくなかった",
+        "past_negative_polite": "ちいさくなかったです",
+        "te_form": "ちいさくて"
+      }
+    },
+    {
+      "id": "a_atarashii",
+      "level": "N5",
+      "group": "i-adj",
+      "dictionary_form": {
+        "kanji": "新しい",
+        "kana": "あたらしい",
+        "romaji": "atarashii"
+      },
+      "meaning": "new",
+      "conjugations": {
+        "polite": "あたらしいです",
+        "negative_plain": "あたらしくない",
+        "negative_polite": "あたらしくないです",
+        "past_plain": "あたらしかった",
+        "past_polite": "あたらしかったです",
+        "past_negative_plain": "あたらしくなかった",
+        "past_negative_polite": "あたらしくなかったです",
+        "te_form": "あたらしくて"
+      }
+    },
+    {
+      "id": "a_furui",
+      "level": "N5",
+      "group": "i-adj",
+      "dictionary_form": {
+        "kanji": "古い",
+        "kana": "ふるい",
+        "romaji": "furui"
+      },
+      "meaning": "old",
+      "conjugations": {
+        "polite": "ふるいです",
+        "negative_plain": "ふるくない",
+        "negative_polite": "ふるくないです",
+        "past_plain": "ふるかった",
+        "past_polite": "ふるかったです",
+        "past_negative_plain": "ふるくなかった",
+        "past_negative_polite": "ふるくなかったです",
+        "te_form": "ふるくて"
+      }
+    },
+    {
+      "id": "a_ii",
+      "level": "N5",
+      "group": "i-adj",
+      "dictionary_form": {
+        "kanji": "いい",
+        "kana": "いい",
+        "romaji": "ii"
+      },
+      "meaning": "good",
+      "conjugations": {
+        "polite": "いいです",
+        "negative_plain": "よくない",
+        "negative_polite": "よくないです",
+        "past_plain": "よかった",
+        "past_polite": "よかったです",
+        "past_negative_plain": "よくなかった",
+        "past_negative_polite": "よくなかったです",
+        "te_form": "よくて"
+      }
+    },
+    {
+      "id": "a_shizuka",
+      "level": "N5",
+      "group": "na-adj",
+      "dictionary_form": {
+        "kanji": "静か",
+        "kana": "しずか",
+        "romaji": "shizuka"
+      },
+      "meaning": "quiet",
+      "conjugations": {
+        "polite": "しずかです",
+        "negative_plain": "しずかじゃない",
+        "negative_polite": "しずかじゃありません",
+        "past_plain": "しずかだった",
+        "past_polite": "しずかでした",
+        "past_negative_plain": "しずかじゃなかった",
+        "past_negative_polite": "しずかじゃありませんでした",
+        "te_form": "しずかで"
+      }
+    },
+    {
+      "id": "a_nigiyaka",
+      "level": "N5",
+      "group": "na-adj",
+      "dictionary_form": {
+        "kanji": "賑やか",
+        "kana": "にぎやか",
+        "romaji": "nigiyaka"
+      },
+      "meaning": "lively",
+      "conjugations": {
+        "polite": "にぎやかです",
+        "negative_plain": "にぎやかじゃない",
+        "negative_polite": "にぎやかじゃありません",
+        "past_plain": "にぎやかだった",
+        "past_polite": "にぎやかでした",
+        "past_negative_plain": "にぎやかじゃなかった",
+        "past_negative_polite": "にぎやかじゃありませんでした",
+        "te_form": "にぎやかで"
+      }
+    },
+    {
+      "id": "a_kirei",
+      "level": "N5",
+      "group": "na-adj",
+      "dictionary_form": {
+        "kanji": "綺麗",
+        "kana": "きれい",
+        "romaji": "kirei"
+      },
+      "meaning": "beautiful/clean",
+      "conjugations": {
+        "polite": "きれいです",
+        "negative_plain": "きれいじゃない",
+        "negative_polite": "きれいじゃありません",
+        "past_plain": "きれいだった",
+        "past_polite": "きれいでした",
+        "past_negative_plain": "きれいじゃなかった",
+        "past_negative_polite": "きれいじゃありませんでした",
+        "te_form": "きれいで"
+      }
+    },
+    {
+      "id": "a_yuumei",
+      "level": "N5",
+      "group": "na-adj",
+      "dictionary_form": {
+        "kanji": "有名",
+        "kana": "ゆうめい",
+        "romaji": "yuumei"
+      },
+      "meaning": "famous",
+      "conjugations": {
+        "polite": "ゆうめいです",
+        "negative_plain": "ゆうめいじゃない",
+        "negative_polite": "ゆうめいじゃありません",
+        "past_plain": "ゆうめいだった",
+        "past_polite": "ゆうめいでした",
+        "past_negative_plain": "ゆうめいじゃなかった",
+        "past_negative_polite": "ゆうめいじゃありませんでした",
+        "te_form": "ゆうめいで"
+      }
+    },
+    {
+      "id": "v_oshieru",
+      "level": "N4",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "教える",
+        "kana": "おしえる",
+        "romaji": "oshieru"
+      },
+      "meaning": "to teach",
+      "conjugations": {
+        "polite": "おしえます",
+        "negative_plain": "おしえない",
+        "negative_polite": "おしえません",
+        "past_plain": "おしえた",
+        "past_polite": "おしえました",
+        "past_negative_plain": "おしえなかった",
+        "past_negative_polite": "おしえませんでした",
+        "te_form": "おしえて",
+        "potential": "おしえられる",
+        "passive": "おしえられる",
+        "causative": "おしえさせる",
+        "causative_passive": "おしえさせられる",
+        "imperative": "おしえろ",
+        "volitional": "おしえよう",
+        "conditional_ba": "おしえれば",
+        "conditional_tara": "おしえたら"
+      }
+    },
+    {
+      "id": "v_oboeru",
+      "level": "N4",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "覚える",
+        "kana": "おぼえる",
+        "romaji": "oboeru"
+      },
+      "meaning": "to remember",
+      "conjugations": {
+        "polite": "おぼえます",
+        "negative_plain": "おぼえない",
+        "negative_polite": "おぼえません",
+        "past_plain": "おぼえた",
+        "past_polite": "おぼえました",
+        "past_negative_plain": "おぼえなかった",
+        "past_negative_polite": "おぼえませんでした",
+        "te_form": "おぼえて",
+        "potential": "おぼえられる",
+        "passive": "おぼえられる",
+        "causative": "おぼえさせる",
+        "causative_passive": "おぼえさせられる",
+        "imperative": "おぼえろ",
+        "volitional": "おぼえよう",
+        "conditional_ba": "おぼえれば",
+        "conditional_tara": "おぼえたら"
+      }
+    },
+    {
+      "id": "v_kangaeru",
+      "level": "N4",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "考える",
+        "kana": "かんがえる",
+        "romaji": "kangaeru"
+      },
+      "meaning": "to think",
+      "conjugations": {
+        "polite": "かんがえます",
+        "negative_plain": "かんがえない",
+        "negative_polite": "かんがえません",
+        "past_plain": "かんがえた",
+        "past_polite": "かんがえました",
+        "past_negative_plain": "かんがえなかった",
+        "past_negative_polite": "かんがえませんでした",
+        "te_form": "かんがえて",
+        "potential": "かんがえられる",
+        "passive": "かんがえられる",
+        "causative": "かんがえさせる",
+        "causative_passive": "かんがえさせられる",
+        "imperative": "かんがえろ",
+        "volitional": "かんがえよう",
+        "conditional_ba": "かんがえれば",
+        "conditional_tara": "かんがえたら"
+      }
+    },
+    {
+      "id": "v_kimeru",
+      "level": "N4",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "決める",
+        "kana": "きめる",
+        "romaji": "kimeru"
+      },
+      "meaning": "to decide",
+      "conjugations": {
+        "polite": "きめます",
+        "negative_plain": "きめない",
+        "negative_polite": "きめません",
+        "past_plain": "きめた",
+        "past_polite": "きめました",
+        "past_negative_plain": "きめなかった",
+        "past_negative_polite": "きめませんでした",
+        "te_form": "きめて",
+        "potential": "きめられる",
+        "passive": "きめられる",
+        "causative": "きめさせる",
+        "causative_passive": "きめさせられる",
+        "imperative": "きめろ",
+        "volitional": "きめよう",
+        "conditional_ba": "きめれば",
+        "conditional_tara": "きめたら"
+      }
+    },
+    {
+      "id": "v_shiraberu",
+      "level": "N4",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "調べる",
+        "kana": "しらべる",
+        "romaji": "shiraberu"
+      },
+      "meaning": "to investigate",
+      "conjugations": {
+        "polite": "しらべます",
+        "negative_plain": "しらべない",
+        "negative_polite": "しらべません",
+        "past_plain": "しらべた",
+        "past_polite": "しらべました",
+        "past_negative_plain": "しらべなかった",
+        "past_negative_polite": "しらべませんでした",
+        "te_form": "しらべて",
+        "potential": "しらべられる",
+        "passive": "しらべられる",
+        "causative": "しらべさせる",
+        "causative_passive": "しらべさせられる",
+        "imperative": "しらべろ",
+        "volitional": "しらべよう",
+        "conditional_ba": "しらべれば",
+        "conditional_tara": "しらべたら"
+      }
+    },
+    {
+      "id": "v_wasureru",
+      "level": "N4",
+      "group": "ichidan",
+      "dictionary_form": {
+        "kanji": "忘れる",
+        "kana": "わすれる",
+        "romaji": "wasureru"
+      },
+      "meaning": "to forget",
+      "conjugations": {
+        "polite": "わすれます",
+        "negative_plain": "わすれない",
+        "negative_polite": "わすれません",
+        "past_plain": "わすれた",
+        "past_polite": "わすれました",
+        "past_negative_plain": "わすれなかった",
+        "past_negative_polite": "わすれませんでした",
+        "te_form": "わすれて",
+        "potential": "わすれられる",
+        "passive": "わすれられる",
+        "causative": "わすれさせる",
+        "causative_passive": "わすれさせられる",
+        "imperative": "わすれろ",
+        "volitional": "わすれよう",
+        "conditional_ba": "わすれれば",
+        "conditional_tara": "わすれたら"
+      }
+    },
+    {
+      "id": "v_warau",
+      "level": "N4",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "笑う",
+        "kana": "わらう",
+        "romaji": "warau"
+      },
+      "meaning": "to laugh",
+      "conjugations": {
+        "polite": "わらいます",
+        "negative_plain": "わらわない",
+        "negative_polite": "わらいません",
+        "te_form": "わらって",
+        "past_plain": "わらった",
+        "past_polite": "わらいました",
+        "past_negative_plain": "わらわなかった",
+        "past_negative_polite": "わらいませんでした",
+        "potential": "わらえる",
+        "passive": "わらわれる",
+        "causative": "わらわせる",
+        "causative_passive": "わらわせられる",
+        "imperative": "わらえ",
+        "volitional": "わらおう",
+        "conditional_ba": "わらえば",
+        "conditional_tara": "わらったら"
+      }
+    },
+    {
+      "id": "v_okoru",
+      "level": "N4",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "怒る",
+        "kana": "おこる",
+        "romaji": "okoru"
+      },
+      "meaning": "to get angry",
+      "conjugations": {
+        "polite": "おこります",
+        "negative_plain": "おこらない",
+        "negative_polite": "おこりません",
+        "te_form": "おこって",
+        "past_plain": "おこった",
+        "past_polite": "おこりました",
+        "past_negative_plain": "おこらなかった",
+        "past_negative_polite": "おこりませんでした",
+        "potential": "おこれる",
+        "passive": "おこられる",
+        "causative": "おこらせる",
+        "causative_passive": "おこらせられる",
+        "imperative": "おこれ",
+        "volitional": "おころう",
+        "conditional_ba": "おこれば",
+        "conditional_tara": "おこったら"
+      }
+    },
+    {
+      "id": "v_tanomu",
+      "level": "N4",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "頼む",
+        "kana": "たのむ",
+        "romaji": "tanomu"
+      },
+      "meaning": "to request",
+      "conjugations": {
+        "polite": "たのみます",
+        "negative_plain": "たのまない",
+        "negative_polite": "たのみません",
+        "te_form": "たのんで",
+        "past_plain": "たのんだ",
+        "past_polite": "たのみました",
+        "past_negative_plain": "たのまなかった",
+        "past_negative_polite": "たのみませんでした",
+        "potential": "たのめる",
+        "passive": "たのまれる",
+        "causative": "たのませる",
+        "causative_passive": "たのませられる",
+        "imperative": "たのめ",
+        "volitional": "たのもう",
+        "conditional_ba": "たのめば",
+        "conditional_tara": "たのんだら"
+      }
+    },
+    {
+      "id": "v_ganbaru",
+      "level": "N4",
+      "group": "godan",
+      "dictionary_form": {
+        "kanji": "頑張る",
+        "kana": "がんばる",
+        "romaji": "ganbaru"
+      },
+      "meaning": "to do one's best",
+      "conjugations": {
+        "polite": "がんばります",
+        "negative_plain": "がんばらない",
+        "negative_polite": "がんばりません",
+        "te_form": "がんばって",
+        "past_plain": "がんばった",
+        "past_polite": "がんばりました",
+        "past_negative_plain": "がんばらなかった",
+        "past_negative_polite": "がんばりませんでした",
+        "potential": "がんばれる",
+        "passive": "がんばられる",
+        "causative": "がんばらせる",
+        "causative_passive": "がんばらせられる",
+        "imperative": "がんばれ",
+        "volitional": "がんばろう",
+        "conditional_ba": "がんばれば",
+        "conditional_tara": "がんばったら"
+      }
+    }
+  ]
+}
