@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { WordEntry, ConjugationType } from './distractorEngine';
+import { WordEntry, ConjugationType, WordType } from './distractorEngine';
 
 interface WordStats {
     seen: number;
@@ -9,7 +9,8 @@ interface WordStats {
 }
 
 interface SessionConfig {
-    leves: ('N5' | 'N4')[];
+    leves: ('N5' | 'N4' | 'N3')[];
+    wordTypes: WordType[];
     categories: string[];
     batchSize: number;
     mode: 'choice' | 'input';
@@ -50,6 +51,7 @@ export const useStore = create<AppState>()(
             wordStats: {},
             config: {
                 leves: ['N5'],
+                wordTypes: ['verb', 'i-adj', 'na-adj'],
                 categories: ['te_form', 'polite', 'negative_plain'],
                 batchSize: 10,
                 mode: 'choice'
@@ -123,7 +125,16 @@ export const useStore = create<AppState>()(
                 globalStats: state.globalStats,
                 wordStats: state.wordStats,
                 config: state.config
-            })
+            }),
+            merge: (persisted: any, current: AppState) => {
+                const merged = { ...current, ...persisted };
+                // Backfill new config fields from defaults
+                merged.config = {
+                    ...current.config,
+                    ...(persisted as any)?.config,
+                };
+                return merged;
+            },
         }
     )
 );

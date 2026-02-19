@@ -2,7 +2,19 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:skills.sh)",
-      "Bash(npx next build)"
+      "Bash(npx next build)",
+      "WebFetch(domain:jisho.org)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://jisho.org/api/v1/search/words?keyword=%23jlpt-n5\")",
+      "Bash(curl -s \"https://jisho.org/api/v1/search/words?keyword=%23jlpt-n5\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d[''''data''''][:2], indent=2, ensure_ascii=False\\)\\)\")",
+      "Bash(python3 -c \":*)",
+      "Bash(curl -s \"https://jisho.org/api/v1/search/words?keyword=%23jlpt-n5&page=1\")",
+      "Bash(curl -s \"https://jisho.org/api/v1/search/words?keyword=%23jlpt-n5&page=2\")",
+      "Bash(curl -s \"https://jisho.org/api/v1/search/words?keyword=%23jlpt-n4&page=1\")",
+      "Bash(for level in n5 n4 n3)",
+      "Bash(do echo \"=== JLPT $level ===\" for page in 1 2 3 4 5)",
+      "Bash(do curl -s \"https://jisho.org/api/v1/search/words?keyword=%23jlpt-$level&page=$page\")",
+      "Bash(python3 generate_dictionary_jisho.py)"
     ]
   }
 }

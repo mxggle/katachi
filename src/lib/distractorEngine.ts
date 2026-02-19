@@ -1,14 +1,35 @@
 export type WordGroup = 'godan' | 'ichidan' | 'suru' | 'kuru' | 'i-adj' | 'na-adj';
-export type ConjugationType = 
-  | 'polite' | 'negative_plain' | 'negative_polite' 
+export type WordType = 'verb' | 'i-adj' | 'na-adj';
+export type ConjugationType =
+  | 'polite' | 'negative_plain' | 'negative_polite'
   | 'past_plain' | 'past_polite' | 'past_negative_plain' | 'past_negative_polite'
   | 'te_form' | 'potential' | 'passive' | 'causative' | 'causative_passive'
   | 'imperative' | 'volitional' | 'conditional_ba' | 'conditional_tara';
 
+/** Conjugation types that only apply to verbs */
+export const VERB_ONLY_CONJS: ConjugationType[] = [
+  'potential', 'passive', 'causative', 'causative_passive', 'imperative', 'volitional'
+];
+
+/** Conjugation types shared by all word types */
+export const SHARED_CONJS: ConjugationType[] = [
+  'polite', 'negative_plain', 'negative_polite',
+  'past_plain', 'past_polite', 'past_negative_plain', 'past_negative_polite',
+  'te_form', 'conditional_ba', 'conditional_tara'
+];
+
+/** Map word type to its valid conjugation types */
+export const CONJS_FOR_WORD_TYPE: Record<WordType, ConjugationType[]> = {
+  'verb': [...SHARED_CONJS, ...VERB_ONLY_CONJS],
+  'i-adj': [...SHARED_CONJS],
+  'na-adj': [...SHARED_CONJS],
+};
+
 export interface WordEntry {
   id: string;
-  level: 'N5' | 'N4';
+  level: 'N5' | 'N4' | 'N3';
   group: WordGroup;
+  word_type: WordType;
   dictionary_form: {
     kanji: string;
     kana: string;
