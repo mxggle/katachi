@@ -63,8 +63,7 @@ export function generateDistractors(word: WordEntry, type: ConjugationType): str
   // Rule B: Te-Form Sound Swaps
   if (type === 'te_form' && word.group === 'godan') {
     const stem = word.dictionary_form.kana.slice(0, -1);
-    const lastChar = word.dictionary_form.kana.slice(-1);
-    
+
     // Swap common connectors
     const swaps = ['って', 'んで', 'いて', 'いで', 'して'];
     swaps.forEach(s => {

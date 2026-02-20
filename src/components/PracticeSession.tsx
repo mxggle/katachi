@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useStore } from '@/lib/store';
-import { generateDistractors } from '@/lib/distractorEngine';
 import * as wanakana from 'wanakana';
 
 function SessionComplete({ correctCount, total, onBack }: { correctCount: number, total: number, onBack: () => void }) {
@@ -10,8 +9,8 @@ function SessionComplete({ correctCount, total, onBack }: { correctCount: number
     const emoji = pct >= 80 ? '🎉' : pct >= 50 ? '💪' : '📖';
     const message = pct >= 80 ? 'すごい！' : pct >= 50 ? 'いい調子！' : 'がんばって！';
     return (
-        <div className="max-w-lg mx-auto px-5 pt-16 space-y-8 animate-fade-in text-center">
-            <div className="glass p-8 rounded-2xl space-y-6">
+        <div className="max-w-lg mx-auto px-4 pt-10 pb-8 space-y-6 animate-fade-in text-center">
+            <div className="glass p-6 md:p-8 rounded-2xl space-y-6">
                 <div className="text-5xl">{emoji}</div>
                 <h2 className="text-2xl font-bold text-zinc-100">{message}</h2>
                 <div className="space-y-1">
@@ -22,7 +21,7 @@ function SessionComplete({ correctCount, total, onBack }: { correctCount: number
                 </div>
                 <button
                     onClick={onBack}
-                    className="w-full py-3.5 rounded-xl bg-[var(--surface-raised)] text-zinc-300 font-semibold text-sm transition-colors active:bg-zinc-700"
+                    className="w-full py-4 min-h-[48px] rounded-xl bg-[var(--surface-raised)] text-zinc-200 font-bold text-sm transition-colors active:bg-zinc-700"
                 >
                     🏠 メニューに戻る
                 </button>
@@ -65,13 +64,8 @@ export default function PracticeSession() {
     const currentItem = (activeSession && !isFinished) ? activeSession.words[currentIdx] : null;
     const word = currentItem?.word;
     const type = currentItem?.type;
+    const choices = currentItem?.choices || [];
     const correctAnswer = (word && type) ? word.conjugations[type] : '';
-
-    const choices = useMemo(() => {
-        if (!word || !type || config.mode !== 'choice') return [];
-        const distractors = generateDistractors(word, type);
-        return [correctAnswer, ...distractors].sort(() => Math.random() - 0.5);
-    }, [word, type, config.mode, correctAnswer]);
 
     const handleChoice = (choice: string) => {
         if (isRevealed) return;
@@ -108,7 +102,7 @@ export default function PracticeSession() {
     const progress = totalWords > 0 ? (currentIdx / totalWords) * 100 : 0;
 
     return (
-        <div className="max-w-lg mx-auto px-5 pt-3 pb-8 space-y-5 animate-fade-in">
+        <div className="max-w-lg mx-auto px-4 pt-1 pb-6 space-y-5 animate-fade-in">
             {/* Progress bar + counter */}
             <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs text-zinc-500 font-medium">
@@ -214,7 +208,7 @@ export default function PracticeSession() {
             {/* Confirm Quit Modal */}
             {showConfirm && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-                    <div className="glass w-full max-w-sm p-8 rounded-2xl space-y-6 text-center shadow-2xl">
+                    <div className="glass w-full max-w-sm p-6 rounded-2xl space-y-6 text-center shadow-2xl">
                         <div className="space-y-3">
                             <div className="text-4xl">⚠️</div>
                             <h3 className="text-xl font-bold text-zinc-100">セッションを終了しますか？</h3>
@@ -225,13 +219,13 @@ export default function PracticeSession() {
                         <div className="grid grid-cols-2 gap-3 pt-2">
                             <button
                                 onClick={() => setShowConfirm(false)}
-                                className="py-3 px-4 rounded-xl font-medium text-sm bg-[var(--surface-raised)] text-zinc-300 active:bg-zinc-700 transition-colors"
+                                className="py-4 min-h-[48px] px-4 rounded-xl font-bold text-sm bg-[var(--surface-raised)] text-zinc-300 active:bg-zinc-700 transition-colors"
                             >
                                 キャンセル
                             </button>
                             <button
                                 onClick={endSession}
-                                className="py-3 px-4 rounded-xl font-medium text-sm bg-red-500/10 text-red-500 active:bg-red-500/20 active:text-red-400 transition-colors"
+                                className="py-4 min-h-[48px] px-4 rounded-xl font-bold text-sm bg-red-500/10 text-red-500 active:bg-red-500/20 active:text-red-400 transition-colors"
                             >
                                 終了する
                             </button>

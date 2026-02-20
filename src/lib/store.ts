@@ -17,7 +17,7 @@ interface SessionConfig {
 }
 
 interface MiniSession {
-    words: { word: WordEntry; type: ConjugationType }[];
+    words: { word: WordEntry; type: ConjugationType; choices: string[] }[];
     currentIndex: number;
     sessionStreak: number;
     results: boolean[];
@@ -35,7 +35,7 @@ interface AppState {
     activeSession: MiniSession | null;
 
     // Actions
-    startSession: (words: { word: WordEntry; type: ConjugationType }[]) => void;
+    startSession: (words: { word: WordEntry; type: ConjugationType; choices: string[] }[]) => void;
     submitAnswer: (isCorrect: boolean) => void;
     endSession: () => void;
     updateConfig: (config: Partial<SessionConfig>) => void;
@@ -126,12 +126,12 @@ export const useStore = create<AppState>()(
                 wordStats: state.wordStats,
                 config: state.config
             }),
-            merge: (persisted: any, current: AppState) => {
-                const merged = { ...current, ...persisted };
+            merge: (persisted: unknown, current: AppState) => {
+                const merged = { ...current, ...(persisted as Partial<AppState>) };
                 // Backfill new config fields from defaults
                 merged.config = {
                     ...current.config,
-                    ...(persisted as any)?.config,
+                    ...(persisted as { config?: Partial<SessionConfig> })?.config,
                 };
                 return merged;
             },
