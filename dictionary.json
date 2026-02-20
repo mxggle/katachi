@@ -21302,30 +21302,6 @@
       }
     },
     {
-      "id": "na_hone",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "骨",
-        "kana": "ほね",
-        "romaji": "hone"
-      },
-      "meaning": "bone",
-      "conjugations": {
-        "polite": "ほねです",
-        "negative_plain": "ほねじゃない",
-        "negative_polite": "ほねじゃありません",
-        "past_plain": "ほねだった",
-        "past_polite": "ほねでした",
-        "past_negative_plain": "ほねじゃなかった",
-        "past_negative_polite": "ほねじゃありませんでした",
-        "te_form": "ほねで",
-        "conditional_ba": "ほねであれば",
-        "conditional_tara": "ほねだったら"
-      }
-    },
-    {
       "id": "v_kagiru",
       "level": "N3",
       "group": "godan",

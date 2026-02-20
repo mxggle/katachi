@@ -49,6 +49,19 @@ const CONJUGATION_LABELS: Record<string, string> = {
     conditional_tara: 'たら形',
 };
 
+const ADJ_CONJUGATION_LABELS: Record<string, string> = {
+    polite: 'です形',
+    negative_plain: 'ない形',
+    negative_polite: '丁寧否定形',
+    past_plain: 'た形',
+    past_polite: 'でした形',
+    past_negative_plain: 'なかった形',
+    past_negative_polite: '丁寧過去否定形',
+    te_form: 'て形',
+    conditional_ba: 'ば形',
+    conditional_tara: 'たら形',
+};
+
 const WORD_GROUP_TAGS: Record<string, { label: string, colorClass: string }> = {
     'godan': { label: '1グループ', colorClass: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
     'ichidan': { label: '2グループ', colorClass: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' },
@@ -147,7 +160,7 @@ export default function PracticeSession() {
                     </div>
                     <div>
                         <div className="inline-block px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20">
-                            {CONJUGATION_LABELS[type] || type.replace(/_/g, ' ').toUpperCase()}
+                            {((word.group === 'i-adj' || word.group === 'na-adj') ? ADJ_CONJUGATION_LABELS[type] : CONJUGATION_LABELS[type]) || type.replace(/_/g, ' ').toUpperCase()}
                         </div>
                     </div>
                 </div>
