@@ -49,6 +49,15 @@ const CONJUGATION_LABELS: Record<string, string> = {
     conditional_tara: 'たら形',
 };
 
+const WORD_GROUP_TAGS: Record<string, { label: string, colorClass: string }> = {
+    'godan': { label: '1グループ', colorClass: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
+    'ichidan': { label: '2グループ', colorClass: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20' },
+    'suru': { label: '3グループ', colorClass: 'bg-violet-500/10 text-violet-400 border-violet-500/20' },
+    'kuru': { label: '3グループ', colorClass: 'bg-fuchsia-500/10 text-fuchsia-400 border-fuchsia-500/20' },
+    'i-adj': { label: 'い形容詞', colorClass: 'bg-rose-500/10 text-rose-400 border-rose-500/20' },
+    'na-adj': { label: 'な形容詞', colorClass: 'bg-orange-500/10 text-orange-400 border-orange-500/20' },
+};
+
 export default function PracticeSession() {
     const { activeSession, submitAnswer, endSession, config } = useStore();
     const [selected, setSelected] = useState<string | null>(null);
@@ -100,6 +109,7 @@ export default function PracticeSession() {
     if (!word || !type) return null;
 
     const progress = totalWords > 0 ? (currentIdx / totalWords) * 100 : 0;
+    const tagInfo = WORD_GROUP_TAGS[word.group] || { label: word.group, colorClass: 'bg-zinc-800 text-zinc-400 border-zinc-700' };
 
     return (
         <div
@@ -126,6 +136,11 @@ export default function PracticeSession() {
             <div className="glass rounded-2xl p-5 md:p-6 text-center flex flex-col flex-1 mt-5 mb-3">
                 <div className="flex-1 flex flex-col justify-center space-y-5 pb-6">
                     <div className="space-y-1">
+                        <div className="flex justify-center mb-2">
+                            <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold border shadow-md ${tagInfo.colorClass}`}>
+                                {tagInfo.label}
+                            </span>
+                        </div>
                         <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">{word.meaning}</p>
                         <h2 className="text-5xl font-bold text-zinc-100 py-2">{word.dictionary_form.kanji}</h2>
                         <p className="text-sm text-zinc-500">{word.dictionary_form.kana}</p>
