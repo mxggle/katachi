@@ -133,13 +133,13 @@ export default function PracticeSession() {
                 {/* Action area */}
                 <div className="pt-2">
                     {config.mode === 'choice' ? (
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className={`grid gap-3 ${Math.max(0, ...choices.map(c => c.length)) > 7 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-2'}`}>
                             {choices.map((choice) => (
                                 <button
                                     key={choice}
                                     disabled={isRevealed}
                                     onClick={() => handleChoice(choice)}
-                                    className={`py-4 px-3 rounded-xl border text-lg font-semibold transition-colors ${isRevealed
+                                    className={`py-3 sm:py-4 px-3 rounded-xl border ${Math.max(0, ...choices.map(c => c.length)) > 7 ? 'text-base sm:text-lg' : 'text-lg'} font-semibold transition-colors flex items-center justify-center text-center break-keep min-h-[3.5rem] leading-snug sm:leading-normal ${isRevealed
                                         ? choice === correctAnswer
                                             ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-300'
                                             : choice === selected
