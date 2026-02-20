@@ -130,12 +130,23 @@ export default function PracticeSession() {
             style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
         >
             {/* Progress bar + counter */}
-            <div className="space-y-2 shrink-0">
+            <div className="space-y-3 shrink-0">
                 <div className="flex justify-between items-center text-xs text-zinc-500 font-medium">
-                    <span>📝 {currentIdx + 1} / {totalWords}</span>
-                    <span>
-                        🔥 <span className="text-amber-400 font-semibold">{activeSession.sessionStreak}</span> 連続
-                    </span>
+                    <button
+                        onClick={() => setShowConfirm(true)}
+                        className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--surface-raised)] text-zinc-400 active:bg-red-500/20 active:text-red-400 transition-colors"
+                        aria-label="セッションをやめる"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <div className="flex items-center gap-3">
+                        <span>📝 {currentIdx + 1} / {totalWords}</span>
+                        <span>
+                            🔥 <span className="text-amber-400 font-semibold">{activeSession.sessionStreak}</span> 連続
+                        </span>
+                    </div>
                 </div>
                 <div className="w-full h-1.5 bg-[var(--surface-raised)] rounded-full overflow-hidden">
                     <div
