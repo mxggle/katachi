@@ -31,12 +31,32 @@ function SessionComplete({ correctCount, total, onBack }: { correctCount: number
     );
 }
 
+const CONJUGATION_LABELS: Record<string, string> = {
+    polite: 'ます形',
+    negative_plain: 'ない形',
+    negative_polite: 'ません形',
+    past_plain: 'た形',
+    past_polite: 'ました形',
+    past_negative_plain: 'なかった形',
+    past_negative_polite: 'ませんでした形',
+    te_form: 'て形',
+    potential: '可能形',
+    passive: '受身形',
+    causative: '使役形',
+    causative_passive: '使役受身形',
+    imperative: '命令形',
+    volitional: '意向形',
+    conditional_ba: 'ば形',
+    conditional_tara: 'たら形',
+};
+
 export default function PracticeSession() {
     const { activeSession, submitAnswer, endSession, config } = useStore();
     const [selected, setSelected] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState('');
     const [isRevealed, setIsRevealed] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
 
     const currentIdx = activeSession?.currentIndex ?? 0;
     const totalWords = activeSession?.words.length ?? 0;
@@ -113,7 +133,7 @@ export default function PracticeSession() {
                     <p className="text-sm text-zinc-500">{word.dictionary_form.kana}</p>
                 </div>
                 <div className="inline-block px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20">
-                    {type.replace(/_/g, ' ').toUpperCase()}
+                    {CONJUGATION_LABELS[type] || type.replace(/_/g, ' ').toUpperCase()}
                 </div>
 
                 {/* Action area */}
@@ -132,7 +152,7 @@ export default function PracticeSession() {
                                                 ? 'border-red-500/50 bg-red-500/10 text-red-300'
                                                 : 'border-[var(--border)] text-zinc-700'
                                         : 'border-[var(--border)] text-zinc-300 active:bg-[var(--surface-raised)]'
-                                    }`}
+                                        }`}
                                 >
                                     {choice}
                                 </button>
@@ -150,7 +170,7 @@ export default function PracticeSession() {
                                 className={`w-full py-4 px-6 rounded-xl bg-[var(--bg)] border text-xl font-semibold text-center focus:outline-none transition-colors ${isRevealed
                                     ? isCorrect ? 'border-emerald-500/50 text-emerald-300' : 'border-red-500/50 text-red-300'
                                     : 'border-[var(--border)] text-zinc-200 focus:border-amber-500/50 placeholder:text-zinc-700'
-                                }`}
+                                    }`}
                             />
                         </form>
                     )}
@@ -174,7 +194,7 @@ export default function PracticeSession() {
                             className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-colors active:scale-[0.98] ${isCorrect
                                 ? 'bg-emerald-600 active:bg-emerald-700 text-white'
                                 : 'bg-[var(--surface-raised)] text-zinc-300 active:bg-zinc-700'
-                            }`}
+                                }`}
                         >
                             次へ →
                         </button>
@@ -184,12 +204,41 @@ export default function PracticeSession() {
 
             <div className="text-center">
                 <button
-                    onClick={() => { if (confirm('セッションを終了しますか？')) endSession() }}
-                    className="text-zinc-700 active:text-red-400 text-xs font-medium transition-colors py-2"
+                    onClick={() => setShowConfirm(true)}
+                    className="text-zinc-500 hover:text-zinc-300 active:text-red-400 text-xs font-medium transition-colors py-2"
                 >
                     やめる
                 </button>
             </div>
+
+            {/* Confirm Quit Modal */}
+            {showConfirm && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+                    <div className="glass w-full max-w-sm p-8 rounded-2xl space-y-6 text-center shadow-2xl">
+                        <div className="space-y-3">
+                            <div className="text-4xl">⚠️</div>
+                            <h3 className="text-xl font-bold text-zinc-100">セッションを終了しますか？</h3>
+                            <p className="text-sm text-zinc-400">
+                                セッションを中断してメニューに戻りますか？現在の進捗は保存されません。
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 pt-2">
+                            <button
+                                onClick={() => setShowConfirm(false)}
+                                className="py-3 px-4 rounded-xl font-medium text-sm bg-[var(--surface-raised)] text-zinc-300 active:bg-zinc-700 transition-colors"
+                            >
+                                キャンセル
+                            </button>
+                            <button
+                                onClick={endSession}
+                                className="py-3 px-4 rounded-xl font-medium text-sm bg-red-500/10 text-red-500 active:bg-red-500/20 active:text-red-400 transition-colors"
+                            >
+                                終了する
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
