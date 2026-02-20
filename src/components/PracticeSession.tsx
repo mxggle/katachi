@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useStore } from '@/lib/store';
 import * as wanakana from 'wanakana';
 
@@ -82,6 +82,72 @@ export default function PracticeSession() {
     const currentIdx = activeSession?.currentIndex ?? 0;
     const totalWords = activeSession?.words.length ?? 0;
     const isFinished = activeSession ? currentIdx >= totalWords : false;
+
+    // Ref to hold a persistent audio object to satisfy mobile browser policies
+    // requiring audio to be played from a direct user interaction context
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined' && !audioRef.current) {
+            audioRef.current = new Audio();
+        }
+    }, []);
+
+    const playAudio = (text: string) => {
+        if (!audioRef.current) return;
+
+        try {
+            // Use the new, robust Edge Neural API generated server-side
+            const url = `/api/tts?text=${encodeURIComponent(text)}`;
+            audioRef.current.src = url;
+            audioRef.current.load(); // Important for iOS
+
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.catch((error) => {
+                    console.error("Audio playback failed, attempting fallbacks:", error);
+                    fallbackGoogleTTS(text);
+                });
+            }
+        } catch (e) {
+            fallbackGoogleTTS(text);
+        }
+    };
+
+    const fallbackGoogleTTS = (text: string) => {
+        if (!audioRef.current) return;
+        try {
+            const url = `https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q=${encodeURIComponent(text)}`;
+            audioRef.current.src = url;
+            audioRef.current.load();
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => fallbackBrowserTTS(text));
+            }
+        } catch (e) {
+            fallbackBrowserTTS(text);
+        }
+    };
+
+    const fallbackBrowserTTS = (text: string) => {
+        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.9;
+
+            const setVoice = () => {
+                const voices = window.speechSynthesis.getVoices();
+                const jaVoices = voices.filter(v => v.lang.includes('ja') || v.lang === 'ja-JP');
+                if (jaVoices.length > 0) {
+                    utterance.voice = jaVoices.find(v => v.name.includes('Google') || v.name.includes('Premium')) || jaVoices[0]!;
+                }
+            };
+
+            setVoice();
+            window.speechSynthesis.speak(utterance);
+        }
+    };
 
     const currentItem = (activeSession && !isFinished) ? activeSession.words[currentIdx] : null;
     const word = currentItem?.word;
@@ -166,7 +232,20 @@ export default function PracticeSession() {
                             </span>
                         </div>
                         <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">{word.meaning}</p>
-                        <h2 className="text-5xl font-bold text-zinc-100 py-2">{word.dictionary_form.kanji}</h2>
+
+                        <div className="flex items-center justify-center gap-3 py-2">
+                            <h2 className="text-5xl font-bold text-zinc-100">{word.dictionary_form.kanji}</h2>
+                            <button
+                                onClick={() => playAudio(word.dictionary_form.kanji)}
+                                className="w-10 h-10 rounded-full bg-[var(--surface-raised)] text-amber-500 flex items-center justify-center hover:bg-amber-500/10 active:scale-95 transition-all outline-none shrink-0"
+                                aria-label="音声を聞く"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </button>
+                        </div>
+
                         <p className="text-sm text-zinc-500">{word.dictionary_form.kana}</p>
                     </div>
                     <div>
@@ -220,14 +299,39 @@ export default function PracticeSession() {
                 {isRevealed && (
                     <div className="space-y-4 pt-2 animate-fade-in">
                         {!isCorrect && (
-                            <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/15 text-left space-y-1">
-                                <p className="text-xs font-semibold text-red-400 uppercase tracking-wider">❌ 正解</p>
-                                <p className="text-lg font-bold text-zinc-200">{correctAnswer}</p>
-                                <p className="text-xs text-zinc-500">{word.group}</p>
+                            <div className="flex items-center justify-between p-4 rounded-xl bg-red-500/5 border border-red-500/15 text-left">
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-red-400 uppercase tracking-wider">❌ 正解</p>
+                                    <p className="text-lg font-bold text-zinc-200">{correctAnswer}</p>
+                                    <p className="text-xs text-zinc-500">{word.group}</p>
+                                </div>
+                                <button
+                                    onClick={() => playAudio(correctAnswer)}
+                                    className="w-10 h-10 rounded-full bg-red-500/10 text-red-400 flex items-center justify-center hover:bg-red-500/20 active:scale-95 transition-all outline-none border border-red-500/20 shrink-0"
+                                    aria-label="正解の音声を聞く"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg>
+                                </button>
                             </div>
                         )}
                         {isCorrect && (
-                            <p className="text-emerald-400 font-semibold text-sm">✅ 正解！</p>
+                            <div className="flex items-center justify-between p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/15 text-left">
+                                <div className="space-y-1">
+                                    <p className="text-emerald-400 font-semibold text-xs tracking-wider">✅ 正解！</p>
+                                    <p className="text-lg font-bold text-zinc-200">{correctAnswer}</p>
+                                </div>
+                                <button
+                                    onClick={() => playAudio(correctAnswer)}
+                                    className="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/20 active:scale-95 transition-all outline-none border border-emerald-500/20 shrink-0"
+                                    aria-label="正解の音声を聞く"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
+                                        <path d="M8 5v14l11-7z" />
+                                    </svg>
+                                </button>
+                            </div>
                         )}
                         <button
                             onClick={handleNext}
