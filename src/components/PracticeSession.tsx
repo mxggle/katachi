@@ -102,9 +102,12 @@ export default function PracticeSession() {
     const progress = totalWords > 0 ? (currentIdx / totalWords) * 100 : 0;
 
     return (
-        <div className="max-w-lg mx-auto px-4 pt-1 pb-6 space-y-5 animate-fade-in">
+        <div
+            className="max-w-lg mx-auto px-4 pt-1 flex flex-col h-[100dvh] animate-fade-in"
+            style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }}
+        >
             {/* Progress bar + counter */}
-            <div className="space-y-2">
+            <div className="space-y-2 shrink-0">
                 <div className="flex justify-between items-center text-xs text-zinc-500 font-medium">
                     <span>📝 {currentIdx + 1} / {totalWords}</span>
                     <span>
@@ -120,18 +123,22 @@ export default function PracticeSession() {
             </div>
 
             {/* Word card */}
-            <div className="glass rounded-2xl p-6 text-center space-y-5">
-                <div className="space-y-1">
-                    <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">{word.meaning}</p>
-                    <h2 className="text-5xl font-bold text-zinc-100 py-2">{word.dictionary_form.kanji}</h2>
-                    <p className="text-sm text-zinc-500">{word.dictionary_form.kana}</p>
-                </div>
-                <div className="inline-block px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20">
-                    {CONJUGATION_LABELS[type] || type.replace(/_/g, ' ').toUpperCase()}
+            <div className="glass rounded-2xl p-5 md:p-6 text-center flex flex-col flex-1 mt-5 mb-3">
+                <div className="flex-1 flex flex-col justify-center space-y-5 pb-6">
+                    <div className="space-y-1">
+                        <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">{word.meaning}</p>
+                        <h2 className="text-5xl font-bold text-zinc-100 py-2">{word.dictionary_form.kanji}</h2>
+                        <p className="text-sm text-zinc-500">{word.dictionary_form.kana}</p>
+                    </div>
+                    <div>
+                        <div className="inline-block px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold border border-amber-500/20">
+                            {CONJUGATION_LABELS[type] || type.replace(/_/g, ' ').toUpperCase()}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Action area */}
-                <div className="pt-2">
+                <div className="shrink-0">
                     {config.mode === 'choice' ? (
                         <div className={`grid gap-3 ${Math.max(0, ...choices.map(c => c.length)) > 7 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-2'}`}>
                             {choices.map((choice) => (
@@ -196,7 +203,7 @@ export default function PracticeSession() {
                 )}
             </div>
 
-            <div className="text-center">
+            <div className="text-center shrink-0">
                 <button
                     onClick={() => setShowConfirm(true)}
                     className="text-zinc-500 hover:text-zinc-300 active:text-red-400 text-xs font-medium transition-colors py-2"
