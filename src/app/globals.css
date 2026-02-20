@@ -1,18 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #111113;
-  --surface: #19191d;
-  --surface-raised: #222228;
-  --border: rgba(255, 255, 255, 0.06);
-  --accent: #f59e0b;
-  --accent-dim: rgba(245, 158, 11, 0.1);
-  --accent-border: rgba(245, 158, 11, 0.25);
+  --bg: #e8eedd;
+  /* Pale green/yellowish background from reference */
+  --surface: #ffffff;
+  --surface-raised: #f1f5f9;
+  --border: rgba(0, 0, 0, 0.04);
+  --accent: #ff6b6b;
+  /* Red/pink accent from reference */
+  --accent-dim: rgba(255, 107, 107, 0.1);
+  --primary-green: #9acd32;
+  /* Yellow-green from buttons/bars */
 }
 
 body {
   background: var(--bg);
-  color: #e8e6e3;
+  color: #2d3748;
   font-family: var(--font-outfit), system-ui, sans-serif;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
@@ -20,12 +23,81 @@ body {
 
 .glass {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: none;
+  border-radius: 2rem;
+  box-shadow: 0 4px 12px rgba(154, 205, 50, 0.1), 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.card {
+  background: var(--surface);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(154, 205, 50, 0.1), 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.blob-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.blob-bg::before,
+.blob-bg::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  animation: float 20s infinite alternate ease-in-out;
+}
+
+.blob-bg::before {
+  background: radial-gradient(circle, #fde68a 0%, rgba(253, 230, 138, 0) 70%);
+  top: -200px;
+  left: -200px;
+}
+
+.blob-bg::after {
+  background: radial-gradient(circle, #fbcfe8 0%, rgba(251, 207, 232, 0) 70%);
+  bottom: -200px;
+  right: -200px;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {

@@ -20,6 +20,7 @@ interface MiniSession {
     words: { word: WordEntry; type: ConjugationType; choices: string[] }[];
     currentIndex: number;
     sessionStreak: number;
+    sessionCorrect: number;
     results: boolean[];
 }
 
@@ -67,6 +68,7 @@ export const useStore = create<AppState>()(
                     words,
                     currentIndex: 0,
                     sessionStreak: 0,
+                    sessionCorrect: 0,
                     results: []
                 }
             }),
@@ -92,6 +94,7 @@ export const useStore = create<AppState>()(
                     activeSession: {
                         ...state.activeSession,
                         sessionStreak: isCorrect ? state.activeSession.sessionStreak + 1 : 0,
+                        sessionCorrect: state.activeSession.sessionCorrect + (isCorrect ? 1 : 0),
                         results: [...state.activeSession.results, isCorrect],
                         currentIndex: state.activeSession.currentIndex + 1
                     }

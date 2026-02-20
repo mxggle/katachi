@@ -37,6 +37,8 @@ export interface WordEntry {
   };
   meaning: string;
   conjugations: Record<string, string>;
+  jlpt?: string;
+  is_common?: boolean;
 }
 
 /**
