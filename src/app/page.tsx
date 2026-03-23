@@ -5,10 +5,15 @@ import SetupMenu from '@/components/SetupMenu';
 import PracticeSession from '@/components/PracticeSession';
 import ReportDashboard from '@/components/ReportDashboard';
 import { useStore } from '@/lib/store';
+import { useAuth } from '@/components/AuthProvider';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'practice' | 'report'>('practice');
   const { activeSession, dailyStreak, checkDailyStreak } = useStore();
+  const { isLoading } = useAuth();
+  const authError = typeof window !== 'undefined'
+    ? new URLSearchParams(window.location.search).get('error')
+    : null;
 
   useEffect(() => {
     checkDailyStreak();
@@ -19,16 +24,35 @@ export default function Home() {
       className="min-h-dvh relative overflow-x-hidden font-bold"
       style={{ paddingBottom: activeSession ? '0' : 'calc(6rem + env(safe-area-inset-bottom, 0px))' }}
     >
+      {authError === 'auth_failed' && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-red-500 text-white text-xs font-bold px-4 py-2 rounded-2xl shadow-lg">
+          Sign in failed. Please try again.
+        </div>
+      )}
+
       {!activeSession && (
         <nav
           className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-[#e8eedd] pt-2 px-4 shadow-[0_-8px_30px_rgba(154,205,50,0.06)]"
           style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 16px)' }}
         >
           <div className="max-w-sm mx-auto flex justify-between items-center">
-            <NavButton active={activeTab === 'practice'} onClick={() => setActiveTab('practice')} label="Practice" icon="🎯" />
-            <NavButton active={false} onClick={() => alert('Dictionary feature coming soon!')} label="Dict." icon="📖" isMock />
-            <NavButton active={activeTab === 'report'} onClick={() => setActiveTab('report')} label="Profile" icon="🧑‍🎨" />
-            <NavButton active={false} onClick={() => alert('Settings coming soon!')} label="Settings" icon="⚙️" isMock />
+            {isLoading ? (
+              <>
+                {[0, 1, 2, 3].map(i => (
+                  <div key={i} className="flex flex-col items-center gap-1.5 min-w-[72px] min-h-[56px] px-2 py-2">
+                    <div className="w-7 h-7 rounded-full bg-[#e8eedd] animate-pulse" />
+                    <div className="w-10 h-2 rounded-full bg-[#e8eedd] animate-pulse" />
+                  </div>
+                ))}
+              </>
+            ) : (
+              <>
+                <NavButton active={activeTab === 'practice'} onClick={() => setActiveTab('practice')} label="Practice" icon="🎯" />
+                <NavButton active={false} onClick={() => alert('Dictionary feature coming soon!')} label="Dict." icon="📖" isMock />
+                <NavButton active={activeTab === 'report'} onClick={() => setActiveTab('report')} label="Profile" icon="🧑‍🎨" />
+                <NavButton active={false} onClick={() => alert('Settings coming soon!')} label="Settings" icon="⚙️" isMock />
+              </>
+            )}
           </div>
         </nav>
       )}
