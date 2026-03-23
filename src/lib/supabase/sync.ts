@@ -95,6 +95,10 @@ export async function fetchUserData(
 
   if (profileRes.error) return null
 
+  if (statsRes.error) console.warn('[katachi] user_stats fetch error:', statsRes.error.message)
+  if (wordRes.error) console.warn('[katachi] word_stats fetch error:', wordRes.error.message)
+  if (configRes.error) console.warn('[katachi] user_config fetch error:', configRes.error.message)
+
   return {
     profile: profileRes.data,
     userStats: statsRes.data ?? null,
@@ -161,7 +165,7 @@ export async function upsertUserData(
       : null,
   }))
 
-  await Promise.all([
+  const [statsResult, configResult, wordResult] = await Promise.all([
     supabase.from('user_stats').upsert({
       user_id: userId,
       daily_streak: state.dailyStreak,
@@ -179,8 +183,12 @@ export async function upsertUserData(
     }),
     wordRows.length > 0
       ? supabase.from('word_stats').upsert(wordRows, { onConflict: 'user_id,word_id' })
-      : Promise.resolve(),
+      : Promise.resolve({ error: null }),
   ])
+
+  if (statsResult.error) throw new Error(`user_stats upsert failed: ${statsResult.error.message}`)
+  if (configResult.error) throw new Error(`user_config upsert failed: ${configResult.error.message}`)
+  if (wordResult && 'error' in wordResult && wordResult.error) throw new Error(`word_stats upsert failed: ${wordResult.error.message}`)
 }
 
 // ---------------------------------------------------------------
@@ -198,10 +206,15 @@ export function createDebouncedSync(
   let timer: ReturnType<typeof setTimeout> | null = null
   let dirty = false
 
-  const flush = () => {
+  const flush = async () => {
     const state = getState()
-    upsertUserData(supabase, userId, state).catch(console.error)
-    dirty = false
+    try {
+      await upsertUserData(supabase, userId, state)
+      dirty = false
+    } catch (err) {
+      console.error('[katachi] sync flush failed:', err)
+      // dirty remains true so next change retries
+    }
   }
 
   const onStoreChange = () => {
@@ -267,7 +280,9 @@ export async function migrateLocalToSupabase(
 
   await Promise.all([
     upsertUserData(supabase, userId, mergedState),
-    supabase.from('profiles').update({ migrated_at: new Date().toISOString() }).eq('id', userId),
+    supabase.from('profiles').update({ migrated_at: new Date().toISOString() }).eq('id', userId).then(({ error }) => {
+      if (error) throw new Error(`profiles migrated_at update failed: ${error.message}`)
+    }),
   ])
 
   return mergedState
