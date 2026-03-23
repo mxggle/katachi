@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import { useAuth } from '@/components/AuthProvider';
 import { useStore } from '@/lib/store';
 import { WordType, ConjugationType, VERB_ONLY_CONJS, CONJS_FOR_WORD_TYPE, generateDistractors, WordEntry } from '@/lib/distractorEngine';
 import dictionaryData from '../../dictionary.json';
@@ -31,6 +33,16 @@ const WORD_TYPE_LABELS: Record<WordType, string> = {
 
 export default function SetupMenu() {
     const { config, updateConfig, startSession, dailyStreak, globalStats } = useStore();
+    const { user } = useAuth();
+    const [nudgeDismissed, setNudgeDismissed] = useState(() => {
+        if (typeof window === 'undefined') return true;
+        return localStorage.getItem('katachi-nudge-dismissed') === '1';
+    });
+
+    const dismissNudge = () => {
+        localStorage.setItem('katachi-nudge-dismissed', '1');
+        setNudgeDismissed(true);
+    };
 
     // Compute which conjugations are available based on selected word types
     const availableConjs = new Set<ConjugationType>();
@@ -121,6 +133,20 @@ export default function SetupMenu() {
 
     return (
         <div className="max-w-xl mx-auto px-4 pb-8 space-y-6 animate-fade-in flex flex-col min-h-full">
+            {!user && !nudgeDismissed && (
+                <div className="mx-0 mb-2 flex items-center justify-between gap-3 bg-[#f8fcf2] border border-[#9acd32]/30 rounded-2xl px-4 py-3">
+                    <p className="text-xs font-bold text-[#466a3e]">
+                        Sign in to sync your progress across devices
+                    </p>
+                    <button
+                        onClick={dismissNudge}
+                        className="text-[#8ba888] text-sm font-black shrink-0 hover:text-[#466a3e] transition-colors"
+                        aria-label="Dismiss"
+                    >
+                        ✕
+                    </button>
+                </div>
+            )}
             {/* User Stats Card */}
             <div className="bg-gradient-to-b from-[#a4dc37] to-[#8cbe2c] ring-1 ring-inset ring-white/30 rounded-[1.5rem] px-2 py-4 flex justify-between items-center shadow-[0_8px_20px_rgba(142,191,41,0.25)] mt-8 relative">
                 {/* Streak icon positioned on the top edge of the left section */}
