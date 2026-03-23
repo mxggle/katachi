@@ -41,6 +41,7 @@ interface AppState {
     endSession: () => void;
     updateConfig: (config: Partial<SessionConfig>) => void;
     checkDailyStreak: () => void;
+    resetStore: () => void;
 }
 
 export const useStore = create<AppState>()(
@@ -118,7 +119,26 @@ export const useStore = create<AppState>()(
                 } else {
                     set({ dailyStreak: 1, lastLoginDate: today });
                 }
-            }
+            },
+
+            resetStore: () => {
+                set({
+                    dailyStreak: 0,
+                    lastLoginDate: null,
+                    globalStats: { totalAnswered: 0, totalCorrect: 0 },
+                    wordStats: {},
+                    config: {
+                        leves: ['N5'],
+                        wordTypes: ['verb', 'i-adj', 'na-adj'],
+                        categories: ['te_form', 'polite', 'negative_plain'],
+                        batchSize: 10,
+                        mode: 'choice'
+                    },
+                    activeSession: null,
+                })
+                // Clear the persisted localStorage key so stale data doesn't rehydrate
+                useStore.persist.clearStorage()
+            },
         }),
         {
             name: 'katachi-storage',
