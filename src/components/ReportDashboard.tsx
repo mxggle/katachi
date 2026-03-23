@@ -1,9 +1,12 @@
 'use client';
 
 import { useStore } from '@/lib/store';
+import { useAuth } from '@/components/AuthProvider';
+import LoginForm from '@/components/LoginForm';
 
 export default function ReportDashboard() {
     const { globalStats, wordStats } = useStore();
+    const { user, signOut } = useAuth();
 
     const totalAnswered = globalStats.totalAnswered;
     const accuracy = totalAnswered > 0
@@ -36,8 +39,25 @@ export default function ReportDashboard() {
                     <img src="/mascot.png" alt="Mascot" className="w-full h-full object-contain transform translate-y-1" />
                 </div>
                 <div className="text-center space-y-0.5">
-                    <h1 className="text-xl font-black text-[#2d3748] tracking-tight">Learner</h1>
-                    <p className="text-xs font-bold text-[#8ba888]">Katachi Student</p>
+                  {user ? (
+                    <>
+                      <h1 className="text-xl font-black text-[#2d3748] tracking-tight">
+                        {user.email?.split('@')[0] ?? 'Learner'}
+                      </h1>
+                      <p className="text-xs font-bold text-[#8ba888]">{user.email}</p>
+                      <button
+                        onClick={signOut}
+                        className="mt-2 text-[10px] font-bold text-[#8ba888] underline hover:text-[#466a3e] transition-colors"
+                      >
+                        Sign out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <h1 className="text-xl font-black text-[#2d3748] tracking-tight">Learner</h1>
+                      <p className="text-xs font-bold text-[#8ba888]">Katachi Student</p>
+                    </>
+                  )}
                 </div>
                 {/* Level progress bar simulation */}
                 <div className="w-48 max-w-full flex items-center gap-2 pt-2">
@@ -49,6 +69,12 @@ export default function ReportDashboard() {
                     </div>
                 </div>
             </div>
+
+            {!user && (
+              <div className="bg-white border border-[#e8eedd] rounded-2xl p-4 shadow-sm">
+                <LoginForm />
+              </div>
+            )}
 
             {/* Stats row container */}
             <div className="card bg-white p-3 shadow-sm border border-[#e8eedd]">
