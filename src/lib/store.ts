@@ -24,7 +24,7 @@ interface MiniSession {
     results: boolean[];
 }
 
-interface AppState {
+export interface AppState {
     // Global Persistence
     dailyStreak: number;
     lastLoginDate: string | null;
