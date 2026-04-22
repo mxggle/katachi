@@ -5,11 +5,14 @@ import { describe, expect, it } from 'vitest';
 const pageSource = readFileSync(path.resolve(__dirname, './page.tsx'), 'utf8');
 
 describe('homepage entry layout', () => {
-  it('presents a practice-first home with a dominant launch card and compact status strip', () => {
+  it('presents a practice-first home with a dominant launch card and a dedicated progress strip', () => {
     expect(pageSource).toContain("t('heroTitleLine1')");
     expect(pageSource).toContain("t('startPractice')");
     expect(pageSource).toContain("t('currentlyPracticing')");
     expect(pageSource).toContain("t('streak')");
+    expect(pageSource).toContain("t('viewProgress')");
+    expect(pageSource).toContain("t('itemsStudied')");
+    expect(pageSource).toContain('studyState.learnerSummary.totalAnswered');
   });
 
   it('removes the placeholder header slot in favor of learning-focused support content', () => {

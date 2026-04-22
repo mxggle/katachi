@@ -2,26 +2,47 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { ConjugationType, WordEntry, WordType } from './distractorEngine';
 import type { Language } from './i18n';
+import {
+  DEFAULT_STUDY_STATE,
+  type PracticeType,
+  type StudySessionConfig,
+  type StudyState,
+} from '@/lib/study/types';
+import { migratePersistedStudyState } from '@/lib/study/migrate';
 
-export interface SessionConfig {
-  levels: ('N5' | 'N4' | 'N3')[];
-  wordTypes: WordType[];
-  forms: ConjugationType[];
-  questionCount: number;
-  mode: 'choice' | 'input';
+export interface SessionConfig extends StudySessionConfig {
+  practiceType: PracticeType;
+}
+
+interface SessionItem {
+  unitKey: string;
+  word: WordEntry;
+  type: ConjugationType;
+  choices: string[];
+  retryCount: number;
 }
 
 interface MiniSession {
-  words: { word: WordEntry; type: ConjugationType; choices: string[] }[];
+  sessionId: string;
+  practiceType: PracticeType;
+  words: SessionItem[];
   currentIndex: number;
   sessionStreak: number;
   sessionCorrect: number;
   results: boolean[];
+  startedAt: string;
 }
 
 interface ProgressStats {
   totalAnswered: number;
   totalCorrect: number;
+}
+
+interface PersistedStudyEnvelope {
+  studyState?: StudyState;
+  state?: {
+    studyState?: StudyState;
+  };
 }
 
 export interface AppState {
@@ -30,8 +51,9 @@ export interface AppState {
   progress: ProgressStats;
   config: SessionConfig;
   language: Language;
+  studyState: StudyState;
   activeSession: MiniSession | null;
-  startSession: (words: { word: WordEntry; type: ConjugationType; choices: string[] }[]) => void;
+  startSession: (words: { unitKey: string; word: WordEntry; type: ConjugationType; choices: string[] }[]) => void;
   submitAnswer: (isCorrect: boolean) => void;
   endSession: () => void;
   updateConfig: (config: Partial<SessionConfig>) => void;
@@ -39,12 +61,13 @@ export interface AppState {
   setLanguage: (language: Language) => void;
 }
 
-const defaultConfig: SessionConfig = {
+const defaultBaseConfig: SessionConfig = {
   levels: ['N5'],
   wordTypes: ['verb', 'i-adj', 'na-adj'],
   forms: ['te_form', 'polite', 'negative_plain', 'past_plain'],
   questionCount: 10,
   mode: 'choice',
+  practiceType: 'daily',
 };
 
 function getDefaultLanguage(): Language {
@@ -55,121 +78,299 @@ function getDefaultLanguage(): Language {
   return 'en';
 }
 
+function buildConfig(studyState: StudyState): SessionConfig {
+  return {
+    ...studyState.preferences.defaultSessionConfig,
+    practiceType: 'daily',
+  };
+}
+
+function createSessionId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+
+  return `session-${Date.now()}`;
+}
+
+function getTodayDateString(date = new Date()): string {
+  return date.toISOString().split('T')[0];
+}
+
+function updateDailyStreak(previousDate: string | null, previousStreak: number, today: string) {
+  if (previousDate === today) {
+    return { dailyStreak: previousStreak, lastPracticeDate: previousDate };
+  }
+
+  const yesterday = new Date(`${today}T00:00:00.000Z`);
+  yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+  const yesterdayString = getTodayDateString(yesterday);
+
+  if (previousDate === yesterdayString) {
+    return { dailyStreak: previousStreak + 1, lastPracticeDate: today };
+  }
+
+  return { dailyStreak: 1, lastPracticeDate: today };
+}
+
+function buildInitialProgress(word: WordEntry, type: ConjugationType, mode: SessionConfig['mode']) {
+  return {
+    wordId: word.id,
+    conjugationType: type,
+    mode,
+    wordType: word.word_type as WordType,
+    seenCount: 0,
+    correctCount: 0,
+    wrongCount: 0,
+    consecutiveCorrect: 0,
+    consecutiveWrong: 0,
+    lastSeenAt: null,
+    lastCorrectAt: null,
+    lastWrongAt: null,
+    sameDayExposureCount: 0,
+    sameSessionRetryCount: 0,
+  };
+}
+
+function syncAliases(studyState: StudyState, config?: SessionConfig) {
+  return {
+    dailyStreak: studyState.learnerSummary.dailyStreak,
+    lastPracticeDate: studyState.learnerSummary.lastPracticeDate,
+    progress: {
+      totalAnswered: studyState.learnerSummary.totalAnswered,
+      totalCorrect: studyState.learnerSummary.totalCorrect,
+    },
+    language: studyState.preferences.language,
+    config: config ?? buildConfig(studyState),
+  };
+}
+
+export function extractPersistedStudyState(persisted: unknown): StudyState {
+  const envelope = (persisted as PersistedStudyEnvelope & Record<string, unknown>) ?? {};
+  return envelope.studyState ?? envelope.state?.studyState ?? migratePersistedStudyState(envelope as never);
+}
+
 export const useStore = create<AppState>()(
   persist(
-    (set, get) => ({
-      dailyStreak: 0,
-      lastPracticeDate: null,
-      progress: { totalAnswered: 0, totalCorrect: 0 },
-      config: defaultConfig,
-      language: getDefaultLanguage(),
-      activeSession: null,
+    (set) => {
+      const initialStudyState = DEFAULT_STUDY_STATE(getDefaultLanguage());
 
-      setLanguage: (language) => set({ language }),
+      return {
+        ...syncAliases(initialStudyState, defaultBaseConfig),
+        studyState: initialStudyState,
+        activeSession: null,
 
-      updateConfig: (newConfig) =>
-        set((state) => ({
-          config: { ...state.config, ...newConfig },
-        })),
+        setLanguage: (language) =>
+          set((state) => {
+            const nextStudyState: StudyState = {
+              ...state.studyState,
+              preferences: {
+                ...state.studyState.preferences,
+                language,
+              },
+            };
 
-      startSession: (words) =>
-        set({
-          activeSession: {
-            words,
-            currentIndex: 0,
-            sessionStreak: 0,
-            sessionCorrect: 0,
-            results: [],
-          },
-        }),
+            return {
+              ...syncAliases(nextStudyState, state.config),
+              studyState: nextStudyState,
+              config: {
+                ...state.config,
+              },
+              language,
+            };
+          }),
 
-      submitAnswer: (isCorrect) =>
-        set((state) => {
-          if (!state.activeSession) {
-            return state;
-          }
+        updateConfig: (newConfig) =>
+          set((state) => {
+            const nextConfig = { ...state.config, ...newConfig };
+            const nextStudyState: StudyState = {
+              ...state.studyState,
+              preferences: {
+                ...state.studyState.preferences,
+                defaultSessionConfig: {
+                  levels: nextConfig.levels,
+                  wordTypes: nextConfig.wordTypes,
+                  forms: nextConfig.forms,
+                  questionCount: nextConfig.questionCount,
+                  mode: nextConfig.mode,
+                },
+              },
+            };
 
-          return {
-            progress: {
-              totalAnswered: state.progress.totalAnswered + 1,
-              totalCorrect: state.progress.totalCorrect + (isCorrect ? 1 : 0),
+            return {
+              ...syncAliases(nextStudyState, nextConfig),
+              studyState: nextStudyState,
+              config: nextConfig,
+            };
+          }),
+
+        startSession: (words) =>
+          set((state) => ({
+            studyState: {
+              ...state.studyState,
+              unitProgress: Object.fromEntries(
+                Object.entries(state.studyState.unitProgress).map(([key, progress]) => [
+                  key,
+                  {
+                    ...progress,
+                    sameSessionRetryCount: 0,
+                  },
+                ])
+              ),
             },
             activeSession: {
-              ...state.activeSession,
-              sessionStreak: isCorrect ? state.activeSession.sessionStreak + 1 : 0,
-              sessionCorrect: state.activeSession.sessionCorrect + (isCorrect ? 1 : 0),
-              results: [...state.activeSession.results, isCorrect],
-              currentIndex: state.activeSession.currentIndex + 1,
+              sessionId: createSessionId(),
+              practiceType: state.config.practiceType,
+              words: words.map((item) => ({ ...item, retryCount: 0 })),
+              currentIndex: 0,
+              sessionStreak: 0,
+              sessionCorrect: 0,
+              results: [],
+              startedAt: new Date().toISOString(),
             },
-          };
-        }),
+          })),
 
-      endSession: () => set({ activeSession: null }),
+        submitAnswer: (isCorrect) =>
+          set((state) => {
+            if (!state.activeSession) {
+              return state;
+            }
 
-      checkDailyStreak: () => {
-        const today = new Date().toISOString().split('T')[0];
-        const lastDate = get().lastPracticeDate;
+            const activeSession = state.activeSession;
+            const currentItem = activeSession.words[activeSession.currentIndex];
+            if (!currentItem) {
+              return state;
+            }
 
-        if (lastDate === today) {
-          return;
-        }
+            const now = new Date().toISOString();
+            const today = getTodayDateString(new Date(now));
+            const existingProgress =
+              state.studyState.unitProgress[currentItem.unitKey] ??
+              buildInitialProgress(currentItem.word, currentItem.type, state.config.mode);
 
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        const yesterdayString = yesterday.toISOString().split('T')[0];
+            const nextUnitProgress = {
+              ...existingProgress,
+              seenCount: existingProgress.seenCount + 1,
+              correctCount: existingProgress.correctCount + (isCorrect ? 1 : 0),
+              wrongCount: existingProgress.wrongCount + (isCorrect ? 0 : 1),
+              consecutiveCorrect: isCorrect ? existingProgress.consecutiveCorrect + 1 : 0,
+              consecutiveWrong: isCorrect ? 0 : existingProgress.consecutiveWrong + 1,
+              lastSeenAt: now,
+              lastCorrectAt: isCorrect ? now : existingProgress.lastCorrectAt,
+              lastWrongAt: isCorrect ? existingProgress.lastWrongAt : now,
+              sameDayExposureCount: existingProgress.sameDayExposureCount + 1,
+              sameSessionRetryCount: isCorrect
+                ? existingProgress.sameSessionRetryCount
+                : existingProgress.sameSessionRetryCount + (currentItem.retryCount > 0 ? 1 : 0),
+            };
 
-        if (lastDate === yesterdayString) {
-          set((state) => ({
-            dailyStreak: state.dailyStreak + 1,
-            lastPracticeDate: today,
-          }));
-          return;
-        }
+            const nextWords = [...activeSession.words];
+            const shouldRetry =
+              !isCorrect &&
+              currentItem.retryCount < 2 &&
+              nextUnitProgress.sameSessionRetryCount < 2;
 
-        set({
-          dailyStreak: 1,
-          lastPracticeDate: today,
-        });
-      },
-    }),
+            if (shouldRetry) {
+              const retryItem: SessionItem = {
+                ...currentItem,
+                retryCount: currentItem.retryCount + 1,
+              };
+              const insertAt = Math.min(activeSession.currentIndex + 3, nextWords.length);
+              nextWords.splice(insertAt, 0, retryItem);
+            }
+
+            const nextCurrentIndex = activeSession.currentIndex + 1;
+            const nextSessionCorrect = activeSession.sessionCorrect + (isCorrect ? 1 : 0);
+            const nextSessionStreak = isCorrect ? activeSession.sessionStreak + 1 : 0;
+            const completed = nextCurrentIndex >= nextWords.length;
+
+            const nextSummaryBase = {
+              ...state.studyState.learnerSummary,
+              totalAnswered: state.studyState.learnerSummary.totalAnswered + 1,
+              totalCorrect: state.studyState.learnerSummary.totalCorrect + (isCorrect ? 1 : 0),
+              lastSessionAt: now,
+            };
+
+            const streakUpdate = updateDailyStreak(
+              state.studyState.learnerSummary.lastPracticeDate,
+              state.studyState.learnerSummary.dailyStreak,
+              today
+            );
+
+            const nextStudyState: StudyState = {
+              ...state.studyState,
+              learnerSummary: {
+                ...nextSummaryBase,
+                dailyStreak: streakUpdate.dailyStreak,
+                lastPracticeDate: streakUpdate.lastPracticeDate,
+              },
+              unitProgress: {
+                ...state.studyState.unitProgress,
+                [currentItem.unitKey]: nextUnitProgress,
+              },
+              attemptHistory: [
+                ...state.studyState.attemptHistory,
+                {
+                  attemptId: `${activeSession.sessionId}-${state.studyState.attemptHistory.length + 1}`,
+                  sessionId: activeSession.sessionId,
+                  wordId: currentItem.word.id,
+                  conjugationType: currentItem.type,
+                  mode: state.config.mode,
+                  isCorrect,
+                  answeredAt: now,
+                },
+              ],
+              sessionHistory: completed
+                ? [
+                    ...state.studyState.sessionHistory,
+                    {
+                      sessionId: activeSession.sessionId,
+                      practiceType: activeSession.practiceType,
+                      configSnapshot: state.studyState.preferences.defaultSessionConfig,
+                      startedAt: activeSession.startedAt,
+                      endedAt: now,
+                      totalAnswered: nextWords.length,
+                      totalCorrect: nextSessionCorrect,
+                    },
+                  ]
+                : state.studyState.sessionHistory,
+            };
+
+            return {
+              ...syncAliases(nextStudyState, state.config),
+              studyState: nextStudyState,
+              activeSession: {
+                ...activeSession,
+                words: nextWords,
+                sessionStreak: nextSessionStreak,
+                sessionCorrect: nextSessionCorrect,
+                results: [...activeSession.results, isCorrect],
+                currentIndex: nextCurrentIndex,
+              },
+            };
+          }),
+
+        endSession: () => set({ activeSession: null }),
+
+        checkDailyStreak: () => {
+          // Streak advancement is now tied to completed practice sessions.
+        },
+      };
+    },
     {
       name: 'katachi-storage',
       partialize: (state) => ({
-        dailyStreak: state.dailyStreak,
-        lastPracticeDate: state.lastPracticeDate,
-        progress: state.progress,
-        config: state.config,
-        language: state.language,
+        studyState: state.studyState,
       }),
       merge: (persisted, current) => {
-        const legacy = (persisted as {
-          dailyStreak?: number;
-          lastLoginDate?: string | null;
-          lastPracticeDate?: string | null;
-          globalStats?: ProgressStats;
-          progress?: ProgressStats;
-          language?: Language;
-          config?: Partial<SessionConfig> & {
-            leves?: ('N5' | 'N4' | 'N3')[];
-            categories?: ConjugationType[];
-            batchSize?: number;
-          };
-        }) ?? {};
+        const migratedStudyState = extractPersistedStudyState(persisted);
+        const nextConfig = buildConfig(migratedStudyState);
 
         return {
           ...current,
-          dailyStreak: legacy.dailyStreak ?? current.dailyStreak,
-          lastPracticeDate: legacy.lastPracticeDate ?? legacy.lastLoginDate ?? current.lastPracticeDate,
-          progress: legacy.progress ?? legacy.globalStats ?? current.progress,
-          language: legacy.language ?? current.language,
-          config: {
-            ...current.config,
-            ...legacy.config,
-            levels: legacy.config?.levels ?? legacy.config?.leves ?? current.config.levels,
-            forms: legacy.config?.forms ?? legacy.config?.categories ?? current.config.forms,
-            questionCount:
-              legacy.config?.questionCount ?? legacy.config?.batchSize ?? current.config.questionCount,
-          },
+          ...syncAliases(migratedStudyState, nextConfig),
+          studyState: migratedStudyState,
+          config: nextConfig,
         };
       },
     }

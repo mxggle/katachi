@@ -13,12 +13,13 @@ const config: SessionConfig = {
   forms: ['polite', 'te_form'],
   questionCount: 10,
   mode: 'choice',
+  practiceType: 'daily',
 };
 
 describe('setup menu helpers', () => {
   it('builds a compact plain-language setup summary', () => {
     expect(buildSetupSummary(config, 'en')).toBe(
-      'N5 • verbs, i-adjectives • 2 forms • multiple choice • 10 questions'
+      'Daily practice • N5 • verbs, i-adjectives • 2 forms • multiple choice • 10 questions'
     );
   });
 

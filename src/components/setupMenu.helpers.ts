@@ -3,15 +3,21 @@ import type { Language } from '@/lib/i18n';
 import { getPracticeModeLabel, getWordTypeLabel } from '@/lib/displayText';
 
 export function buildSetupSummary(config: SessionConfig, language: Language) {
+  const PRACTICE_TYPE_SUMMARY: Record<SessionConfig['practiceType'], string> = {
+    daily: language === 'zh' ? '每日练习' : 'Daily practice',
+    weakness: language === 'zh' ? '弱点训练' : 'Weakness drill',
+    free: language === 'zh' ? '自由练习' : 'Free practice',
+  };
   const levels = config.levels.join(', ');
   const wordTypes = config.wordTypes.map((wordType) => getWordTypeLabel(wordType, language)).join(', ');
   const formCount = language === 'zh'
     ? `${config.forms.length}种形式`
     : `${config.forms.length} form${config.forms.length === 1 ? '' : 's'}`;
+  const practiceType = PRACTICE_TYPE_SUMMARY[config.practiceType];
   const mode = getPracticeModeLabel(config.mode, language);
   const questionsLabel = language === 'zh' ? '题' : 'questions';
 
-  return `${levels} • ${wordTypes} • ${formCount} • ${mode} • ${config.questionCount} ${questionsLabel}`;
+  return `${practiceType} • ${levels} • ${wordTypes} • ${formCount} • ${mode} • ${config.questionCount} ${questionsLabel}`;
 }
 
 export function getSetupHeading(totalAnswered: number, language: Language) {

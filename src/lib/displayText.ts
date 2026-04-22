@@ -1,7 +1,7 @@
 import type { Language } from '@/lib/i18n';
 import { translations } from '@/lib/i18n';
 import type { ConjugationType, WordEntry, WordType } from '@/lib/distractorEngine';
-import type { SessionConfig } from '@/lib/store';
+import type { PracticeMode, StudySessionConfig } from '@/lib/study/types';
 
 export function getWordDisplayText(word: Pick<WordEntry, 'dictionary_form' | 'id'>): string {
   return (
@@ -22,8 +22,8 @@ export function getWordTypeLabel(wordType: WordType, language: Language): string
   return labels[wordType];
 }
 
-export function getPracticeModeLabel(mode: SessionConfig['mode'], language: Language): string {
-  const labels: Record<SessionConfig['mode'], string> = {
+export function getPracticeModeLabel(mode: StudySessionConfig['mode'], language: Language): string {
+  const labels: Record<PracticeMode, string> = {
     choice: language === 'zh' ? '选择题' : 'multiple choice',
     input: language === 'zh' ? '输入题' : 'typing',
   };
@@ -42,7 +42,7 @@ export function getConjugationLabel(
     return dict.verb_form[type] ?? (language === 'zh' ? '变形练习' : 'Conjugation practice');
   }
 
-  return (dict.adj_form as Record<string, string>)[type] ?? (language === 'zh' ? '变形练习' : 'Conjugation practice');
+  return dict.adj_form[type] ?? (language === 'zh' ? '变形练习' : 'Conjugation practice');
 }
 
 export function getWeakPointLabel(

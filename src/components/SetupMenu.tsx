@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useStore } from '@/lib/store';
 import { useTranslation, translations } from '@/lib/i18n';
 import { WordType, ConjugationType, VERB_ONLY_CONJS, CONJS_FOR_WORD_TYPE } from '@/lib/distractorEngine';
+import type { PracticeType } from '@/lib/study/types';
 
 const LEVELS = ['N5', 'N4', 'N3'] as const;
 const QUESTION_COUNTS = [10, 20, 30];
@@ -51,6 +52,12 @@ export default function SetupMenu() {
     verb: t('verb'),
     'i-adj': t('iAdj'),
     'na-adj': t('naAdj'),
+  };
+
+  const practiceTypeLabels: Record<PracticeType, string> = {
+    daily: t('dailyPractice'),
+    weakness: t('weaknessDrill'),
+    free: t('freePractice'),
   };
 
   const availableForms = useMemo(() => {
@@ -144,6 +151,19 @@ export default function SetupMenu() {
 
       {isExpanded && (
         <div className="mt-8 space-y-8 border-t-[3px] border-dashed border-[color:var(--border-strong)] pt-8">
+          <ConfigSection title={t('practiceType')}>
+            <ChipRow>
+              {(['daily', 'weakness', 'free'] as const).map((practiceType) => (
+                <ToggleChip
+                  key={practiceType}
+                  active={config.practiceType === practiceType}
+                  onClick={() => updateConfig({ practiceType })}
+                  label={practiceTypeLabels[practiceType]}
+                />
+              ))}
+            </ChipRow>
+          </ConfigSection>
+
           <ConfigSection title={t('levels')}>
             <ChipRow>
               {LEVELS.map((level) => (
@@ -177,7 +197,7 @@ export default function SetupMenu() {
               <div className="flex gap-2">
                 <button onClick={selectAllForms} className="text-xs font-bold text-[color:var(--accent)] hover:underline">{t('selectAll')}</button>
                 <span className="text-xs text-[color:var(--muted)]">|</span>
-                <button onClick={clearAllForms} className="text-xs font-bold text-[color:var(--muted)] hover:underline">{t('clear')}</button>
+                <button onClick={clearAllForms} className="text-xs font-bold text-[color:var(--muted)] hover:underline">{t('resetForms')}</button>
               </div>
             }
           >
