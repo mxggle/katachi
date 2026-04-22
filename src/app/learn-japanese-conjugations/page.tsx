@@ -1,15 +1,7 @@
 import type { Metadata } from 'next';
-import { headers } from 'next/headers';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
 import { getLandingCopy, type LandingLanguage } from '@/lib/landing-i18n';
-
-async function detectLanguage(): Promise<LandingLanguage> {
-  const headersList = await headers();
-  const acceptLang = headersList.get('accept-language') || '';
-  if (acceptLang.includes('zh')) return 'zh';
-  return 'en';
-}
 
 interface PageProps {
   searchParams: Promise<{ lang?: string }>;
@@ -17,7 +9,7 @@ interface PageProps {
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const params = await searchParams;
-  const lang: LandingLanguage = params.lang === 'zh' ? 'zh' : await detectLanguage();
+  const lang: LandingLanguage = params.lang === 'zh' ? 'zh' : 'en';
   const copy = getLandingCopy(lang);
 
   const canonical = lang === 'zh'
@@ -51,12 +43,10 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
 
 export default async function LandingPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const lang: LandingLanguage = params.lang === 'zh' ? 'zh' : await detectLanguage();
+  const lang: LandingLanguage = params.lang === 'zh' ? 'zh' : 'en';
   const copy = getLandingCopy(lang);
   const alternateLang = lang === 'en' ? 'zh' : 'en';
-  const alternateUrl = alternateLang === 'zh'
-    ? '/learn-japanese-conjugations?lang=zh'
-    : '/learn-japanese-conjugations';
+  const alternateUrl = `/learn-japanese-conjugations?lang=${alternateLang}`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
