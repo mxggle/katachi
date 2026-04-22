@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
 import { translations } from "@/lib/i18n";
 
@@ -9,13 +10,35 @@ const font = Outfit({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-export const metadata: Metadata = {
-  title: translations.en.metaTitle,
-  description: translations.en.metaDescription,
-  icons: {
-    icon: '/icon.svg',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const acceptLang = headersList.get('accept-language') || '';
+  const lang: 'en' | 'zh' = acceptLang.includes('zh') ? 'zh' : 'en';
+  const t = translations[lang];
+
+  return {
+    title: t.metaTitle,
+    description: t.metaDescription,
+    icons: {
+      icon: '/icon.svg',
+    },
+    alternates: {
+      canonical: '/',
+    },
+    openGraph: {
+      title: t.metaTitle,
+      description: t.metaDescription,
+      url: '/',
+      type: 'website',
+      locale: lang === 'zh' ? 'zh_CN' : 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t.metaTitle,
+      description: t.metaDescription,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
