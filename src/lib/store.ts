@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { ConjugationType, WordEntry, WordType } from './distractorEngine';
+import type { Language } from './i18n';
 
 export interface SessionConfig {
-  levels: ('N5' | 'N4')[];
+  levels: ('N5' | 'N4' | 'N3')[];
   wordTypes: WordType[];
   forms: ConjugationType[];
   questionCount: number;
@@ -28,12 +29,14 @@ export interface AppState {
   lastPracticeDate: string | null;
   progress: ProgressStats;
   config: SessionConfig;
+  language: Language;
   activeSession: MiniSession | null;
   startSession: (words: { word: WordEntry; type: ConjugationType; choices: string[] }[]) => void;
   submitAnswer: (isCorrect: boolean) => void;
   endSession: () => void;
   updateConfig: (config: Partial<SessionConfig>) => void;
   checkDailyStreak: () => void;
+  setLanguage: (language: Language) => void;
 }
 
 const defaultConfig: SessionConfig = {
@@ -44,6 +47,14 @@ const defaultConfig: SessionConfig = {
   mode: 'choice',
 };
 
+function getDefaultLanguage(): Language {
+  if (typeof navigator !== 'undefined' && navigator.language) {
+    const lang = navigator.language.toLowerCase();
+    if (lang.startsWith('zh')) return 'zh';
+  }
+  return 'en';
+}
+
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
@@ -51,7 +62,10 @@ export const useStore = create<AppState>()(
       lastPracticeDate: null,
       progress: { totalAnswered: 0, totalCorrect: 0 },
       config: defaultConfig,
+      language: getDefaultLanguage(),
       activeSession: null,
+
+      setLanguage: (language) => set({ language }),
 
       updateConfig: (newConfig) =>
         set((state) => ({
@@ -125,6 +139,7 @@ export const useStore = create<AppState>()(
         lastPracticeDate: state.lastPracticeDate,
         progress: state.progress,
         config: state.config,
+        language: state.language,
       }),
       merge: (persisted, current) => {
         const legacy = (persisted as {
@@ -133,8 +148,9 @@ export const useStore = create<AppState>()(
           lastPracticeDate?: string | null;
           globalStats?: ProgressStats;
           progress?: ProgressStats;
+          language?: Language;
           config?: Partial<SessionConfig> & {
-            leves?: ('N5' | 'N4')[];
+            leves?: ('N5' | 'N4' | 'N3')[];
             categories?: ConjugationType[];
             batchSize?: number;
           };
@@ -145,6 +161,7 @@ export const useStore = create<AppState>()(
           dailyStreak: legacy.dailyStreak ?? current.dailyStreak,
           lastPracticeDate: legacy.lastPracticeDate ?? legacy.lastLoginDate ?? current.lastPracticeDate,
           progress: legacy.progress ?? legacy.globalStats ?? current.progress,
+          language: legacy.language ?? current.language,
           config: {
             ...current.config,
             ...legacy.config,

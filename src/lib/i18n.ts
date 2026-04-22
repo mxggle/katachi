@@ -1,0 +1,241 @@
+import { useCallback } from 'react';
+
+export type Language = 'en' | 'zh';
+
+export const translations = {
+  en: {
+    // Common
+    appName: 'Katachi ✦ 形',
+    streak: 'Streak',
+    days: 'days',
+    day: 'day',
+    goal: 'Goal',
+    prompts: 'prompts',
+    startPractice: 'Start Practice',
+    currentlyPracticing: 'Currently practicing:',
+    setupOptions: 'Setup Options',
+    setupDescription: 'Tweak the forms and modes for your session.',
+    hideOptions: 'Hide Options',
+    showOptions: 'Show Options',
+    levels: 'Levels',
+    wordTypes: 'Word types',
+    forms: 'Forms',
+    formsHelper: 'At least one must be selected.',
+    selectAll: 'Select All',
+    clear: 'Clear',
+    practiceMode: 'Practice mode',
+    multipleChoice: 'Multiple choice',
+    typing: 'Typing',
+    questionCount: 'Question count',
+    verb: '動詞',
+    iAdj: 'い形容詞',
+    naAdj: 'な形容詞',
+    verb_form: {
+      polite: 'ます形',
+      negative_plain: 'ない形',
+      negative_polite: 'ません形',
+      past_plain: 'た形',
+      past_polite: 'ました形',
+      past_negative_plain: 'なかった形',
+      past_negative_polite: 'ませんでした形',
+      te_form: 'て形',
+      potential: '可能形',
+      passive: '受身形',
+      causative: '使役形',
+      causative_passive: '使役受身形',
+      imperative: '命令形',
+      volitional: '意向形',
+      conditional_ba: 'ば形',
+      conditional_tara: 'たら形',
+    },
+    adj_form: {
+      polite: 'です形',
+      negative_plain: 'ない形',
+      negative_polite: '丁寧否定形',
+      past_plain: 'た形',
+      past_polite: 'でした形',
+      past_negative_plain: 'なかった形',
+      past_negative_polite: '丁寧過去否定形',
+      te_form: 'て形',
+      conditional_ba: 'ば形',
+      conditional_tara: 'たら形',
+    },
+
+    // Practice Session
+    quit: 'Quit?',
+    quitMessage: 'Your progress in this session will be lost.',
+    quitSession: 'Quit Session',
+    keepGoing: 'Keep Going',
+    common: 'Common',
+    question: 'Question',
+    nextQuestion: 'Next Question',
+    checkAnswer: 'Check Answer',
+    correctAnswer: 'Correct Answer',
+    sessionSummary: 'Session Summary',
+    score: 'Score',
+    backToHome: 'Back to Home',
+    placeholder: 'Type in Hiragana or Romaji',
+
+    // Progress Snapshot
+    progressSnapshot: 'Progress Snapshot',
+    progressHeading: 'Keep the streak alive with short daily reps.',
+    noProgress: 'No progress yet. Your stats will appear after the first session.',
+    answered: 'Answered',
+    accuracy: 'Accuracy',
+    dailyStreak: 'Daily streak',
+    totalAnswered: 'Total questions completed.',
+    acrossAllSessions: 'Across all saved sessions.',
+    practiceOnConsecutiveDays: 'Practice on consecutive days.',
+
+    // Setup Summary
+    verbs: 'verbs',
+    iAdjectives: 'i-adjectives',
+    naAdjectives: 'na-adjectives',
+    form: 'form',
+    formsPlural: 'forms',
+    questions: 'questions',
+
+    // Session Builder Errors
+    noWordsMatch: 'No words match this setup. Try another level or word type.',
+    selectAtLeastOneForm: 'Select at least one conjugation form.',
+    couldNotBuildSession: 'Could not build a session from this combination. Adjust the setup and try again.',
+
+    // Language Switcher
+    language: 'Language',
+    english: 'English',
+    chinese: '中文',
+
+    // Hero
+    heroTitleLine1: 'Master',
+    heroTitleLine2: 'conjugations.',
+
+    // Metadata
+    metaTitle: 'Katachi',
+    metaDescription: 'Practice Japanese conjugations in focused daily sessions.',
+  },
+  zh: {
+    // Common
+    appName: 'Katachi ✦ 形',
+    streak: '连续天数',
+    days: '天',
+    day: '天',
+    goal: '目标',
+    prompts: '题',
+    startPractice: '开始练习',
+    currentlyPracticing: '当前练习：',
+    setupOptions: '练习设置',
+    setupDescription: '调整本次练习的形式和模式。',
+    hideOptions: '隐藏选项',
+    showOptions: '显示选项',
+    levels: '等级',
+    wordTypes: '单词类型',
+    forms: '变形形式',
+    formsHelper: '至少选择一项。',
+    selectAll: '全选',
+    clear: '清空',
+    practiceMode: '练习模式',
+    multipleChoice: '选择题',
+    typing: '输入题',
+    questionCount: '题目数量',
+    verb: '动词',
+    iAdj: 'い形容词',
+    naAdj: 'な形容词',
+    verb_form: {
+      polite: 'ます形',
+      negative_plain: 'ない形',
+      negative_polite: 'ません形',
+      past_plain: 'た形',
+      past_polite: 'ました形',
+      past_negative_plain: 'なかった形',
+      past_negative_polite: 'ませんでした形',
+      te_form: 'て形',
+      potential: '可能形',
+      passive: '受身形',
+      causative: '使役形',
+      causative_passive: '使役受身形',
+      imperative: '命令形',
+      volitional: '意向形',
+      conditional_ba: 'ば形',
+      conditional_tara: 'たら形',
+    },
+    adj_form: {
+      polite: 'です形',
+      negative_plain: 'ない形',
+      negative_polite: '丁寧否定形',
+      past_plain: 'た形',
+      past_polite: 'でした形',
+      past_negative_plain: 'なかった形',
+      past_negative_polite: '丁寧過去否定形',
+      te_form: 'て形',
+      conditional_ba: 'ば形',
+      conditional_tara: 'たら形',
+    },
+
+    // Practice Session
+    quit: '退出？',
+    quitMessage: '本次练习的进度将会丢失。',
+    quitSession: '退出练习',
+    keepGoing: '继续练习',
+    common: '常用',
+    question: '题目',
+    nextQuestion: '下一题',
+    checkAnswer: '检查答案',
+    correctAnswer: '正确答案',
+    sessionSummary: '练习总结',
+    score: '得分',
+    backToHome: '返回首页',
+    placeholder: '请输入平假名或罗马字',
+
+    // Progress Snapshot
+    progressSnapshot: '进度概览',
+    progressHeading: '坚持每日练习，保持连胜！',
+    noProgress: '暂无进度。完成第一次练习后将显示统计数据。',
+    answered: '已答题',
+    accuracy: '正确率',
+    dailyStreak: '连续天数',
+    totalAnswered: '已完成的总题目数。',
+    acrossAllSessions: '所有已保存的练习记录。',
+    practiceOnConsecutiveDays: '连续练习的天数。',
+
+    // Setup Summary
+    verbs: '动词',
+    iAdjectives: 'い形容词',
+    naAdjectives: 'な形容词',
+    form: '种形式',
+    formsPlural: '种形式',
+    questions: '题',
+
+    // Session Builder Errors
+    noWordsMatch: '没有符合该设置的单词。请尝试其他等级或单词类型。',
+    selectAtLeastOneForm: '请至少选择一种变形形式。',
+    couldNotBuildSession: '无法根据当前组合创建练习。请调整设置后重试。',
+
+    // Language Switcher
+    language: '语言',
+    english: 'English',
+    chinese: '中文',
+
+    // Hero
+    heroTitleLine1: '掌握日语变形',
+    heroTitleLine2: '',
+
+    // Metadata
+    metaTitle: 'Katachi - 日语变形练习',
+    metaDescription: '通过专注的每日练习，掌握日语动词和形容词的变形。',
+  },
+} as const;
+
+export type Translations = typeof translations.en;
+export type TranslationKey = keyof Translations;
+
+export function useTranslation(language: Language) {
+  const t = useCallback(
+    (key: TranslationKey): string => {
+      const value = translations[language][key];
+      return typeof value === 'string' ? value : key;
+    },
+    [language]
+  );
+
+  return { t, language };
+}

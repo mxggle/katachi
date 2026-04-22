@@ -1,48 +1,51 @@
 'use client';
 
-import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStore } from '@/lib/store';
+import { useTranslation, translations } from '@/lib/i18n';
 import * as wanakana from 'wanakana';
+import Logo from '@/components/Logo';
 
-const CONJUGATION_LABELS: Record<string, string> = {
-    polite: 'ます形',
-    negative_plain: 'ない形',
-    negative_polite: 'ません形',
-    past_plain: 'た形',
-    past_polite: 'ました形',
-    past_negative_plain: 'なかった形',
-    past_negative_polite: 'ませんでした形',
-    te_form: 'て形',
-    potential: '可能形',
-    passive: '受身形',
-    causative: '使役形',
-    causative_passive: '使役受身形',
-    imperative: '命令形',
-    volitional: '意向形',
-    conditional_ba: 'ば形',
-    conditional_tara: 'たら形',
-};
+const getConjugationLabel = (type: string, wordType: string, language: 'en' | 'zh') => {
+  const dict = translations[language];
 
-const ADJ_CONJUGATION_LABELS: Record<string, string> = {
-    polite: 'です形',
-    negative_plain: 'ない形',
-    negative_polite: '丁寧否定形',
-    past_plain: 'た形',
-    past_polite: 'でした形',
-    past_negative_plain: 'なかった形',
-    past_negative_polite: '丁寧过去否定形',
-    te_form: 'て形',
-    conditional_ba: 'ば形',
-    conditional_tara: 'たら形',
-};
+  const verbLabels: Record<string, string> = {
+    polite: dict.verb_form.polite,
+    negative_plain: dict.verb_form.negative_plain,
+    negative_polite: dict.verb_form.negative_polite,
+    past_plain: dict.verb_form.past_plain,
+    past_polite: dict.verb_form.past_polite,
+    past_negative_plain: dict.verb_form.past_negative_plain,
+    past_negative_polite: dict.verb_form.past_negative_polite,
+    te_form: dict.verb_form.te_form,
+    potential: dict.verb_form.potential,
+    passive: dict.verb_form.passive,
+    causative: dict.verb_form.causative,
+    causative_passive: dict.verb_form.causative_passive,
+    imperative: dict.verb_form.imperative,
+    volitional: dict.verb_form.volitional,
+    conditional_ba: dict.verb_form.conditional_ba,
+    conditional_tara: dict.verb_form.conditional_tara,
+  };
 
-const getConjugationLabel = (type: string, wordType: string) => {
-    if (wordType === 'verb') {
-        return CONJUGATION_LABELS[type] || type;
-    } else {
-        return ADJ_CONJUGATION_LABELS[type] || type;
-    }
+  const adjLabels: Record<string, string> = {
+    polite: dict.adj_form.polite,
+    negative_plain: dict.adj_form.negative_plain,
+    negative_polite: dict.adj_form.negative_polite,
+    past_plain: dict.adj_form.past_plain,
+    past_polite: dict.adj_form.past_polite,
+    past_negative_plain: dict.adj_form.past_negative_plain,
+    past_negative_polite: dict.adj_form.past_negative_polite,
+    te_form: dict.adj_form.te_form,
+    conditional_ba: dict.adj_form.conditional_ba,
+    conditional_tara: dict.adj_form.conditional_tara,
+  };
+
+  if (wordType === 'verb') {
+    return verbLabels[type] || type;
+  } else {
+    return adjLabels[type] || type;
+  }
 };
 
 const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
@@ -53,7 +56,8 @@ const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 );
 
 export default function PracticeSession() {
-    const { activeSession, submitAnswer, endSession, config } = useStore();
+    const { activeSession, submitAnswer, endSession, config, language } = useStore();
+    const { t } = useTranslation(language);
     const [inputValue, setInputValue] = useState('');
     const [isCorrect, setIsCorrect] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
@@ -163,22 +167,24 @@ export default function PracticeSession() {
             <div className="min-h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-6 sm:p-8 animate-fade-in relative overflow-hidden">
                 <div className="blob-bg" />
                 <div className="w-full max-w-md relative z-10 space-y-8">
-                    <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-8 shadow-[12px_12px_0px_0px_var(--ink)] text-center space-y-6">
+                    <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-8 shadow-[12px_12px_0px_0px_var(--ink)] text-center space-y-6 flex flex-col items-center">
+                        <Logo size={140} showText={true} className="text-[color:var(--ink)] mb-2" />
+                        
                         <div className="inline-flex items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-2 shadow-[4px_4px_0px_0px_var(--ink)]">
                             <span className="text-xl font-bold uppercase tracking-widest">{message}</span>
                         </div>
 
                         <div className="space-y-2">
-                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">Session Summary</p>
+                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('sessionSummary')}</p>
                             <div className="flex justify-center gap-8">
                                 <div className="text-center">
                                     <div className="text-5xl font-black text-[color:var(--accent)]">{pct}%</div>
-                                    <div className="text-[10px] font-bold uppercase text-[color:var(--muted)] mt-1">Score</div>
+                                    <div className="text-[10px] font-bold uppercase text-[color:var(--muted)] mt-1">{t('score')}</div>
                                 </div>
                                 <div className="w-[2px] bg-[color:var(--ink)] opacity-20" />
                                 <div className="text-center">
                                     <div className="text-5xl font-black text-[color:var(--ink)]">{activeSession.sessionStreak}</div>
-                                    <div className="text-[10px] font-bold uppercase text-[color:var(--muted)] mt-1">Streak</div>
+                                    <div className="text-[10px] font-bold uppercase text-[color:var(--muted)] mt-1">{t('streak')}</div>
                                 </div>
                             </div>
                         </div>
@@ -187,7 +193,7 @@ export default function PracticeSession() {
                             onClick={endSession}
                             className="w-full py-5 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-2xl font-bold text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none"
                         >
-                            Back to Home
+                            {t('backToHome')}
                         </button>
                     </div>
                 </div>
@@ -212,11 +218,14 @@ export default function PracticeSession() {
                         </svg>
                     </button>
 
-                    <div className="flex-1 h-6 rounded-full border-[3px] border-[color:var(--ink)] bg-white shadow-[4px_4px_0px_0px_var(--ink)] overflow-hidden relative">
-                        <div
-                            className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[3px] border-[color:var(--ink)] transition-all duration-300"
-                            style={{ width: `${progress}%` }}
-                        />
+                    <div className="flex-1 flex items-center gap-4">
+                        <Logo size={32} withContainer={true} className="text-[color:var(--ink)] shrink-0" />
+                        <div className="flex-1 h-6 rounded-full border-[3px] border-[color:var(--ink)] bg-white shadow-[4px_4px_0px_0px_var(--ink)] overflow-hidden relative">
+                            <div
+                                className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[3px] border-[color:var(--ink)] transition-all duration-300"
+                                style={{ width: `${progress}%` }}
+                            />
+                        </div>
                     </div>
 
                     <div className="inline-flex items-center px-4 h-12 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] shadow-[4px_4px_0px_0px_var(--ink)] font-bold text-sm">
@@ -229,7 +238,7 @@ export default function PracticeSession() {
                     <div className="flex items-start justify-between">
                         <div className="flex gap-2">
                             {word?.is_common && (
-                                <span className="px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-[#fde68a] text-[10px] font-bold uppercase tracking-wider">Common</span>
+                                <span className="px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-[#fde68a] text-[10px] font-bold uppercase tracking-wider">{t('common')}</span>
                             )}
                             {word?.jlpt && (
                                 <span className="px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-white text-[10px] font-bold uppercase tracking-wider">{word.jlpt}</span>
@@ -258,9 +267,9 @@ export default function PracticeSession() {
                         <p className="text-2xl font-bold text-[color:var(--muted)]">{word?.dictionary_form.kana}</p>
 
                         <div className="mt-10 flex flex-col items-center gap-3">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[color:var(--muted)]">Question</span>
+                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[color:var(--muted)]">{t('question')}</span>
                             <div className="px-6 py-2 rounded-xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] shadow-[4px_4px_0px_0px_var(--ink)] text-lg font-bold">
-                                {type && word ? getConjugationLabel(type, word.word_type) : '---'}
+                                {type && word ? getConjugationLabel(type, word.word_type, language) : '---'}
                             </div>
                         </div>
                     </div>
@@ -304,7 +313,7 @@ export default function PracticeSession() {
                                         onClick={handleNext}
                                         className="sm:col-span-2 mt-4 py-5 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[color:var(--ink)] text-white text-xl font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
                                     >
-                                        <span>Next Question</span>
+                                        <span>{t('nextQuestion')}</span>
                                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                         </svg>
@@ -320,7 +329,7 @@ export default function PracticeSession() {
                                         value={inputValue}
                                         onChange={(e) => setInputValue(e.target.value)}
                                         disabled={showFeedback}
-                                        placeholder="Type in Hiragana or Romaji"
+                                        placeholder={t('placeholder')}
                                         className={`w-full text-center text-2xl font-bold p-6 rounded-2xl border-[4px] border-[color:var(--ink)] bg-white outline-none transition-all ${
                                             showFeedback
                                                 ? isCorrect
@@ -333,7 +342,7 @@ export default function PracticeSession() {
                                     {showFeedback && (
                                         <div className={`mt-4 p-4 rounded-xl border-[3px] border-[color:var(--ink)] ${isCorrect ? 'bg-[color:var(--primary-green)] text-white' : 'bg-[#fde68a] text-[color:var(--ink)]'} flex items-center justify-between`}>
                                             <div className="flex flex-col items-start">
-                                                <span className="text-[10px] font-black uppercase tracking-widest opacity-70">Correct Answer</span>
+                                                <span className="text-[10px] font-black uppercase tracking-widest opacity-70">{t('correctAnswer')}</span>
                                                 <span className="text-xl font-bold">{correctAnswer}</span>
                                             </div>
                                             <button 
@@ -352,7 +361,7 @@ export default function PracticeSession() {
                                         showFeedback ? 'bg-[color:var(--ink)] text-white' : 'bg-[color:var(--accent)] text-white'
                                     }`}
                                 >
-                                    <span>{showFeedback ? 'Next Question' : 'Check Answer'}</span>
+                                    <span>{showFeedback ? t('nextQuestion') : t('checkAnswer')}</span>
                                     {showFeedback && (
                                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -371,21 +380,21 @@ export default function PracticeSession() {
                     <div className="w-full max-w-[320px] rounded-[2rem] border-[4px] border-[color:var(--ink)] bg-white p-8 space-y-6 text-center shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)]">
                         <div className="text-5xl">😿</div>
                         <div className="space-y-2">
-                            <h3 className="text-2xl font-black text-[color:var(--ink)]">Quit?</h3>
-                            <p className="font-bold text-[color:var(--muted)] leading-tight">Your progress in this session will be lost.</p>
+                            <h3 className="text-2xl font-black text-[color:var(--ink)]">{t('quit')}</h3>
+                            <p className="font-bold text-[color:var(--muted)] leading-tight">{t('quitMessage')}</p>
                         </div>
                         <div className="grid grid-cols-1 gap-3">
                             <button
                                 onClick={endSession}
                                 className="py-4 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-white font-bold shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
                             >
-                                Quit Session
+                                {t('quitSession')}
                             </button>
                             <button
                                 onClick={() => setShowConfirm(false)}
                                 className="py-4 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white text-[color:var(--ink)] font-bold active:bg-[color:var(--surface-soft)] transition-all"
                             >
-                                Keep Going
+                                {t('keepGoing')}
                             </button>
                         </div>
                     </div>

@@ -1,9 +1,11 @@
 'use client';
 
 import { useStore } from '@/lib/store';
+import { useTranslation } from '@/lib/i18n';
 
 export default function ProgressSnapshot() {
-  const { dailyStreak, progress } = useStore();
+  const { dailyStreak, progress, language } = useStore();
+  const { t } = useTranslation(language);
   const accuracy =
     progress.totalAnswered > 0
       ? Math.round((progress.totalCorrect / progress.totalAnswered) * 100)
@@ -13,24 +15,24 @@ export default function ProgressSnapshot() {
     <section className="card border border-[color:var(--border-strong)] p-6 space-y-4">
       <div className="space-y-1">
         <p className="text-[11px] font-black uppercase tracking-[0.24em] text-[color:var(--muted)]">
-          Progress Snapshot
+          {t('progressSnapshot')}
         </p>
         <h2 className="text-2xl font-black tracking-tight text-[color:var(--ink)]">
-          Keep the streak alive with short daily reps.
+          {t('progressHeading')}
         </h2>
       </div>
 
       {progress.totalAnswered === 0 ? (
         <div className="rounded-[1.5rem] border border-dashed border-[color:var(--border-strong)] bg-[color:var(--surface-soft)] px-5 py-6">
           <p className="text-sm font-semibold text-[color:var(--ink)]">
-            No progress yet. Your stats will appear after the first session.
+            {t('noProgress')}
           </p>
         </div>
       ) : (
         <div className="grid gap-3 sm:grid-cols-3">
-          <SnapshotCard label="Daily streak" value={`${dailyStreak} days`} helper="Practice on consecutive days." />
-          <SnapshotCard label="Answered" value={String(progress.totalAnswered)} helper="Total questions completed." />
-          <SnapshotCard label="Accuracy" value={`${accuracy}%`} helper="Across all saved sessions." />
+          <SnapshotCard label={t('dailyStreak')} value={`${dailyStreak} ${t('days')}`} helper={t('practiceOnConsecutiveDays')} />
+          <SnapshotCard label={t('answered')} value={String(progress.totalAnswered)} helper={t('totalAnswered')} />
+          <SnapshotCard label={t('accuracy')} value={`${accuracy}%`} helper={t('acrossAllSessions')} />
         </div>
       )}
     </section>

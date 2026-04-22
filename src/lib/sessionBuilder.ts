@@ -1,4 +1,3 @@
-import dictionaryData from '../../dictionary.json';
 import {
   CONJS_FOR_WORD_TYPE,
   ConjugationType,
@@ -6,15 +5,24 @@ import {
   WordEntry,
   WordType,
 } from '@/lib/distractorEngine';
+import { loadDictionary } from '@/lib/dictionaryLoader';
 import type { SessionConfig } from '@/lib/store';
+import { translations, type Language } from '@/lib/i18n';
 
-export function buildPracticeSession(config: SessionConfig) {
-  const availableWords = (dictionaryData as { words: WordEntry[] }).words.filter(
-    (word) => config.levels.includes(word.level as 'N5' | 'N4') && config.wordTypes.includes(word.word_type)
+export function buildPracticeSession(config: SessionConfig, language?: Language): { error: string } | { words: { word: WordEntry; type: ConjugationType; choices: string[] }[] } {
+  const dict = translations[language ?? 'en'];
+  const t = (key: keyof typeof dict): string => {
+    const value = dict[key];
+    return typeof value === 'string' ? value : key;
+  };
+
+  const dictionaryData = { words: loadDictionary(language ?? 'en') };
+  const availableWords = dictionaryData.words.filter(
+    (word) => config.levels.includes(word.level as 'N5' | 'N4' | 'N3') && config.wordTypes.includes(word.word_type)
   );
 
   if (availableWords.length === 0) {
-    return { error: 'No words match this setup. Try another level or word type.' } as const;
+    return { error: t('noWordsMatch') };
   }
 
   const availableForms = new Set<ConjugationType>();
@@ -26,7 +34,7 @@ export function buildPracticeSession(config: SessionConfig) {
 
   const activeForms = config.forms.filter((form) => availableForms.has(form));
   if (activeForms.length === 0) {
-    return { error: 'Select at least one conjugation form.' } as const;
+    return { error: t('selectAtLeastOneForm') };
   }
 
   const sessionWords = [];
@@ -51,9 +59,9 @@ export function buildPracticeSession(config: SessionConfig) {
 
   if (sessionWords.length === 0) {
     return {
-      error: 'Could not build a session from this combination. Adjust the setup and try again.',
-    } as const;
+      error: t('couldNotBuildSession'),
+    };
   }
 
-  return { words: sessionWords } as const;
+  return { words: sessionWords };
 }

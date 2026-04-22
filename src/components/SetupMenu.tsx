@@ -2,52 +2,56 @@
 
 import { useMemo, useState } from 'react';
 import { useStore } from '@/lib/store';
+import { useTranslation, translations } from '@/lib/i18n';
 import { WordType, ConjugationType, VERB_ONLY_CONJS, CONJS_FOR_WORD_TYPE } from '@/lib/distractorEngine';
-
-const VERB_FORM_LABELS: Record<ConjugationType, string> = {
-  polite: 'ます形',
-  negative_plain: 'ない形',
-  negative_polite: 'ません形',
-  past_plain: 'た形',
-  past_polite: 'ました形',
-  past_negative_plain: 'なかった形',
-  past_negative_polite: 'ませんでした形',
-  te_form: 'て形',
-  potential: '可能形',
-  passive: '受身形',
-  causative: '使役形',
-  causative_passive: '使役受身形',
-  imperative: '命令形',
-  volitional: '意向形',
-  conditional_ba: 'ば形',
-  conditional_tara: 'たら形',
-};
-
-const ADJ_FORM_LABELS: Record<string, string> = {
-  polite: 'です形',
-  negative_plain: 'ない形',
-  negative_polite: '丁寧否定形',
-  past_plain: 'た形',
-  past_polite: 'でした形',
-  past_negative_plain: 'なかった形',
-  past_negative_polite: '丁寧過去否定形',
-  te_form: 'て形',
-  conditional_ba: 'ば形',
-  conditional_tara: 'たら形',
-};
-
-const WORD_TYPE_LABELS: Record<WordType, string> = {
-  verb: '動詞',
-  'i-adj': 'い形容詞',
-  'na-adj': 'な形容詞',
-};
 
 const LEVELS = ['N5', 'N4', 'N3'] as const;
 const QUESTION_COUNTS = [10, 20, 30];
 
 export default function SetupMenu() {
-  const { config, updateConfig } = useStore();
+  const { config, updateConfig, language } = useStore();
+  const { t } = useTranslation(language);
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const dict = translations[language];
+
+  const verbFormLabels: Record<ConjugationType, string> = {
+    polite: dict.verb_form.polite,
+    negative_plain: dict.verb_form.negative_plain,
+    negative_polite: dict.verb_form.negative_polite,
+    past_plain: dict.verb_form.past_plain,
+    past_polite: dict.verb_form.past_polite,
+    past_negative_plain: dict.verb_form.past_negative_plain,
+    past_negative_polite: dict.verb_form.past_negative_polite,
+    te_form: dict.verb_form.te_form,
+    potential: dict.verb_form.potential,
+    passive: dict.verb_form.passive,
+    causative: dict.verb_form.causative,
+    causative_passive: dict.verb_form.causative_passive,
+    imperative: dict.verb_form.imperative,
+    volitional: dict.verb_form.volitional,
+    conditional_ba: dict.verb_form.conditional_ba,
+    conditional_tara: dict.verb_form.conditional_tara,
+  };
+
+  const adjFormLabels: Record<string, string> = {
+    polite: dict.adj_form.polite,
+    negative_plain: dict.adj_form.negative_plain,
+    negative_polite: dict.adj_form.negative_polite,
+    past_plain: dict.adj_form.past_plain,
+    past_polite: dict.adj_form.past_polite,
+    past_negative_plain: dict.adj_form.past_negative_plain,
+    past_negative_polite: dict.adj_form.past_negative_polite,
+    te_form: dict.adj_form.te_form,
+    conditional_ba: dict.adj_form.conditional_ba,
+    conditional_tara: dict.adj_form.conditional_tara,
+  };
+
+  const wordTypeLabels: Record<WordType, string> = {
+    verb: t('verb'),
+    'i-adj': t('iAdj'),
+    'na-adj': t('naAdj'),
+  };
 
   const availableForms = useMemo(() => {
     const nextAvailable = new Set<ConjugationType>();
@@ -121,10 +125,10 @@ export default function SetupMenu() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <h3 className="text-2xl font-bold text-[color:var(--ink)]">
-            Setup Options
+            {t('setupOptions')}
           </h3>
           <p className="text-sm font-medium text-[color:var(--muted)]">
-            Tweak the forms and modes for your session.
+            {t('setupDescription')}
           </p>
         </div>
 
@@ -134,13 +138,13 @@ export default function SetupMenu() {
           onClick={() => setIsExpanded((value) => !value)}
           className="inline-flex min-h-11 items-center justify-center rounded-xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
         >
-          {isExpanded ? 'Hide Options' : 'Show Options'}
+          {isExpanded ? t('hideOptions') : t('showOptions')}
         </button>
       </div>
 
       {isExpanded && (
         <div className="mt-8 space-y-8 border-t-[3px] border-dashed border-[color:var(--border-strong)] pt-8">
-          <ConfigSection title="Levels">
+          <ConfigSection title={t('levels')}>
             <ChipRow>
               {LEVELS.map((level) => (
                 <ToggleChip
@@ -153,45 +157,45 @@ export default function SetupMenu() {
             </ChipRow>
           </ConfigSection>
 
-          <ConfigSection title="Word types">
+          <ConfigSection title={t('wordTypes')}>
             <ChipRow>
               {(['verb', 'i-adj', 'na-adj'] as const).map((wordType) => (
                 <ToggleChip
                   key={wordType}
                   active={config.wordTypes.includes(wordType)}
                   onClick={() => toggleWordType(wordType)}
-                  label={WORD_TYPE_LABELS[wordType]}
+                  label={wordTypeLabels[wordType]}
                 />
               ))}
             </ChipRow>
           </ConfigSection>
 
           <ConfigSection 
-            title="Forms" 
-            helper="At least one must be selected."
+            title={t('forms')} 
+            helper={t('formsHelper')}
             action={
               <div className="flex gap-2">
-                <button onClick={selectAllForms} className="text-xs font-bold text-[color:var(--accent)] hover:underline">Select All</button>
+                <button onClick={selectAllForms} className="text-xs font-bold text-[color:var(--accent)] hover:underline">{t('selectAll')}</button>
                 <span className="text-xs text-[color:var(--muted)]">|</span>
-                <button onClick={clearAllForms} className="text-xs font-bold text-[color:var(--muted)] hover:underline">Clear</button>
+                <button onClick={clearAllForms} className="text-xs font-bold text-[color:var(--muted)] hover:underline">{t('clear')}</button>
               </div>
             }
           >
             <ChipRow>
-              {(Object.keys(VERB_FORM_LABELS) as ConjugationType[]).map((form) => {
+              {(Object.keys(verbFormLabels) as ConjugationType[]).map((form) => {
                 if (!availableForms.has(form)) return null;
 
                 const hasVerb = config.wordTypes.includes('verb');
                 const hasAdj = config.wordTypes.includes('i-adj') || config.wordTypes.includes('na-adj');
                 
-                let label = VERB_FORM_LABELS[form];
+                let label = verbFormLabels[form];
                 if (hasVerb && hasAdj) {
-                  const adjLabel = ADJ_FORM_LABELS[form];
-                  if (adjLabel && adjLabel !== VERB_FORM_LABELS[form]) {
-                    label = `${VERB_FORM_LABELS[form]} / ${adjLabel}`;
+                  const adjLabel = adjFormLabels[form];
+                  if (adjLabel && adjLabel !== verbFormLabels[form]) {
+                    label = `${verbFormLabels[form]} / ${adjLabel}`;
                   }
                 } else if (hasAdj) {
-                  label = ADJ_FORM_LABELS[form] || VERB_FORM_LABELS[form];
+                  label = adjFormLabels[form] || verbFormLabels[form];
                 }
 
                 return (
@@ -208,20 +212,20 @@ export default function SetupMenu() {
           </ConfigSection>
 
           <div className="grid gap-8 md:grid-cols-2">
-            <ConfigSection title="Practice mode">
+            <ConfigSection title={t('practiceMode')}>
               <ChipRow>
                 {(['choice', 'input'] as const).map((mode) => (
                   <ToggleChip
                     key={mode}
                     active={config.mode === mode}
                     onClick={() => updateConfig({ mode })}
-                    label={mode === 'choice' ? 'Multiple choice' : 'Typing'}
+                    label={mode === 'choice' ? t('multipleChoice') : t('typing')}
                   />
                 ))}
               </ChipRow>
             </ConfigSection>
 
-            <ConfigSection title="Question count">
+            <ConfigSection title={t('questionCount')}>
               <ChipRow>
                 {QUESTION_COUNTS.map((questionCount) => (
                   <ToggleChip

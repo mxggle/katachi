@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import { translations } from "@/lib/i18n";
 
 const font = Outfit({
   variable: "--font-outfit",
@@ -9,8 +10,11 @@ const font = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Katachi",
-  description: "Practice Japanese conjugations in focused daily sessions.",
+  title: translations.en.metaTitle,
+  description: translations.en.metaDescription,
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export const viewport: Viewport = {
