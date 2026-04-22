@@ -135,4 +135,76 @@ describe('selectPracticeUnits', () => {
 
     expect(selected).toHaveLength(3);
   });
+
+  it('prefers unique words before repeating another form in free practice', () => {
+    const words = [
+      buildWord('word-1', 'verb', ['te_form', 'polite']),
+      buildWord('word-2', 'verb', ['te_form', 'polite']),
+      buildWord('word-3', 'verb', ['te_form', 'polite']),
+    ];
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 3 },
+      practiceType: 'free',
+      preferences,
+      unitProgress: {},
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    expect(selected).toHaveLength(3);
+    expect(new Set(selected.map((item) => item.word.id)).size).toBe(3);
+  });
+
+  it('reuses the same word only after unique words run out', () => {
+    const words = [
+      buildWord('word-1', 'verb', ['te_form', 'polite']),
+      buildWord('word-2', 'verb', ['te_form', 'polite']),
+    ];
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 3 },
+      practiceType: 'free',
+      preferences,
+      unitProgress: {},
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    expect(selected).toHaveLength(3);
+    expect(selected[0].word.id).toBe('word-1');
+    expect(selected[1].word.id).toBe('word-2');
+    expect(new Set(selected.slice(0, 2).map((item) => item.word.id)).size).toBe(2);
+  });
+
+  it('picks the weakest form per word before repeating a weak word', () => {
+    const words = [
+      buildWord('word-1', 'verb', ['te_form', 'polite']),
+      buildWord('word-2', 'verb', ['te_form', 'polite']),
+      buildWord('word-3', 'verb', ['te_form', 'polite']),
+    ];
+
+    const unitProgress: Record<string, UnitProgress> = {
+      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', wrongCount: 5, consecutiveWrong: 3 }),
+      'word-1::polite::choice': buildProgress({ wordId: 'word-1', conjugationType: 'polite', wrongCount: 4, consecutiveWrong: 2 }),
+      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', wrongCount: 3, consecutiveWrong: 2 }),
+      'word-3::polite::choice': buildProgress({ wordId: 'word-3', conjugationType: 'polite', wrongCount: 2, consecutiveWrong: 1 }),
+    };
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 3 },
+      practiceType: 'weakness',
+      preferences,
+      unitProgress,
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    expect(selected).toHaveLength(3);
+    expect(selected.map((item) => item.unitKey)).toEqual([
+      'word-1::te_form::choice',
+      'word-2::te_form::choice',
+      'word-3::polite::choice',
+    ]);
+  });
 });
