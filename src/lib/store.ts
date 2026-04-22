@@ -259,26 +259,10 @@ export const useStore = create<AppState>()(
               lastCorrectAt: isCorrect ? now : existingProgress.lastCorrectAt,
               lastWrongAt: isCorrect ? existingProgress.lastWrongAt : now,
               sameDayExposureCount: existingProgress.sameDayExposureCount + 1,
-              sameSessionRetryCount: isCorrect
-                ? existingProgress.sameSessionRetryCount
-                : existingProgress.sameSessionRetryCount + (currentItem.retryCount > 0 ? 1 : 0),
+              sameSessionRetryCount: existingProgress.sameSessionRetryCount,
             };
 
             const nextWords = [...activeSession.words];
-            const shouldRetry =
-              !isCorrect &&
-              currentItem.retryCount < 2 &&
-              nextUnitProgress.sameSessionRetryCount < 2;
-
-            if (shouldRetry) {
-              const retryItem: SessionItem = {
-                ...currentItem,
-                retryCount: currentItem.retryCount + 1,
-              };
-              const insertAt = Math.min(activeSession.currentIndex + 3, nextWords.length);
-              nextWords.splice(insertAt, 0, retryItem);
-            }
-
             const nextCurrentIndex = activeSession.currentIndex + 1;
             const nextSessionCorrect = activeSession.sessionCorrect + (isCorrect ? 1 : 0);
             const nextSessionStreak = isCorrect ? activeSession.sessionStreak + 1 : 0;

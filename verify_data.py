@@ -5,6 +5,7 @@ def verify():
         data = json.load(f)
     
     words = {w["dictionary_form"]["kana"]: w for w in data["words"]}
+    words_by_id = {w["id"]: w for w in data["words"]}
     
     # Target words that are commonly conjugated incorrectly in automated scripts
     test_cases = [
@@ -12,7 +13,7 @@ def verify():
         ("かえる", "godan", "かえって", "かえらない"), # Godan Ru-trap
         ("たべる", "ichidan", "たべて", "たべない"),   # Standard Ichidan
         ("くる", "kuru", "きて", "こない"),            # Irregular
-        ("いい", "i-adj", "よくて", "よくない")        # Adjective exception
+        ("よい", "i-adj", "よくて", "よくない")        # Adjective exception; polite stays いいです
     ]
     
     print(f"{'Word':<10} | {'Group':<10} | {'Te-Form':<10} | {'Negative':<10} | {'Status'}")
@@ -20,6 +21,8 @@ def verify():
     
     for kana, group, exp_te, exp_neg in test_cases:
         w = words.get(kana)
+        if not w and kana == "よい":
+            w = words.get("いい") or words_by_id.get("ia_yoi")
         if not w:
             print(f"{kana:<10} | {'MISSING':<10}")
             continue
