@@ -1,0 +1,67 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e46] [cursor=pointer]:
+    - img [ref=e47]
+  - alert [ref=e50]
+  - main [ref=e160]:
+    - generic [ref=e161]:
+      - generic [ref=e162]:
+        - generic [ref=e163]:
+          - paragraph [ref=e164]: 查看进度
+          - heading "看看你的弱点在哪里。" [level=1] [ref=e165]
+          - paragraph [ref=e166]: 找到最容易出错的形式，然后直接开始针对性训练。
+        - link "返回首页" [ref=e167] [cursor=pointer]:
+          - /url: /
+      - generic [ref=e168]:
+        - heading "总览" [level=2] [ref=e169]
+        - generic [ref=e170]:
+          - generic [ref=e171]:
+            - paragraph [ref=e172]: 已答题
+            - paragraph [ref=e173]: "0"
+            - paragraph [ref=e174]: 已完成的总题目数。
+          - generic [ref=e175]:
+            - paragraph [ref=e176]: 正确率
+            - paragraph [ref=e177]: 0%
+            - paragraph [ref=e178]: 所有已保存的练习记录。
+          - generic [ref=e179]:
+            - paragraph [ref=e180]: 连续天数
+            - paragraph [ref=e181]: "0"
+            - paragraph [ref=e182]: 连续练习的天数。
+          - generic [ref=e183]:
+            - paragraph [ref=e184]: 今日已练
+            - paragraph [ref=e185]: "0"
+            - paragraph [ref=e186]: 今天已完成的题数。
+      - generic [ref=e187]:
+        - heading "最弱变形" [level=2] [ref=e189]
+        - heading "最弱项目" [level=2] [ref=e191]
+        - heading "模式对比" [level=2] [ref=e193]
+      - generic [ref=e194]:
+        - heading "最近活动" [level=2] [ref=e195]
+        - generic [ref=e196]:
+          - generic [ref=e197]:
+            - generic [ref=e198]: 2026-04-16
+            - generic [ref=e199]: 0 answered
+            - generic [ref=e200]: 0 correct
+          - generic [ref=e201]:
+            - generic [ref=e202]: 2026-04-17
+            - generic [ref=e203]: 0 answered
+            - generic [ref=e204]: 0 correct
+          - generic [ref=e205]:
+            - generic [ref=e206]: 2026-04-18
+            - generic [ref=e207]: 0 answered
+            - generic [ref=e208]: 0 correct
+          - generic [ref=e209]:
+            - generic [ref=e210]: 2026-04-19
+            - generic [ref=e211]: 0 answered
+            - generic [ref=e212]: 0 correct
+          - generic [ref=e213]:
+            - generic [ref=e214]: 2026-04-20
+            - generic [ref=e215]: 0 answered
+            - generic [ref=e216]: 0 correct
+          - generic [ref=e217]:
+            - generic [ref=e218]: 2026-04-21
+            - generic [ref=e219]: 0 answered
+            - generic [ref=e220]: 0 correct
+          - generic [ref=e221]:
+            - generic [ref=e222]: 2026-04-22
+            - generic [ref=e223]: 0 answered
+            - generic [ref=e224]: 0 correct

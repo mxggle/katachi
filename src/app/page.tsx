@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
+import { useMemo, useState } from 'react';
 import SetupMenu from '@/components/SetupMenu';
 import PracticeSession from '@/components/PracticeSession';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -13,18 +14,14 @@ import { useTranslation } from '@/lib/i18n';
 import Logo from '@/components/Logo';
 
 export default function Home() {
-  const { activeSession, checkDailyStreak, config, dailyStreak, startSession, language } = useStore();
+  const { activeSession, config, dailyStreak, startSession, language, studyState } = useStore();
   const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation(language);
-
-  useEffect(() => {
-    checkDailyStreak();
-  }, [checkDailyStreak]);
 
   const setupSummary = useMemo(() => buildSetupSummary(config, language), [config, language]);
 
   const handleStart = () => {
-    const result = buildPracticeSession(config, language);
+    const result = buildPracticeSession(config, studyState, language);
 
     if ('error' in result) {
       setError(result.error);
@@ -114,7 +111,13 @@ export default function Home() {
           <SetupMenu />
         </section>
 
-        <div className="animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
+        <div className="flex flex-col items-center gap-4 animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
+          <Link
+            href="/progress"
+            className="inline-flex items-center rounded-full border-[2px] border-[color:var(--ink)] bg-white px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)]"
+          >
+            {t('viewProgress')}
+          </Link>
           <LanguageSwitcher />
         </div>
       </div>

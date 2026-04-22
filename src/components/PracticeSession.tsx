@@ -2,51 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStore } from '@/lib/store';
-import { useTranslation, translations } from '@/lib/i18n';
+import { useTranslation } from '@/lib/i18n';
+import { getConjugationLabel } from '@/lib/displayText';
 import * as wanakana from 'wanakana';
 import Logo from '@/components/Logo';
-
-const getConjugationLabel = (type: string, wordType: string, language: 'en' | 'zh') => {
-  const dict = translations[language];
-
-  const verbLabels: Record<string, string> = {
-    polite: dict.verb_form.polite,
-    negative_plain: dict.verb_form.negative_plain,
-    negative_polite: dict.verb_form.negative_polite,
-    past_plain: dict.verb_form.past_plain,
-    past_polite: dict.verb_form.past_polite,
-    past_negative_plain: dict.verb_form.past_negative_plain,
-    past_negative_polite: dict.verb_form.past_negative_polite,
-    te_form: dict.verb_form.te_form,
-    potential: dict.verb_form.potential,
-    passive: dict.verb_form.passive,
-    causative: dict.verb_form.causative,
-    causative_passive: dict.verb_form.causative_passive,
-    imperative: dict.verb_form.imperative,
-    volitional: dict.verb_form.volitional,
-    conditional_ba: dict.verb_form.conditional_ba,
-    conditional_tara: dict.verb_form.conditional_tara,
-  };
-
-  const adjLabels: Record<string, string> = {
-    polite: dict.adj_form.polite,
-    negative_plain: dict.adj_form.negative_plain,
-    negative_polite: dict.adj_form.negative_polite,
-    past_plain: dict.adj_form.past_plain,
-    past_polite: dict.adj_form.past_polite,
-    past_negative_plain: dict.adj_form.past_negative_plain,
-    past_negative_polite: dict.adj_form.past_negative_polite,
-    te_form: dict.adj_form.te_form,
-    conditional_ba: dict.adj_form.conditional_ba,
-    conditional_tara: dict.adj_form.conditional_tara,
-  };
-
-  if (wordType === 'verb') {
-    return verbLabels[type] || type;
-  } else {
-    return adjLabels[type] || type;
-  }
-};
 
 const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>

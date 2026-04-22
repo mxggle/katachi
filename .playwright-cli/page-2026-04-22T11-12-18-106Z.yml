@@ -1,0 +1,38 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e72] [cursor=pointer]:
+    - img [ref=e73]
+  - alert [ref=e76]
+  - main [ref=e77]:
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - img "Katachi Logo" [ref=e80]
+        - heading "Master conjugations." [level=1] [ref=e81]
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - generic [ref=e86]:
+            - generic [ref=e87]: Streak
+            - generic [ref=e88]:
+              - generic [ref=e89]: "0"
+              - generic [ref=e90]: days
+          - generic [ref=e92]:
+            - generic [ref=e93]: Goal
+            - generic [ref=e94]:
+              - generic [ref=e95]: "10"
+              - generic [ref=e96]: prompts
+        - button "Start Practice" [ref=e97] [cursor=pointer]:
+          - generic [ref=e98]: Start Practice
+          - img [ref=e99]
+        - paragraph [ref=e101]: "Currently practicing: Daily practice • N5 • verbs, i-adjectives, na-adjectives • 4 forms • multiple choice • 10 questions"
+      - generic [ref=e104]:
+        - generic [ref=e105]:
+          - heading "Setup Options" [level=3] [ref=e106]
+          - paragraph [ref=e107]: Tweak the forms and modes for your session.
+        - button "Show Options" [ref=e108] [cursor=pointer]
+      - generic [ref=e109]:
+        - link "View Progress" [ref=e110] [cursor=pointer]:
+          - /url: /progress
+        - generic [ref=e111]:
+          - generic [ref=e112]: Language
+          - generic [ref=e113]:
+            - button "English" [ref=e114] [cursor=pointer]
+            - button "中文" [ref=e115] [cursor=pointer]

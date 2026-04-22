@@ -1,0 +1,67 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - paragraph [ref=e6]: View Progress
+          - heading "See where your weak spots are." [level=1] [ref=e7]
+          - paragraph [ref=e8]: Track the forms that keep slipping, then jump straight into focused drills.
+        - link "Back to Home" [ref=e9] [cursor=pointer]:
+          - /url: /
+      - generic [ref=e10]:
+        - heading "Overview" [level=2] [ref=e11]
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - paragraph [ref=e14]: Answered
+            - paragraph [ref=e15]: "0"
+            - paragraph [ref=e16]: Total questions completed.
+          - generic [ref=e17]:
+            - paragraph [ref=e18]: Accuracy
+            - paragraph [ref=e19]: 0%
+            - paragraph [ref=e20]: Across all saved sessions.
+          - generic [ref=e21]:
+            - paragraph [ref=e22]: Daily streak
+            - paragraph [ref=e23]: "0"
+            - paragraph [ref=e24]: Practice on consecutive days.
+          - generic [ref=e25]:
+            - paragraph [ref=e26]: Studied today
+            - paragraph [ref=e27]: "0"
+            - paragraph [ref=e28]: Questions answered today.
+      - generic [ref=e29]:
+        - heading "Weakest Conjugations" [level=2] [ref=e31]
+        - heading "Weakest Items" [level=2] [ref=e33]
+        - heading "Mode Comparison" [level=2] [ref=e35]
+      - generic [ref=e36]:
+        - heading "Recent Activity" [level=2] [ref=e37]
+        - generic [ref=e38]:
+          - generic [ref=e39]:
+            - generic [ref=e40]: 2026-04-16
+            - generic [ref=e41]: 0 answered
+            - generic [ref=e42]: 0 correct
+          - generic [ref=e43]:
+            - generic [ref=e44]: 2026-04-17
+            - generic [ref=e45]: 0 answered
+            - generic [ref=e46]: 0 correct
+          - generic [ref=e47]:
+            - generic [ref=e48]: 2026-04-18
+            - generic [ref=e49]: 0 answered
+            - generic [ref=e50]: 0 correct
+          - generic [ref=e51]:
+            - generic [ref=e52]: 2026-04-19
+            - generic [ref=e53]: 0 answered
+            - generic [ref=e54]: 0 correct
+          - generic [ref=e55]:
+            - generic [ref=e56]: 2026-04-20
+            - generic [ref=e57]: 0 answered
+            - generic [ref=e58]: 0 correct
+          - generic [ref=e59]:
+            - generic [ref=e60]: 2026-04-21
+            - generic [ref=e61]: 0 answered
+            - generic [ref=e62]: 0 correct
+          - generic [ref=e63]:
+            - generic [ref=e64]: 2026-04-22
+            - generic [ref=e65]: 0 answered
+            - generic [ref=e66]: 0 correct
+  - button "Open Next.js Dev Tools" [ref=e72] [cursor=pointer]:
+    - img [ref=e73]
+  - alert [ref=e76]

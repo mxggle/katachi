@@ -1,0 +1,95 @@
+<h2>Progress Page Direction</h2>
+<p class="subtitle">Same visual language as the homepage, but with a tighter focus on what the learner should practice next.</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">A. Balanced Dashboard</div>
+        <div class="mockup-body">
+          <div class="label">Top row</div>
+          <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-bottom:12px;">
+            <div class="placeholder" style="min-height:110px;">Hero header + back button</div>
+            <div class="placeholder" style="min-height:110px;">Overview cards</div>
+          </div>
+          <div class="label">Main row</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div class="placeholder" style="min-height:190px;">Weak conjugations</div>
+            <div class="placeholder" style="min-height:190px;">Weak words</div>
+          </div>
+          <div class="placeholder" style="min-height:90px;">Recent activity</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Balanced Dashboard</h3>
+      <p>Keeps overview visible, but no longer lets it dominate the page.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">B. Weakness First</div>
+        <div class="mockup-body">
+          <div class="label">Top row</div>
+          <div style="display:grid;grid-template-columns:1.4fr .6fr;gap:12px;margin-bottom:12px;">
+            <div class="placeholder" style="min-height:110px;">Hero header + back button + short guidance</div>
+            <div class="placeholder" style="min-height:110px;">Compact overview stack</div>
+          </div>
+          <div class="label">Priority section</div>
+          <div class="placeholder" style="min-height:90px;margin-bottom:12px;">Practice next spotlight</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div class="placeholder" style="min-height:190px;">Weak conjugations</div>
+            <div class="placeholder" style="min-height:190px;">Weak words</div>
+          </div>
+          <div class="placeholder" style="min-height:80px;">Mode comparison / recent activity collapsed lower</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Weakness First</h3>
+      <p>Most aligned with your feedback. Overview becomes support info, and the page starts with where to drill next.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">C. Practice Queue</div>
+        <div class="mockup-body">
+          <div class="label">Top row</div>
+          <div class="placeholder" style="min-height:110px;margin-bottom:12px;">Hero header + back button + one CTA</div>
+          <div class="label">Main stack</div>
+          <div class="placeholder" style="min-height:100px;margin-bottom:12px;">Top 3 drills queue</div>
+          <div class="placeholder" style="min-height:160px;margin-bottom:12px;">Weak words</div>
+          <div class="placeholder" style="min-height:160px;margin-bottom:12px;">Weak conjugations</div>
+          <div class="placeholder" style="min-height:70px;">Tiny overview strip</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Practice Queue</h3>
+      <p>Most action-oriented, but it changes the page concept more aggressively than the current implementation.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>Recommendation</h4>
+      <ul>
+        <li>Choose <strong>B. Weakness First</strong> if the goal is to keep the existing page but fix hierarchy and consistency.</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>What changes with B</h4>
+      <ul>
+        <li>Back button style matches homepage action pills.</li>
+        <li>Overview shrinks into a compact side module.</li>
+        <li>Weakness and drill actions become the visual focal point.</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+- generic [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e46] [cursor=pointer]:
+    - img [ref=e47]
+  - alert [ref=e50]
+  - main [ref=e116]:
+    - generic [ref=e117]:
+      - generic [ref=e118]:
+        - img "Katachi Logo" [ref=e119]
+        - heading "掌握日语变形" [level=1] [ref=e155]
+      - generic [ref=e123]:
+        - generic [ref=e124]:
+          - generic [ref=e125]:
+            - generic [ref=e126]: 连续天数
+            - generic [ref=e127]:
+              - generic [ref=e128]: "0"
+              - generic [ref=e129]: 天
+          - generic [ref=e131]:
+            - generic [ref=e132]: 目标
+            - generic [ref=e133]:
+              - generic [ref=e134]: "10"
+              - generic [ref=e135]: 题
+        - button "开始练习" [ref=e156] [cursor=pointer]:
+          - generic [ref=e137]: 开始练习
+          - img [ref=e138]
+        - paragraph [ref=e140]: 当前练习： 每日练习 • N5 • 动词, い形容词, な形容词 • 4种形式 • 选择题 • 10 题
+      - generic [ref=e143]:
+        - generic [ref=e144]:
+          - heading "练习设置" [level=3] [ref=e157]
+          - paragraph [ref=e146]: 调整本次练习的形式和模式。
+        - button "显示选项" [ref=e158] [cursor=pointer]
+      - generic [ref=e148]:
+        - link "查看进度" [ref=e159] [cursor=pointer]:
+          - /url: /progress
+        - generic [ref=e150]:
+          - generic [ref=e151]: 语言
+          - generic [ref=e152]:
+            - button "English" [ref=e153] [cursor=pointer]
+            - button "中文" [active] [ref=e154] [cursor=pointer]

@@ -10,6 +10,7 @@ describe('homepage entry layout', () => {
     expect(pageSource).toContain("t('startPractice')");
     expect(pageSource).toContain("t('currentlyPracticing')");
     expect(pageSource).toContain("t('streak')");
+    expect(pageSource).toContain("t('viewProgress')");
   });
 
   it('removes the placeholder header slot in favor of learning-focused support content', () => {
