@@ -99,6 +99,28 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
+
+              <Link
+                href="/progress"
+                className="flex w-full flex-col gap-4 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent-soft)] px-5 py-5 text-left shadow-[5px_5px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_var(--ink)] sm:flex-row sm:items-center sm:justify-between sm:px-6"
+              >
+                <div className="space-y-1">
+                  <p className="text-xs font-black uppercase tracking-[0.24em] text-[color:var(--muted)]">
+                    {t('itemsStudied')}
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl font-black tracking-tight text-[color:var(--ink)]">
+                      {studyState.learnerSummary.totalAnswered}
+                    </span>
+                    <span className="text-sm font-semibold text-[color:var(--muted)]">
+                      {t('totalAnswered')}
+                    </span>
+                  </div>
+                </div>
+                <span className="inline-flex min-h-11 items-center justify-center rounded-full border-[2px] border-[color:var(--ink)] bg-white px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all sm:shrink-0">
+                  {t('viewProgress')}
+                </span>
+              </Link>
               
               <p className="text-sm font-medium text-[color:var(--muted)] text-center max-w-md">
                 {t('currentlyPracticing')} <span className="font-bold text-[color:var(--ink)]">{setupSummary}</span>
@@ -112,12 +134,6 @@ export default function Home() {
         </section>
 
         <div className="flex flex-col items-center gap-4 animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
-          <Link
-            href="/progress"
-            className="inline-flex items-center rounded-full border-[2px] border-[color:var(--ink)] bg-white px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)]"
-          >
-            {t('viewProgress')}
-          </Link>
           <LanguageSwitcher />
         </div>
       </div>
