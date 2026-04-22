@@ -42,7 +42,7 @@ export function getConjugationLabel(
     return dict.verb_form[type] ?? (language === 'zh' ? '变形练习' : 'Conjugation practice');
   }
 
-  return dict.adj_form[type] ?? (language === 'zh' ? '变形练习' : 'Conjugation practice');
+  return (dict.adj_form as Record<string, string>)[type] ?? (language === 'zh' ? '变形练习' : 'Conjugation practice');
 }
 
 export function getWeakPointLabel(

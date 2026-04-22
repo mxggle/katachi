@@ -21,6 +21,13 @@ export interface LandingCopy {
       description: string;
     }>;
   };
+  modes: {
+    heading: string;
+    items: Array<{
+      title: string;
+      description: string;
+    }>;
+  };
   coverage: {
     heading: string;
     verbs: {
@@ -31,6 +38,11 @@ export interface LandingCopy {
       label: string;
       list: string;
     };
+  };
+  whyN3: {
+    heading: string;
+    body1: string;
+    body2: string;
   };
   finalCta: {
     heading: string;
@@ -85,6 +97,23 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
         },
       ],
     },
+    modes: {
+      heading: 'Three ways to practice',
+      items: [
+        {
+          title: 'Daily Drill',
+          description: 'A curated session generated automatically every day. Just open the app and go — no decisions needed.',
+        },
+        {
+          title: 'Weakness Training',
+          description: 'Katachi analyzes your mistakes and builds sessions that target your weakest forms. te-form trouble? You will get more te-form until it clicks.',
+        },
+        {
+          title: 'Free Practice',
+          description: 'Full control. Pick any level, word type, and conjugation form combination. Perfect for drilling a specific grammar point before a test.',
+        },
+      ],
+    },
     coverage: {
       heading: 'Every form you need for N5 & N4',
       verbs: {
@@ -95,6 +124,11 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
         label: 'Adjectives',
         list: 'i-adjective & na-adjective forms for polite, negative, past, and conditional',
       },
+    },
+    whyN3: {
+      heading: 'Why stop at N3?',
+      body1: 'Katachi covers N5 through N3, but that is not because N2 and N1 are unimportant. It is the opposite — once you drill the fundamental conjugation patterns into muscle memory, advanced vocabulary is just a different stem with the same rules.',
+      body2: 'This is not a vocabulary app. It is a conjugation drill tool. You do not need to memorize ten thousand words to master conjugation. You need repetition on the patterns until they become automatic, regardless of the word.',
     },
     finalCta: {
       heading: 'Ready to make conjugations automatic?',
@@ -145,6 +179,23 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
         },
       ],
     },
+    modes: {
+      heading: '三种练习方式',
+      items: [
+        {
+          title: '每日练习',
+          description: '每天自动生成一套精选题目。打开应用直接开始——无需任何选择。',
+        },
+        {
+          title: '弱点训练',
+          description: 'Katachi 分析你的错误记录，针对你最薄弱的变形形式进行强化。て形总出错？系统会一直推送て形，直到你掌握为止。',
+        },
+        {
+          title: '自由练习',
+          description: '完全自定义。自由选择等级、词性和变形形式的任意组合。考前突击某个语法点的最佳选择。',
+        },
+      ],
+    },
     coverage: {
       heading: '覆盖 N5 & N4 全部核心变形',
       verbs: {
@@ -155,6 +206,11 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
         label: '形容词',
         list: 'い形容词与な形容词的丁宁形、否定形、过去形、条件形',
       },
+    },
+    whyN3: {
+      heading: '为什么只到 N3？',
+      body1: 'Katachi 覆盖 N5 到 N3 的核心变形，但这不是因为 N2、N1 不重要。恰恰相反——一旦你把基础变形练到本能反应，高级词汇的变形只是换了一个词干，规则是完全一样的。',
+      body2: '这不是一个背单词的软件，它是一个练变形的工具。你不需要背一万个单词才能掌握变形。你需要的是对规则进行反复训练，直到它们成为本能，无论遇到什么词都能立刻反应。',
     },
     finalCta: {
       heading: '让变形成为你的本能',

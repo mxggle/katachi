@@ -162,6 +162,28 @@ export default async function LandingPage({ searchParams }: PageProps) {
             </div>
           </section>
 
+          {/* Modes Section */}
+          <section className="w-full animate-fade-in [animation-delay:175ms] opacity-0 [animation-fill-mode:forwards]">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[color:var(--ink)] text-center mb-8">
+              {copy.modes.heading}
+            </h2>
+            <div className="grid gap-6">
+              {copy.modes.items.map((item, index) => (
+                <div
+                  key={index}
+                  className="rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-white p-6 sm:p-8 shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)]"
+                >
+                  <h3 className="text-lg font-bold text-[color:var(--ink)] mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm font-medium text-[color:var(--muted)] leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* Coverage Section */}
           <section className="w-full animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
             <div className="rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-8 sm:p-10 shadow-[8px_8px_0px_0px_var(--ink)] space-y-6">
@@ -187,6 +209,21 @@ export default async function LandingPage({ searchParams }: PageProps) {
                   </p>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Why N3 Section */}
+          <section className="w-full animate-fade-in [animation-delay:225ms] opacity-0 [animation-fill-mode:forwards]">
+            <div className="rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-8 sm:p-10 shadow-[8px_8px_0px_0px_var(--ink)] space-y-6">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[color:var(--ink)]">
+                {copy.whyN3.heading}
+              </h2>
+              <p className="text-base sm:text-lg font-medium text-[color:var(--muted)] leading-relaxed">
+                {copy.whyN3.body1}
+              </p>
+              <p className="text-base sm:text-lg font-medium text-[color:var(--muted)] leading-relaxed">
+                {copy.whyN3.body2}
+              </p>
             </div>
           </section>
 

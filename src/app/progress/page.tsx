@@ -12,6 +12,7 @@ import { getConjugationLabel, getPracticeModeLabel, getWordDisplayText } from '@
 import { useTranslation } from '@/lib/i18n';
 import { buildPracticeSession } from '@/lib/sessionBuilder';
 import { useStore } from '@/lib/store';
+import type { ConjugationType } from '@/lib/distractorEngine';
 import {
   getModeBreakdown,
   getOverviewStats,
@@ -117,7 +118,7 @@ export default function ProgressPage() {
                   <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                       <p className="text-2xl font-black tracking-tight">
-                        {getConjugationLabel(focusConjugation.conjugationType, 'verb', language)}
+                        {getConjugationLabel(focusConjugation.conjugationType as ConjugationType, 'verb', language)}
                       </p>
                       <p className="mt-1 text-sm font-medium text-white/85">{focusConjugation.accuracy}% {t('accuracy').toLowerCase()}</p>
                       <p className="mt-3 text-sm font-medium text-white/85">{t('practiceNextDescription')}</p>

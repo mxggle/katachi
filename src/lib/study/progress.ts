@@ -1,3 +1,4 @@
+import type { ConjugationType } from '@/lib/distractorEngine';
 import { calculateWeaknessScore } from '@/lib/study/scoring';
 import type { PracticeMode, StudyState } from '@/lib/study/types';
 
@@ -17,7 +18,7 @@ export function getOverviewStats(studyState: StudyState, today = new Date().toIS
 }
 
 export function getWeakestConjugations(studyState: StudyState, limit = 5) {
-  const grouped = new Map<string, { answered: number; correct: number; wrong: number }>();
+  const grouped = new Map<ConjugationType, { answered: number; correct: number; wrong: number }>();
 
   for (const item of Object.values(studyState.unitProgress)) {
     const current = grouped.get(item.conjugationType) ?? { answered: 0, correct: 0, wrong: 0 };
