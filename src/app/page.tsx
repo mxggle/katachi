@@ -52,12 +52,12 @@ export default function Home() {
       <div className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col items-center justify-center gap-10 px-4 py-12 sm:px-6 lg:px-8">
         
         <header className="w-full text-center space-y-6 animate-fade-in flex flex-col items-center">
-          <Logo size={120} showText={true} className="text-[color:var(--ink)]" />
+          <Logo size={120} className="text-[color:var(--ink)]" />
           
-          <h1 className="text-6xl font-bold tracking-tight text-[color:var(--ink)] sm:text-[5.5rem] leading-[1.1]">
+          <h1 className="text-4xl font-bold tracking-tight text-[color:var(--ink)] sm:text-7xl leading-[1.1]">
             {t('heroTitleLine2') ? (
               <>
-                {t('heroTitleLine1')}<br />{t('heroTitleLine2')}
+                {t('heroTitleLine1')} {t('heroTitleLine2')}
               </>
             ) : (
               t('heroTitleLine1')

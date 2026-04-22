@@ -164,34 +164,34 @@ export default function PracticeSession() {
 
     if (isFinished) {
         return (
-            <div className="min-h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-6 sm:p-8 animate-fade-in relative overflow-hidden">
+            <div className="h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-4 sm:p-8 animate-fade-in relative overflow-hidden">
                 <div className="blob-bg" />
-                <div className="w-full max-w-md relative z-10 space-y-8">
-                    <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-8 shadow-[12px_12px_0px_0px_var(--ink)] text-center space-y-6 flex flex-col items-center">
-                        <Logo size={140} showText={true} className="text-[color:var(--ink)] mb-2" />
+                <div className="w-full max-w-md relative z-10">
+                    <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-6 sm:p-8 shadow-[8px_8px_0px_0px_var(--ink)] text-center space-y-6 flex flex-col items-center">
+                        <Logo size={100} className="text-[color:var(--ink)]" />
                         
-                        <div className="inline-flex items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-2 shadow-[4px_4px_0px_0px_var(--ink)]">
-                            <span className="text-xl font-bold uppercase tracking-widest">{message}</span>
+                        <div className="inline-flex items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-1.5 shadow-[4px_4px_0px_0px_var(--ink)]">
+                            <span className="text-lg font-bold uppercase tracking-widest">{message}</span>
                         </div>
 
-                        <div className="space-y-2">
-                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('sessionSummary')}</p>
-                            <div className="flex justify-center gap-8">
+                        <div className="space-y-1 w-full">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('sessionSummary')}</p>
+                            <div className="flex justify-center gap-6">
                                 <div className="text-center">
-                                    <div className="text-5xl font-black text-[color:var(--accent)]">{pct}%</div>
-                                    <div className="text-[10px] font-bold uppercase text-[color:var(--muted)] mt-1">{t('score')}</div>
+                                    <div className="text-4xl font-black text-[color:var(--accent)]">{pct}%</div>
+                                    <div className="text-[9px] font-bold uppercase text-[color:var(--muted)] mt-0.5">{t('score')}</div>
                                 </div>
-                                <div className="w-[2px] bg-[color:var(--ink)] opacity-20" />
+                                <div className="w-[1.5px] bg-[color:var(--ink)] opacity-10" />
                                 <div className="text-center">
-                                    <div className="text-5xl font-black text-[color:var(--ink)]">{activeSession.sessionStreak}</div>
-                                    <div className="text-[10px] font-bold uppercase text-[color:var(--muted)] mt-1">{t('streak')}</div>
+                                    <div className="text-4xl font-black text-[color:var(--ink)]">{activeSession.sessionStreak}</div>
+                                    <div className="text-[9px] font-bold uppercase text-[color:var(--muted)] mt-0.5">{t('streak')}</div>
                                 </div>
                             </div>
                         </div>
 
                         <button
                             onClick={endSession}
-                            className="w-full py-5 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-2xl font-bold text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none"
+                            className="w-full py-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-xl font-bold text-white shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
                         >
                             {t('backToHome')}
                         </button>
@@ -202,126 +202,128 @@ export default function PracticeSession() {
     }
 
     return (
-        <div className="min-h-dvh bg-[color:var(--bg)] flex flex-col p-4 sm:p-6 lg:p-8 animate-fade-in relative overflow-hidden">
+        <div className="h-dvh bg-[color:var(--bg)] flex flex-col p-3 sm:p-6 animate-fade-in relative overflow-hidden">
             <div className="blob-bg" />
             
-            <div className="mx-auto w-full max-w-2xl flex flex-col flex-1 relative z-10 gap-6">
+            <div className="mx-auto w-full max-w-2xl flex flex-col h-full relative z-10 gap-3">
                 
-                {/* Session Header */}
-                <div className="flex items-center justify-between gap-4">
+                {/* Compact Session Header */}
+                <div className="flex items-center gap-3">
                     <button
                         onClick={() => setShowConfirm(true)}
-                        className="flex items-center justify-center w-12 h-12 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white shadow-[4px_4px_0px_0px_var(--ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
+                        className="flex items-center justify-center w-10 h-10 rounded-xl border-[2px] border-[color:var(--ink)] bg-white shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
                     >
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
 
-                    <div className="flex-1 flex items-center gap-4">
-                        <Logo size={32} withContainer={true} className="text-[color:var(--ink)] shrink-0" />
-                        <div className="flex-1 h-6 rounded-full border-[3px] border-[color:var(--ink)] bg-white shadow-[4px_4px_0px_0px_var(--ink)] overflow-hidden relative">
-                            <div
-                                className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[3px] border-[color:var(--ink)] transition-all duration-300"
-                                style={{ width: `${progress}%` }}
-                            />
-                        </div>
+                    <div className="flex-1 h-4 rounded-full border-[2px] border-[color:var(--ink)] bg-white shadow-[2px_2px_0px_0px_var(--ink)] overflow-hidden relative">
+                        <div
+                            className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[2px] border-[color:var(--ink)] transition-all duration-300"
+                            style={{ width: `${progress}%` }}
+                        />
                     </div>
 
-                    <div className="inline-flex items-center px-4 h-12 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] shadow-[4px_4px_0px_0px_var(--ink)] font-bold text-sm">
+                    <div className="inline-flex items-center px-3 h-10 rounded-xl border-[2px] border-[color:var(--ink)] bg-[#fde68a] shadow-[2px_2px_0px_0px_var(--ink)] font-bold text-xs">
                         {currentIdx + 1}/{totalWords}
                     </div>
                 </div>
 
-                {/* Main Card */}
-                <div className="flex-1 flex flex-col rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-6 sm:p-10 shadow-[8px_8px_0px_0px_var(--ink)]">
-                    <div className="flex items-start justify-between">
-                        <div className="flex gap-2">
+                {/* Main Card - Reduced padding and optimized spacing */}
+                <div className="flex-1 flex flex-col rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-4 sm:p-8 shadow-[4px_4px_0px_0px_var(--ink)] min-h-0">
+                    <div className="flex items-center justify-between gap-2 shrink-0">
+                        <div className="flex gap-1.5 overflow-hidden">
                             {word?.is_common && (
-                                <span className="px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-[#fde68a] text-[10px] font-bold uppercase tracking-wider">{t('common')}</span>
+                                <span className="px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-[#fde68a] text-[9px] font-bold uppercase tracking-wider truncate">{t('common')}</span>
                             )}
                             {word?.jlpt && (
-                                <span className="px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-white text-[10px] font-bold uppercase tracking-wider">{word.jlpt}</span>
+                                <span className="px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-white text-[9px] font-bold uppercase tracking-wider shrink-0">{word.jlpt}</span>
                             )}
                         </div>
-                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-[color:var(--accent-soft)]">
-                            <span className="text-sm">🔥</span>
-                            <span className="text-sm font-bold text-[color:var(--accent)]">{activeSession.sessionStreak}</span>
+                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-[color:var(--accent-soft)] shrink-0">
+                            <span className="text-xs">🔥</span>
+                            <span className="text-xs font-bold text-[color:var(--accent)]">{activeSession.sessionStreak}</span>
                         </div>
                     </div>
 
-                    <div className="flex-1 flex flex-col items-center justify-center text-center py-8">
-                        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--muted)] mb-4">{word?.meaning || '---'}</p>
+                    <div className="flex-1 flex flex-col items-center justify-center text-center py-2 min-h-0">
+                        <p className="text-[10px] sm:text-sm font-bold uppercase tracking-[0.15em] text-[color:var(--muted)] mb-1 sm:mb-2 line-clamp-2 px-4">{word?.meaning || '---'}</p>
                         
-                        <div className="relative group">
-                            <h2 className="text-6xl sm:text-7xl font-bold tracking-tight text-[color:var(--ink)] mb-2">
+                        <div className="flex items-center justify-center w-full gap-3 px-4">
+                            <h2 className="text-4xl sm:text-6xl font-bold tracking-tight text-[color:var(--ink)] break-all leading-tight">
                                 {word?.dictionary_form.kanji || '---'}
                             </h2>
                             <button
                                 onClick={() => playAudio(word?.dictionary_form.kanji || '')}
-                                className="absolute -right-16 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-[3px] border-[color:var(--ink)] bg-[#fde68a] flex items-center justify-center shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+                                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] flex items-center justify-center shadow-[2.5px_2.5px_0px_0px_var(--ink)] active:translate-x-[1.5px] active:translate-y-[1.5px] active:shadow-none transition-all shrink-0"
                             >
-                                <SpeakerIcon className="w-6 h-6" />
+                                <SpeakerIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                             </button>
                         </div>
-                        <p className="text-2xl font-bold text-[color:var(--muted)]">{word?.dictionary_form.kana}</p>
+                        <p className="text-lg sm:text-xl font-bold text-[color:var(--muted)] mt-0.5 sm:mt-1">{word?.dictionary_form.kana}</p>
 
-                        <div className="mt-10 flex flex-col items-center gap-3">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[color:var(--muted)]">{t('question')}</span>
-                            <div className="px-6 py-2 rounded-xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] shadow-[4px_4px_0px_0px_var(--ink)] text-lg font-bold">
+                        <div className="mt-4 sm:mt-6 flex flex-col items-center gap-1.5 shrink-0">
+                            <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('question')}</span>
+                            <div className="px-4 py-1.5 rounded-lg border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] shadow-[3px_3px_0px_0px_var(--ink)] text-sm sm:text-lg font-black">
                                 {type && word ? getConjugationLabel(type, word.word_type, language) : '---'}
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-auto pt-6">
+                    {/* Action Area - Responsive layout for different counts/modes */}
+                    <div className="mt-auto pt-4 shrink-0">
                         {config.mode === 'choice' ? (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {choices.map((choice, i) => {
-                                    let variantClasses = "bg-white text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none";
-                                    
-                                    if (showFeedback) {
-                                        if (choice === correctAnswer) {
-                                            variantClasses = "bg-[color:var(--primary-green)] text-white shadow-[4px_4px_0px_0px_var(--ink)]";
-                                        } else if (choice === lastSelected) {
-                                            variantClasses = "bg-[color:var(--accent)] text-white shadow-[4px_4px_0px_0px_var(--ink)]";
+                            <div className="flex flex-col gap-2.5">
+                                <div className={`grid gap-2 sm:gap-3 ${choices.length > 4 || choices.some(c => c.length > 8) ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                                    {choices.map((choice, i) => {
+                                        let variantClasses = "bg-white text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none";
+                                        
+                                        if (showFeedback) {
+                                            if (choice === correctAnswer) {
+                                                variantClasses = "bg-[color:var(--primary-green)] text-white shadow-[2px_2px_0px_0px_var(--ink)] scale-[0.98]";
+                                            } else if (choice === lastSelected) {
+                                                variantClasses = "bg-[color:var(--accent)] text-white shadow-[2px_2px_0px_0px_var(--ink)] scale-[0.98]";
+                                            } else {
+                                                variantClasses = "bg-white text-[color:var(--ink)] opacity-30 border-dashed shadow-none translate-x-0 translate-y-0 grayscale";
+                                            }
                                         } else {
-                                            variantClasses = "bg-white text-[color:var(--ink)] opacity-50 border-dashed shadow-none translate-x-0 translate-y-0";
+                                            variantClasses += " hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)]";
                                         }
-                                    }
 
-                                    return (
-                                        <button
-                                            key={i}
-                                            disabled={showFeedback}
-                                            onClick={() => handleChoice(choice)}
-                                            className={`group relative p-4 min-h-[4rem] rounded-2xl border-[3px] border-[color:var(--ink)] font-bold text-lg transition-all flex items-center justify-center text-center ${variantClasses}`}
-                                        >
-                                            {choice}
-                                            {showFeedback && choice === correctAnswer && (
-                                                <div className="absolute right-4">
-                                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                    </svg>
-                                                </div>
-                                            )}
-                                        </button>
-                                    );
-                                })}
+                                        return (
+                                            <button
+                                                key={i}
+                                                disabled={showFeedback}
+                                                onClick={() => handleChoice(choice)}
+                                                className={`group relative p-2.5 min-h-[3rem] sm:min-h-[3.5rem] rounded-xl border-[2.5px] border-[color:var(--ink)] font-bold text-sm sm:text-base transition-all flex items-center justify-center text-center leading-none ${variantClasses}`}
+                                            >
+                                                <span className="whitespace-nowrap overflow-hidden text-ellipsis px-1">{choice}</span>
+                                                {showFeedback && choice === correctAnswer && (
+                                                    <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                                                        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                )}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
                                 {showFeedback && (
                                     <button
                                         onClick={handleNext}
-                                        className="sm:col-span-2 mt-4 py-5 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[color:var(--ink)] text-white text-xl font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
+                                        className="w-full py-3.5 sm:py-4 rounded-xl border-[3px] border-[color:var(--ink)] bg-[color:var(--ink)] text-white text-base sm:text-xl font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2"
                                     >
                                         <span>{t('nextQuestion')}</span>
-                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                         </svg>
                                     </button>
                                 )}
                             </div>
                         ) : (
-                            <div className="space-y-4">
+                            <div className="space-y-3">
                                 <form onSubmit={handleInputSubmit} className="relative">
                                     <input
                                         ref={inputRef}
@@ -330,40 +332,40 @@ export default function PracticeSession() {
                                         onChange={(e) => setInputValue(e.target.value)}
                                         disabled={showFeedback}
                                         placeholder={t('placeholder')}
-                                        className={`w-full text-center text-2xl font-bold p-6 rounded-2xl border-[4px] border-[color:var(--ink)] bg-white outline-none transition-all ${
+                                        className={`w-full text-center text-xl sm:text-2xl font-bold p-3.5 sm:p-5 rounded-xl border-[3px] border-[color:var(--ink)] bg-white outline-none transition-all ${
                                             showFeedback
                                                 ? isCorrect
                                                     ? 'border-[color:var(--primary-green)] bg-[color:var(--primary-green)]/10'
                                                     : 'border-[color:var(--accent)] bg-[color:var(--accent)]/10'
-                                                : 'focus:shadow-[6px_6px_0px_0px_var(--ink)]'
+                                                : 'focus:shadow-[4px_4px_0px_0px_var(--ink)]'
                                         }`}
                                         autoComplete="off"
                                     />
                                     {showFeedback && (
-                                        <div className={`mt-4 p-4 rounded-xl border-[3px] border-[color:var(--ink)] ${isCorrect ? 'bg-[color:var(--primary-green)] text-white' : 'bg-[#fde68a] text-[color:var(--ink)]'} flex items-center justify-between`}>
-                                            <div className="flex flex-col items-start">
-                                                <span className="text-[10px] font-black uppercase tracking-widest opacity-70">{t('correctAnswer')}</span>
-                                                <span className="text-xl font-bold">{correctAnswer}</span>
+                                        <div className={`mt-3 p-3 rounded-lg border-[2px] border-[color:var(--ink)] ${isCorrect ? 'bg-[color:var(--primary-green)] text-white' : 'bg-[#fde68a] text-[color:var(--ink)]'} flex items-center justify-between`}>
+                                            <div className="flex flex-col items-start overflow-hidden">
+                                                <span className="text-[8px] font-black uppercase tracking-widest opacity-70 leading-none mb-1">{t('correctAnswer')}</span>
+                                                <span className="text-base font-bold truncate w-full">{correctAnswer}</span>
                                             </div>
                                             <button 
                                                 type="button"
                                                 onClick={() => playAudio(correctAnswer)}
-                                                className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center hover:bg-black/20"
+                                                className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center shrink-0 ml-2"
                                             >
-                                                <SpeakerIcon className="w-5 h-5" />
+                                                <SpeakerIcon className="w-4 h-4" />
                                             </button>
                                         </div>
                                     )}
                                 </form>
                                 <button
                                     onClick={showFeedback ? handleNext : handleInputSubmit}
-                                    className={`w-full py-5 rounded-2xl border-[3px] border-[color:var(--ink)] font-bold text-xl shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none flex items-center justify-center gap-2 ${
+                                    className={`w-full py-3.5 sm:py-4 rounded-xl border-[3px] border-[color:var(--ink)] font-bold text-base sm:text-xl shadow-[4px_4px_0px_0px_var(--ink)] transition-all active:translate-x-[3px] active:translate-y-[3px] active:shadow-none flex items-center justify-center gap-2 ${
                                         showFeedback ? 'bg-[color:var(--ink)] text-white' : 'bg-[color:var(--accent)] text-white'
                                     }`}
                                 >
                                     <span>{showFeedback ? t('nextQuestion') : t('checkAnswer')}</span>
                                     {showFeedback && (
-                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                         </svg>
                                     )}
@@ -377,22 +379,22 @@ export default function PracticeSession() {
             {/* Confirm Modal */}
             {showConfirm && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
-                    <div className="w-full max-w-[320px] rounded-[2rem] border-[4px] border-[color:var(--ink)] bg-white p-8 space-y-6 text-center shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)]">
-                        <div className="text-5xl">😿</div>
-                        <div className="space-y-2">
-                            <h3 className="text-2xl font-black text-[color:var(--ink)]">{t('quit')}</h3>
-                            <p className="font-bold text-[color:var(--muted)] leading-tight">{t('quitMessage')}</p>
+                    <div className="w-full max-w-[280px] rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-white p-6 space-y-4 text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]">
+                        <div className="text-4xl">😿</div>
+                        <div className="space-y-1">
+                            <h3 className="text-xl font-black text-[color:var(--ink)]">{t('quit')}</h3>
+                            <p className="text-xs font-bold text-[color:var(--muted)] leading-tight">{t('quitMessage')}</p>
                         </div>
-                        <div className="grid grid-cols-1 gap-3">
+                        <div className="grid grid-cols-1 gap-2 pt-2">
                             <button
                                 onClick={endSession}
-                                className="py-4 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-white font-bold shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
+                                className="py-3 rounded-xl border-[2px] border-[color:var(--ink)] bg-[color:var(--accent)] text-white text-sm font-bold shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
                             >
                                 {t('quitSession')}
                             </button>
                             <button
                                 onClick={() => setShowConfirm(false)}
-                                className="py-4 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white text-[color:var(--ink)] font-bold active:bg-[color:var(--surface-soft)] transition-all"
+                                className="py-3 rounded-xl border-[2px] border-[color:var(--ink)] bg-white text-[color:var(--ink)] text-sm font-bold active:bg-[color:var(--surface-soft)] transition-all"
                             >
                                 {t('keepGoing')}
                             </button>
