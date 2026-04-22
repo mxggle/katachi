@@ -1,0 +1,87 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: Japanese Conjugation Practice
+        - generic [ref=e7]:
+          - heading "Katachi" [level=1] [ref=e8]
+          - paragraph [ref=e9]: Practice Japanese conjugations in short focused sets.
+          - paragraph [ref=e10]: Train the forms that actually matter, switch between recognition and recall, and keep your daily streak moving without getting lost in feature clutter.
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]:
+            - generic [ref=e14]:
+              - paragraph [ref=e15]: Quick Start
+              - generic [ref=e16]:
+                - heading "Start your first session." [level=2] [ref=e17]
+                - paragraph [ref=e18]: Choose level, form, and mode. Start in one tap.
+            - generic [ref=e19]:
+              - generic [ref=e20]: N5
+              - generic [ref=e21]: Verbs
+              - generic [ref=e22]: I-adjectives
+              - generic [ref=e23]: Na-adjectives
+              - generic [ref=e24]: Te-form
+              - generic [ref=e25]: Polite
+              - generic [ref=e26]: Negative
+              - generic [ref=e27]: Past
+              - generic [ref=e28]: Multiple choice
+              - generic [ref=e29]: 10 questions
+            - generic [ref=e30]:
+              - button "Start practice" [ref=e31] [cursor=pointer]
+              - button "Hide setup" [expanded] [ref=e32] [cursor=pointer]
+          - generic [ref=e33]:
+            - generic [ref=e34]:
+              - heading "Levels" [level=3] [ref=e36]
+              - generic [ref=e37]:
+                - button "N5" [ref=e38] [cursor=pointer]:
+                  - generic [ref=e39]: N5
+                - button "N4" [ref=e40] [cursor=pointer]:
+                  - generic [ref=e41]: N4
+            - generic [ref=e42]:
+              - heading "Word types" [level=3] [ref=e44]
+              - generic [ref=e45]:
+                - button "Verbs" [ref=e46] [cursor=pointer]:
+                  - generic [ref=e47]: Verbs
+                - button "I-adjectives" [ref=e48] [cursor=pointer]:
+                  - generic [ref=e49]: I-adjectives
+                - button "Na-adjectives" [ref=e50] [cursor=pointer]:
+                  - generic [ref=e51]: Na-adjectives
+            - generic [ref=e52]:
+              - generic [ref=e53]:
+                - heading "Conjugation forms" [level=3] [ref=e54]
+                - paragraph [ref=e55]: Choose one or more forms.
+              - generic [ref=e56]:
+                - button "Polite" [ref=e57] [cursor=pointer]:
+                  - generic [ref=e58]: Polite
+                - button "Negative" [ref=e59] [cursor=pointer]:
+                  - generic [ref=e60]: Negative
+                - button "Past" [ref=e61] [cursor=pointer]:
+                  - generic [ref=e62]: Past
+                - button "Te-form" [ref=e63] [cursor=pointer]:
+                  - generic [ref=e64]: Te-form
+            - generic [ref=e65]:
+              - generic [ref=e66]:
+                - generic [ref=e67]:
+                  - heading "Practice mode" [level=3] [ref=e68]
+                  - paragraph [ref=e69]: Recognition or recall.
+                - generic [ref=e70]:
+                  - button "Multiple choice" [ref=e71] [cursor=pointer]:
+                    - generic [ref=e72]: Multiple choice
+                  - button "Typing" [ref=e73] [cursor=pointer]:
+                    - generic [ref=e74]: Typing
+              - generic [ref=e75]:
+                - heading "Question count" [level=3] [ref=e77]
+                - generic [ref=e78]:
+                  - button "10 questions" [ref=e79] [cursor=pointer]:
+                    - generic [ref=e80]: 10 questions
+                  - button "20 questions" [ref=e81] [cursor=pointer]:
+                    - generic [ref=e82]: 20 questions
+                  - button "30 questions" [ref=e83] [cursor=pointer]:
+                    - generic [ref=e84]: 30 questions
+        - generic [ref=e85]:
+          - generic [ref=e86]:
+            - paragraph [ref=e87]: Progress Snapshot
+            - heading "Keep the streak alive with short daily reps." [level=2] [ref=e88]
+          - paragraph [ref=e90]: No progress yet. Your stats will appear after the first session.
+  - button "Open Next.js Dev Tools" [ref=e96] [cursor=pointer]:
+    - img [ref=e97]

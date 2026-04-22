@@ -1,0 +1,32 @@
+- generic [ref=e1]:
+  - generic [ref=e126] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e127]:
+      - img [ref=e128]
+    - generic [ref=e131]:
+      - button "Open issues overlay" [ref=e132]:
+        - generic [ref=e133]:
+          - generic [ref=e134]: "0"
+          - generic [ref=e135]: "1"
+        - generic [ref=e136]: Issue
+      - button "Collapse issues badge" [ref=e137]:
+        - img [ref=e138]
+  - main [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - button "🎯 Practice" [ref=e5]:
+          - generic [ref=e7]: 🎯
+          - generic [ref=e8]: Practice
+        - button "📖 Dict." [ref=e9]:
+          - generic [ref=e10]: 📖
+          - generic [ref=e11]: Dict.
+        - button "🧑‍🎨 Profile" [active] [ref=e12]:
+          - generic [ref=e13]: 🧑‍🎨
+          - generic [ref=e14]: Profile
+        - button "⚙️ Settings" [ref=e15]:
+          - generic [ref=e16]: ⚙️
+          - generic [ref=e17]: Settings
+    - generic [ref=e141]:
+      - generic [ref=e142]: 📭
+      - heading "No Data Yet" [level=2] [ref=e143]
+      - paragraph [ref=e144]: Complete a session to see your stats.
+  - alert [ref=e121]

@@ -14,7 +14,9 @@
       "Bash(for level in n5 n4 n3)",
       "Bash(do echo \"=== JLPT $level ===\" for page in 1 2 3 4 5)",
       "Bash(do curl -s \"https://jisho.org/api/v1/search/words?keyword=%23jlpt-$level&page=$page\")",
-      "Bash(python3 generate_dictionary_jisho.py)"
+      "Bash(python3 generate_dictionary_jisho.py)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

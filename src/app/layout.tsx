@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import AuthProvider from '@/components/AuthProvider'
 
 const font = Outfit({
   variable: "--font-outfit",
@@ -11,7 +10,7 @@ const font = Outfit({
 
 export const metadata: Metadata = {
   title: "Katachi",
-  description: "Master Japanese Conjugations in style",
+  description: "Practice Japanese conjugations in focused daily sessions.",
 };
 
 export const viewport: Viewport = {
@@ -28,11 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${font.variable} antialiased`}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
+      <body className={`${font.variable} antialiased`}>{children}</body>
     </html>
   );
 }

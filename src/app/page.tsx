@@ -1,90 +1,110 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import SetupMenu from '@/components/SetupMenu';
 import PracticeSession from '@/components/PracticeSession';
-import ReportDashboard from '@/components/ReportDashboard';
+import { buildSetupSummary } from '@/components/setupMenu.helpers';
+import { buildPracticeSession } from '@/lib/sessionBuilder';
 import { useStore } from '@/lib/store';
-import { useAuth } from '@/components/AuthProvider';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'practice' | 'report'>('practice');
-  const { activeSession, dailyStreak, checkDailyStreak } = useStore();
-  const { isLoading } = useAuth();
-  const authError = typeof window !== 'undefined'
-    ? new URLSearchParams(window.location.search).get('error')
-    : null;
+  const { activeSession, checkDailyStreak, config, dailyStreak, startSession } = useStore();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     checkDailyStreak();
   }, [checkDailyStreak]);
 
+  const setupSummary = useMemo(() => buildSetupSummary(config), [config]);
+
+  const handleStart = () => {
+    const result = buildPracticeSession(config);
+
+    if ('error' in result) {
+      setError(result.error);
+      return;
+    }
+
+    setError(null);
+    startSession(result.words);
+  };
+
+  if (activeSession) {
+    return (
+      <main className="min-h-dvh bg-[color:var(--bg)]">
+        <PracticeSession />
+      </main>
+    );
+  }
+
   return (
-    <main
-      className="min-h-dvh relative overflow-x-hidden font-bold"
-      style={{ paddingBottom: activeSession ? '0' : 'calc(6rem + env(safe-area-inset-bottom, 0px))' }}
-    >
-      {authError === 'auth_failed' && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-red-500 text-white text-xs font-bold px-4 py-2 rounded-2xl shadow-lg">
-          Sign in failed. Please try again.
-        </div>
-      )}
-
-      {!activeSession && (
-        <nav
-          className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-[#e8eedd] pt-2 px-4 shadow-[0_-8px_30px_rgba(154,205,50,0.06)]"
-          style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 16px)' }}
-        >
-          <div className="max-w-sm mx-auto flex justify-between items-center">
-            {isLoading ? (
-              <>
-                {[0, 1, 2, 3].map(i => (
-                  <div key={i} className="flex flex-col items-center gap-1.5 min-w-[72px] min-h-[56px] px-2 py-2">
-                    <div className="w-7 h-7 rounded-full bg-[#e8eedd] animate-pulse" />
-                    <div className="w-10 h-2 rounded-full bg-[#e8eedd] animate-pulse" />
-                  </div>
-                ))}
-              </>
-            ) : (
-              <>
-                <NavButton active={activeTab === 'practice'} onClick={() => setActiveTab('practice')} label="Practice" icon="🎯" />
-                <NavButton active={false} onClick={() => alert('Dictionary feature coming soon!')} label="Dict." icon="📖" isMock />
-                <NavButton active={activeTab === 'report'} onClick={() => setActiveTab('report')} label="Profile" icon="🧑‍🎨" />
-                <NavButton active={false} onClick={() => alert('Settings coming soon!')} label="Settings" icon="⚙️" isMock />
-              </>
-            )}
+    <main className="relative min-h-dvh overflow-x-hidden bg-[color:var(--bg)] selection:bg-[color:var(--accent-soft)] selection:text-[color:var(--accent)]">
+      <div className="blob-bg" />
+      
+      <div className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col items-center justify-center gap-10 px-4 py-12 sm:px-6 lg:px-8">
+        
+        <header className="w-full text-center space-y-6 animate-fade-in">
+          <div className="inline-flex items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-4 py-1.5 shadow-[4px_4px_0px_0px_var(--ink)]">
+            <span className="text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--ink)]">
+              Katachi ✦ 形
+            </span>
           </div>
-        </nav>
-      )}
+          
+          <h1 className="text-6xl font-bold tracking-tight text-[color:var(--ink)] sm:text-[5.5rem] leading-[1.1]">
+            Master<br />conjugations.
+          </h1>
+        </header>
 
-      {/* Removing standard text header in fav of the avatar component we'll put in each view */}
+        <section className="w-full animate-fade-in [animation-delay:100ms] opacity-0 [animation-fill-mode:forwards]">
+          <div className="relative rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-8 sm:p-10 shadow-[8px_8px_0px_0px_var(--ink)]">
+            <div className="flex flex-col items-center gap-8">
+              
+              <div className="flex w-full flex-wrap justify-center gap-4 sm:gap-8">
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-bold uppercase tracking-widest text-[color:var(--muted)]">Streak</span>
+                  <div className="mt-1 flex items-baseline gap-1">
+                    <span className="text-4xl font-bold text-[color:var(--accent)]">{dailyStreak}</span>
+                    <span className="text-lg font-bold text-[color:var(--ink)]">days</span>
+                  </div>
+                </div>
+                <div className="hidden sm:block w-[3px] bg-[color:var(--ink)] rounded-full" />
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-bold uppercase tracking-widest text-[color:var(--muted)]">Goal</span>
+                  <div className="mt-1 flex items-baseline gap-1">
+                    <span className="text-4xl font-bold text-[color:var(--ink)]">{config.questionCount}</span>
+                    <span className="text-lg font-bold text-[color:var(--muted)]">prompts</span>
+                  </div>
+                </div>
+              </div>
 
-      <div className={activeSession ? '' : 'pt-2 max-w-xl mx-auto'}>
-        {activeSession ? (
-          <PracticeSession />
-        ) : (
-          activeTab === 'practice' ? <SetupMenu /> : <ReportDashboard />
-        )}
+              {error && (
+                <div className="w-full rounded-xl border-2 border-[#b42318] bg-[#fff1f2] px-4 py-3 text-center text-sm font-bold text-[#b42318]">
+                  {error}
+                </div>
+              )}
+
+              <button
+                onClick={handleStart}
+                className="group relative inline-flex w-full items-center justify-center gap-3 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] px-8 py-5 text-2xl font-bold text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none sm:w-auto sm:px-16"
+              >
+                <span>Start Practice</span>
+                <svg className="h-7 w-7 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+              
+              <p className="text-sm font-medium text-[color:var(--muted)] text-center max-w-md">
+                Currently practicing: <span className="font-bold text-[color:var(--ink)]">{setupSummary}</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="w-full animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
+          <SetupMenu />
+        </section>
+
       </div>
     </main>
-  );
-}
-
-function NavButton({ active, onClick, label, icon, isMock }: { active: boolean, onClick: () => void, label: string, icon: string, isMock?: boolean }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`group flex flex-col items-center justify-center gap-1.5 min-w-[72px] min-h-[56px] px-2 py-2 rounded-2xl transition-all duration-300 active:scale-95 relative ${active ? 'bg-gradient-to-b from-[#f8fcf2] to-white' : ''}`}
-    >
-      {active && (
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-[#9acd32] rounded-b-full shadow-[0_2px_8px_rgba(154,205,50,0.4)]" />
-      )}
-      <div className={`text-2xl transition-all duration-300 flex items-center justify-center ${active ? 'scale-110 -translate-y-0.5 drop-shadow-md' : isMock ? 'opacity-30 grayscale hover:opacity-60' : 'opacity-40 grayscale hover:opacity-100 hover:grayscale-0'}`}>
-        {icon}
-      </div>
-      <span className={`text-[9px] font-black tracking-wider transition-colors uppercase ${active ? 'text-[#9acd32]' : isMock ? 'text-[#8ba888]/40' : 'text-[#8ba888]'}`}>
-        {label}
-      </span>
-    </button>
   );
 }

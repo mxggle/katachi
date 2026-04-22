@@ -1,163 +1,160 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { WordEntry, ConjugationType, WordType } from './distractorEngine';
+import { ConjugationType, WordEntry, WordType } from './distractorEngine';
 
-interface WordStats {
-    seen: number;
-    correct: number;
-    lastReviewed: number;
-}
-
-interface SessionConfig {
-    leves: ('N5' | 'N4' | 'N3')[];
-    wordTypes: WordType[];
-    categories: string[];
-    batchSize: number;
-    mode: 'choice' | 'input';
+export interface SessionConfig {
+  levels: ('N5' | 'N4')[];
+  wordTypes: WordType[];
+  forms: ConjugationType[];
+  questionCount: number;
+  mode: 'choice' | 'input';
 }
 
 interface MiniSession {
-    words: { word: WordEntry; type: ConjugationType; choices: string[] }[];
-    currentIndex: number;
-    sessionStreak: number;
-    sessionCorrect: number;
-    results: boolean[];
+  words: { word: WordEntry; type: ConjugationType; choices: string[] }[];
+  currentIndex: number;
+  sessionStreak: number;
+  sessionCorrect: number;
+  results: boolean[];
+}
+
+interface ProgressStats {
+  totalAnswered: number;
+  totalCorrect: number;
 }
 
 export interface AppState {
-    // Global Persistence
-    dailyStreak: number;
-    lastLoginDate: string | null;
-    globalStats: { totalAnswered: number; totalCorrect: number };
-    wordStats: Record<string, WordStats>;
-    config: SessionConfig;
-
-    // Active Session (Non-persistent for simplicity in this draft, but could be)
-    activeSession: MiniSession | null;
-
-    // Actions
-    startSession: (words: { word: WordEntry; type: ConjugationType; choices: string[] }[]) => void;
-    submitAnswer: (isCorrect: boolean) => void;
-    endSession: () => void;
-    updateConfig: (config: Partial<SessionConfig>) => void;
-    checkDailyStreak: () => void;
-    resetStore: () => void;
+  dailyStreak: number;
+  lastPracticeDate: string | null;
+  progress: ProgressStats;
+  config: SessionConfig;
+  activeSession: MiniSession | null;
+  startSession: (words: { word: WordEntry; type: ConjugationType; choices: string[] }[]) => void;
+  submitAnswer: (isCorrect: boolean) => void;
+  endSession: () => void;
+  updateConfig: (config: Partial<SessionConfig>) => void;
+  checkDailyStreak: () => void;
 }
 
+const defaultConfig: SessionConfig = {
+  levels: ['N5'],
+  wordTypes: ['verb', 'i-adj', 'na-adj'],
+  forms: ['te_form', 'polite', 'negative_plain', 'past_plain'],
+  questionCount: 10,
+  mode: 'choice',
+};
+
 export const useStore = create<AppState>()(
-    persist(
-        (set, get) => ({
-            dailyStreak: 0,
-            lastLoginDate: null,
-            globalStats: { totalAnswered: 0, totalCorrect: 0 },
-            wordStats: {},
-            config: {
-                leves: ['N5'],
-                wordTypes: ['verb', 'i-adj', 'na-adj'],
-                categories: ['te_form', 'polite', 'negative_plain'],
-                batchSize: 10,
-                mode: 'choice'
-            },
-            activeSession: null,
+  persist(
+    (set, get) => ({
+      dailyStreak: 0,
+      lastPracticeDate: null,
+      progress: { totalAnswered: 0, totalCorrect: 0 },
+      config: defaultConfig,
+      activeSession: null,
 
-            updateConfig: (newConfig) => set((state) => ({
-                config: { ...state.config, ...newConfig }
-            })),
+      updateConfig: (newConfig) =>
+        set((state) => ({
+          config: { ...state.config, ...newConfig },
+        })),
 
-            startSession: (words) => set({
-                activeSession: {
-                    words,
-                    currentIndex: 0,
-                    sessionStreak: 0,
-                    sessionCorrect: 0,
-                    results: []
-                }
-            }),
-
-            submitAnswer: (isCorrect) => set((state) => {
-                if (!state.activeSession) return state;
-
-                const currentWord = state.activeSession.words[state.activeSession.currentIndex].word;
-                const newWordStats = { ...(state.wordStats[currentWord.id] || { seen: 0, correct: 0, lastReviewed: 0 }) };
-                newWordStats.seen += 1;
-                if (isCorrect) newWordStats.correct += 1;
-                newWordStats.lastReviewed = Date.now();
-
-                return {
-                    globalStats: {
-                        totalAnswered: state.globalStats.totalAnswered + 1,
-                        totalCorrect: state.globalStats.totalCorrect + (isCorrect ? 1 : 0)
-                    },
-                    wordStats: {
-                        ...state.wordStats,
-                        [currentWord.id]: newWordStats
-                    },
-                    activeSession: {
-                        ...state.activeSession,
-                        sessionStreak: isCorrect ? state.activeSession.sessionStreak + 1 : 0,
-                        sessionCorrect: state.activeSession.sessionCorrect + (isCorrect ? 1 : 0),
-                        results: [...state.activeSession.results, isCorrect],
-                        currentIndex: state.activeSession.currentIndex + 1
-                    }
-                };
-            }),
-
-            endSession: () => set({ activeSession: null }),
-
-            checkDailyStreak: () => {
-                const today = new Date().toISOString().split('T')[0];
-                const lastDate = get().lastLoginDate;
-
-                if (lastDate === today) return;
-
-                const yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
-                const yesterdayStr = yesterday.toISOString().split('T')[0];
-
-                if (lastDate === yesterdayStr) {
-                    set((state) => ({ dailyStreak: state.dailyStreak + 1, lastLoginDate: today }));
-                } else {
-                    set({ dailyStreak: 1, lastLoginDate: today });
-                }
-            },
-
-            resetStore: () => {
-                set({
-                    dailyStreak: 0,
-                    lastLoginDate: null,
-                    globalStats: { totalAnswered: 0, totalCorrect: 0 },
-                    wordStats: {},
-                    config: {
-                        leves: ['N5'],
-                        wordTypes: ['verb', 'i-adj', 'na-adj'],
-                        categories: ['te_form', 'polite', 'negative_plain'],
-                        batchSize: 10,
-                        mode: 'choice'
-                    },
-                    activeSession: null,
-                })
-                // Clear the persisted localStorage key so stale data doesn't rehydrate
-                useStore.persist.clearStorage()
-            },
+      startSession: (words) =>
+        set({
+          activeSession: {
+            words,
+            currentIndex: 0,
+            sessionStreak: 0,
+            sessionCorrect: 0,
+            results: [],
+          },
         }),
-        {
-            name: 'katachi-storage',
-            partialize: (state) => ({
-                dailyStreak: state.dailyStreak,
-                lastLoginDate: state.lastLoginDate,
-                globalStats: state.globalStats,
-                wordStats: state.wordStats,
-                config: state.config
-            }),
-            merge: (persisted: unknown, current: AppState) => {
-                const merged = { ...current, ...(persisted as Partial<AppState>) };
-                // Backfill new config fields from defaults
-                merged.config = {
-                    ...current.config,
-                    ...(persisted as { config?: Partial<SessionConfig> })?.config,
-                };
-                return merged;
+
+      submitAnswer: (isCorrect) =>
+        set((state) => {
+          if (!state.activeSession) {
+            return state;
+          }
+
+          return {
+            progress: {
+              totalAnswered: state.progress.totalAnswered + 1,
+              totalCorrect: state.progress.totalCorrect + (isCorrect ? 1 : 0),
             },
+            activeSession: {
+              ...state.activeSession,
+              sessionStreak: isCorrect ? state.activeSession.sessionStreak + 1 : 0,
+              sessionCorrect: state.activeSession.sessionCorrect + (isCorrect ? 1 : 0),
+              results: [...state.activeSession.results, isCorrect],
+              currentIndex: state.activeSession.currentIndex + 1,
+            },
+          };
+        }),
+
+      endSession: () => set({ activeSession: null }),
+
+      checkDailyStreak: () => {
+        const today = new Date().toISOString().split('T')[0];
+        const lastDate = get().lastPracticeDate;
+
+        if (lastDate === today) {
+          return;
         }
-    )
+
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterdayString = yesterday.toISOString().split('T')[0];
+
+        if (lastDate === yesterdayString) {
+          set((state) => ({
+            dailyStreak: state.dailyStreak + 1,
+            lastPracticeDate: today,
+          }));
+          return;
+        }
+
+        set({
+          dailyStreak: 1,
+          lastPracticeDate: today,
+        });
+      },
+    }),
+    {
+      name: 'katachi-storage',
+      partialize: (state) => ({
+        dailyStreak: state.dailyStreak,
+        lastPracticeDate: state.lastPracticeDate,
+        progress: state.progress,
+        config: state.config,
+      }),
+      merge: (persisted, current) => {
+        const legacy = (persisted as {
+          dailyStreak?: number;
+          lastLoginDate?: string | null;
+          lastPracticeDate?: string | null;
+          globalStats?: ProgressStats;
+          progress?: ProgressStats;
+          config?: Partial<SessionConfig> & {
+            leves?: ('N5' | 'N4')[];
+            categories?: ConjugationType[];
+            batchSize?: number;
+          };
+        }) ?? {};
+
+        return {
+          ...current,
+          dailyStreak: legacy.dailyStreak ?? current.dailyStreak,
+          lastPracticeDate: legacy.lastPracticeDate ?? legacy.lastLoginDate ?? current.lastPracticeDate,
+          progress: legacy.progress ?? legacy.globalStats ?? current.progress,
+          config: {
+            ...current.config,
+            ...legacy.config,
+            levels: legacy.config?.levels ?? legacy.config?.leves ?? current.config.levels,
+            forms: legacy.config?.forms ?? legacy.config?.categories ?? current.config.forms,
+            questionCount:
+              legacy.config?.questionCount ?? legacy.config?.batchSize ?? current.config.questionCount,
+          },
+        };
+      },
+    }
+  )
 );

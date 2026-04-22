@@ -1,37 +1,9 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStore } from '@/lib/store';
 import * as wanakana from 'wanakana';
-
-// SessionComplete component is no longer used directly, its logic is inlined into PracticeSession
-// function SessionComplete({ correctCount, total, onBack }: { correctCount: number, total: number, onBack: () => void }) {
-//     const pct = Math.round((correctCount / total) * 100);
-//     const emoji = pct >= 80 ? '🎉' : pct >= 50 ? '💪' : '📖';
-//     const message = pct >= 80 ? 'すごい！' : pct >= 50 ? 'いい調子！' : 'がんばって！';
-//     return (
-//         <div className="max-w-lg mx-auto px-4 pt-10 pb-8 space-y-6 animate-fade-in text-center">
-//             <div className="glass p-6 md:p-8 rounded-[2rem] space-y-6">
-//                 <div className="flex justify-center mb-2">
-//                     <img src="/mascot.png" alt="Mascot" className="w-32 h-32 object-contain animate-bounce drop-shadow-md" />
-//                 </div>
-//                 <h2 className="text-2xl font-bold text-slate-800">{message}</h2>
-//                 <div className="space-y-1">
-//                     <div className="text-6xl font-black text-amber-500">
-//                         {correctCount}<span className="text-slate-400 text-3xl font-bold">/{total}</span>
-//                     </div>
-//                     <p className="text-sm font-medium text-slate-500">正答率 {pct}%</p>
-//                 </div>
-//                 <button
-//                     onClick={onBack}
-//                     className="w-full py-4 min-h-[48px] rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold text-lg transition-colors hover:shadow-md"
-//                 >
-//                     🏠 メニューに戻る
-//                 </button>
-//             </div>
-//         </div>
-//     );
-// }
 
 const CONJUGATION_LABELS: Record<string, string> = {
     polite: 'ます形',
@@ -59,35 +31,18 @@ const ADJ_CONJUGATION_LABELS: Record<string, string> = {
     past_plain: 'た形',
     past_polite: 'でした形',
     past_negative_plain: 'なかった形',
-    past_negative_polite: '丁寧過去否定形',
+    past_negative_polite: '丁寧过去否定形',
     te_form: 'て形',
     conditional_ba: 'ば形',
     conditional_tara: 'たら形',
 };
 
-const WORD_GROUP_TAGS: Record<string, { label: string, colorClass: string }> = {
-    'godan': { label: '1グループ', colorClass: 'bg-blue-50 text-blue-600 border-blue-200 shadow-sm' },
-    'ichidan': { label: '2グループ', colorClass: 'bg-indigo-50 text-indigo-600 border-indigo-200 shadow-sm' },
-    'suru': { label: '3グループ', colorClass: 'bg-violet-50 text-violet-600 border-violet-200 shadow-sm' },
-    'kuru': { label: '3グループ', colorClass: 'bg-fuchsia-50 text-fuchsia-600 border-fuchsia-200 shadow-sm' },
-    'i-adj': { label: 'い形容詞', colorClass: 'bg-rose-50 text-rose-600 border-rose-200 shadow-sm' },
-    'na-adj': { label: 'な形容詞', colorClass: 'bg-orange-50 text-orange-600 border-orange-200 shadow-sm' },
-};
-
-// New color mapping for word groups
-const WORD_GROUP_COLORS: Record<string, string> = {
-    'godan': 'bg-[#e8eedd] text-[#466a3e]',
-    'ichidan': 'bg-[#e8eedd] text-[#466a3e]',
-    'suru': 'bg-[#e8eedd] text-[#466a3e]',
-    'kuru': 'bg-[#e8eedd] text-[#466a3e]',
-    'i-adj': 'bg-[#e8eedd] text-[#466a3e]',
-    'na-adj': 'bg-[#e8eedd] text-[#466a3e]',
-};
-
-// Combined conjugation labels
-const CONJ_LABELS: Record<string, string> = {
-    ...CONJUGATION_LABELS,
-    ...ADJ_CONJUGATION_LABELS,
+const getConjugationLabel = (type: string, wordType: string) => {
+    if (wordType === 'verb') {
+        return CONJUGATION_LABELS[type] || type;
+    } else {
+        return ADJ_CONJUGATION_LABELS[type] || type;
+    }
 };
 
 const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
@@ -99,15 +54,13 @@ const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 
 export default function PracticeSession() {
     const { activeSession, submitAnswer, endSession, config } = useStore();
-    const [selected, setSelected] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState('');
-    const [isRevealed, setIsRevealed] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-    const [showFeedback, setShowFeedback] = useState(false); // New state for feedback
-    const [lastSelected, setLastSelected] = useState<string | null>(null); // New state for last selected choice
+    const [showFeedback, setShowFeedback] = useState(false);
+    const [lastSelected, setLastSelected] = useState<string | null>(null);
 
-    const inputRef = useRef<HTMLInputElement>(null); // Ref for input field
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const currentIdx = activeSession?.currentIndex ?? 0;
     const totalWords = activeSession?.words.length ?? 0;
@@ -119,8 +72,6 @@ export default function PracticeSession() {
     const choices = currentItem?.choices || [];
     const correctAnswer = (word && type) ? word.conjugations[type] : '';
 
-    // Ref to hold a persistent audio object to satisfy mobile browser policies
-    // requiring audio to be played from a direct user interaction context
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
@@ -130,66 +81,35 @@ export default function PracticeSession() {
     }, []);
 
     useEffect(() => {
-        if (config.mode === 'input' && !isRevealed && inputRef.current) {
+        if (config.mode === 'input' && !showFeedback && inputRef.current) {
             inputRef.current.focus();
         }
-    }, [config.mode, isRevealed, currentIdx]); // Focus input on new question
+    }, [config.mode, currentIdx, showFeedback]);
 
-    const playAudio = (text: string) => {
-        if (!audioRef.current) return;
-
-        try {
-            // Use the new, robust Edge Neural API generated server-side
-            const url = `/api/tts?text=${encodeURIComponent(text)}`;
-            audioRef.current.src = url;
-            audioRef.current.load(); // Important for iOS
-
-            const playPromise = audioRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise.catch((error) => {
-                    console.error("Audio playback failed, attempting fallbacks:", error);
-                    fallbackGoogleTTS(text);
-                });
-            }
-        } catch (e) {
-            fallbackGoogleTTS(text);
+    const fallbackBrowserTTS = useCallback((text: string) => {
+        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ja-JP';
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
         }
-    };
+    }, []);
 
-    const fallbackGoogleTTS = (text: string) => {
+    const playAudio = useCallback((text: string) => {
         if (!audioRef.current) return;
         try {
-            const url = `https://translate.googleapis.com/translate_tts?client=gtx&ie=UTF-8&tl=ja&q=${encodeURIComponent(text)}`;
+            const url = `/api/tts?text=${encodeURIComponent(text)}`;
             audioRef.current.src = url;
             audioRef.current.load();
             const playPromise = audioRef.current.play();
             if (playPromise !== undefined) {
                 playPromise.catch(() => fallbackBrowserTTS(text));
             }
-        } catch (e) {
+        } catch {
             fallbackBrowserTTS(text);
         }
-    };
-
-    const fallbackBrowserTTS = (text: string) => {
-        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'ja-JP';
-            utterance.rate = 0.9;
-
-            const setVoice = () => {
-                const voices = window.speechSynthesis.getVoices();
-                const jaVoices = voices.filter(v => v.lang.includes('ja') || v.lang === 'ja-JP');
-                if (jaVoices.length > 0) {
-                    utterance.voice = jaVoices.find(v => v.name.includes('Google') || v.name.includes('Premium')) || jaVoices[0]!;
-                }
-            };
-
-            setVoice();
-            window.speechSynthesis.speak(utterance);
-        }
-    };
+    }, [fallbackBrowserTTS]);
 
     const lastPlayedIdxRef = useRef<number>(-1);
 
@@ -198,10 +118,10 @@ export default function PracticeSession() {
             lastPlayedIdxRef.current = currentIdx;
             const timer = setTimeout(() => {
                 playAudio(word.dictionary_form.kanji);
-            }, 50);
+            }, 100);
             return () => clearTimeout(timer);
         }
-    }, [currentIdx, isFinished, word?.dictionary_form.kanji, showFeedback]);
+    }, [currentIdx, isFinished, playAudio, showFeedback, word?.dictionary_form.kanji]);
 
     const handleChoice = (choice: string) => {
         if (showFeedback) return;
@@ -218,7 +138,8 @@ export default function PracticeSession() {
             handleNext();
             return;
         }
-        const correct = wanakana.toHiragana(inputValue) === wanakana.toHiragana(correctAnswer);
+        if (!inputValue.trim()) return;
+        const correct = wanakana.toHiragana(inputValue.trim()) === wanakana.toHiragana(correctAnswer);
         setIsCorrect(correct);
         setShowFeedback(true);
         playAudio(correctAnswer);
@@ -226,11 +147,9 @@ export default function PracticeSession() {
 
     const handleNext = () => {
         submitAnswer(isCorrect);
-        setSelected(null);
         setInputValue('');
-        setIsRevealed(false);
-        setShowFeedback(false); // Reset feedback state
-        setLastSelected(null); // Reset last selected choice
+        setShowFeedback(false);
+        setLastSelected(null);
     };
 
     if (!activeSession) return null;
@@ -239,239 +158,234 @@ export default function PracticeSession() {
     const pct = Math.round((activeSession.sessionCorrect / totalWords) * 100);
     const message = pct >= 80 ? 'すごい！' : pct >= 50 ? 'いい調子！' : 'がんばって！';
 
-    return (
-        <div className="max-w-xl mx-auto px-4 flex flex-col h-[100dvh] overflow-y-auto animate-fade-in relative">
-            <div className="absolute inset-0 bg-white pointer-events-none rounded-b-[3rem] shadow-sm z-0"></div>
-            {/* Session Complete Screen */}
-            {isFinished && (
-                <div className="absolute inset-0 z-50 flex flex-col items-center justify-between p-4 md:p-6 bg-[#e8eedd] overflow-hidden">
-                    <div className="w-full max-w-sm flex-1 flex flex-col items-center justify-center relative min-h-0 pt-4 md:pt-8 pb-4">
-                        <div className="relative w-full aspect-square max-h-[45vh] lg:max-h-[50vh] rounded-[3rem] overflow-hidden shadow-2xl border-[8px] border-white/60 bg-white">
-                            <img
-                                src="/header_tiger.png"
-                                alt="Tiger Mascot"
-                                className="w-full h-full object-cover animate-bounce"
-                                style={{ animationDuration: '4s' }}
-                            />
+    if (isFinished) {
+        return (
+            <div className="min-h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-6 sm:p-8 animate-fade-in relative overflow-hidden">
+                <div className="blob-bg" />
+                <div className="w-full max-w-md relative z-10 space-y-8">
+                    <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-8 shadow-[12px_12px_0px_0px_var(--ink)] text-center space-y-6">
+                        <div className="inline-flex items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-2 shadow-[4px_4px_0px_0px_var(--ink)]">
+                            <span className="text-xl font-bold uppercase tracking-widest">{message}</span>
                         </div>
-                    </div>
-                    <div className="card bg-white w-full max-w-sm p-6 md:p-8 text-center space-y-6 shadow-2xl rounded-[2.5rem] relative z-20 shrink-0 mb-2 md:mb-4 border-2 border-[#e8eedd]/30">
-                        <h2 className="text-4xl font-black text-[#2d3748] tracking-tight">{message}</h2>
-                        <div className="flex justify-between items-center bg-[#f8faf6] p-5 rounded-3xl border-2 border-[#e8eedd]/50">
-                            <div className="space-y-1 flex-1">
-                                <p className="text-[11px] font-bold text-[#8ba888] uppercase tracking-wider">Score</p>
-                                <div className="text-4xl font-black text-[#ff6b6b]">
-                                    {Math.round((activeSession.sessionCorrect / totalWords) * 100)}<span className="text-2xl">%</span>
+
+                        <div className="space-y-2">
+                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">Session Summary</p>
+                            <div className="flex justify-center gap-8">
+                                <div className="text-center">
+                                    <div className="text-5xl font-black text-[color:var(--accent)]">{pct}%</div>
+                                    <div className="text-[10px] font-bold uppercase text-[color:var(--muted)] mt-1">Score</div>
                                 </div>
-                            </div>
-                            <div className="w-0.5 h-14 bg-[#e8eedd] rounded-full opacity-60"></div>
-                            <div className="space-y-1 flex-1">
-                                <p className="text-[11px] font-bold text-[#8ba888] uppercase tracking-wider">Streak</p>
-                                <div className="text-4xl font-black text-[#9acd32]">
-                                    {activeSession.sessionStreak}
+                                <div className="w-[2px] bg-[color:var(--ink)] opacity-20" />
+                                <div className="text-center">
+                                    <div className="text-5xl font-black text-[color:var(--ink)]">{activeSession.sessionStreak}</div>
+                                    <div className="text-[10px] font-bold uppercase text-[color:var(--muted)] mt-1">Streak</div>
                                 </div>
                             </div>
                         </div>
+
                         <button
                             onClick={endSession}
-                            className="mt-2 w-full py-4 min-h-[64px] rounded-[1.8rem] font-black text-xl bg-[#9acd32] text-white shadow-xl shadow-[#9acd32]/30 active:scale-95 transition-all hover:bg-[#8ac220]"
+                            className="w-full py-5 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-2xl font-bold text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none"
                         >
-                            Continue
+                            Back to Home
                         </button>
                     </div>
                 </div>
-            )}
-
-            {/* Header with Leave button */}
-            <div className="flex justify-between items-center pt-2 pb-1 relative z-10">
-                <button
-                    onClick={() => setShowConfirm(true)}
-                    className="flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-white shadow-sm hover:shadow active:scale-95 transition-all text-slate-400 hover:text-red-500 hover:bg-red-50"
-                    aria-label="セッションをやめる"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
             </div>
+        );
+    }
 
-            <div className="space-y-1.5 shrink-0 relative z-10 pt-1 pb-3">
-                <div className="flex justify-between items-center text-xs font-bold text-[#8ba888]">
-                    <div className="flex items-center gap-2">
-                        <span>📝 {currentIdx + 1} / {totalWords}</span>
+    return (
+        <div className="min-h-dvh bg-[color:var(--bg)] flex flex-col p-4 sm:p-6 lg:p-8 animate-fade-in relative overflow-hidden">
+            <div className="blob-bg" />
+            
+            <div className="mx-auto w-full max-w-2xl flex flex-col flex-1 relative z-10 gap-6">
+                
+                {/* Session Header */}
+                <div className="flex items-center justify-between gap-4">
+                    <button
+                        onClick={() => setShowConfirm(true)}
+                        className="flex items-center justify-center w-12 h-12 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white shadow-[4px_4px_0px_0px_var(--ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
+                    >
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <div className="flex-1 h-6 rounded-full border-[3px] border-[color:var(--ink)] bg-white shadow-[4px_4px_0px_0px_var(--ink)] overflow-hidden relative">
+                        <div
+                            className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[3px] border-[color:var(--ink)] transition-all duration-300"
+                            style={{ width: `${progress}%` }}
+                        />
                     </div>
-                    <div className="flex items-center gap-1.5 bg-[#e8eedd] px-3 py-1 rounded-full">
-                        <span>🔥</span>
-                        <span className="text-[#9acd32]">Streak {activeSession.sessionStreak}</span>
+
+                    <div className="inline-flex items-center px-4 h-12 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] shadow-[4px_4px_0px_0px_var(--ink)] font-bold text-sm">
+                        {currentIdx + 1}/{totalWords}
                     </div>
                 </div>
-                <div className="w-full h-2.5 bg-[#e8eedd] rounded-full overflow-hidden shadow-inner">
-                    <div
-                        className="h-full bg-[#9acd32] transition-all duration-300 rounded-full"
-                        style={{ width: `${progress}%` }}
-                    />
-                </div>
-            </div>
 
-            {/* Word card */}
-            <div className="card bg-white p-4 md:p-6 flex flex-col flex-1 mt-0 mb-4 relative z-10 border-2 border-[#e8eedd]">
-                <div className="flex justify-between items-start mb-2">
-                    <div className="flex gap-2">
-                        {word?.is_common && <span className="px-2 py-1 bg-yellow-100 text-yellow-700 text-[10px] font-bold rounded-lg uppercase tracking-wider">Common</span>}
-                        {word?.jlpt && <span className="px-2 py-1 bg-blue-100 text-blue-700 text-[10px] font-bold rounded-lg">{word.jlpt.toUpperCase()}</span>}
+                {/* Main Card */}
+                <div className="flex-1 flex flex-col rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-6 sm:p-10 shadow-[8px_8px_0px_0px_var(--ink)]">
+                    <div className="flex items-start justify-between">
+                        <div className="flex gap-2">
+                            {word?.is_common && (
+                                <span className="px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-[#fde68a] text-[10px] font-bold uppercase tracking-wider">Common</span>
+                            )}
+                            {word?.jlpt && (
+                                <span className="px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-white text-[10px] font-bold uppercase tracking-wider">{word.jlpt}</span>
+                            )}
+                        </div>
+                        <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg border-[2px] border-[color:var(--ink)] bg-[color:var(--accent-soft)]">
+                            <span className="text-sm">🔥</span>
+                            <span className="text-sm font-bold text-[color:var(--accent)]">{activeSession.sessionStreak}</span>
+                        </div>
                     </div>
-                </div>
 
-                <div className="flex-1 flex flex-col justify-center items-center py-4 text-center">
-
-
-                    <p className="text-xs md:text-sm font-bold text-[#8ba888] mb-2 md:mb-4 uppercase tracking-widest">{word?.meaning || '---'}</p>
-                    <div className="relative flex flex-col items-center">
-                        <div className="flex items-center justify-center">
-                            <h2 className="text-4xl md:text-5xl font-black text-[#2d3748] tracking-tight">{word?.dictionary_form.kanji || '---'}</h2>
+                    <div className="flex-1 flex flex-col items-center justify-center text-center py-8">
+                        <p className="text-sm font-bold uppercase tracking-[0.2em] text-[color:var(--muted)] mb-4">{word?.meaning || '---'}</p>
+                        
+                        <div className="relative group">
+                            <h2 className="text-6xl sm:text-7xl font-bold tracking-tight text-[color:var(--ink)] mb-2">
+                                {word?.dictionary_form.kanji || '---'}
+                            </h2>
                             <button
                                 onClick={() => playAudio(word?.dictionary_form.kanji || '')}
-                                className="absolute -right-12 md:-right-16 w-11 h-11 min-w-[44px] min-h-[44px] flex-shrink-0 rounded-full bg-[#f1f5f9] text-[#8ba888] flex items-center justify-center hover:bg-[#e8eedd] transition-colors shadow-sm active:scale-95"
-                                aria-label="音声を聞く"
+                                className="absolute -right-16 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border-[3px] border-[color:var(--ink)] bg-[#fde68a] flex items-center justify-center shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
                             >
-                                <SpeakerIcon className="w-5 h-5" />
+                                <SpeakerIcon className="w-6 h-6" />
                             </button>
                         </div>
-                        <p className="text-[#8ba888] font-bold mt-2 text-lg">{word?.dictionary_form.kana}</p>
-                    </div>
-                    <div className="mt-4 md:mt-6 flex flex-col items-center gap-1.5">
-                        <span className="text-[10px] font-bold text-[#8ba888] uppercase tracking-widest">Question</span>
-                        <div className={`px-4 py-1.5 text-xs md:text-sm font-black rounded-xl uppercase tracking-wider shadow-sm border-2 ${WORD_GROUP_COLORS[word?.group || ''] || 'bg-slate-100 text-slate-600 border-slate-200'}`}>
-                            {type ? CONJ_LABELS[type] || type : '---'}
+                        <p className="text-2xl font-bold text-[color:var(--muted)]">{word?.dictionary_form.kana}</p>
+
+                        <div className="mt-10 flex flex-col items-center gap-3">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[color:var(--muted)]">Question</span>
+                            <div className="px-6 py-2 rounded-xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] shadow-[4px_4px_0px_0px_var(--ink)] text-lg font-bold">
+                                {type && word ? getConjugationLabel(type, word.word_type) : '---'}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Input/Choice Area */}
-                <div className="mt-auto space-y-4">
-                    {config.mode === 'choice' ? (
-                        <div className="space-y-4">
-                            <div className={`grid gap-2 md:gap-3 ${choices.some(c => c.length > 8) ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                                {choices.map((c, i) => {
-                                    // Make buttons flex-col to naturally handle multiline text and the icon
-                                    let btnClass = "p-3 min-h-[56px] md:min-h-[64px] rounded-[1.25rem] md:rounded-[1.5rem] font-bold text-xs md:text-base transition-all border-2 relative flex flex-col items-center justify-center gap-1 ";
+                    <div className="mt-auto pt-6">
+                        {config.mode === 'choice' ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {choices.map((choice, i) => {
+                                    let variantClasses = "bg-white text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none";
+                                    
                                     if (showFeedback) {
-                                        if (c === correctAnswer) {
-                                            btnClass += "bg-[#e8eedd] border-[#9acd32] text-[#466a3e] shadow-sm";
-                                        } else if (c === lastSelected) {
-                                            btnClass += "bg-[#ff6b6b]/10 border-[#ff6b6b] text-[#c92a2a] shadow-sm";
+                                        if (choice === correctAnswer) {
+                                            variantClasses = "bg-[color:var(--primary-green)] text-white shadow-[4px_4px_0px_0px_var(--ink)]";
+                                        } else if (choice === lastSelected) {
+                                            variantClasses = "bg-[color:var(--accent)] text-white shadow-[4px_4px_0px_0px_var(--ink)]";
                                         } else {
-                                            btnClass += "bg-white border-transparent text-[#8ba888] opacity-50";
+                                            variantClasses = "bg-white text-[color:var(--ink)] opacity-50 border-dashed shadow-none translate-x-0 translate-y-0";
                                         }
-                                    } else {
-                                        btnClass += "bg-[#e8eedd]/50 border-transparent text-[#2d3748] hover:bg-[#e8eedd] active:scale-95";
                                     }
+
                                     return (
                                         <button
                                             key={i}
-                                            onClick={() => showFeedback ? playAudio(c) : handleChoice(c)}
-                                            className={btnClass}
+                                            disabled={showFeedback}
+                                            onClick={() => handleChoice(choice)}
+                                            className={`group relative p-4 min-h-[4rem] rounded-2xl border-[3px] border-[color:var(--ink)] font-bold text-lg transition-all flex items-center justify-center text-center ${variantClasses}`}
                                         >
-                                            <span className="text-center leading-tight">{c}</span>
-                                            {showFeedback && c === correctAnswer && (
-                                                <div className="absolute top-2 right-2">
-                                                    <SpeakerIcon className="w-4 h-4 opacity-70 text-[#466a3e]" />
+                                            {choice}
+                                            {showFeedback && choice === correctAnswer && (
+                                                <div className="absolute right-4">
+                                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                    </svg>
                                                 </div>
                                             )}
                                         </button>
                                     );
                                 })}
-                            </div>
-                            {showFeedback && (
-                                <button
-                                    onClick={handleNext}
-                                    className="w-full py-4 min-h-[56px] rounded-[1.5rem] font-black text-lg transition-all bg-[#9acd32] active:bg-[#85b525] text-white shadow-lg shadow-[#9acd32]/30"
-                                >
-                                    Next
-                                </button>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="space-y-4">
-                            <form onSubmit={handleInputSubmit} className="relative">
-                                <input
-                                    ref={inputRef}
-                                    type="text"
-                                    value={inputValue}
-                                    onChange={(e) => setInputValue(e.target.value)}
-                                    disabled={showFeedback}
-                                    placeholder="Romaji / Kana"
-                                    className={`w-full text-center text-xl font-bold p-4 min-h-[64px] rounded-[1.5rem] bg-[#e8eedd]/50 border-2 outline-none transition-all placeholder:text-[#8ba888] ${showFeedback
-                                        ? isCorrect
-                                            ? 'border-[#9acd32] text-[#466a3e] bg-[#e8eedd]'
-                                            : 'border-[#ff6b6b] text-[#c92a2a] bg-[#ff6b6b]/10'
-                                        : 'border-transparent text-[#2d3748] focus:border-[#9acd32] focus:bg-white'
-                                        }`}
-                                    autoComplete="off"
-                                />
-                                {showFeedback && isCorrect && (
+                                {showFeedback && (
                                     <button
-                                        type="button"
-                                        onClick={() => playAudio(correctAnswer)}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 opacity-70 hover:opacity-100 active:scale-95 transition-all text-[#466a3e]"
+                                        onClick={handleNext}
+                                        className="sm:col-span-2 mt-4 py-5 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[color:var(--ink)] text-white text-xl font-bold shadow-[6px_6px_0px_0px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 active:translate-y-0 active:shadow-none flex items-center justify-center gap-2"
                                     >
-                                        <SpeakerIcon className="w-7 h-7" />
+                                        <span>Next Question</span>
+                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
                                     </button>
                                 )}
-                            </form>
-                            {showFeedback && !isCorrect && (
-                                <div
-                                    className="text-center font-bold text-[#c92a2a] bg-[#ff6b6b]/10 py-3 rounded-xl flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-transform"
-                                    onClick={() => playAudio(correctAnswer)}
-                                >
-                                    <span>正解: {correctAnswer}</span>
-                                    <SpeakerIcon className="w-5 h-5 opacity-70" />
-                                </div>
-                            )}
-                            <button
-                                onClick={handleInputSubmit}
-                                className={`w-full py-4 min-h-[56px] rounded-[1.5rem] font-black text-lg transition-all ${showFeedback
-                                    ? 'bg-[#9acd32] active:bg-[#85b525] text-white shadow-lg shadow-[#9acd32]/30'
-                                    : 'bg-[#2d3748] active:bg-[#1a202c] text-white'
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                <form onSubmit={handleInputSubmit} className="relative">
+                                    <input
+                                        ref={inputRef}
+                                        type="text"
+                                        value={inputValue}
+                                        onChange={(e) => setInputValue(e.target.value)}
+                                        disabled={showFeedback}
+                                        placeholder="Type in Hiragana or Romaji"
+                                        className={`w-full text-center text-2xl font-bold p-6 rounded-2xl border-[4px] border-[color:var(--ink)] bg-white outline-none transition-all ${
+                                            showFeedback
+                                                ? isCorrect
+                                                    ? 'border-[color:var(--primary-green)] bg-[color:var(--primary-green)]/10'
+                                                    : 'border-[color:var(--accent)] bg-[color:var(--accent)]/10'
+                                                : 'focus:shadow-[6px_6px_0px_0px_var(--ink)]'
+                                        }`}
+                                        autoComplete="off"
+                                    />
+                                    {showFeedback && (
+                                        <div className={`mt-4 p-4 rounded-xl border-[3px] border-[color:var(--ink)] ${isCorrect ? 'bg-[color:var(--primary-green)] text-white' : 'bg-[#fde68a] text-[color:var(--ink)]'} flex items-center justify-between`}>
+                                            <div className="flex flex-col items-start">
+                                                <span className="text-[10px] font-black uppercase tracking-widest opacity-70">Correct Answer</span>
+                                                <span className="text-xl font-bold">{correctAnswer}</span>
+                                            </div>
+                                            <button 
+                                                type="button"
+                                                onClick={() => playAudio(correctAnswer)}
+                                                className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center hover:bg-black/20"
+                                            >
+                                                <SpeakerIcon className="w-5 h-5" />
+                                            </button>
+                                        </div>
+                                    )}
+                                </form>
+                                <button
+                                    onClick={showFeedback ? handleNext : handleInputSubmit}
+                                    className={`w-full py-5 rounded-2xl border-[3px] border-[color:var(--ink)] font-bold text-xl shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none flex items-center justify-center gap-2 ${
+                                        showFeedback ? 'bg-[color:var(--ink)] text-white' : 'bg-[color:var(--accent)] text-white'
                                     }`}
-                            >
-                                {showFeedback ? 'Next' : 'Check'}
-                            </button>
-                        </div>
-                    )}
+                                >
+                                    <span>{showFeedback ? 'Next Question' : 'Check Answer'}</span>
+                                    {showFeedback && (
+                                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
+                                    )}
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
-            <div className="text-center shrink-0 pb-4 relative z-10">
-                <button
-                    onClick={() => setShowConfirm(true)}
-                    className="text-slate-400 hover:text-slate-600 active:text-red-500 text-sm font-bold transition-colors py-3 min-h-[44px] px-4"
-                >
-                    やめる
-                </button>
-            </div>
-
-            {/* Confirm Quit Modal */}
+            {/* Confirm Modal */}
             {showConfirm && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
-                    <div className="card bg-white w-full max-w-[320px] p-6 space-y-6 text-center shadow-2xl">
-                        <div className="w-20 h-20 bg-[#ff6b6b]/10 rounded-full flex items-center justify-center mx-auto mb-2 text-4xl">
-                            😿
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+                    <div className="w-full max-w-[320px] rounded-[2rem] border-[4px] border-[color:var(--ink)] bg-white p-8 space-y-6 text-center shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)]">
+                        <div className="text-5xl">😿</div>
+                        <div className="space-y-2">
+                            <h3 className="text-2xl font-black text-[color:var(--ink)]">Quit?</h3>
+                            <p className="font-bold text-[color:var(--muted)] leading-tight">Your progress in this session will be lost.</p>
                         </div>
-                        <h3 className="text-xl font-black text-[#2d3748]">Quit Session?</h3>
-                        <p className="text-sm font-bold text-[#8ba888]">Your streak will be lost.</p>
-                        <div className="grid grid-cols-2 gap-3 pt-2">
-                            <button
-                                onClick={() => setShowConfirm(false)}
-                                className="py-3 px-4 rounded-[1.5rem] font-bold text-sm bg-[#e8eedd] text-[#466a3e] active:scale-95 transition-transform"
-                            >
-                                Cancel
-                            </button>
+                        <div className="grid grid-cols-1 gap-3">
                             <button
                                 onClick={endSession}
-                                className="py-3 px-4 rounded-[1.5rem] font-bold text-sm bg-[#ff6b6b] text-white shadow-lg shadow-[#ff6b6b]/30 active:scale-95 transition-transform"
+                                className="py-4 rounded-2xl border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-white font-bold shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
                             >
-                                Quit
+                                Quit Session
+                            </button>
+                            <button
+                                onClick={() => setShowConfirm(false)}
+                                className="py-4 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white text-[color:var(--ink)] font-bold active:bg-[color:var(--surface-soft)] transition-all"
+                            >
+                                Keep Going
                             </button>
                         </div>
                     </div>

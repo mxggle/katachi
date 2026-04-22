@@ -1,0 +1,1104 @@
+[    1966ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    2112ms] [LOG] [HMR] connected @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    2305ms] Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <LoadingBoundary name="/" loading={null}>
+      <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+        <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+          <RedirectBoundary>
+            <RedirectErrorBoundary router={{...}}>
+              <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} segmentPath={[...]} ...>
+                <SegmentViewNode type="page" pagePath="page.tsx">
+                  <SegmentTrieNode>
+                  <ClientPageRoot Component={function Home} serverProvidedParams={{...}}>
+                    <Home params={Promise} searchParams={Promise}>
+                      <main className="min-h-dvh ..." style={{...}}>
+                        <nav>
+                        <div className="pt-2 max-w...">
+                          <SetupMenu>
+                            <div className="max-w-xl m...">
+                              <div
++                               className="mx-0 mb-2 flex items-center justify-between gap-3 bg-[#f8fcf2] border borde..."
+-                               className="bg-gradient-to-b from-[#a4dc37] to-[#8cbe2c] ring-1 ring-inset ring-white/3..."
+                              >
++                               <p className="text-xs font-bold text-[#466a3e]">
+-                               <div
+-                                 className="absolute -top-[14px] left-1/4 -translate-x-1/2 text-2xl drop-shadow-md z-..."
+-                               >
+                                ...
+                              ...
+                ...
+              ...
+
+    at throwOnHydrationMismatch (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:3348:56)
+    at beginWork (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:6775:918)
+    at runWithFiberInDEV (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:965:74)
+    at performUnitOfWork (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9562:97)
+    at workLoopConcurrentByScheduler (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9558:58)
+    at renderRootConcurrent (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9541:71)
+    at performWorkOnRoot (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9068:150)
+    at performWorkOnRootViaSchedulerTask (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:10230:9)
+    at MessagePort.performWorkUntilDeadline (http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_compiled_a0e4c7b4._.js:2647:64)
+[  296117ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  297520ms] [LOG] [Fast Refresh] done in 1502ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  298479ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  298500ms] [LOG] [HMR] connected @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  308576ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  308576ms] [LOG] [Fast Refresh] done in 101ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  326183ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  327006ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327006ms] [ERROR] ./src/lib/store.ts:1:1
+Module not found: Can't resolve 'zustand'
+> 1 | import { create } from 'zustand';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { persist } from 'zustand/middleware';
+  3 | import { ConjugationType, WordEntry, WordType } from './distractorEngine';
+  4 |
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327006ms] [ERROR] ./src/lib/store.ts:2:1
+Module not found: Can't resolve 'zustand/middleware'
+  1 | import { create } from 'zustand';
+> 2 | import { persist } from 'zustand/middleware';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | import { ConjugationType, WordEntry, WordType } from './distractorEngine';
+  4 |
+  5 | export interface SessionConfig {
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327040ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327040ms] [ERROR] ./src/lib/store.ts:1:1
+Module not found: Can't resolve 'zustand'
+> 1 | import { create } from 'zustand';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { persist } from 'zustand/middleware';
+  3 | import { ConjugationType, WordEntry, WordType } from './distractorEngine';
+  4 |
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327040ms] [ERROR] ./src/lib/store.ts:2:1
+Module not found: Can't resolve 'zustand/middleware'
+  1 | import { create } from 'zustand';
+> 2 | import { persist } from 'zustand/middleware';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | import { ConjugationType, WordEntry, WordType } from './distractorEngine';
+  4 |
+  5 | export interface SessionConfig {
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327141ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  327213ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327213ms] [ERROR] ./node_modules/zustand/index.js:3:15
+Module not found: Can't resolve 'zustand/vanilla'
+  1 | 'use strict';
+  2 |
+> 3 | var vanilla = require('zustand/vanilla');
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 | var react = require('zustand/react');
+  5 |
+  6 |
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/zustand/index.js [Client Component Browser]
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/zustand/index.js [Client Component SSR]
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327315ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  327344ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327344ms] [ERROR] ./node_modules/zustand/index.js:3:15
+Module not found: Can't resolve 'zustand/vanilla'
+  1 | 'use strict';
+  2 |
+> 3 | var vanilla = require('zustand/vanilla');
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 | var react = require('zustand/react');
+  5 |
+  6 |
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/zustand/index.js [Client Component Browser]
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/zustand/index.js [Client Component SSR]
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327344ms] [ERROR] ./node_modules/zustand/react.js:4:15
+Module not found: Can't resolve 'zustand/vanilla'
+  2 |
+  3 | var React = require('react');
+> 4 | var vanilla = require('zustand/vanilla');
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | const identity = (arg) => arg;
+  7 | function useStore(api, selector = identity) {
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/zustand/react.js [Client Component Browser]
+    ./node_modules/zustand/index.js [Client Component Browser]
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/zustand/react.js [Client Component SSR]
+    ./node_modules/zustand/index.js [Client Component SSR]
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327446ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  327570ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '@tailwindcss/postcss'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at <anonymous> (turbopack:///[turbopack-node]/transforms/postcss.ts:49:25)]
+    [at <anonymous>]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327571ms] [ERROR] ./src/lib/store.ts:1:1
+Module not found: Can't resolve 'zustand'
+> 1 | import { create } from 'zustand';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { persist } from 'zustand/middleware';
+  3 | import { ConjugationType, WordEntry, WordType } from './distractorEngine';
+  4 |
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327571ms] [ERROR] ./src/lib/store.ts:2:1
+Module not found: Can't resolve 'zustand/middleware'
+  1 | import { create } from 'zustand';
+> 2 | import { persist } from 'zustand/middleware';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | import { ConjugationType, WordEntry, WordType } from './distractorEngine';
+  4 |
+  5 | export interface SessionConfig {
+
+Import traces:
+  Client Component Browser:
+    ./src/lib/store.ts [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/store.ts [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  327761ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  328609ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  330008ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  330066ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  330128ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  330202ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  330243ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  330391ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  330460ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  330670ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  330764ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  330815ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  331055ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  331117ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  476216ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  476462ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  536255ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  536361ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  536725ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  540549ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  540559ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  564491ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  564513ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  566621ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  566684ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  610219ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  610264ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  617413ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  617426ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  619114ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  619147ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  628639ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  628701ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  633608ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  633656ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  633710ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  634819ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  634880ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  635009ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  635063ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  881912ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  881949ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  884955ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  884984ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  890050ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  890098ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  890148ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  890203ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  905974ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  906033ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  908489ms] [ERROR] ./src/app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module '../lightningcss.darwin-x64.node'
+Require stack:
+- /Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/node/dist/index.js
+- /Users/szy/CascadeProjects/katachi/node_modules/@tailwindcss/postcss/dist/index.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[root-of-the-server]__51225daf._.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/chunks/[turbopack]_runtime.js
+- /Users/szy/CascadeProjects/katachi/.next/dev/build/postcss.js
+    [at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)]
+    [at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)]
+    [at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)]
+    [at Function._load (node:internal/modules/cjs/loader:1211:37)]
+    [at TracingChannel.traceSync (node:diagnostics_channel:322:14)]
+    [at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)]
+    [at Module.require (node:internal/modules/cjs/loader:1487:12)]
+    [at require (node:internal/modules/helpers:135:16)]
+    [at Object.<anonymous> (/Users/szy/CascadeProjects/katachi/node_modules/lightningcss/node/index.js:22:22)]
+    [at Module._compile (node:internal/modules/cjs/loader:1730:14)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  908529ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  957486ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4399/_next/webpack-hmr?id=-iPIzUK-V6N8OnkqOh6bD' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  958487ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4399/_next/webpack-hmr?id=-iPIzUK-V6N8OnkqOh6bD' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  959491ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4399/_next/webpack-hmr?id=-iPIzUK-V6N8OnkqOh6bD' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  960492ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4399/_next/webpack-hmr?id=-iPIzUK-V6N8OnkqOh6bD' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  962362ms] [LOG] [HMR] connected @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  964665ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  964934ms] [LOG] [HMR] connected @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  968351ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  968353ms] [LOG] [Fast Refresh] done in 103ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  998069ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  998379ms] [LOG] [Fast Refresh] done in 410ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297

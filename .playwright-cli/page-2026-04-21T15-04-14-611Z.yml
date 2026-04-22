@@ -1,0 +1,114 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - button "🎯 Practice" [ref=e5]:
+          - generic [ref=e7]: 🎯
+          - generic [ref=e8]: Practice
+        - button "📖 Dict." [ref=e9]:
+          - generic [ref=e10]: 📖
+          - generic [ref=e11]: Dict.
+        - button "🧑‍🎨 Profile" [ref=e12]:
+          - generic [ref=e13]: 🧑‍🎨
+          - generic [ref=e14]: Profile
+        - button "⚙️ Settings" [ref=e15]:
+          - generic [ref=e16]: ⚙️
+          - generic [ref=e17]: Settings
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - paragraph [ref=e21]: Sign in to sync your progress across devices
+        - button "Dismiss" [ref=e22]: ✕
+      - generic [ref=e23]:
+        - generic: 🔥
+        - generic [ref=e24]:
+          - generic [ref=e25]: Daily Streak
+          - generic [ref=e26]:
+            - generic [ref=e27]: 🔥
+            - generic [ref=e28]: "1"
+            - generic [ref=e29]: days
+        - generic [ref=e31]:
+          - generic [ref=e32]: Total Practiced
+          - generic [ref=e33]:
+            - generic [ref=e34]: 🏆
+            - generic [ref=e35]: "0"
+            - generic [ref=e36]: q's
+      - generic [ref=e37]:
+        - heading "★ Configure Your Session" [level=3] [ref=e38]:
+          - generic [ref=e39]: ★
+          - text: Configure Your Session
+        - generic [ref=e40]: Scroll
+      - generic [ref=e41]:
+        - heading "Level" [level=4] [ref=e43]
+        - generic [ref=e44]:
+          - button "🌱 N5" [ref=e45]:
+            - generic [ref=e47]: 🌱
+            - generic [ref=e48]: N5
+          - button "🌿 N4" [ref=e49]:
+            - generic [ref=e50]: 🌿
+            - generic [ref=e51]: N4
+          - button "🌳 N3" [ref=e52]:
+            - generic [ref=e53]: 🌳
+            - generic [ref=e54]: N3
+        - heading "Word Type" [level=4] [ref=e56]
+        - generic [ref=e58]:
+          - generic [ref=e60]: 🚀
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - heading "Word Types" [level=4] [ref=e64]
+              - generic [ref=e65]: Required
+            - generic [ref=e66]:
+              - button "動詞" [ref=e67]
+              - button "い形容詞" [ref=e68]
+              - button "な形容詞" [ref=e69]
+        - generic [ref=e71]:
+          - generic [ref=e73]: 📖
+          - generic [ref=e75]:
+            - generic [ref=e76]:
+              - heading "Conjugations (3)" [level=4] [ref=e77]
+              - generic [ref=e78]:
+                - button "All" [ref=e79]
+                - button "Clear" [ref=e81]
+            - generic [ref=e82]:
+              - button "ます形" [ref=e83]
+              - button "ない形" [ref=e84]
+              - button "ません形" [ref=e85]
+              - button "た形" [ref=e86]
+              - button "ました形" [ref=e87]
+              - button "なかった形" [ref=e88]
+              - button "ませんでした形" [ref=e89]
+              - button "て形" [ref=e90]
+              - button "可能形 (V)" [ref=e91]:
+                - text: 可能形
+                - generic [ref=e92]: (V)
+              - button "受身形 (V)" [ref=e93]:
+                - text: 受身形
+                - generic [ref=e94]: (V)
+              - button "使役形 (V)" [ref=e95]:
+                - text: 使役形
+                - generic [ref=e96]: (V)
+              - button "使役受身形 (V)" [ref=e97]:
+                - text: 使役受身形
+                - generic [ref=e98]: (V)
+              - button "命令形 (V)" [ref=e99]:
+                - text: 命令形
+                - generic [ref=e100]: (V)
+              - button "意向形 (V)" [ref=e101]:
+                - text: 意向形
+                - generic [ref=e102]: (V)
+              - button "ば形" [ref=e103]
+              - button "たら形" [ref=e104]
+        - generic [ref=e106]:
+          - heading "⚙️ Advanced Tools" [level=4] [ref=e108]
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - generic [ref=e111]:
+                - generic [ref=e112]: Session Length
+                - generic [ref=e113]: 10 Questions
+              - slider [ref=e114]: "10"
+            - generic [ref=e115]:
+              - generic [ref=e116]: Practice Mode
+              - generic [ref=e117]:
+                - button "Multiple Choice" [ref=e118]
+                - button "Keyboard Input" [ref=e119]
+      - button "Start Session" [ref=e120]
+  - alert [ref=e121]

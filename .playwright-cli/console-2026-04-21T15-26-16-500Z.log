@@ -1,0 +1,43 @@
+[     508ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[     806ms] [LOG] [HMR] connected @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    4798ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[    4821ms] [LOG] [Fast Refresh] done in 124ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   39191ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   39218ms] [LOG] [Fast Refresh] done in 127ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   87688ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[   89821ms] [LOG] [Fast Refresh] done in 2003ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  127111ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  127135ms] [LOG] [Fast Refresh] done in 93ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  503893ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  503945ms] [LOG] [Fast Refresh] done in 155ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  570821ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  570995ms] [LOG] [Fast Refresh] done in 268ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  927601ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[  927703ms] [LOG] [Fast Refresh] done in 203ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[ 1039384ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[ 1039685ms] [ERROR] ./src/components/SetupMenu.tsx:208:1
+Parsing ecmascript source code failed
+  206 |     </section>
+  207 |   );
+> 208 | }
+      | ^
+  209 |
+  210 | function ConfigSection({
+  211 |   title,
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/components/SetupMenu.tsx [Client Component Browser]
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/SetupMenu.tsx [Client Component SSR]
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[ 1072954ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[ 1073097ms] [LOG] [Fast Refresh] done in 217ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[ 1073299ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
+[ 1073593ms] [LOG] [Fast Refresh] done in 395ms @ http://127.0.0.1:4399/_next/static/chunks/node_modules_next_dist_f3530cac._.js:2297
