@@ -12,7 +12,7 @@ import sys
 
 JISHO_API = "https://jisho.org/api/v1/search/words"
 LEVELS = ["n5", "n4", "n3"]
-OUTPUT_FILE = "dictionary.json"
+OUTPUT_FILE = "src/data/dictionaries/dictionary.json"
 REQUEST_DELAY = 1.2  # seconds between API calls
 
 # ---------------------------------------------------------------------------

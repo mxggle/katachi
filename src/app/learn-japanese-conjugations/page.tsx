@@ -9,7 +9,7 @@ interface PageProps {
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const params = await searchParams;
-  const lang: LandingLanguage = params.lang === 'zh' ? 'zh' : 'en';
+  const lang: LandingLanguage = params.lang === 'zh' ? 'zh' : params.lang === 'vi' ? 'vi' : 'en';
   const copy = getLandingCopy(lang);
 
   const canonical = lang === 'zh'
@@ -41,12 +41,12 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   };
 }
 
+import LandingLanguageSwitcher from '@/components/LandingLanguageSwitcher';
+
 export default async function LandingPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const lang: LandingLanguage = params.lang === 'zh' ? 'zh' : 'en';
+  const lang: LandingLanguage = params.lang === 'zh' ? 'zh' : params.lang === 'vi' ? 'vi' : 'en';
   const copy = getLandingCopy(lang);
-  const alternateLang = lang === 'en' ? 'zh' : 'en';
-  const alternateUrl = `/learn-japanese-conjugations?lang=${alternateLang}`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -78,19 +78,14 @@ export default async function LandingPage({ searchParams }: PageProps) {
 
         <div className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col items-center gap-16 px-4 py-12 sm:px-6 lg:px-8">
           {/* Header / Lang Switch */}
-          <header className="w-full flex items-center justify-between animate-fade-in">
+          <header className="relative z-50 w-full flex items-center justify-between animate-fade-in">
             <Link href="/" className="flex items-center gap-2 group">
               <Logo size={32} className="text-[color:var(--ink)]" />
               <span className="text-sm font-bold text-[color:var(--muted)] group-hover:text-[color:var(--ink)] transition-colors">
                 Katachi
               </span>
             </Link>
-            <Link
-              href={alternateUrl}
-              className="text-sm font-bold text-[color:var(--accent)] hover:underline"
-            >
-              {copy.langSwitch}
-            </Link>
+            <LandingLanguageSwitcher currentLang={lang} />
           </header>
 
           {/* Hero Section */}

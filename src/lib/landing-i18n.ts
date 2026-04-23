@@ -53,11 +53,9 @@ export interface LandingCopy {
     copyright: string;
     practiceLink: string;
   };
-  langSwitch: string;
-  langParam: string;
 }
 
-export type LandingLanguage = 'en' | 'zh';
+export type LandingLanguage = 'en' | 'zh' | 'vi';
 
 export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   en: {
@@ -139,8 +137,6 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       copyright: '© 2026 Katachi. Built by a Japanese learner, for Japanese learners.',
       practiceLink: 'Practice App',
     },
-    langSwitch: 'Switch to 中文',
-    langParam: 'zh',
   },
   zh: {
     meta: {
@@ -221,8 +217,86 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       copyright: '© 2026 Katachi. 由日语学习者打造，为日语学习者服务。',
       practiceLink: '练习应用',
     },
-    langSwitch: 'Switch to English',
-    langParam: 'en',
+  },
+  vi: {
+    meta: {
+      title: 'Katachi — Nắm vững chia động từ tiếng Nhật qua luyện tập hằng ngày | JLPT N5 & N4',
+      description: 'Công cụ luyện tập chia động từ tiếng Nhật được tạo ra bởi người học, dành cho người học. Luyện tập động từ và tính từ với phân tích điểm yếu thông minh. Bao gồm các dạng ngữ pháp JLPT N5 & N4.',
+    },
+    hero: {
+      h1: 'Ngừng bối rối khi chia động từ tiếng Nhật. Bắt đầu luyện tập ngay.',
+      subtitle: 'Tôi tạo ra Katachi vì tôi liên tục bị kẹt — nhầm lẫn các thì, quên thể bị động, do dự với thể te. Công cụ này loại bỏ sự phân tâm và tập trung vào một điều duy nhất: lặp lại cho đến khi nhớ.',
+      cta: 'Bắt đầu luyện tập',
+      ctaLink: '/',
+    },
+    problem: {
+      heading: 'Sự bực bội đã bắt đầu tất cả',
+      body1: "Khi bạn đang đọc tiếng Nhật và gặp một động từ chia, mạch đọc bị gián đoạn. Đây là thể quá khứ lịch sự hay thông thường? Họ đã dùng thể bị động hay sai khiến? Đối với tôi, điều đó xảy ra liên tục — thể te là điểm yếu lớn nhất của tôi. Tôi biết thể từ điển, nhưng lúc cần kết nối, tôi lại đứng hình.",
+      body2: 'Sách giáo khoa giải thích các quy tắc. Flashcard cho thấy đáp án. Nhưng không cái nào cung cấp cho bạn sự lặp lại mà bạn thực sự cần để việc chia từ trở thành phản xạ tự nhiên.',
+    },
+    features: {
+      heading: 'Không thiết lập. Không phân tâm. Chỉ luyện tập.',
+      items: [
+        {
+          title: 'Luyện tập không rào cản',
+          description: 'Chọn cấp độ (N5, N4, hoặc N3), chọn loại động từ hoặc tính từ và bắt đầu. Hệ thống sẽ lo phần còn lại.',
+        },
+        {
+          title: 'Phát hiện điểm yếu thông minh',
+          description: "Gặp khó khăn với thể te? Hệ thống sẽ nhận ra và đưa ra nhiều bài tập thể te hơn. Bạn không cần tự theo dõi điểm yếu — Katachi làm điều đó cho bạn.",
+        },
+        {
+          title: 'Chế độ luyện tập kép',
+          description: 'Trắc nghiệm để nhận diện nhanh, Gõ chữ để chủ động nhớ lại. Chuyển đổi bất cứ lúc nào.',
+        },
+        {
+          title: 'Chuỗi ngày học liên tục',
+          description: 'Các phiên học ngắn, tập trung mà bạn thực sự có thể duy trì. Sự kiên trì chiến thắng cường độ.',
+        },
+      ],
+    },
+    modes: {
+      heading: 'Ba cách để luyện tập',
+      items: [
+        {
+          title: 'Luyện tập hằng ngày',
+          description: 'Một phiên học được chọn lọc và tạo tự động mỗi ngày. Chỉ cần mở ứng dụng và học — không cần phải quyết định.',
+        },
+        {
+          title: 'Huấn luyện điểm yếu',
+          description: 'Katachi phân tích lỗi sai của bạn và xây dựng các phiên học nhắm vào những dạng yếu nhất. Khó khăn với thể te? Bạn sẽ nhận được nhiều thể te hơn cho đến khi thành thạo.',
+        },
+        {
+          title: 'Luyện tập tự do',
+          description: 'Kiểm soát hoàn toàn. Chọn bất kỳ sự kết hợp nào giữa cấp độ, loại từ và dạng chia. Hoàn hảo để luyện tập một điểm ngữ pháp cụ thể trước kỳ thi.',
+        },
+      ],
+    },
+    coverage: {
+      heading: 'Mọi dạng chia bạn cần cho N5 & N4',
+      verbs: {
+        label: 'Động từ',
+        list: 'Lịch sự (masu), Thông thường phủ định, Quá khứ thông thường/lịch sự, Thể te, Khả năng, Bị động, Sai khiến, Mệnh lệnh, Ý chí, Điều kiện (ba/tara)',
+      },
+      adjectives: {
+        label: 'Tính từ',
+        list: 'Các dạng tính từ đuôi i & đuôi na cho lịch sự, phủ định, quá khứ và điều kiện',
+      },
+    },
+    whyN3: {
+      heading: 'Tại sao dừng lại ở N3?',
+      body1: 'Katachi bao phủ từ N5 đến N3, nhưng không phải vì N2 và N1 không quan trọng. Ngược lại — một khi bạn đã rèn luyện các mẫu chia từ cơ bản thành phản xạ cơ bắp, từ vựng nâng cao chỉ là một gốc từ khác với cùng một quy tắc.',
+      body2: 'Đây không phải là một ứng dụng từ vựng. Nó là một công cụ luyện chia động từ. Bạn không cần phải ghi nhớ mười nghìn từ để làm chủ cách chia. Bạn cần sự lặp lại các mẫu chia cho đến khi chúng trở thành tự động, bất kể là từ nào.',
+    },
+    finalCta: {
+      heading: 'Sẵn sàng để việc chia động từ trở nên tự động?',
+      subtitle: 'Tham gia cùng hàng ngàn người học luyện ngữ pháp tiếng Nhật mỗi ngày. Miễn phí. Không cần đăng ký.',
+      cta: 'Bắt đầu luyện tập ngay',
+    },
+    footer: {
+      copyright: '© 2026 Katachi. Được tạo ra bởi người học tiếng Nhật, dành cho người học tiếng Nhật.',
+      practiceLink: 'Ứng dụng luyện tập',
+    },
   },
 };
 

@@ -1,7 +1,7 @@
 import json
 
 def verify():
-    with open("dictionary.json", "r", encoding="utf-8") as f:
+    with open("src/data/dictionaries/dictionary.json", "r", encoding="utf-8") as f:
         data = json.load(f)
     
     words = {w["dictionary_form"]["kana"]: w for w in data["words"]}
