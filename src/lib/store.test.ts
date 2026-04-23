@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it } from 'vitest';
-import { extractPersistedStudyState, useStore } from '@/lib/store';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { extractPersistedStudyState, getLocalDateString, STORE_STORAGE_KEY, useStore } from '@/lib/store';
 import { DEFAULT_STUDY_STATE } from '@/lib/study/types';
 import type { WordEntry } from '@/lib/distractorEngine';
 
@@ -50,6 +50,24 @@ describe('extractPersistedStudyState', () => {
 });
 
 describe('useStore session flow', () => {
+  it('clears the persisted storage when resetting after sign-out', () => {
+    const removeItem = vi.fn();
+    vi.stubGlobal('localStorage', {
+      getItem: vi.fn(),
+      setItem: vi.fn(),
+      removeItem,
+    });
+
+    useStore.getState().resetStore();
+
+    expect(removeItem).toHaveBeenCalledWith(STORE_STORAGE_KEY);
+    vi.unstubAllGlobals();
+  });
+
+  it('uses the learner local day instead of the UTC day for streak dates', () => {
+    expect(getLocalDateString(new Date('2026-04-23T00:30:00+09:00'))).toBe('2026-04-23');
+  });
+
   it('does not reinsert the same word into the active session after a wrong answer', () => {
     const word = buildWord('word-1');
 

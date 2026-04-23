@@ -88,16 +88,23 @@ function buildConfig(studyState: StudyState): SessionConfig {
   };
 }
 
-function createSessionId(): string {
+function createRandomId(prefix: string): string {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID();
   }
 
-  return `session-${Date.now()}`;
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
-function getTodayDateString(date = new Date()): string {
-  return date.toISOString().split('T')[0];
+function createSessionId(): string {
+  return createRandomId('session');
+}
+
+export function getLocalDateString(date = new Date()): string {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const day = `${date.getDate()}`.padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 function updateDailyStreak(previousDate: string | null, previousStreak: number, today: string) {
@@ -107,7 +114,7 @@ function updateDailyStreak(previousDate: string | null, previousStreak: number, 
 
   const yesterday = new Date(`${today}T00:00:00.000Z`);
   yesterday.setUTCDate(yesterday.getUTCDate() - 1);
-  const yesterdayString = getTodayDateString(yesterday);
+  const yesterdayString = yesterday.toISOString().split('T')[0];
 
   if (previousDate === yesterdayString) {
     return { dailyStreak: previousStreak + 1, lastPracticeDate: today };
@@ -202,6 +209,9 @@ export const useStore = create<AppState>()(
             studyState: initialStudyState,
             activeSession: null,
           });
+          if (typeof localStorage !== 'undefined') {
+            localStorage.removeItem(STORE_STORAGE_KEY);
+          }
         },
 
         updateConfig: (newConfig) =>
@@ -267,7 +277,7 @@ export const useStore = create<AppState>()(
             }
 
             const now = new Date().toISOString();
-            const today = getTodayDateString(new Date(now));
+            const today = getLocalDateString(new Date(now));
             const existingProgress =
               state.studyState.unitProgress[currentItem.unitKey] ??
               buildInitialProgress(currentItem.word, currentItem.type, state.config.mode);
@@ -319,7 +329,7 @@ export const useStore = create<AppState>()(
               attemptHistory: [
                 ...state.studyState.attemptHistory,
                 {
-                  attemptId: `${activeSession.sessionId}-${state.studyState.attemptHistory.length + 1}`,
+                  attemptId: createRandomId('attempt'),
                   sessionId: activeSession.sessionId,
                   wordId: currentItem.word.id,
                   conjugationType: currentItem.type,

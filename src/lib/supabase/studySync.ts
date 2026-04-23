@@ -1,7 +1,55 @@
 import type { SupabaseClient, User } from '@supabase/supabase-js';
 import type { Database } from './database.types';
 import type { Json } from './json';
-import type { StudyState, UnitProgress } from '@/lib/study/types';
+import type { TranslationKey } from '@/lib/i18n';
+import type { AttemptRecord, SessionRecord, StudyState, UnitProgress } from '@/lib/study/types';
+
+export const SYNC_META_STORAGE_KEY = 'katachi-sync-meta';
+
+export interface StudySyncMeta {
+  userId: string;
+  remoteUpdatedAt?: string;
+  syncedStateJson: string;
+}
+
+export interface RemoteStudySnapshot {
+  studyState: StudyState;
+  updatedAt: string | null;
+}
+
+function stableStringify(value: unknown): string {
+  if (Array.isArray(value)) {
+    return `[${value.map((item) => stableStringify(item)).join(',')}]`;
+  }
+
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, unknown>)
+      .filter(([, entryValue]) => entryValue !== undefined)
+      .sort(([left], [right]) => left.localeCompare(right));
+
+    return `{${entries
+      .map(([key, entryValue]) => `${JSON.stringify(key)}:${stableStringify(entryValue)}`)
+      .join(',')}}`;
+  }
+
+  return JSON.stringify(value);
+}
+
+export function stringifyStudyState(studyState: StudyState): string {
+  return stableStringify(studyState);
+}
+
+export function getStudySyncErrorMessageKey(error: unknown): TranslationKey {
+  const maybeError = error as { code?: unknown; message?: unknown };
+  const code = typeof maybeError?.code === 'string' ? maybeError.code : '';
+  const message = typeof maybeError?.message === 'string' ? maybeError.message : '';
+
+  if (code === 'PGRST205' || message.includes("Could not find the table 'public.study_states'")) {
+    return 'syncSetupMissingTable';
+  }
+
+  return 'syncFailed';
+}
 
 export const STUDY_STATES_TABLE_SQL = `
 create table if not exists public.study_states (
@@ -56,6 +104,34 @@ function mergeUnitProgress(local: UnitProgress, remote: UnitProgress): UnitProgr
   };
 }
 
+function mergeById<T>(local: T[], remote: T[], getId: (item: T) => string, getTimestamp: (item: T) => string): T[] {
+  const merged = new Map<string, T>();
+
+  for (const item of [...remote, ...local]) {
+    merged.set(getId(item), item);
+  }
+
+  return Array.from(merged.values()).sort((left, right) => getTimestamp(left).localeCompare(getTimestamp(right)));
+}
+
+function mergeSessionHistory(local: SessionRecord[], remote: SessionRecord[]): SessionRecord[] {
+  return mergeById(
+    local,
+    remote,
+    (session) => session.sessionId,
+    (session) => session.endedAt ?? session.startedAt
+  );
+}
+
+function mergeAttemptHistory(local: AttemptRecord[], remote: AttemptRecord[]): AttemptRecord[] {
+  return mergeById(
+    local,
+    remote,
+    (attempt) => attempt.attemptId,
+    (attempt) => attempt.answeredAt
+  );
+}
+
 export function mergeStudyStates(local: StudyState, remote: StudyState | null): StudyState {
   if (!remote) {
     return local;
@@ -82,18 +158,47 @@ export function mergeStudyStates(local: StudyState, remote: StudyState | null): 
       schemaVersion: Math.max(local.learnerSummary.schemaVersion, remote.learnerSummary.schemaVersion),
     },
     unitProgress,
-    sessionHistory: local.sessionHistory.length > remote.sessionHistory.length ? local.sessionHistory : remote.sessionHistory,
-    attemptHistory: local.attemptHistory.length > remote.attemptHistory.length ? local.attemptHistory : remote.attemptHistory,
+    sessionHistory: mergeSessionHistory(local.sessionHistory, remote.sessionHistory),
+    attemptHistory: mergeAttemptHistory(local.attemptHistory, remote.attemptHistory),
   };
+}
+
+export function resolveStudyStateForHydration(
+  localState: StudyState,
+  options: {
+    userId: string;
+    remoteState: StudyState | null;
+    syncMeta: StudySyncMeta | null;
+  }
+): StudyState {
+  const { userId, remoteState, syncMeta } = options;
+
+  if (!remoteState) {
+    return localState;
+  }
+
+  if (syncMeta?.userId === userId && syncMeta.syncedStateJson === stringifyStudyState(localState)) {
+    return remoteState;
+  }
+
+  return mergeStudyStates(localState, remoteState);
 }
 
 export async function fetchRemoteStudyState(
   supabase: SupabaseClient<Database>,
   user: User
 ): Promise<StudyState | null> {
+  const snapshot = await fetchRemoteStudySnapshot(supabase, user);
+  return snapshot?.studyState ?? null;
+}
+
+export async function fetchRemoteStudySnapshot(
+  supabase: SupabaseClient<Database>,
+  user: User
+): Promise<RemoteStudySnapshot | null> {
   const { data, error } = await supabase
     .from('study_states')
-    .select('study_state')
+    .select('study_state, updated_at')
     .eq('user_id', user.id)
     .maybeSingle();
 
@@ -101,23 +206,78 @@ export async function fetchRemoteStudyState(
     throw error;
   }
 
-  return (data?.study_state as StudyState | undefined) ?? null;
+  if (!data?.study_state) {
+    return null;
+  }
+
+  return {
+    studyState: data.study_state as unknown as StudyState,
+    updatedAt: data.updated_at ?? null,
+  };
 }
 
 export async function saveRemoteStudyState(
   supabase: SupabaseClient<Database>,
   user: User,
   studyState: StudyState
-) {
-  const { error } = await supabase
+): Promise<RemoteStudySnapshot> {
+  const { data, error } = await supabase
     .from('study_states')
     .upsert({
       user_id: user.id,
       study_state: studyState as unknown as Json,
       updated_at: new Date().toISOString(),
-    });
+    })
+    .select('study_state, updated_at')
+    .single();
 
   if (error) {
     throw error;
   }
+
+  return {
+    studyState: (data.study_state as unknown as StudyState | undefined) ?? studyState,
+    updatedAt: data.updated_at ?? null,
+  };
+}
+
+export function readStudySyncMeta(userId: string): StudySyncMeta | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const raw = window.localStorage.getItem(SYNC_META_STORAGE_KEY);
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as StudySyncMeta;
+    return parsed.userId === userId ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+export function writeStudySyncMeta(userId: string, snapshot: RemoteStudySnapshot) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  window.localStorage.setItem(
+    SYNC_META_STORAGE_KEY,
+    JSON.stringify({
+      userId,
+      remoteUpdatedAt: snapshot.updatedAt ?? undefined,
+      syncedStateJson: stringifyStudyState(snapshot.studyState),
+    } satisfies StudySyncMeta)
+  );
+}
+
+export function clearStudySyncMeta() {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  window.localStorage.removeItem(SYNC_META_STORAGE_KEY);
 }

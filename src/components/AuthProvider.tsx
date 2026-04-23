@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 import type { SupabaseClient, User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
 import type { Database } from '@/lib/supabase/database.types';
+import { clearStudySyncMeta } from '@/lib/supabase/studySync';
 import { useStore } from '@/lib/store';
 
 interface AuthContextValue {
@@ -49,9 +50,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
       });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
       setIsLoading(false);
+      if (event === 'SIGNED_OUT') {
+        resetStore();
+        clearStudySyncMeta();
+      }
     });
 
     return () => {
@@ -59,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       window.clearTimeout(loadingTimeout);
       listener.subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, [resetStore, supabase]);
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -68,10 +73,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isConfigured: Boolean(supabase),
       isLoading,
       signOut: async () => {
-        if (supabase) {
-          await supabase.auth.signOut();
+        try {
+          if (supabase) {
+            await supabase.auth.signOut();
+          }
+        } finally {
+          resetStore();
+          clearStudySyncMeta();
         }
-        resetStore();
       },
     }),
     [isLoading, resetStore, supabase, user]

@@ -30,19 +30,23 @@ export default function LoginForm() {
     setError(null);
     setMessage(null);
 
-    const result =
-      mode === 'signIn'
-        ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password });
+    try {
+      const result =
+        mode === 'signIn'
+          ? await supabase.auth.signInWithPassword({ email, password })
+          : await supabase.auth.signUp({ email, password });
 
-    setIsSubmitting(false);
+      if (result.error) {
+        setError(result.error.message);
+        return;
+      }
 
-    if (result.error) {
-      setError(result.error.message);
-      return;
+      setMessage(mode === 'signIn' ? t('signedIn') : t('signUpSuccess'));
+    } catch (authError) {
+      setError(authError instanceof Error ? authError.message : t('authUnexpectedError'));
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setMessage(mode === 'signIn' ? t('signedIn') : t('signUpSuccess'));
   };
 
   const handleGoogle = async () => {
@@ -52,13 +56,22 @@ export default function LoginForm() {
 
     setIsSubmitting(true);
     setError(null);
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-    setIsSubmitting(false);
+    try {
+      const oauthResult = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (oauthResult.error) {
+        setError(oauthResult.error.message);
+      }
+    } catch (authError) {
+      setError(authError instanceof Error ? authError.message : t('authUnexpectedError'));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isConfigured) {

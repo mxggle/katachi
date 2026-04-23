@@ -2,42 +2,66 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from './AuthProvider';
+import { useTranslation } from '@/lib/i18n';
 import { useStore } from '@/lib/store';
-import { fetchRemoteStudyState, mergeStudyStates, saveRemoteStudyState } from '@/lib/supabase/studySync';
+import {
+  fetchRemoteStudySnapshot,
+  getStudySyncErrorMessageKey,
+  readStudySyncMeta,
+  resolveStudyStateForHydration,
+  saveRemoteStudyState,
+  stringifyStudyState,
+  writeStudySyncMeta,
+} from '@/lib/supabase/studySync';
 
 export default function StudySync() {
-  const { supabase, user } = useAuth();
+  const { isLoading, supabase, user } = useAuth();
   const studyState = useStore((state) => state.studyState);
   const setStudyState = useStore((state) => state.setStudyState);
+  const language = useStore((state) => state.language);
+  const { t } = useTranslation(language);
   const [isReady, setIsReady] = useState(false);
+  const [syncErrorKey, setSyncErrorKey] = useState<ReturnType<typeof getStudySyncErrorMessageKey> | null>(null);
   const lastSavedJsonRef = useRef<string | null>(null);
 
   useEffect(() => {
     let isCancelled = false;
 
     async function hydrate() {
+      if (isLoading) {
+        return;
+      }
+
       if (!supabase || !user) {
         setIsReady(false);
+        setSyncErrorKey(null);
         lastSavedJsonRef.current = null;
         return;
       }
 
       try {
         const localState = useStore.getState().studyState;
-        const remoteState = await fetchRemoteStudyState(supabase, user);
-        const mergedState = mergeStudyStates(localState, remoteState);
+        const remoteSnapshot = await fetchRemoteStudySnapshot(supabase, user);
+        const nextState = resolveStudyStateForHydration(localState, {
+          userId: user.id,
+          remoteState: remoteSnapshot?.studyState ?? null,
+          syncMeta: readStudySyncMeta(user.id),
+        });
 
         if (isCancelled) {
           return;
         }
 
-        setStudyState(mergedState);
-        await saveRemoteStudyState(supabase, user, mergedState);
-        lastSavedJsonRef.current = JSON.stringify(mergedState);
+        setStudyState(nextState);
+        const savedSnapshot = await saveRemoteStudyState(supabase, user, nextState);
+        writeStudySyncMeta(user.id, savedSnapshot);
+        lastSavedJsonRef.current = stringifyStudyState(savedSnapshot.studyState);
+        setSyncErrorKey(null);
         setIsReady(true);
       } catch (error) {
         console.error('Failed to hydrate Supabase study state', error);
         if (!isCancelled) {
+          setSyncErrorKey(getStudySyncErrorMessageKey(error));
           setIsReady(false);
         }
       }
@@ -48,30 +72,40 @@ export default function StudySync() {
     return () => {
       isCancelled = true;
     };
-  }, [setStudyState, supabase, user]);
+  }, [isLoading, setStudyState, supabase, user]);
 
   useEffect(() => {
     if (!supabase || !user || !isReady) {
       return;
     }
 
-    const nextJson = JSON.stringify(studyState);
+    const nextJson = stringifyStudyState(studyState);
     if (nextJson === lastSavedJsonRef.current) {
       return;
     }
 
     const timeout = window.setTimeout(() => {
       saveRemoteStudyState(supabase, user, studyState)
-        .then(() => {
-          lastSavedJsonRef.current = nextJson;
+        .then((savedSnapshot) => {
+          writeStudySyncMeta(user.id, savedSnapshot);
+          lastSavedJsonRef.current = stringifyStudyState(savedSnapshot.studyState);
         })
         .catch((error) => {
           console.error('Failed to save Supabase study state', error);
+          setSyncErrorKey(getStudySyncErrorMessageKey(error));
         });
     }, 1200);
 
     return () => window.clearTimeout(timeout);
   }, [isReady, studyState, supabase, user]);
 
-  return null;
+  if (!syncErrorKey || !user) {
+    return null;
+  }
+
+  return (
+    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-lg rounded-2xl border-[3px] border-[#b42318] bg-[#fff1f2] px-4 py-3 text-sm font-bold text-[#b42318] shadow-[4px_4px_0px_0px_#b42318]">
+      {t(syncErrorKey)}
+    </div>
+  );
 }

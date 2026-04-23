@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useMemo, useState } from 'react';
 import SetupMenu from '@/components/SetupMenu';
 import PracticeSession from '@/components/PracticeSession';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -15,9 +16,25 @@ import { useTranslation } from '@/lib/i18n';
 import Logo from '@/components/Logo';
 
 export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+function HomeContent() {
   const { activeSession, config, dailyStreak, startSession, language, studyState } = useStore();
+  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation(language);
+  const authError = searchParams.get('error');
+  const authErrorMessage =
+    authError === 'auth_failed'
+      ? t('authCallbackFailed')
+      : authError === 'auth_unconfigured'
+        ? t('authUnavailable')
+        : null;
 
   const setupSummary = useMemo(() => buildSetupSummary(config, language), [config, language]);
 
@@ -49,11 +66,11 @@ export default function Home() {
       
       {/* Top Utility Bar */}
       <div className="absolute left-0 top-0 z-30 w-full">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 sm:px-8">
-          <div className="flex items-center gap-4">
-            <Logo size={40} className="text-[color:var(--ink)]" />
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-6 sm:px-8">
+          <div className="flex items-center gap-4 shrink-0">
+            <Logo size={40} className="shrink-0 text-[color:var(--ink)]" />
             <div className="flex flex-col">
-              <span className="text-lg font-black uppercase tracking-tighter leading-none">{t('appName')}</span>
+              <span className="whitespace-nowrap text-lg font-black uppercase tracking-tighter leading-none">{t('appName')}</span>
             </div>
           </div>
           <AuthStatus />
@@ -101,9 +118,9 @@ export default function Home() {
               </div>
 
               <div className="p-8 sm:p-10 space-y-10">
-                {error && (
+                {(error || authErrorMessage) && (
                   <div className="w-full rounded-2xl border-2 border-[#b42318] bg-[#fff1f2] px-6 py-4 text-center text-sm font-bold text-[#b42318] animate-shake">
-                    {error}
+                    {error ?? authErrorMessage}
                   </div>
                 )}
 

@@ -27,20 +27,20 @@ export default function AuthStatus() {
 
   if (!hasMounted || isLoading) {
     return (
-      <div className="flex items-center gap-2 rounded-full border-2 border-[color:var(--ink)]/10 px-4 py-2 opacity-50">
-        <div className="h-2 w-2 animate-pulse rounded-full bg-[color:var(--muted)]" />
-        <span className="text-[10px] font-black uppercase tracking-widest">{t('loadingAccount')}</span>
+      <div className="flex h-11 shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full border-2 border-[color:var(--ink)]/10 px-3 opacity-50 sm:px-4">
+        <div className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-[color:var(--muted)]" />
+        <span className="hidden whitespace-nowrap text-[10px] font-black uppercase tracking-widest sm:inline">{t('loadingAccount')}</span>
       </div>
     );
   }
 
   if (user) {
     return (
-      <div className="relative">
+      <div className="relative shrink-0">
         <button
           type="button"
           onClick={() => setIsOpen((v) => !v)}
-          className={`flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-white transition-all ${
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-white transition-all ${
             isOpen 
             ? 'translate-x-[2px] translate-y-[2px] shadow-none' 
             : 'shadow-[3px_3px_0px_0px_var(--ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)]'
@@ -80,21 +80,21 @@ export default function AuthStatus() {
   if (!isConfigured) return null;
 
   return (
-    <div className="relative">
+    <div className="relative shrink-0">
       <button
         type="button"
         onClick={() => setIsOpen((value) => !value)}
-        className={`flex items-center gap-3 rounded-full border-[3px] border-[color:var(--ink)] px-5 py-2 text-xs font-black transition-all ${
+        className={`flex h-11 shrink-0 items-center gap-3 rounded-full border-[3px] border-[color:var(--ink)] px-4 text-xs font-black transition-all sm:px-5 ${
           isOpen 
           ? 'bg-[color:var(--ink)] text-white shadow-none translate-x-[2px] translate-y-[2px]' 
           : 'bg-[#fffbeb] text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)]'
         }`}
       >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+        <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8" />
         </svg>
-        <span className="hidden sm:inline">{t('saveProgressOnline')}</span>
-        <span className="sm:hidden">{t('signIn')}</span>
+        <span className="hidden whitespace-nowrap sm:inline">{t('saveProgressOnline')}</span>
+        <span className="whitespace-nowrap sm:hidden">{t('signIn')}</span>
       </button>
 
       {isOpen && (
