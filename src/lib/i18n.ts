@@ -138,10 +138,30 @@ export const translations = {
     // Hero
     heroTitleLine1: 'Master',
     heroTitleLine2: 'conjugations.',
+    heroSubtitle: 'REPS ➔ REFLEX',
 
     // Metadata
     metaTitle: 'Katachi',
     metaDescription: 'Practice Japanese conjugations in focused daily sessions.',
+
+    // Auth
+    account: 'Account',
+    signIn: 'Sign in',
+    signOut: 'Sign out',
+    createAccount: 'Create account',
+    email: 'Email',
+    password: 'Password',
+    working: 'Working...',
+    needAccount: 'Need an account? Create one.',
+    haveAccount: 'Already have an account? Sign in.',
+    continueWithGoogle: 'Continue with Google',
+    authUnavailable: 'Online accounts are not configured yet. You can keep practicing locally.',
+    localMode: 'Local practice mode',
+    saveProgressOnline: 'Save progress online',
+    loadingAccount: 'Loading account...',
+    signedIn: 'Signed in. Your progress will sync automatically.',
+    signUpSuccess: 'Account created. Check your email if confirmation is enabled.',
+    syncProgressPrompt: 'Sign in to sync your progress across devices.',
   },
   zh: {
     // Common
@@ -276,12 +296,32 @@ export const translations = {
     vietnamese: 'Tiếng Việt',
 
     // Hero
-    heroTitleLine1: '掌握日语变形',
-    heroTitleLine2: '',
+    heroTitleLine1: '掌握日语',
+    heroTitleLine2: '变形',
+    heroSubtitle: '重复 ➔ 肌肉记忆',
 
     // Metadata
     metaTitle: 'Katachi - 日语变形练习',
     metaDescription: '通过专注的每日练习，掌握日语动词和形容词的变形。',
+
+    // Auth
+    account: '账号',
+    signIn: '登录',
+    signOut: '退出',
+    createAccount: '创建账号',
+    email: '邮箱',
+    password: '密码',
+    working: '处理中...',
+    needAccount: '还没有账号？创建一个。',
+    haveAccount: '已有账号？登录。',
+    continueWithGoogle: '使用 Google 继续',
+    authUnavailable: '暂未配置在线账号。你可以继续在本地练习。',
+    localMode: '本地练习模式',
+    saveProgressOnline: '在线保存进度',
+    loadingAccount: '正在加载账号...',
+    signedIn: '已登录。你的进度会自动同步。',
+    signUpSuccess: '账号已创建。如果开启了邮件确认，请检查邮箱。',
+    syncProgressPrompt: '登录后可在多设备同步学习进度。',
   },
   vi: {
     // Common
@@ -418,10 +458,30 @@ export const translations = {
     // Hero
     heroTitleLine1: 'Nắm vững',
     heroTitleLine2: 'chia động từ.',
+    heroSubtitle: 'LẶP LẠI ➔ PHẢN XẠ',
 
     // Metadata
     metaTitle: 'Katachi - Luyện chia tiếng Nhật',
     metaDescription: 'Luyện tập chia động từ và tính từ tiếng Nhật trong các phiên học hằng ngày.',
+
+    // Auth
+    account: 'Tài khoản',
+    signIn: 'Đăng nhập',
+    signOut: 'Đăng xuất',
+    createAccount: 'Tạo tài khoản',
+    email: 'Email',
+    password: 'Mật khẩu',
+    working: 'Đang xử lý...',
+    needAccount: 'Chưa có tài khoản? Tạo một tài khoản.',
+    haveAccount: 'Đã có tài khoản? Đăng nhập.',
+    continueWithGoogle: 'Tiếp tục với Google',
+    authUnavailable: 'Tài khoản trực tuyến chưa được cấu hình. Bạn vẫn có thể luyện tập cục bộ.',
+    localMode: 'Chế độ luyện tập cục bộ',
+    saveProgressOnline: 'Lưu tiến trình trực tuyến',
+    loadingAccount: 'Đang tải tài khoản...',
+    signedIn: 'Đã đăng nhập. Tiến trình của bạn sẽ tự động đồng bộ.',
+    signUpSuccess: 'Tài khoản đã được tạo. Hãy kiểm tra email nếu xác nhận được bật.',
+    syncProgressPrompt: 'Đăng nhập để đồng bộ tiến trình trên nhiều thiết bị.',
   },
 } as const;
 

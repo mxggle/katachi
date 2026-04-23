@@ -7,6 +7,8 @@ import { ModeBreakdownPanel } from '@/components/progress/ModeBreakdownPanel';
 import { OverviewPanel } from '@/components/progress/OverviewPanel';
 import { RecentActivityPanel } from '@/components/progress/RecentActivityPanel';
 import { WeaknessPanels } from '@/components/progress/WeaknessPanels';
+import LoginForm from '@/components/LoginForm';
+import { useAuth } from '@/components/AuthProvider';
 import { loadDictionary } from '@/lib/dictionaryLoader';
 import { getConjugationLabel, getPracticeModeLabel, getWordDisplayText } from '@/lib/displayText';
 import { useTranslation } from '@/lib/i18n';
@@ -23,6 +25,7 @@ import {
 
 export default function ProgressPage() {
   const router = useRouter();
+  const { user, isLoading } = useAuth();
   const { config, language, startSession, studyState, updateConfig } = useStore();
   const { t } = useTranslation(language);
   const [error, setError] = useState<string | null>(null);
@@ -74,6 +77,11 @@ export default function ProgressPage() {
                   <p className="mt-3 max-w-2xl text-sm font-medium text-[color:var(--muted)] sm:text-base">
                     {t('progressPageDescription')}
                   </p>
+                  {!isLoading && !user && (
+                    <p className="mt-3 max-w-2xl text-sm font-bold text-[color:var(--ink)]">
+                      {t('syncProgressPrompt')}
+                    </p>
+                  )}
                 </div>
                 <Link
                   href="/"
@@ -85,6 +93,12 @@ export default function ProgressPage() {
                   {t('backToHome')}
                 </Link>
               </div>
+
+              {!isLoading && !user && (
+                <div className="max-w-md">
+                  <LoginForm />
+                </div>
+              )}
 
               <div className="rounded-[1.75rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] px-5 py-5 text-white shadow-[4px_4px_0px_0px_var(--ink)]">
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-white/80">{t('practiceNextTitle')}</p>

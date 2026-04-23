@@ -59,6 +59,8 @@ export interface AppState {
   updateConfig: (config: Partial<SessionConfig>) => void;
   checkDailyStreak: () => void;
   setLanguage: (language: Language) => void;
+  setStudyState: (studyState: StudyState) => void;
+  resetStore: () => void;
 }
 
 const defaultBaseConfig: SessionConfig = {
@@ -151,6 +153,8 @@ export function extractPersistedStudyState(persisted: unknown): StudyState {
   return envelope.studyState ?? envelope.state?.studyState ?? migratePersistedStudyState(envelope as never);
 }
 
+export const STORE_STORAGE_KEY = 'katachi-storage';
+
 export const useStore = create<AppState>()(
   persist(
     (set) => {
@@ -180,6 +184,25 @@ export const useStore = create<AppState>()(
               language,
             };
           }),
+
+        setStudyState: (studyState) => {
+          const nextConfig = buildConfig(studyState);
+          set({
+            ...syncAliases(studyState, nextConfig),
+            studyState,
+            config: nextConfig,
+            activeSession: null,
+          });
+        },
+
+        resetStore: () => {
+          const initialStudyState = DEFAULT_STUDY_STATE(getDefaultLanguage());
+          set({
+            ...syncAliases(initialStudyState, defaultBaseConfig),
+            studyState: initialStudyState,
+            activeSession: null,
+          });
+        },
 
         updateConfig: (newConfig) =>
           set((state) => {
@@ -343,7 +366,7 @@ export const useStore = create<AppState>()(
       };
     },
     {
-      name: 'katachi-storage',
+      name: STORE_STORAGE_KEY,
       partialize: (state) => ({
         studyState: state.studyState,
       }),
