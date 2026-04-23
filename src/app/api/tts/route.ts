@@ -23,16 +23,54 @@ export async function GET(request: Request) {
         const { audioStream } = tts.toStream(text);
 
         // Convert Node.js Readable stream to Web Streams API ReadableStream
+        let settled = false;
+        let cleanup = () => {};
+
+        const settle = (callback: () => void) => {
+            if (settled) {
+                return;
+            }
+
+            settled = true;
+            cleanup();
+            callback();
+        };
+
         const stream = new ReadableStream({
             start(controller) {
-                audioStream.on('data', (chunk) => {
-                    controller.enqueue(chunk);
-                });
-                audioStream.on('end', () => {
-                    controller.close();
-                });
-                audioStream.on('error', (err) => {
-                    controller.error(err);
+                const onData = (chunk: Buffer) => {
+                    if (!settled) {
+                        controller.enqueue(chunk);
+                    }
+                };
+
+                const onEnd = () => {
+                    settle(() => {
+                        controller.close();
+                    });
+                };
+
+                const onError = (err: Error) => {
+                    settle(() => {
+                        controller.error(err);
+                    });
+                };
+
+                cleanup = () => {
+                    audioStream.off('data', onData);
+                    audioStream.off('end', onEnd);
+                    audioStream.off('error', onError);
+                };
+
+                audioStream.on('data', onData);
+                audioStream.on('end', onEnd);
+                audioStream.on('error', onError);
+            },
+            cancel() {
+                settle(() => {
+                    if ('destroy' in audioStream && typeof audioStream.destroy === 'function') {
+                        audioStream.destroy();
+                    }
                 });
             },
         });

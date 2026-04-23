@@ -33,7 +33,7 @@ export default function LanguageSwitcher() {
     <div className="relative inline-flex flex-col items-center" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white px-4 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+        className="flex items-center gap-2 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white px-4 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
         aria-label={t('language')}
         aria-expanded={isOpen}
       >
@@ -47,7 +47,7 @@ export default function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute bottom-full mb-3 w-full min-w-[120px] animate-fade-in flex flex-col overflow-hidden rounded-2xl border-[3px] border-[color:var(--ink)] bg-white shadow-[4px_4px_0px_0px_var(--ink)] origin-bottom z-50">
+        <div className="absolute bottom-full mb-3 w-full min-w-[120px] animate-fade-in flex flex-col overflow-hidden rounded-2xl border-[3px] border-[color:var(--ink)] bg-white shadow-[3px_3px_0px_0px_var(--ink)] origin-bottom z-50">
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}

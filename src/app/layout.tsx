@@ -4,6 +4,8 @@ import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { translations } from "@/lib/i18n";
+import { AuthProvider } from "@/components/AuthProvider";
+import StudySync from "@/components/StudySync";
 
 const font = Outfit({
   variable: "--font-outfit",
@@ -56,7 +58,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${font.variable} antialiased`}>
-        {children}
+        <AuthProvider>
+          <StudySync />
+          {children}
+        </AuthProvider>
         <Analytics />
       </body>
     </html>

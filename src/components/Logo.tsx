@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface LogoProps {
   className?: string;
@@ -10,7 +11,7 @@ export default function Logo({
   size = 40, 
 }: LogoProps) {
   return (
-    <img 
+    <Image
       src="/logo.svg" 
       alt="Katachi Logo"
       width={size}

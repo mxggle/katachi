@@ -13,6 +13,11 @@
   --accent-soft: rgba(255, 107, 107, 0.12);
   --primary-green: #9acd32;
   --focus: #6f8f2f;
+  
+  /* Industrial Palette Extensions */
+  --ink-90: rgba(31, 41, 55, 0.9);
+  --ink-50: rgba(31, 41, 55, 0.5);
+  --ink-10: rgba(31, 41, 55, 0.1);
 }
 
 body {
@@ -138,4 +143,28 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
+}
+
+/* Industrial Texture Utilities */
+.bg-grid-technical {
+  background-image: radial-gradient(var(--ink-10) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.label-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
 }

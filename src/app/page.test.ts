@@ -19,4 +19,9 @@ describe('homepage entry layout', () => {
     expect(pageSource).not.toContain('Header slot');
     expect(pageSource).toContain('SetupMenu');
   });
+
+  it('keeps the top brand mark stable while auth controls change state', () => {
+    expect(pageSource).toContain('flex items-center gap-4 shrink-0');
+    expect(pageSource).toContain('whitespace-nowrap text-lg font-black');
+  });
 });

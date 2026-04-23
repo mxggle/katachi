@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useMemo, useState } from 'react';
 import SetupMenu from '@/components/SetupMenu';
 import PracticeSession from '@/components/PracticeSession';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { HtmlLangSync } from '@/components/HtmlLangSync';
+import AuthStatus from '@/components/AuthStatus';
 import { buildSetupSummary } from '@/components/setupMenu.helpers';
 import { buildPracticeSession } from '@/lib/sessionBuilder';
 import { useStore } from '@/lib/store';
@@ -14,9 +16,25 @@ import { useTranslation } from '@/lib/i18n';
 import Logo from '@/components/Logo';
 
 export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+function HomeContent() {
   const { activeSession, config, dailyStreak, startSession, language, studyState } = useStore();
+  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation(language);
+  const authError = searchParams.get('error');
+  const authErrorMessage =
+    authError === 'auth_failed'
+      ? t('authCallbackFailed')
+      : authError === 'auth_unconfigured'
+        ? t('authUnavailable')
+        : null;
 
   const setupSummary = useMemo(() => buildSetupSummary(config, language), [config, language]);
 
@@ -46,15 +64,30 @@ export default function Home() {
       <HtmlLangSync />
       <div className="blob-bg" />
       
-      <div className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col items-center justify-center gap-10 px-4 py-12 sm:px-6 lg:px-8">
+      {/* Top Utility Bar */}
+      <div className="absolute left-0 top-0 z-30 w-full">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-6 sm:px-8">
+          <div className="flex items-center gap-4 shrink-0">
+            <Logo size={40} className="shrink-0 text-[color:var(--ink)]" />
+            <div className="flex flex-col">
+              <span className="whitespace-nowrap text-lg font-black uppercase tracking-tighter leading-none">{t('appName')}</span>
+            </div>
+          </div>
+          <AuthStatus />
+        </div>
+      </div>
+
+      <div className="mx-auto flex w-full max-w-3xl flex-col items-center justify-start gap-12 px-4 pb-24 pt-24 sm:px-6 lg:px-8">
         
-        <header className="w-full text-center space-y-6 animate-fade-in flex flex-col items-center">
-          <Logo size={120} className="text-[color:var(--ink)]" />
-          
-          <h1 className="text-4xl font-bold tracking-tight text-[color:var(--ink)] sm:text-7xl leading-[1.1] text-balance">
+        <header className="relative w-full text-center space-y-4 animate-fade-in flex flex-col items-center">
+          <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.3em] text-[color:var(--muted)] opacity-60">
+            {t('heroSubtitle')}
+          </p>
+          <h1 className="text-5xl font-black tracking-tight text-[color:var(--ink)] sm:text-8xl leading-[0.9] text-balance">
             {t('heroTitleLine2') ? (
               <>
-                {t('heroTitleLine1')} {t('heroTitleLine2')}
+                {t('heroTitleLine1')}{language !== 'zh' && ' '}
+                <span className="text-[color:var(--accent)]">{t('heroTitleLine2')}</span>
               </>
             ) : (
               t('heroTitleLine1')
@@ -63,68 +96,73 @@ export default function Home() {
         </header>
 
         <section className="w-full animate-fade-in [animation-delay:100ms] opacity-0 [animation-fill-mode:forwards]">
-          <div className="relative rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-8 sm:p-10 shadow-[8px_8px_0px_0px_var(--ink)]">
-            <div className="flex flex-col items-center gap-8">
+          <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white shadow-[8px_8px_0px_0px_var(--ink)] overflow-hidden">
+            <div className="flex flex-col">
               
-              <div className="flex w-full flex-wrap justify-center gap-4 sm:gap-8">
-                <div className="flex flex-col items-center">
-                  <span className="text-xs font-bold uppercase tracking-widest text-[color:var(--muted)]">{t('streak')}</span>
-                  <div className="mt-1 flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-[color:var(--accent)]">{dailyStreak}</span>
-                    <span className="text-lg font-bold text-[color:var(--ink)]">{t('days')}</span>
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 divide-x-[4px] divide-[color:var(--ink)] border-b-[4px] border-[color:var(--ink)]">
+                <div className="p-6 sm:p-8 flex flex-col items-center justify-center bg-[#fffbeb]">
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('streak')}</span>
+                  <div className="mt-2 flex items-baseline gap-1">
+                    <span className="text-5xl sm:text-6xl font-black text-[color:var(--accent)]">{dailyStreak}</span>
+                    <span className="text-sm font-bold text-[color:var(--ink)]">{t('days')}</span>
                   </div>
                 </div>
-                <div className="hidden sm:block w-[3px] bg-[color:var(--ink)] rounded-full" />
-                <div className="flex flex-col items-center">
-                  <span className="text-xs font-bold uppercase tracking-widest text-[color:var(--muted)]">{t('goal')}</span>
-                  <div className="mt-1 flex items-baseline gap-1">
-                    <span className="text-4xl font-bold text-[color:var(--ink)]">{config.questionCount}</span>
-                    <span className="text-lg font-bold text-[color:var(--muted)]">{t('prompts')}</span>
+                <div className="p-6 sm:p-8 flex flex-col items-center justify-center">
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('goal')}</span>
+                  <div className="mt-2 flex items-baseline gap-1">
+                    <span className="text-5xl sm:text-6xl font-black text-[color:var(--ink)]">{config.questionCount}</span>
+                    <span className="text-sm font-bold text-[color:var(--muted)]">{t('prompts')}</span>
                   </div>
                 </div>
               </div>
 
-              {error && (
-                <div className="w-full rounded-xl border-2 border-[#b42318] bg-[#fff1f2] px-4 py-3 text-center text-sm font-bold text-[#b42318]">
-                  {error}
-                </div>
-              )}
-
-              <button
-                onClick={handleStart}
-                className="group relative inline-flex w-full items-center justify-center gap-3 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] px-8 py-5 text-xl sm:text-2xl font-bold text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none sm:w-auto sm:px-16"
-              >
-                <span className="text-pretty text-center">{t('startPractice')}</span>
-                <svg className="h-7 w-7 shrink-0 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </button>
-
-              <Link
-                href="/progress"
-                className="flex w-full flex-col gap-4 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent-soft)] px-5 py-5 text-left shadow-[5px_5px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_var(--ink)] sm:flex-row sm:items-center sm:justify-between sm:px-6"
-              >
-                <div className="space-y-1">
-                  <p className="text-xs font-black uppercase tracking-[0.24em] text-[color:var(--muted)]">
-                    {t('itemsStudied')}
-                  </p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-black tracking-tight text-[color:var(--ink)]">
-                      {studyState.learnerSummary.totalAnswered}
-                    </span>
-                    <span className="text-sm font-semibold text-[color:var(--muted)]">
-                      {t('totalAnswered')}
-                    </span>
+              <div className="p-8 sm:p-10 space-y-10">
+                {(error || authErrorMessage) && (
+                  <div className="w-full rounded-2xl border-2 border-[#b42318] bg-[#fff1f2] px-6 py-4 text-center text-sm font-bold text-[#b42318] animate-shake">
+                    {error ?? authErrorMessage}
                   </div>
+                )}
+
+                <div className="flex flex-col gap-8">
+                  <div className="space-y-4">
+                    <p className="text-center text-[10px] font-black uppercase tracking-[0.2em] text-[color:var(--muted)]">
+                      {t('currentlyPracticing')} <span className="text-[color:var(--ink)]">{setupSummary}</span>
+                    </p>
+                    <button
+                      onClick={handleStart}
+                      className="group relative inline-flex w-full items-center justify-center gap-4 rounded-[1.75rem] border-[4px] border-[color:var(--ink)] bg-[color:var(--accent)] px-8 py-6 text-2xl sm:text-3xl font-black text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none"
+                    >
+                      <span className="whitespace-nowrap">{t('startPractice')}</span>
+                      <svg className="h-8 w-8 shrink-0 transition-transform group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <Link
+                    href="/progress"
+                    className="group flex w-full flex-col gap-4 rounded-[1.75rem] border-[3px] border-[color:var(--ink)] bg-[#f4f4ea] px-6 py-6 text-left shadow-[5px_5px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_var(--ink)] sm:flex-row sm:items-center sm:justify-between"
+                  >
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[color:var(--muted)]">
+                        {t('itemsStudied')}
+                      </p>
+                      <div className="flex items-baseline gap-3">
+                        <span className="text-4xl font-black tracking-tight text-[color:var(--ink)]">
+                          {studyState.learnerSummary.totalAnswered}
+                        </span>
+                        <span className="text-xs font-bold text-[color:var(--muted)]">
+                          {t('totalAnswered')}
+                        </span>
+                      </div>
+                    </div>
+                    <span className="inline-flex min-h-12 items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-white px-6 py-2 text-sm font-black text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] group-hover:bg-[color:var(--accent-soft)] transition-colors sm:shrink-0">
+                      {t('viewProgress')}
+                    </span>
+                  </Link>
                 </div>
-                <span className="inline-flex min-h-11 items-center justify-center rounded-full border-[2px] border-[color:var(--ink)] bg-white px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all sm:shrink-0">
-                  {t('viewProgress')}
-                </span>
-              </Link>
-              
-              <p className="text-sm font-medium text-[color:var(--muted)] text-center max-w-md">
-                {t('currentlyPracticing')} <span className="font-bold text-[color:var(--ink)]">{setupSummary}</span>
-              </p>
+              </div>
             </div>
           </div>
         </section>
@@ -133,8 +171,14 @@ export default function Home() {
           <SetupMenu />
         </section>
 
-        <footer className="mt-8 flex w-full justify-center animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
-          <LanguageSwitcher />
+        <footer className="mt-12 flex w-full flex-col items-center gap-8 animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
+          <div className="flex flex-col items-center gap-4">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[color:var(--ink)]/20">
+              {t('appName')} &copy; {new Date().getFullYear()}
+            </p>
+            <div className="h-px w-12 bg-[color:var(--ink)]/10" />
+            <LanguageSwitcher />
+          </div>
         </footer>
       </div>
     </main>
