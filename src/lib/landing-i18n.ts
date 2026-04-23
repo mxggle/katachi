@@ -4,10 +4,33 @@ export interface LandingCopy {
     description: string;
   };
   hero: {
+    eyebrow: string;
     h1: string;
     subtitle: string;
     cta: string;
     ctaLink: string;
+    proof: string[];
+  };
+  drillPanel: {
+    label: string;
+    promptLabel: string;
+    prompt: string;
+    targetLabel: string;
+    target: string;
+    choices: string[];
+    helper: string;
+    stats: Array<{
+      value: string;
+      label: string;
+    }>;
+  };
+  trainingStats: Array<{
+    value: string;
+    label: string;
+  }>;
+  sectionLabels: {
+    problem: string;
+    modes: string;
   };
   problem: {
     heading: string;
@@ -23,7 +46,9 @@ export interface LandingCopy {
   };
   modes: {
     heading: string;
+    intro: string;
     items: Array<{
+      modeIndex: string;
       title: string;
       description: string;
     }>;
@@ -64,15 +89,40 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       description: 'A focused Japanese conjugation practice tool built by a learner, for learners. Drill verbs and adjectives with smart distractors and weakness tracking. Covers JLPT N5 & N4 grammar forms.',
     },
     hero: {
-      h1: 'Stop freezing on Japanese conjugations. Start drilling them.',
-      subtitle: 'I built Katachi because I kept getting stuck — mixing up tenses, forgetting passive forms, hesitating on te-form. This tool strips away the noise and focuses on one thing: repetition until it sticks.',
+      eyebrow: 'Conjugation Lab',
+      h1: 'Build Japanese conjugations into muscle memory.',
+      subtitle: 'Katachi focuses on one skill: turning Japanese verb and adjective conjugation into fast, reliable recall through short drills, smart distractors, and targeted repetition.',
       cta: 'Start Practicing',
       ctaLink: '/',
+      proof: ['Free practice', 'No sign-up required', 'JLPT N5-N3 patterns'],
+    },
+    drillPanel: {
+      label: 'Live drill preview',
+      promptLabel: 'Dictionary form',
+      prompt: '泳ぐ',
+      targetLabel: 'Make the te-form',
+      target: 'Which answer connects the sentence correctly?',
+      choices: ['泳いで', '泳って', '泳んで'],
+      helper: 'The distractors are intentionally close, so each round gives you the repetition you need to make the form automatic.',
+      stats: [
+        { value: '12', label: 'prompts' },
+        { value: '4', label: 'forms mixed' },
+        { value: '1', label: 'weak spot surfaced' },
+      ],
+    },
+    trainingStats: [
+      { value: 'N5-N3', label: 'levels covered' },
+      { value: '2', label: 'practice modes' },
+      { value: '0', label: 'setup required' },
+    ],
+    sectionLabels: {
+      problem: 'Why it matters',
+      modes: 'Practice setup',
     },
     problem: {
-      heading: 'The frustration that started it all',
-      body1: "When you're reading Japanese and hit a verb conjugation, the flow breaks. Is this past polite or plain? Did they use passive or causative? For me, it happened constantly — te-form was my biggest weakness. I'd know the dictionary form, but the moment I needed to connect it, I'd freeze.",
-      body2: 'Textbooks explain the rules. Flashcards show the answers. But neither gives you the repetition you actually need to make conjugation automatic.',
+      heading: 'Why conjugation needs focused practice',
+      body1: 'Many learners understand conjugation rules in isolation, but still hesitate when a sentence requires the right form: past, negative, te-form, potential, passive, causative, or conditional.',
+      body2: 'Textbooks explain the rules. Flashcards show the answers. Katachi gives you the focused repetition you need to make conjugation automatic.',
     },
     features: {
       heading: 'No setup. No distraction. Just practice.',
@@ -97,16 +147,20 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     modes: {
       heading: 'Three ways to practice',
+      intro: 'Choose a ready-made session, target your weak spots, or take full control when you want to drill a specific grammar point.',
       items: [
         {
+          modeIndex: '01',
           title: 'Daily Drill',
           description: 'A curated session generated automatically every day. Just open the app and go — no decisions needed.',
         },
         {
+          modeIndex: '02',
           title: 'Weakness Training',
           description: 'Katachi analyzes your mistakes and builds sessions that target your weakest forms. te-form trouble? You will get more te-form until it clicks.',
         },
         {
+          modeIndex: '03',
           title: 'Free Practice',
           description: 'Full control. Pick any level, word type, and conjugation form combination. Perfect for drilling a specific grammar point before a test.',
         },
@@ -129,7 +183,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       body2: 'This is not a vocabulary app. It is a conjugation drill tool. You do not need to memorize ten thousand words to master conjugation. You need repetition on the patterns until they become automatic, regardless of the word.',
     },
     finalCta: {
-      heading: 'Ready to make conjugations automatic?',
+      heading: 'Ready to build conjugations into muscle memory?',
       subtitle: 'Join thousands of learners drilling Japanese grammar every day. Free. No sign-up required.',
       cta: 'Start Practicing Now',
     },
@@ -144,15 +198,40 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       description: '由日语学习者开发的变形练习工具。专注反复训练，智能识别薄弱环节（如て形、被动形），针对性强化。覆盖 JLPT N5 & N4 核心语法。',
     },
     hero: {
-      h1: '日语变形总卡壳？那就练到形成肌肉记忆。',
-      subtitle: '我在学日语时，时态总是搞混、被动形记不住、て形变到一半就愣住。所以我做了 Katachi —— 去掉一切干扰，只专注一件事：反复练习，直到变形成为本能。',
+      eyebrow: 'Conjugation Lab',
+      h1: '把日语变形练成肌肉记忆',
+      subtitle: 'Katachi 专注于一件事：通过短时高频练习、智能干扰项和薄弱点追踪，帮助学习者把日语动词与形容词变形练到快速、稳定、自然。',
       cta: '开始练习',
       ctaLink: '/',
+      proof: ['免费练习', '无需注册', '覆盖 JLPT N5-N3 核心模式'],
+    },
+    drillPanel: {
+      label: '练习预览',
+      promptLabel: '辞书形',
+      prompt: '泳ぐ',
+      targetLabel: '变成て形',
+      target: '哪一个答案能正确连接句子？',
+      choices: ['泳いで', '泳って', '泳んで'],
+      helper: '干扰项会尽量贴近常见错误，让每一轮练习都真正提供让变形形成本能的重复训练。',
+      stats: [
+        { value: '12', label: '题' },
+        { value: '4', label: '混合形式' },
+        { value: '1', label: '薄弱点浮现' },
+      ],
+    },
+    trainingStats: [
+      { value: 'N5-N3', label: '覆盖等级' },
+      { value: '2', label: '练习模式' },
+      { value: '0', label: '开始前配置' },
+    ],
+    sectionLabels: {
+      problem: '为什么会卡住',
+      modes: '练习设置',
     },
     problem: {
-      heading: '一切源于一个让人抓狂的瞬间',
-      body1: '读日语的时候，遇到一个动词变形，整个节奏就断了。这是过去式还是现在式？是被动还是使役？对我来说，这种卡顿太常见了——尤其是て形，明明认识原形，一到变形就愣在那里。',
-      body2: '课本会讲规则，单词卡会给你答案，但都没有提供真正让你形成本能的重复训练。',
+      heading: '为什么变形需要专项训练',
+      body1: '很多学习者能理解变形规则，但在阅读或输出时遇到具体形式，仍然会停顿：过去式、否定形、て形、可能形、被动形、使役形或条件形。',
+      body2: '课本会讲规则，单词卡会给你答案。Katachi 提供的是针对变形本身的重复训练，帮助你把规则练到自动反应。',
     },
     features: {
       heading: '零配置、零干扰，只管练',
@@ -177,16 +256,20 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     modes: {
       heading: '三种练习方式',
+      intro: '你可以直接开始每日练习，也可以针对薄弱点强化，或自由选择某个语法点反复训练。',
       items: [
         {
+          modeIndex: '01',
           title: '每日练习',
           description: '每天自动生成一套精选题目。打开应用直接开始——无需任何选择。',
         },
         {
+          modeIndex: '02',
           title: '弱点训练',
           description: 'Katachi 分析你的错误记录，针对你最薄弱的变形形式进行强化。て形总出错？系统会一直推送て形，直到你掌握为止。',
         },
         {
+          modeIndex: '03',
           title: '自由练习',
           description: '完全自定义。自由选择等级、词性和变形形式的任意组合。考前突击某个语法点的最佳选择。',
         },
@@ -209,7 +292,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       body2: '这不是一个背单词的软件，它是一个练变形的工具。你不需要背一万个单词才能掌握变形。你需要的是对规则进行反复训练，直到它们成为本能，无论遇到什么词都能立刻反应。',
     },
     finalCta: {
-      heading: '让变形成为你的本能',
+      heading: '把日语变形练成肌肉记忆',
       subtitle: '和数千名学习者一起，每天进行高效的日语变形训练。免费，无需注册。',
       cta: '立即开始练习',
     },
@@ -224,15 +307,40 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       description: 'Công cụ luyện tập chia động từ tiếng Nhật được tạo ra bởi người học, dành cho người học. Luyện tập động từ và tính từ với phân tích điểm yếu thông minh. Bao gồm các dạng ngữ pháp JLPT N5 & N4.',
     },
     hero: {
-      h1: 'Ngừng bối rối khi chia động từ tiếng Nhật. Bắt đầu luyện tập ngay.',
-      subtitle: 'Tôi tạo ra Katachi vì tôi liên tục bị kẹt — nhầm lẫn các thì, quên thể bị động, do dự với thể te. Công cụ này loại bỏ sự phân tâm và tập trung vào một điều duy nhất: lặp lại cho đến khi nhớ.',
+      eyebrow: 'Conjugation Lab',
+      h1: 'Luyện chia động từ tiếng Nhật thành phản xạ.',
+      subtitle: 'Katachi tập trung vào một kỹ năng: biến việc chia động từ và tính từ tiếng Nhật thành phản xạ nhanh, ổn định thông qua phiên luyện ngắn, đáp án gây nhiễu thông minh và lặp lại có mục tiêu.',
       cta: 'Bắt đầu luyện tập',
       ctaLink: '/',
+      proof: ['Miễn phí', 'Không cần đăng ký', 'Mẫu JLPT N5-N3'],
+    },
+    drillPanel: {
+      label: 'Xem trước bài luyện',
+      promptLabel: 'Thể từ điển',
+      prompt: '泳ぐ',
+      targetLabel: 'Chuyển sang thể te',
+      target: 'Đáp án nào nối câu chính xác?',
+      choices: ['泳いで', '泳って', '泳んで'],
+      helper: 'Các đáp án gây nhiễu được đặt gần với lỗi thường gặp, để mỗi vòng luyện tập tạo ra sự lặp lại bạn cần.',
+      stats: [
+        { value: '12', label: 'câu hỏi' },
+        { value: '4', label: 'dạng trộn' },
+        { value: '1', label: 'điểm yếu hiện ra' },
+      ],
+    },
+    trainingStats: [
+      { value: 'N5-N3', label: 'cấp độ bao phủ' },
+      { value: '2', label: 'chế độ luyện tập' },
+      { value: '0', label: 'thiết lập cần thiết' },
+    ],
+    sectionLabels: {
+      problem: 'Vì sao bị kẹt',
+      modes: 'Thiết lập luyện tập',
     },
     problem: {
-      heading: 'Sự bực bội đã bắt đầu tất cả',
-      body1: "Khi bạn đang đọc tiếng Nhật và gặp một động từ chia, mạch đọc bị gián đoạn. Đây là thể quá khứ lịch sự hay thông thường? Họ đã dùng thể bị động hay sai khiến? Đối với tôi, điều đó xảy ra liên tục — thể te là điểm yếu lớn nhất của tôi. Tôi biết thể từ điển, nhưng lúc cần kết nối, tôi lại đứng hình.",
-      body2: 'Sách giáo khoa giải thích các quy tắc. Flashcard cho thấy đáp án. Nhưng không cái nào cung cấp cho bạn sự lặp lại mà bạn thực sự cần để việc chia từ trở thành phản xạ tự nhiên.',
+      heading: 'Vì sao chia từ cần luyện tập riêng',
+      body1: 'Nhiều người học hiểu quy tắc chia từ khi học riêng lẻ, nhưng vẫn do dự khi câu cần đúng dạng: quá khứ, phủ định, thể te, khả năng, bị động, sai khiến hoặc điều kiện.',
+      body2: 'Sách giáo khoa giải thích quy tắc. Flashcard cho thấy đáp án. Katachi cung cấp sự lặp lại tập trung để việc chia từ trở thành phản xạ tự nhiên.',
     },
     features: {
       heading: 'Không thiết lập. Không phân tâm. Chỉ luyện tập.',
@@ -257,16 +365,20 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     modes: {
       heading: 'Ba cách để luyện tập',
+      intro: 'Chọn một phiên học có sẵn, luyện điểm yếu, hoặc tự kiểm soát khi bạn muốn luyện một điểm ngữ pháp cụ thể.',
       items: [
         {
+          modeIndex: '01',
           title: 'Luyện tập hằng ngày',
           description: 'Một phiên học được chọn lọc và tạo tự động mỗi ngày. Chỉ cần mở ứng dụng và học — không cần phải quyết định.',
         },
         {
+          modeIndex: '02',
           title: 'Huấn luyện điểm yếu',
           description: 'Katachi phân tích lỗi sai của bạn và xây dựng các phiên học nhắm vào những dạng yếu nhất. Khó khăn với thể te? Bạn sẽ nhận được nhiều thể te hơn cho đến khi thành thạo.',
         },
         {
+          modeIndex: '03',
           title: 'Luyện tập tự do',
           description: 'Kiểm soát hoàn toàn. Chọn bất kỳ sự kết hợp nào giữa cấp độ, loại từ và dạng chia. Hoàn hảo để luyện tập một điểm ngữ pháp cụ thể trước kỳ thi.',
         },
@@ -289,7 +401,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       body2: 'Đây không phải là một ứng dụng từ vựng. Nó là một công cụ luyện chia động từ. Bạn không cần phải ghi nhớ mười nghìn từ để làm chủ cách chia. Bạn cần sự lặp lại các mẫu chia cho đến khi chúng trở thành tự động, bất kể là từ nào.',
     },
     finalCta: {
-      heading: 'Sẵn sàng để việc chia động từ trở nên tự động?',
+      heading: 'Sẵn sàng luyện chia động từ thành phản xạ?',
       subtitle: 'Tham gia cùng hàng ngàn người học luyện ngữ pháp tiếng Nhật mỗi ngày. Miễn phí. Không cần đăng ký.',
       cta: 'Bắt đầu luyện tập ngay',
     },
