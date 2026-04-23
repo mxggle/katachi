@@ -74,6 +74,7 @@ function getDefaultLanguage(): Language {
   if (typeof navigator !== 'undefined' && navigator.language) {
     const lang = navigator.language.toLowerCase();
     if (lang.startsWith('zh')) return 'zh';
+    if (lang.startsWith('vi')) return 'vi';
   }
   return 'en';
 }

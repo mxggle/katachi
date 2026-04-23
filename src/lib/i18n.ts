@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-export type Language = 'en' | 'zh';
+export type Language = 'en' | 'zh' | 'vi';
 
 export const translations = {
   en: {
@@ -133,6 +133,7 @@ export const translations = {
     language: 'Language',
     english: 'English',
     chinese: '中文',
+    vietnamese: 'Tiếng Việt',
 
     // Hero
     heroTitleLine1: 'Master',
@@ -199,7 +200,7 @@ export const translations = {
       past_plain: 'た形',
       past_polite: 'でした形',
       past_negative_plain: 'なかった形',
-      past_negative_polite: '丁寧過去否定形',
+      past_negative_polite: '丁寧过去否定形',
       te_form: 'て形',
       conditional_ba: 'ば形',
       conditional_tara: 'たら形',
@@ -272,6 +273,7 @@ export const translations = {
     language: '语言',
     english: 'English',
     chinese: '中文',
+    vietnamese: 'Tiếng Việt',
 
     // Hero
     heroTitleLine1: '掌握日语变形',
@@ -280,6 +282,146 @@ export const translations = {
     // Metadata
     metaTitle: 'Katachi - 日语变形练习',
     metaDescription: '通过专注的每日练习，掌握日语动词和形容词的变形。',
+  },
+  vi: {
+    // Common
+    appName: 'Katachi ✦ 形',
+    streak: 'Chuỗi',
+    days: 'ngày',
+    day: 'ngày',
+    goal: 'Mục tiêu',
+    prompts: 'câu hỏi',
+    startPractice: 'Bắt đầu luyện tập',
+    currentlyPracticing: 'Đang luyện tập:',
+    setupOptions: 'Tùy chọn thiết lập',
+    setupDescription: 'Tinh chỉnh các dạng và chế độ cho phiên luyện tập.',
+    hideOptions: 'Ẩn tùy chọn',
+    showOptions: 'Hiện tùy chọn',
+    practiceType: 'Loại luyện tập',
+    dailyPractice: 'Luyện tập hằng ngày',
+    weaknessDrill: 'Khắc phục điểm yếu',
+    freePractice: 'Luyện tập tự do',
+    levels: 'Cấp độ',
+    wordTypes: 'Loại từ',
+    forms: 'Dạng chia',
+    formsHelper: 'Phải chọn ít nhất một dạng.',
+    selectAll: 'Chọn tất cả',
+    clear: 'Xóa',
+    resetForms: 'Đặt lại',
+    practiceMode: 'Chế độ luyện tập',
+    multipleChoice: 'Trắc nghiệm',
+    typing: 'Gõ chữ',
+    questionCount: 'Số câu hỏi',
+    verb: 'Động từ',
+    iAdj: 'Tính từ đuôi い',
+    naAdj: 'Tính từ đuôi な',
+    verb_form: {
+      polite: 'Thể ます',
+      negative_plain: 'Thể ない',
+      negative_polite: 'Thể ません',
+      past_plain: 'Thể た',
+      past_polite: 'Thể ました',
+      past_negative_plain: 'Thể なかった',
+      past_negative_polite: 'Thể ませんでした',
+      te_form: 'Thể て',
+      potential: 'Thể Khả năng',
+      passive: 'Thể Bị động',
+      causative: 'Thể Sai khiến',
+      causative_passive: 'Thể Bị động sai khiến',
+      imperative: 'Thể Mệnh lệnh',
+      volitional: 'Thể Ý chí',
+      conditional_ba: 'Thể Điều kiện ば',
+      conditional_tara: 'Thể Điều kiện たら',
+    },
+    adj_form: {
+      polite: 'Thể です',
+      negative_plain: 'Thể ない',
+      negative_polite: 'Thể phủ định lịch sự',
+      past_plain: 'Thể た',
+      past_polite: 'Thể でした',
+      past_negative_plain: 'Thể なかった',
+      past_negative_polite: 'Thể phủ định quá khứ lịch sự',
+      te_form: 'Thể て',
+      conditional_ba: 'Thể Điều kiện ば',
+      conditional_tara: 'Thể Điều kiện たら',
+    },
+
+    // Practice Session
+    quit: 'Thoát?',
+    quitMessage: 'Tiến trình của bạn trong phiên này sẽ bị mất.',
+    quitSession: 'Thoát phiên',
+    keepGoing: 'Tiếp tục',
+    common: 'Thông dụng',
+    question: 'Câu hỏi',
+    nextQuestion: 'Câu tiếp theo',
+    checkAnswer: 'Kiểm tra đáp án',
+    correctAnswer: 'Đáp án đúng',
+    sessionSummary: 'Tóm tắt phiên luyện tập',
+    score: 'Điểm số',
+    backToHome: 'Về trang chủ',
+    placeholder: 'Gõ Hiragana hoặc Romaji',
+
+    // Progress Snapshot
+    progressSnapshot: 'Tổng quan tiến trình',
+    progressHeading: 'Duy trì chuỗi ngày học bằng các bài tập ngắn hằng ngày.',
+    noProgress: 'Chưa có tiến trình. Số liệu thống kê của bạn sẽ xuất hiện sau phiên luyện tập đầu tiên.',
+    answered: 'Đã trả lời',
+    itemsStudied: 'Mục đã học',
+    accuracy: 'Độ chính xác',
+    dailyStreak: 'Chuỗi ngày học',
+    totalAnswered: 'Tổng số câu hỏi đã hoàn thành.',
+    acrossAllSessions: 'Trên tất cả các phiên đã lưu.',
+    practiceOnConsecutiveDays: 'Luyện tập trong các ngày liên tiếp.',
+    studiedToday: 'Đã học hôm nay',
+    todaysPractice: 'Số câu hỏi đã trả lời hôm nay.',
+    weakestConjugations: 'Dạng chia yếu nhất',
+    weakestItems: 'Mục yếu nhất',
+    modeComparison: 'So sánh chế độ',
+    recentActivity: 'Hoạt động gần đây',
+    overview: 'Tổng quan',
+    practiceNextTitle: 'Luyện tập tiếp theo',
+    practiceNextDescription: 'Bắt đầu với điểm yếu nhất trước, sau đó dùng phần còn lại của trang này để tham khảo.',
+    focusFallbackHeading: 'Xây dựng bản đồ điểm yếu đầu tiên của bạn',
+    focusWeaknessEmpty: 'Hoàn thành một phiên và Katachi sẽ làm nổi bật những dạng cần tập trung nhất.',
+    compactOverviewTitle: 'Tóm tắt nhanh',
+    weakPointsSectionLabel: 'Luyện tập ưu tiên điểm yếu',
+    supportingStatsLabel: 'Số liệu hỗ trợ',
+    progressPageTitle: 'Xem điểm yếu của bạn ở đâu.',
+    progressPageDescription: 'Theo dõi những dạng thường bị sai, sau đó trực tiếp vào luyện tập chuyên sâu.',
+    viewProgress: 'Xem tiến trình',
+    practiceThisWeakness: 'Luyện tập điểm yếu này',
+    noWeaknessData: 'Chưa có dữ liệu điểm yếu. Hoàn thành một phiên và các điểm yếu của bạn sẽ xuất hiện ở đây.',
+    noRecentActivity: 'Chưa có hoạt động gần đây. Hoàn thành một phiên để bắt đầu xây dựng xu hướng của bạn.',
+    answeredLower: 'đã trả lời',
+    correctLower: 'đúng',
+
+    // Setup Summary
+    verbs: 'động từ',
+    iAdjectives: 'tính từ đuôi i',
+    naAdjectives: 'tính từ đuôi na',
+    form: 'dạng',
+    formsPlural: 'dạng',
+    questions: 'câu hỏi',
+
+    // Session Builder Errors
+    noWordsMatch: 'Không có từ nào khớp với thiết lập này. Hãy thử cấp độ hoặc loại từ khác.',
+    selectAtLeastOneForm: 'Chọn ít nhất một dạng chia.',
+    couldNotBuildSession: 'Không thể tạo phiên luyện tập từ kết hợp này. Hãy điều chỉnh thiết lập và thử lại.',
+    dailyBudgetReached: 'Đã hoàn thành luyện tập hằng ngày cho hôm nay. Hãy chuyển sang Khắc phục điểm yếu hoặc Luyện tập tự do để tiếp tục.',
+
+    // Language Switcher
+    language: 'Ngôn ngữ',
+    english: 'English',
+    chinese: '中文',
+    vietnamese: 'Tiếng Việt',
+
+    // Hero
+    heroTitleLine1: 'Nắm vững',
+    heroTitleLine2: 'chia động từ.',
+
+    // Metadata
+    metaTitle: 'Katachi - Luyện chia tiếng Nhật',
+    metaDescription: 'Luyện tập chia động từ và tính từ tiếng Nhật trong các phiên học hằng ngày.',
   },
 } as const;
 

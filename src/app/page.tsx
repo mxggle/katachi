@@ -51,7 +51,7 @@ export default function Home() {
         <header className="w-full text-center space-y-6 animate-fade-in flex flex-col items-center">
           <Logo size={120} className="text-[color:var(--ink)]" />
           
-          <h1 className="text-4xl font-bold tracking-tight text-[color:var(--ink)] sm:text-7xl leading-[1.1]">
+          <h1 className="text-4xl font-bold tracking-tight text-[color:var(--ink)] sm:text-7xl leading-[1.1] text-balance">
             {t('heroTitleLine2') ? (
               <>
                 {t('heroTitleLine1')} {t('heroTitleLine2')}
@@ -92,10 +92,10 @@ export default function Home() {
 
               <button
                 onClick={handleStart}
-                className="group relative inline-flex w-full items-center justify-center gap-3 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] px-8 py-5 text-2xl font-bold text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none sm:w-auto sm:px-16"
+                className="group relative inline-flex w-full items-center justify-center gap-3 rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] px-8 py-5 text-xl sm:text-2xl font-bold text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none sm:w-auto sm:px-16"
               >
-                <span>{t('startPractice')}</span>
-                <svg className="h-7 w-7 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                <span className="text-pretty text-center">{t('startPractice')}</span>
+                <svg className="h-7 w-7 shrink-0 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
@@ -133,9 +133,9 @@ export default function Home() {
           <SetupMenu />
         </section>
 
-        <div className="flex flex-col items-center gap-4 animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
+        <footer className="mt-8 flex w-full justify-center animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
           <LanguageSwitcher />
-        </div>
+        </footer>
       </div>
     </main>
   );

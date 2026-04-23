@@ -212,7 +212,7 @@ output = {
     "words": words_list
 }
 
-with open("dictionary.json", "w", encoding="utf-8") as f:
+with open("src/data/dictionaries/dictionary.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
-print(f"Generated dictionary.json with {len(words_list)} words.")
+print(f"Generated src/data/dictionaries/dictionary.json with {len(words_list)} words.")
