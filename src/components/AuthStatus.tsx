@@ -56,7 +56,7 @@ export default function AuthStatus() {
             <div className="fixed inset-0 z-30" onClick={() => setIsOpen(false)} />
             <div className="absolute right-0 top-full z-40 mt-4 w-48 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white p-4 shadow-[5px_5px_0px_0px_var(--ink)] animate-in fade-in slide-in-from-top-2 duration-200">
               <div className="mb-3 space-y-1 px-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-[color:var(--muted)]">Signed in as</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[color:var(--muted)]">{t('signedInAs')}</p>
                 <p className="truncate text-xs font-black text-[color:var(--ink)]">{user.email}</p>
               </div>
               <div className="mb-3 h-px bg-[color:var(--ink)]/10" />

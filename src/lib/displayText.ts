@@ -13,19 +13,21 @@ export function getWordDisplayText(word: Pick<WordEntry, 'dictionary_form' | 'id
 }
 
 export function getWordTypeLabel(wordType: WordType, language: Language): string {
+  const t = translations[language];
   const labels: Record<WordType, string> = {
-    verb: language === 'zh' ? '动词' : 'verbs',
-    'i-adj': language === 'zh' ? 'い形容词' : 'i-adjectives',
-    'na-adj': language === 'zh' ? 'な形容词' : 'na-adjectives',
+    verb: t.verbs,
+    'i-adj': t.iAdjectives,
+    'na-adj': t.naAdjectives,
   };
 
   return labels[wordType];
 }
 
 export function getPracticeModeLabel(mode: StudySessionConfig['mode'], language: Language): string {
+  const t = translations[language];
   const labels: Record<PracticeMode, string> = {
-    choice: language === 'zh' ? '选择题' : 'multiple choice',
-    input: language === 'zh' ? '输入题' : 'typing',
+    choice: t.multipleChoice,
+    input: t.typing,
   };
 
   return labels[mode];

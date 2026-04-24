@@ -7,7 +7,7 @@ export function HtmlLangSync() {
   const { language } = useStore();
 
   useEffect(() => {
-    document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+    document.documentElement.lang = language === 'zh' ? 'zh-CN' : (language === 'ne' ? 'ne' : 'en');
   }, [language]);
 
   return null;

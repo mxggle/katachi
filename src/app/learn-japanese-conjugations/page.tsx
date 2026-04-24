@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 function resolveLandingLanguage(lang?: string): LandingLanguage {
-  return lang === 'zh' ? 'zh' : lang === 'vi' ? 'vi' : 'en';
+  return lang === 'zh' ? 'zh' : lang === 'vi' ? 'vi' : lang === 'ne' ? 'ne' : 'en';
 }
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
@@ -17,9 +17,9 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   const lang = resolveLandingLanguage(params.lang);
   const copy = getLandingCopy(lang);
 
-  const canonical = lang === 'zh'
-    ? '/learn-japanese-conjugations?lang=zh'
-    : '/learn-japanese-conjugations';
+  const canonical = lang === 'en'
+    ? '/learn-japanese-conjugations'
+    : `/learn-japanese-conjugations?lang=${lang}`;
 
   return {
     title: copy.meta.title,
@@ -29,6 +29,8 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       languages: {
         en: '/learn-japanese-conjugations',
         zh: '/learn-japanese-conjugations?lang=zh',
+        vi: '/learn-japanese-conjugations?lang=vi',
+        ne: '/learn-japanese-conjugations?lang=ne',
       },
     },
     openGraph: {
@@ -36,7 +38,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       description: copy.meta.description,
       url: canonical,
       type: 'website',
-      locale: lang === 'zh' ? 'zh_CN' : 'en_US',
+      locale: lang === 'zh' ? 'zh_CN' : lang === 'ne' ? 'ne_NP' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -54,7 +56,7 @@ export default async function LandingPage({ searchParams }: PageProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: lang === 'zh' ? 'Katachi — 日语变形练习' : 'Katachi',
+    name: lang === 'zh' ? 'Katachi — 日语变形练习' : (lang === 'ne' ? 'काटाची — जापानी रूपान्तरण अभ्यास' : 'Katachi'),
     applicationCategory: 'EducationApplication',
     description: copy.meta.description,
     offers: {
@@ -62,11 +64,11 @@ export default async function LandingPage({ searchParams }: PageProps) {
       price: '0',
       priceCurrency: 'USD',
     },
-    inLanguage: lang === 'zh' ? ['zh', 'en'] : ['en', 'zh'],
-    educationalLevel: lang === 'zh' ? '初级到中级' : 'Beginner to Intermediate',
+    inLanguage: lang === 'zh' ? ['zh', 'en'] : (lang === 'ne' ? ['ne', 'en'] : ['en', 'zh']),
+    educationalLevel: lang === 'zh' ? '初级到中级' : (lang === 'ne' ? 'प्रारम्भिक देखि माध्यमिक' : 'Beginner to Intermediate'),
     about: {
       '@type': 'Thing',
-      name: lang === 'zh' ? '日语语法' : 'Japanese Language Grammar',
+      name: lang === 'zh' ? '日语语法' : (lang === 'ne' ? 'जापानी भाषा व्याकरण' : 'Japanese Language Grammar'),
     },
   };
 
