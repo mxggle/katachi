@@ -37,20 +37,29 @@ function buildEligibleUnits({
 
   for (const word of words) {
     const allowedForms = config.forms.filter((form) => CONJS_FOR_WORD_TYPE[word.word_type].includes(form));
+    let bestUnit: PracticeUnit | null = null;
+
     for (const conjugationType of allowedForms) {
       const unitKey = makeUnitKey(word.id, conjugationType, config.mode);
       if (seen.has(unitKey)) continue;
       seen.add(unitKey);
 
       const progress = unitProgress[unitKey];
-      units.push({
+      const unit: PracticeUnit = {
         unitKey,
         word,
         conjugationType,
         mode: config.mode,
         wordType: word.word_type,
         weaknessScore: progress ? calculateWeaknessScore(progress, now) : 0,
-      });
+      };
+
+      if (!bestUnit || unit.weaknessScore > bestUnit.weaknessScore) {
+        bestUnit = unit;
+      }
+    }
+    if (bestUnit) {
+      units.push(bestUnit);
     }
   }
 

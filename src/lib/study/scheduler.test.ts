@@ -156,7 +156,7 @@ describe('selectPracticeUnits', () => {
     expect(new Set(selected.map((item) => item.word.id)).size).toBe(3);
   });
 
-  it('reuses the same word only after unique words run out', () => {
+  it('does not repeat words even if questionCount is higher than available words', () => {
     const words = [
       buildWord('word-1', 'verb', ['te_form', 'polite']),
       buildWord('word-2', 'verb', ['te_form', 'polite']),
@@ -171,10 +171,11 @@ describe('selectPracticeUnits', () => {
       now: '2026-04-22T12:00:00.000Z',
     });
 
-    expect(selected).toHaveLength(3);
+    // Each word only contributes its best form to the eligible pool, so we only get 2 units.
+    expect(selected).toHaveLength(2);
     expect(selected[0].word.id).toBe('word-1');
     expect(selected[1].word.id).toBe('word-2');
-    expect(new Set(selected.slice(0, 2).map((item) => item.word.id)).size).toBe(2);
+    expect(new Set(selected.map((item) => item.word.id)).size).toBe(2);
   });
 
   it('picks the weakest form per word before repeating a weak word', () => {
@@ -293,5 +294,70 @@ describe('selectPracticeUnits', () => {
     expect(ichidanCount + irregularCount).toBe(5);
     expect(ichidanCount).toBeGreaterThanOrEqual(2);
     expect(irregularCount).toBeGreaterThanOrEqual(2);
+  });
+
+  it('applies a 24-hour cooldown multiplier to recently seen units', () => {
+    const words = [
+      buildWord('recent-word', 'verb', ['te_form']),
+      buildWord('old-word', 'verb', ['te_form']),
+    ];
+
+    const now = '2026-04-22T12:00:00.000Z';
+    const oneHourAgo = '2026-04-22T11:00:00.000Z';
+    const twoDaysAgo = '2026-04-20T12:00:00.000Z';
+
+    const unitProgress: Record<string, UnitProgress> = {
+      'recent-word::te_form::choice': buildProgress({
+        wordId: 'recent-word',
+        wrongCount: 10,
+        consecutiveWrong: 5,
+        lastSeenAt: oneHourAgo,
+        lastWrongAt: oneHourAgo,
+      }),
+      'old-word::te_form::choice': buildProgress({
+        wordId: 'old-word',
+        wrongCount: 2,
+        consecutiveWrong: 1,
+        lastSeenAt: twoDaysAgo,
+        lastWrongAt: twoDaysAgo,
+      }),
+    };
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 1 },
+      practiceType: 'weakness',
+      preferences,
+      unitProgress,
+      now,
+    });
+
+    // Even though recent-word has many more errors, old-word should be picked because of the cooldown
+    expect(selected[0].word.id).toBe('old-word');
+  });
+
+  it('only includes the highest-scoring form for each word in the eligible pool', () => {
+    const words = [
+      buildWord('word-1', 'verb', ['te_form', 'polite']),
+    ];
+
+    const unitProgress: Record<string, UnitProgress> = {
+      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', wrongCount: 10 }),
+      'word-1::polite::choice': buildProgress({ wordId: 'word-1', conjugationType: 'polite', wrongCount: 5 }),
+    };
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 2 },
+      practiceType: 'weakness',
+      preferences,
+      unitProgress,
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    // Should only have 1 unit because word-1 only contributes its best form to eligible pool
+    // and there are no other words.
+    expect(selected).toHaveLength(1);
+    expect(selected[0].conjugationType).toBe('te_form');
   });
 });

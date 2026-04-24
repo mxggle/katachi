@@ -13,7 +13,7 @@ export function calculateWeaknessScore(progress: UnitProgress, now: string): num
   const recencyBoost = progress.lastWrongAt ? Math.max(0, 180 - recentWrongMinutes) / 30 : 0;
   const typingBoost = progress.mode === 'input' ? 1.5 : 0;
 
-  return (
+  let score = (
     progress.wrongCount * 3 +
     progress.consecutiveWrong * 4 +
     (1 - accuracy) * 5 +
@@ -21,4 +21,12 @@ export function calculateWeaknessScore(progress: UnitProgress, now: string): num
     typingBoost -
     progress.consecutiveCorrect * 2
   );
+
+  // 24-hour cooldown: 90% reduction if seen in the last 24 hours
+  const minutesSinceLastSeen = minutesSince(progress.lastSeenAt, now);
+  if (progress.lastSeenAt && minutesSinceLastSeen < 24 * 60) {
+    score *= 0.1;
+  }
+
+  return score;
 }
