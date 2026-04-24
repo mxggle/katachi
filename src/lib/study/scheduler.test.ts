@@ -3,12 +3,12 @@ import { selectPracticeUnits } from '@/lib/study/scheduler';
 import type { StudyPreferences, StudySessionConfig, UnitProgress } from '@/lib/study/types';
 import type { ConjugationType, WordEntry } from '@/lib/distractorEngine';
 
-function buildWord(id: string, wordType: WordEntry['word_type'], forms: ConjugationType[]): WordEntry {
+function buildWord(id: string, wordType: WordEntry['word_type'], forms: ConjugationType[], group?: WordEntry['group']): WordEntry {
   const conjugations = Object.fromEntries(forms.map((form) => [form, `${id}-${form}`]));
   return {
     id,
     level: 'N5',
-    group: wordType === 'verb' ? 'godan' : wordType,
+    group: group || (wordType === 'verb' ? 'godan' : wordType as WordEntry['group']),
     word_type: wordType,
     dictionary_form: { kanji: id, kana: id, romaji: id },
     meaning: id,
@@ -206,5 +206,92 @@ describe('selectPracticeUnits', () => {
       'word-2::te_form::choice',
       'word-3::polite::choice',
     ]);
+  });
+
+  it('balances verb groups (33/33/33) and interleaves them', () => {
+    const words = [
+      // Godan
+      buildWord('g1', 'verb', ['te_form'], 'godan'),
+      buildWord('g2', 'verb', ['te_form'], 'godan'),
+      buildWord('g3', 'verb', ['te_form'], 'godan'),
+      // Ichidan
+      buildWord('i1', 'verb', ['te_form'], 'ichidan'),
+      buildWord('i2', 'verb', ['te_form'], 'ichidan'),
+      buildWord('i3', 'verb', ['te_form'], 'ichidan'),
+      // Irregular
+      buildWord('s1', 'verb', ['te_form'], 'suru'),
+      buildWord('k1', 'verb', ['te_form'], 'kuru'),
+      buildWord('s2', 'verb', ['te_form'], 'suru'),
+    ];
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 6 },
+      practiceType: 'free',
+      preferences,
+      unitProgress: {},
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    expect(selected).toHaveLength(6);
+    
+    const groups = selected.map(u => u.word.group);
+    
+    // Check for 33/33/33 balance (2 each for a total of 6)
+    const godanCount = groups.filter(g => g === 'godan').length;
+    const ichidanCount = groups.filter(g => g === 'ichidan').length;
+    const irregularCount = groups.filter(g => g === 'suru' || g === 'kuru').length;
+
+    expect(godanCount).toBe(2);
+    expect(ichidanCount).toBe(2);
+    expect(irregularCount).toBe(2);
+
+    // Check for interleaving (no two consecutive units from the same meta-group)
+    // Meta-groups: godan, ichidan, irregular (suru/kuru)
+    const getMetaGroup = (g: string) => (g === 'suru' || g === 'kuru') ? 'irregular' : g;
+    for (let i = 0; i < groups.length - 1; i++) {
+      expect(getMetaGroup(groups[i])).not.toBe(getMetaGroup(groups[i+1]));
+    }
+  });
+
+  it('backfills if a group is under-represented', () => {
+    const words = [
+      // Only 1 Godan
+      buildWord('g1', 'verb', ['te_form'], 'godan'),
+      // Plenty of Ichidan
+      buildWord('i1', 'verb', ['te_form'], 'ichidan'),
+      buildWord('i2', 'verb', ['te_form'], 'ichidan'),
+      buildWord('i3', 'verb', ['te_form'], 'ichidan'),
+      // Plenty of Irregular
+      buildWord('s1', 'verb', ['te_form'], 'suru'),
+      buildWord('k1', 'verb', ['te_form'], 'kuru'),
+      buildWord('s2', 'verb', ['te_form'], 'suru'),
+    ];
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 6 },
+      practiceType: 'free',
+      preferences,
+      unitProgress: {},
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    expect(selected).toHaveLength(6);
+    
+    const groups = selected.map(u => u.word.group);
+    const godanCount = groups.filter(g => g === 'godan').length;
+    
+    // We only have 1 godan, so it should be exactly 1
+    expect(godanCount).toBe(1);
+    
+    // The rest should be distributed among other groups
+    const ichidanCount = groups.filter(g => g === 'ichidan').length;
+    const irregularCount = groups.filter(g => g === 'suru' || g === 'kuru').length;
+    
+    // 6 total, 1 godan leaves 5. Ideally 2 and 3 or 3 and 2.
+    expect(ichidanCount + irregularCount).toBe(5);
+    expect(ichidanCount).toBeGreaterThanOrEqual(2);
+    expect(irregularCount).toBeGreaterThanOrEqual(2);
   });
 });
