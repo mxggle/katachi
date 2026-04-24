@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStore } from '@/lib/store';
 import { useTranslation } from '@/lib/i18n';
 import { getConjugationLabel } from '@/lib/displayText';
+import { createTtsPlaybackController, type TtsPlaybackController } from '@/lib/audioPlayback';
+import { getChoiceInteraction } from '@/lib/practiceChoiceInteraction';
 import * as wanakana from 'wanakana';
 import Logo from '@/components/Logo';
 
@@ -35,12 +37,32 @@ export default function PracticeSession() {
     const choices = currentItem?.choices || [];
     const correctAnswer = (word && type) ? word.conjugations[type] : '';
 
-    const audioRef = useRef<HTMLAudioElement | null>(null);
+    const audioControllerRef = useRef<TtsPlaybackController | null>(null);
 
     useEffect(() => {
-        if (typeof window !== 'undefined' && !audioRef.current) {
-            audioRef.current = new Audio();
+        if (typeof window !== 'undefined' && !audioControllerRef.current) {
+            audioControllerRef.current = createTtsPlaybackController({
+                audio: new Audio(),
+                fallback: (text) => {
+                    if ('speechSynthesis' in window) {
+                        window.speechSynthesis.cancel();
+                        const utterance = new SpeechSynthesisUtterance(text);
+                        utterance.lang = 'ja-JP';
+                        utterance.rate = 0.9;
+                        window.speechSynthesis.speak(utterance);
+                    }
+                },
+                stopFallback: () => {
+                    if ('speechSynthesis' in window) {
+                        window.speechSynthesis.cancel();
+                    }
+                },
+            });
         }
+
+        return () => {
+            audioControllerRef.current?.stop();
+        };
     }, []);
 
     useEffect(() => {
@@ -49,30 +71,32 @@ export default function PracticeSession() {
         }
     }, [config.mode, currentIdx, showFeedback]);
 
-    const fallbackBrowserTTS = useCallback((text: string) => {
-        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'ja-JP';
-            utterance.rate = 0.9;
-            window.speechSynthesis.speak(utterance);
-        }
+    const playAudio = useCallback((text: string) => {
+        void audioControllerRef.current?.play(text);
     }, []);
 
-    const playAudio = useCallback((text: string) => {
-        if (!audioRef.current) return;
-        try {
-            const url = `/api/tts?text=${encodeURIComponent(text)}`;
-            audioRef.current.src = url;
-            audioRef.current.load();
-            const playPromise = audioRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => fallbackBrowserTTS(text));
-            }
-        } catch {
-            fallbackBrowserTTS(text);
+    useEffect(() => {
+        if (isFinished || showFeedback) {
+            return;
         }
-    }, [fallbackBrowserTTS]);
+
+        void audioControllerRef.current?.preload(word?.dictionary_form.kanji || '');
+        void audioControllerRef.current?.preload(correctAnswer);
+    }, [correctAnswer, isFinished, showFeedback, word?.dictionary_form.kanji]);
+
+    useEffect(() => {
+        if (!activeSession || isFinished) {
+            return;
+        }
+
+        const currentAndUpcomingItems = activeSession.words.slice(currentIdx);
+        const textsToPreload = currentAndUpcomingItems.flatMap((item) => [
+            item.word.dictionary_form.kanji,
+            item.word.conjugations[item.type],
+        ]);
+
+        void audioControllerRef.current?.preloadMany(textsToPreload, 2);
+    }, [activeSession, currentIdx, isFinished]);
 
     const lastPlayedIdxRef = useRef<number>(-1);
 
@@ -95,6 +119,19 @@ export default function PracticeSession() {
         playAudio(correctAnswer);
     };
 
+    const handleChoiceButtonClick = (choice: string) => {
+        const interaction = getChoiceInteraction({ choice, correctAnswer, showFeedback });
+
+        if (interaction.action === 'replay') {
+            playAudio(correctAnswer);
+            return;
+        }
+
+        if (interaction.action === 'submit') {
+            handleChoice(choice);
+        }
+    };
+
     const handleInputSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (showFeedback) {
@@ -109,10 +146,16 @@ export default function PracticeSession() {
     };
 
     const handleNext = () => {
+        audioControllerRef.current?.stop();
         submitAnswer(isCorrect);
         setInputValue('');
         setShowFeedback(false);
         setLastSelected(null);
+    };
+
+    const handleEndSession = () => {
+        audioControllerRef.current?.stop();
+        endSession();
     };
 
     if (!activeSession) return null;
@@ -149,7 +192,7 @@ export default function PracticeSession() {
                         </div>
 
                         <button
-                            onClick={endSession}
+                            onClick={handleEndSession}
                             className="w-full py-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-xl font-bold text-white shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
                         >
                             {t('backToHome')}
@@ -169,7 +212,10 @@ export default function PracticeSession() {
                 {/* Compact Session Header */}
                 <div className="flex items-center gap-3">
                     <button
-                        onClick={() => setShowConfirm(true)}
+                        onClick={() => {
+                            audioControllerRef.current?.stop();
+                            setShowConfirm(true);
+                        }}
                         className="flex items-center justify-center w-10 h-10 rounded-xl border-[2px] border-[color:var(--ink)] bg-white shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
                     >
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -236,11 +282,12 @@ export default function PracticeSession() {
                             <div className="flex flex-col gap-2.5">
                                 <div className={`grid gap-2 sm:gap-3 ${choices.length > 4 || choices.some(c => c.length > 8) ? 'grid-cols-1' : 'grid-cols-2'}`}>
                                     {choices.map((choice, i) => {
+                                        const interaction = getChoiceInteraction({ choice, correctAnswer, showFeedback });
                                         let variantClasses = "bg-white text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none";
                                         
                                         if (showFeedback) {
                                             if (choice === correctAnswer) {
-                                                variantClasses = "bg-[color:var(--primary-green)] text-white shadow-[2px_2px_0px_0px_var(--ink)] scale-[0.98]";
+                                                variantClasses = "bg-[color:var(--primary-green)] text-white shadow-[2px_2px_0px_0px_var(--ink)] scale-[0.98] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_var(--ink)]";
                                             } else if (choice === lastSelected) {
                                                 variantClasses = "bg-[color:var(--accent)] text-white shadow-[2px_2px_0px_0px_var(--ink)] scale-[0.98]";
                                             } else {
@@ -253,11 +300,16 @@ export default function PracticeSession() {
                                         return (
                                             <button
                                                 key={i}
-                                                disabled={showFeedback}
-                                                onClick={() => handleChoice(choice)}
+                                                disabled={interaction.disabled}
+                                                onClick={() => handleChoiceButtonClick(choice)}
                                                 className={`group relative p-2.5 min-h-[3rem] sm:min-h-[3.5rem] rounded-xl border-[2.5px] border-[color:var(--ink)] font-bold text-sm sm:text-base transition-all flex items-center justify-center text-center leading-none ${variantClasses}`}
                                             >
-                                                <span className="whitespace-nowrap overflow-hidden text-ellipsis px-1">{choice}</span>
+                                                {showFeedback && choice === correctAnswer && (
+                                                    <div className="absolute left-2 top-1/2 -translate-y-1/2 opacity-90">
+                                                        <SpeakerIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                                                    </div>
+                                                )}
+                                                <span className={`whitespace-nowrap overflow-hidden text-ellipsis ${showFeedback && choice === correctAnswer ? 'px-7' : 'px-1'}`}>{choice}</span>
                                                 {showFeedback && choice === correctAnswer && (
                                                     <div className="absolute right-2 top-1/2 -translate-y-1/2">
                                                         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -346,7 +398,7 @@ export default function PracticeSession() {
                         </div>
                         <div className="grid grid-cols-1 gap-2 pt-2">
                             <button
-                                onClick={endSession}
+                                onClick={handleEndSession}
                                 className="py-3 rounded-xl border-[2px] border-[color:var(--ink)] bg-[color:var(--accent)] text-white text-sm font-bold shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
                             >
                                 {t('quitSession')}

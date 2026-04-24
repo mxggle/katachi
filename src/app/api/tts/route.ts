@@ -4,6 +4,7 @@ import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 // Initialize a shared TTS instance
 const tts = new MsEdgeTTS();
 let metadataSet = false;
+const audioCache = new Map<string, Buffer>();
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -14,9 +15,19 @@ export async function GET(request: Request) {
     }
 
     try {
+        const cachedAudio = audioCache.get(text);
+        if (cachedAudio) {
+            return new NextResponse(new Uint8Array(cachedAudio), {
+                headers: {
+                    'Content-Type': 'audio/mpeg',
+                    'Cache-Control': 'public, max-age=31536000, immutable',
+                },
+            });
+        }
+
         if (!metadataSet) {
             // "ja-JP-NanamiNeural" (Female) or "ja-JP-KeitaNeural" (Male)
-            await tts.setMetadata('ja-JP-NanamiNeural', OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
+            await tts.setMetadata('ja-JP-NanamiNeural', OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
             metadataSet = true;
         }
 
@@ -38,13 +49,20 @@ export async function GET(request: Request) {
 
         const stream = new ReadableStream({
             start(controller) {
+                const chunks: Buffer[] = [];
+
                 const onData = (chunk: Buffer) => {
                     if (!settled) {
+                        chunks.push(Buffer.from(chunk));
                         controller.enqueue(chunk);
                     }
                 };
 
                 const onEnd = () => {
+                    if (chunks.length > 0) {
+                        audioCache.set(text, Buffer.concat(chunks));
+                    }
+
                     settle(() => {
                         controller.close();
                     });

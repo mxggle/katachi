@@ -11,6 +11,7 @@ vi.mock('msedge-tts', () => ({
   })),
   OUTPUT_FORMAT: {
     AUDIO_24KHZ_48KBITRATE_MONO_MP3: 'audio-24khz-48kbitrate-mono-mp3',
+    AUDIO_24KHZ_96KBITRATE_MONO_MP3: 'audio-24khz-96kbitrate-mono-mp3',
   },
 }));
 
@@ -36,5 +37,37 @@ describe('GET /api/tts', () => {
     expect(() => {
       audioStream.emit('end');
     }).not.toThrow();
+  });
+
+  it('uses the higher quality Japanese neural voice output format', async () => {
+    const audioStream = new PassThrough();
+    mockToStream.mockReturnValue({ audioStream });
+
+    const { GET } = await import('./route');
+    await GET(new Request('http://localhost/api/tts?text=test'));
+    audioStream.end();
+
+    expect(mockSetMetadata).toHaveBeenCalledWith(
+      'ja-JP-NanamiNeural',
+      'audio-24khz-96kbitrate-mono-mp3'
+    );
+  });
+
+  it('serves repeated text from the in-memory audio cache', async () => {
+    const audioStream = new PassThrough();
+    mockToStream.mockReturnValue({ audioStream });
+
+    const { GET } = await import('./route');
+    const firstResponse = await GET(new Request('http://localhost/api/tts?text=test'));
+    const firstRead = firstResponse.arrayBuffer();
+
+    audioStream.end(Buffer.from('audio'));
+    await firstRead;
+
+    const secondResponse = await GET(new Request('http://localhost/api/tts?text=test'));
+    const secondAudio = Buffer.from(await secondResponse.arrayBuffer()).toString('utf8');
+
+    expect(mockToStream).toHaveBeenCalledTimes(1);
+    expect(secondAudio).toBe('audio');
   });
 });
