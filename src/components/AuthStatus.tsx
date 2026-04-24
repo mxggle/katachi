@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useStore } from '@/lib/store';
 import { useTranslation } from '@/lib/i18n';
 import { useAuth } from './AuthProvider';
@@ -23,7 +23,20 @@ export default function AuthStatus() {
   const language = useStore((state) => state.language);
   const { t } = useTranslation(language);
   const [isOpen, setIsOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const prevUserRef = useRef(user);
   const hasMounted = useSyncExternalStore(subscribeToClientSnapshot, getClientSnapshot, getServerSnapshot);
+
+  useEffect(() => {
+    // If user just transitioned from null to defined while the form was open, it's a manual login success
+    if (!prevUserRef.current && user && isOpen) {
+      setIsOpen(false);
+      setShowSuccess(true);
+      const timer = setTimeout(() => setShowSuccess(false), 4000);
+      return () => clearTimeout(timer);
+    }
+    prevUserRef.current = user;
+  }, [user, isOpen]);
 
   if (!hasMounted || isLoading) {
     return (
@@ -50,6 +63,15 @@ export default function AuthStatus() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
           </svg>
         </button>
+
+        {showSuccess && (
+          <div className="absolute right-0 top-full z-50 mt-4 flex items-center gap-2 whitespace-nowrap rounded-2xl border-[3px] border-[color:var(--ink)] bg-[color:var(--accent-soft)] px-4 py-3 text-xs font-black text-[color:var(--ink)] shadow-[5px_5px_0px_0px_var(--ink)] animate-in fade-in slide-in-from-top-2 duration-300">
+            <svg className="h-4 w-4 shrink-0 text-[color:var(--accent)]" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            {t('signedIn')}
+          </div>
+        )}
 
         {isOpen && (
           <>
