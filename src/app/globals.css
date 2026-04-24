@@ -168,3 +168,133 @@ input[type="range"]::-webkit-slider-thumb {
 .animate-shake {
   animation: shake 0.2s ease-in-out 0s 2;
 }
+
+@keyframes driftGrid {
+  to {
+    background-position: 36px 36px;
+  }
+}
+
+@keyframes drillPanelEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) rotate(-0.8deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes promptPop {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes answerEnter {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes correctAnswerNudge {
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  42% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes liveChipPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(154, 205, 50, 0.34);
+  }
+
+  48% {
+    box-shadow: 0 0 0 7px rgba(154, 205, 50, 0);
+  }
+}
+
+@keyframes staggerRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ctaBreath {
+  0%, 100% {
+    filter: saturate(1);
+  }
+
+  50% {
+    filter: saturate(1.16);
+  }
+}
+
+.motion-drift-grid {
+  animation: driftGrid 18s linear infinite;
+}
+
+.motion-drill-panel {
+  animation: drillPanelEnter 0.72s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.motion-prompt-pop {
+  animation: promptPop 3.4s ease-in-out 1.1s infinite;
+  transform-origin: left center;
+}
+
+.motion-answer-option {
+  animation: answerEnter 0.45s ease-out both;
+}
+
+.motion-answer-correct {
+  animation:
+    answerEnter 0.45s ease-out both,
+    correctAnswerNudge 2.8s ease-in-out 1.1s infinite;
+}
+
+.motion-live-chip {
+  animation: liveChipPulse 2.6s ease-out infinite;
+}
+
+.motion-stagger-item {
+  animation: staggerRise 0.52s ease-out both;
+}
+
+.motion-cta-pulse {
+  animation: ctaBreath 3.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-drift-grid,
+  .motion-drill-panel,
+  .motion-prompt-pop,
+  .motion-answer-option,
+  .motion-answer-correct,
+  .motion-live-chip,
+  .motion-stagger-item,
+  .motion-cta-pulse {
+    animation: none;
+  }
+}

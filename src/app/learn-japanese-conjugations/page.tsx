@@ -104,7 +104,7 @@ export default async function LandingPage({ searchParams }: PageProps) {
         </div>
 
         <section className="relative border-b border-[#ded6c3]">
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(32,36,43,0.055)_1px,transparent_1px),linear-gradient(rgba(32,36,43,0.055)_1px,transparent_1px)] bg-[size:36px_36px]" />
+          <div className="motion-drift-grid absolute inset-0 bg-[linear-gradient(90deg,rgba(32,36,43,0.055)_1px,transparent_1px),linear-gradient(rgba(32,36,43,0.055)_1px,transparent_1px)] bg-[size:36px_36px]" />
           <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1fr_0.82fr] lg:items-center lg:py-20">
             <div className="max-w-3xl">
               <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#9b4f3f]">
@@ -119,7 +119,7 @@ export default async function LandingPage({ searchParams }: PageProps) {
               <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
                 <Link
                   href={copy.hero.ctaLink}
-                  className="group inline-flex min-h-14 items-center justify-center rounded-full border-2 border-[#20242b] bg-[#f36f5c] px-7 py-4 text-base font-black text-white shadow-[5px_5px_0_0_#20242b] transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0_0_#20242b] active:translate-x-[5px] active:translate-y-[5px] active:shadow-none"
+                  className="motion-cta-pulse group inline-flex min-h-14 items-center justify-center rounded-full border-2 border-[#20242b] bg-[#f36f5c] px-7 py-4 text-base font-black text-white shadow-[5px_5px_0_0_#20242b] transition hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0_0_#20242b] active:translate-x-[5px] active:translate-y-[5px] active:shadow-none"
                 >
                   <span>{copy.hero.cta}</span>
                   <span className="ml-3 transition group-hover:translate-x-1">→</span>
@@ -137,13 +137,13 @@ export default async function LandingPage({ searchParams }: PageProps) {
               </div>
             </div>
 
-            <div className="rounded-[18px] border-2 border-[#20242b] bg-[#fffaf0] p-4 shadow-[8px_8px_0_0_#20242b]">
+            <div className="motion-drill-panel rounded-[18px] border-2 border-[#20242b] bg-[#fffaf0] p-4 shadow-[8px_8px_0_0_#20242b]">
               <div className="rounded-[14px] border border-[#ded6c3] bg-white p-5">
                 <div className="flex items-center justify-between gap-4 border-b border-[#ece5d7] pb-4">
                   <p className="text-[11px] font-black uppercase tracking-[0.22em] text-[#9b4f3f]">
                     {copy.drillPanel.label}
                   </p>
-                  <span className="rounded-full bg-[#e8f1d2] px-3 py-1 text-[11px] font-black text-[#3f5b21]">
+                  <span className="motion-live-chip rounded-full bg-[#e8f1d2] px-3 py-1 text-[11px] font-black text-[#3f5b21]">
                     JLPT
                   </span>
                 </div>
@@ -151,7 +151,7 @@ export default async function LandingPage({ searchParams }: PageProps) {
                   <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7a7165]">
                     {copy.drillPanel.promptLabel}
                   </p>
-                  <p className="mt-2 text-6xl font-black tracking-tight text-[#20242b]">
+                  <p className="motion-prompt-pop mt-2 text-6xl font-black tracking-tight text-[#20242b]">
                     {copy.drillPanel.prompt}
                   </p>
                   <div className="mt-6 rounded-xl border border-[#ded6c3] bg-[#fbf8f0] p-4">
@@ -166,11 +166,12 @@ export default async function LandingPage({ searchParams }: PageProps) {
                     {copy.drillPanel.choices.map((choice, index) => (
                       <div
                         key={choice}
-                        className={`flex items-center justify-between rounded-xl border px-4 py-3 text-lg font-black ${
+                        className={`motion-answer-option flex items-center justify-between rounded-xl border px-4 py-3 text-lg font-black ${
                           index === 0
-                            ? 'border-[#20242b] bg-[#20242b] text-white'
+                            ? 'motion-answer-correct border-[#20242b] bg-[#20242b] text-white'
                             : 'border-[#ded6c3] bg-white text-[#625848]'
                         }`}
+                        style={{ animationDelay: `${360 + index * 100}ms` }}
                       >
                         <span>{choice}</span>
                         <span className="text-xs opacity-70">{String.fromCharCode(65 + index)}</span>
@@ -179,8 +180,12 @@ export default async function LandingPage({ searchParams }: PageProps) {
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-2 border-t border-[#ece5d7] pt-4">
-                  {copy.drillPanel.stats.map((stat) => (
-                    <div key={stat.label} className="rounded-xl bg-[#f7f2e8] p-3">
+                  {copy.drillPanel.stats.map((stat, index) => (
+                    <div
+                      key={stat.label}
+                      className="motion-stagger-item rounded-xl bg-[#f7f2e8] p-3"
+                      style={{ animationDelay: `${620 + index * 90}ms` }}
+                    >
                       <p className="text-2xl font-black text-[#20242b]">{stat.value}</p>
                       <p className="mt-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#7a7165]">
                         {stat.label}
@@ -198,7 +203,7 @@ export default async function LandingPage({ searchParams }: PageProps) {
 
         <section className="mx-auto grid max-w-7xl gap-4 border-b border-[#ded6c3] px-5 py-6 sm:grid-cols-3 sm:px-8">
           {copy.trainingStats.map((stat) => (
-            <div key={stat.label} className="border-l-4 border-[#20242b] bg-[#fbf8f0] px-5 py-4">
+            <div key={stat.label} className="motion-stagger-item border-l-4 border-[#20242b] bg-[#fbf8f0] px-5 py-4">
               <p className="text-3xl font-black tracking-tight text-[#20242b]">{stat.value}</p>
               <p className="mt-1 text-xs font-black uppercase tracking-[0.14em] text-[#756b5e]">
                 {stat.label}
@@ -262,10 +267,11 @@ export default async function LandingPage({ searchParams }: PageProps) {
               </p>
             </div>
             <div className="grid gap-4">
-              {copy.modes.items.map((item) => (
+              {copy.modes.items.map((item, index) => (
                 <article
                   key={item.title}
-                  className="grid gap-4 rounded-[16px] border border-[#ded6c3] bg-[#fffaf0] p-5 shadow-[0_16px_34px_rgba(32,36,43,0.07)] sm:grid-cols-[72px_1fr]"
+                  className="motion-stagger-item grid gap-4 rounded-[16px] border border-[#ded6c3] bg-[#fffaf0] p-5 shadow-[0_16px_34px_rgba(32,36,43,0.07)] sm:grid-cols-[72px_1fr]"
+                  style={{ animationDelay: `${index * 120}ms` }}
                 >
                   <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#20242b] bg-[#e8f1d2] text-sm font-black text-[#20242b]">
                     {item.modeIndex}
