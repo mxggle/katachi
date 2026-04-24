@@ -10,13 +10,47 @@ export default function LoginForm() {
   const { supabase, isConfigured, isLoading } = useAuth();
   const language = useStore((state) => state.language);
   const { t } = useTranslation(language);
-  const [mode, setMode] = useState<'signIn' | 'signUp'>('signIn');
+  const [step, setStep] = useState<'request' | 'verify'>('request');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const googleEnabled = isGoogleAuthEnabled();
+
+  const handleOtpRequest = async () => {
+    if (!supabase) return;
+    const result = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: true,
+      },
+    });
+
+    if (result.error) {
+      setError(result.error.message);
+      return;
+    }
+
+    setStep('verify');
+    setMessage(t('otpSent'));
+  };
+
+  const handleOtpVerify = async () => {
+    if (!supabase) return;
+    const result = await supabase.auth.verifyOtp({
+      email,
+      token: otp,
+      type: 'email',
+    });
+
+    if (result.error) {
+      setError(t('invalidOtp'));
+      return;
+    }
+
+    setMessage(t('signedIn'));
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,17 +65,11 @@ export default function LoginForm() {
     setMessage(null);
 
     try {
-      const result =
-        mode === 'signIn'
-          ? await supabase.auth.signInWithPassword({ email, password })
-          : await supabase.auth.signUp({ email, password });
-
-      if (result.error) {
-        setError(result.error.message);
-        return;
+      if (step === 'request') {
+        await handleOtpRequest();
+      } else {
+        await handleOtpVerify();
       }
-
-      setMessage(mode === 'signIn' ? t('signedIn') : t('signUpSuccess'));
     } catch (authError) {
       setError(authError instanceof Error ? authError.message : t('authUnexpectedError'));
     } finally {
@@ -92,8 +120,13 @@ export default function LoginForm() {
           {t('account')}
         </p>
         <h2 className="mt-1 text-xl font-black text-[color:var(--ink)]">
-          {mode === 'signIn' ? t('signIn') : t('createAccount')}
+          {t('signIn')}
         </h2>
+        {step === 'request' && (
+          <p className="mt-2 text-xs font-bold leading-relaxed text-[color:var(--muted)]">
+            {t('otpNotice')}
+          </p>
+        )}
       </div>
 
       <label className="flex flex-col gap-1 text-sm font-bold text-[color:var(--ink)]">
@@ -102,24 +135,28 @@ export default function LoginForm() {
           type="email"
           autoComplete="email"
           required
+          disabled={step === 'verify'}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="min-h-11 rounded-xl border-2 border-[color:var(--ink)] px-3 text-base font-semibold outline-none focus:ring-4 focus:ring-[color:var(--accent-soft)]"
+          className="min-h-11 rounded-xl border-2 border-[color:var(--ink)] px-3 text-base font-semibold outline-none focus:ring-4 focus:ring-[color:var(--accent-soft)] disabled:bg-[color:var(--ink)]/5"
         />
       </label>
 
-      <label className="flex flex-col gap-1 text-sm font-bold text-[color:var(--ink)]">
-        {t('password')}
-        <input
-          type="password"
-          autoComplete={mode === 'signIn' ? 'current-password' : 'new-password'}
-          required
-          minLength={6}
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          className="min-h-11 rounded-xl border-2 border-[color:var(--ink)] px-3 text-base font-semibold outline-none focus:ring-4 focus:ring-[color:var(--accent-soft)]"
-        />
-      </label>
+      {step === 'verify' && (
+        <label className="flex flex-col gap-1 text-sm font-bold text-[color:var(--ink)]">
+          {t('enterOtp')}
+          <input
+            type="text"
+            required
+            inputMode="numeric"
+            pattern="[0-9]*"
+            autoComplete="one-time-code"
+            value={otp}
+            onChange={(event) => setOtp(event.target.value)}
+            className="min-h-11 rounded-xl border-2 border-[color:var(--ink)] px-3 text-center text-2xl font-black tracking-[0.5em] outline-none focus:ring-4 focus:ring-[color:var(--accent-soft)]"
+          />
+        </label>
+      )}
 
       {error && <p className="rounded-xl bg-[#fff1f2] px-3 py-2 text-sm font-bold text-[#b42318]">{error}</p>}
       {message && <p className="rounded-xl bg-[color:var(--accent-soft)] px-3 py-2 text-sm font-bold text-[color:var(--ink)]">{message}</p>}
@@ -129,20 +166,18 @@ export default function LoginForm() {
         disabled={isSubmitting || isLoading}
         className="min-h-11 rounded-full border-[2px] border-[color:var(--ink)] bg-[color:var(--accent)] px-5 py-2 text-sm font-black text-white shadow-[3px_3px_0px_0px_var(--ink)] transition-all disabled:cursor-wait disabled:opacity-60"
       >
-        {isSubmitting ? t('working') : mode === 'signIn' ? t('signIn') : t('createAccount')}
+        {isSubmitting ? t('working') : step === 'request' ? t('signIn') : t('verify')}
       </button>
 
-      <button
-        type="button"
-        onClick={() => {
-          setMode(mode === 'signIn' ? 'signUp' : 'signIn');
-          setError(null);
-          setMessage(null);
-        }}
-        className="text-sm font-bold text-[color:var(--muted)] underline decoration-2 underline-offset-4"
-      >
-        {mode === 'signIn' ? t('needAccount') : t('haveAccount')}
-      </button>
+      {step === 'verify' && (
+        <button
+          type="button"
+          onClick={() => setStep('request')}
+          className="text-sm font-bold text-[color:var(--muted)] underline decoration-2 underline-offset-4"
+        >
+          {t('resendOtp')}
+        </button>
+      )}
 
       {googleEnabled && (
         <button

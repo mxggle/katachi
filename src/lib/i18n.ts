@@ -172,6 +172,14 @@ export const translations = {
     signedIn: 'Signed in. Your progress will sync automatically.',
     signUpSuccess: 'Account created. Check your email if confirmation is enabled.',
     syncProgressPrompt: 'Sign in to sync your progress across devices.',
+    enterOtp: 'Enter 6-digit code',
+    otpSent: 'Check your email for the login code.',
+    verify: 'Verify',
+    resendOtp: 'Resend code',
+    invalidOtp: 'Invalid or expired code.',
+    loginWithCode: 'Sign in with code',
+    loginWithPassword: 'Sign in with password',
+    otpNotice: 'Enter your email to sign in. If you don’t have an account, one will be created automatically.',
   },
   zh: {
     // Common
@@ -342,6 +350,14 @@ export const translations = {
     signedIn: '已登录。你的进度会自动同步。',
     signUpSuccess: '账号已创建。如果开启了邮件确认，请检查邮箱。',
     syncProgressPrompt: '登录后可在多设备同步学习进度。',
+    enterOtp: '输入 6 位验证码',
+    otpSent: '请检查邮箱中的登录验证码。',
+    verify: '验证',
+    resendOtp: '重新发送验证码',
+    invalidOtp: '验证码无效或已过期。',
+    loginWithCode: '使用验证码登录',
+    loginWithPassword: '使用密码登录',
+    otpNotice: '输入邮箱即可登录。如果没有账号，系统将自动为您创建。',
   },
   vi: {
     // Common
@@ -512,6 +528,14 @@ export const translations = {
     signedIn: 'Đã đăng nhập. Tiến trình của bạn sẽ tự động đồng bộ.',
     signUpSuccess: 'Tài khoản đã được tạo. Hãy kiểm tra email nếu xác nhận được bật.',
     syncProgressPrompt: 'Đăng nhập để đồng bộ tiến trình trên nhiều thiết bị.',
+    enterOtp: 'Nhập mã 6 chữ số',
+    otpSent: 'Kiểm tra email của bạn để lấy mã đăng nhập.',
+    verify: 'Xác minh',
+    resendOtp: 'Gửi lại mã',
+    invalidOtp: 'Mã không hợp lệ hoặc đã hết hạn.',
+    loginWithCode: 'Đăng nhập bằng mã',
+    loginWithPassword: 'Đăng nhập bằng mật khẩu',
+    otpNotice: 'Nhập email để đăng nhập. Nếu chưa có tài khoản, hệ thống sẽ tự động tạo cho bạn.',
   },
   ne: {
     // Common
@@ -683,6 +707,14 @@ export const translations = {
     signedIn: 'साइन इन गरियो। तपाईंको प्रगति स्वचालित रूपमा सिङ्क हुनेछ।',
     signUpSuccess: 'खाता सिर्जना गरियो। यदि पुष्टि सक्षम छ भने तपाईंको इमेल जाँच गर्नुहोस्।',
     syncProgressPrompt: 'उपकरणहरूमा तपाईंको प्रगति सिङ्क गर्न साइन इन गर्नुहोस्।',
+    enterOtp: '६-अङ्कको कोड प्रविष्ट गर्नुहोस्',
+    otpSent: 'लॉगिन कोडको लागि आफ्नो इमेल जाँच गर्नुहोस्।',
+    verify: 'प्रमाणित गर्नुहोस्',
+    resendOtp: 'कोड पुन: पठाउनुहोस्',
+    invalidOtp: 'अवैध वा म्याद सकिएको कोड।',
+    loginWithCode: 'कोडको साथ साइन इन गर्नुहोस्',
+    loginWithPassword: 'पासवर्डको साथ साइन in गर्नुहोस्',
+    otpNotice: 'साइन इन गर्न आफ्नो इमेल प्रविष्ट गर्नुहोस्। यदि तपाइँसँग खाता छैन भने, एउटा स्वतः सिर्जना हुनेछ।',
   },
 } as const;
 

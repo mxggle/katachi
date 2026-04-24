@@ -198,7 +198,6 @@ export const useStore = create<AppState>()(
             ...syncAliases(studyState, nextConfig),
             studyState,
             config: nextConfig,
-            activeSession: null,
           });
         },
 
