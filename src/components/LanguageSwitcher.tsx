@@ -10,6 +10,7 @@ const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'zh', label: '中文' },
   { code: 'vi', label: 'Tiếng Việt' },
   { code: 'ne', label: 'नेपाली' },
+  { code: 'my', label: 'မြန်မာ' },
 ];
 
 export default function LanguageSwitcher() {
