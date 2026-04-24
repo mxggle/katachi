@@ -296,6 +296,12 @@ export const useStore = create<AppState>()(
             };
 
             const nextWords = [...activeSession.words];
+            if (!isCorrect) {
+              nextWords.push({
+                ...currentItem,
+                retryCount: currentItem.retryCount + 1,
+              });
+            }
             const nextCurrentIndex = activeSession.currentIndex + 1;
             const nextSessionCorrect = activeSession.sessionCorrect + (isCorrect ? 1 : 0);
             const nextSessionStreak = isCorrect ? activeSession.sessionStreak + 1 : 0;
