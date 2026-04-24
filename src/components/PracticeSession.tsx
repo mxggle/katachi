@@ -5,6 +5,7 @@ import { useStore } from '@/lib/store';
 import { useTranslation } from '@/lib/i18n';
 import { getConjugationLabel } from '@/lib/displayText';
 import { createTtsPlaybackController, type TtsPlaybackController } from '@/lib/audioPlayback';
+import { collectTtsPreloadTexts } from '@/lib/audioPreload';
 import { getChoiceInteraction } from '@/lib/practiceChoiceInteraction';
 import * as wanakana from 'wanakana';
 import Logo from '@/components/Logo';
@@ -89,11 +90,7 @@ export default function PracticeSession() {
             return;
         }
 
-        const currentAndUpcomingItems = activeSession.words.slice(currentIdx);
-        const textsToPreload = currentAndUpcomingItems.flatMap((item) => [
-            item.word.dictionary_form.kanji,
-            item.word.conjugations[item.type],
-        ]);
+        const textsToPreload = collectTtsPreloadTexts(activeSession.words, currentIdx);
 
         void audioControllerRef.current?.preloadMany(textsToPreload, 2);
     }, [activeSession, currentIdx, isFinished]);

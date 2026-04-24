@@ -93,12 +93,7 @@ export function createTtsPlaybackController({
       const activeRequestId = requestId;
 
       try {
-        const audioUrl = await getCachedAudioUrl(trimmedText);
-        if (activeRequestId !== requestId) {
-          return;
-        }
-
-        audio.src = audioUrl;
+        audio.src = buildUrl(trimmedText);
         audio.load();
         const playResult = audio.play();
 

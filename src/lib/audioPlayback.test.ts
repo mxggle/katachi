@@ -14,6 +14,27 @@ function createAudio(playResult: Promise<void> = Promise.resolve()) {
 }
 
 describe('createTtsPlaybackController', () => {
+  it('starts playback from the TTS URL without waiting for a full audio blob download', async () => {
+    const { audio } = createAudio();
+    const fetchAudio = vi.fn(async () => new Blob(['audio']));
+    const controller = createTtsPlaybackController({
+      audio,
+      fallback: vi.fn(),
+      buildUrl: (text) => `/api/tts?text=${encodeURIComponent(text)}`,
+      fetchAudio,
+      createObjectUrl: vi.fn(() => 'blob:taberu'),
+    });
+
+    const playRequest = controller.play('食べる');
+    await Promise.resolve();
+
+    expect(fetchAudio).not.toHaveBeenCalled();
+    expect(audio.src).toBe('/api/tts?text=%E9%A3%9F%E3%81%B9%E3%82%8B');
+    expect(audio.load).toHaveBeenCalledTimes(1);
+    expect(audio.play).toHaveBeenCalledTimes(1);
+    await playRequest;
+  });
+
   it('stops the current audio before starting the next phrase', async () => {
     const { audio } = createAudio();
     const fetchAudio = vi.fn(async () => new Blob(['audio']));
@@ -33,8 +54,8 @@ describe('createTtsPlaybackController', () => {
 
     expect(audio.pause).toHaveBeenCalledTimes(2);
     expect(audio.currentTime).toBe(0);
-    expect(fetchAudio).toHaveBeenCalledTimes(2);
-    expect(audio.src).toBe('blob:nomu');
+    expect(fetchAudio).not.toHaveBeenCalled();
+    expect(audio.src).toBe('/api/tts?text=%E9%A3%B2%E3%82%80');
     expect(audio.load).toHaveBeenCalledTimes(2);
     expect(audio.play).toHaveBeenCalledTimes(2);
   });
@@ -101,9 +122,9 @@ describe('createTtsPlaybackController', () => {
     await controller.play('食べる');
     await controller.play('食べる');
 
-    expect(fetchAudio).toHaveBeenCalledTimes(1);
-    expect(createObjectUrl).toHaveBeenCalledTimes(1);
-    expect(audio.src).toBe('blob:taberu');
+    expect(fetchAudio).not.toHaveBeenCalled();
+    expect(createObjectUrl).not.toHaveBeenCalled();
+    expect(audio.src).toBe('/api/tts?text=%E9%A3%9F%E3%81%B9%E3%82%8B');
     expect(audio.play).toHaveBeenCalledTimes(2);
   });
 
@@ -126,6 +147,21 @@ describe('createTtsPlaybackController', () => {
 
     expect(fetchAudio).toHaveBeenCalledTimes(2);
     expect(createObjectUrl).toHaveBeenCalledTimes(2);
-    expect(audio.src).toBe('blob:taberu');
+    expect(audio.src).toBe('/api/tts?text=%E9%A3%9F%E3%81%B9%E3%82%8B');
+  });
+
+  it('plays the TTS URL even after preload so Safari can issue media range requests', async () => {
+    const { audio } = createAudio();
+    const controller = createTtsPlaybackController({
+      audio,
+      fallback: vi.fn(),
+      fetchAudio: vi.fn(async () => new Blob(['audio'])),
+      createObjectUrl: vi.fn(() => 'blob:taberu'),
+    });
+
+    await controller.preload('食べる');
+    await controller.play('食べる');
+
+    expect(audio.src).toBe('/api/tts?text=%E9%A3%9F%E3%81%B9%E3%82%8B');
   });
 });

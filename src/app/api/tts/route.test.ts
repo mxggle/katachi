@@ -70,4 +70,51 @@ describe('GET /api/tts', () => {
     expect(mockToStream).toHaveBeenCalledTimes(1);
     expect(secondAudio).toBe('audio');
   });
+
+  it('supports range requests for mobile audio playback', async () => {
+    const audioStream = new PassThrough();
+    mockToStream.mockReturnValue({ audioStream });
+
+    const { GET } = await import('./route');
+    const responsePromise = GET(
+      new Request('http://localhost/api/tts?text=test', {
+        headers: {
+          Range: 'bytes=0-2',
+        },
+      })
+    );
+
+    audioStream.end(Buffer.from('audio'));
+    const response = await responsePromise;
+    const rangedAudio = Buffer.from(await response.arrayBuffer()).toString('utf8');
+
+    expect(response.status).toBe(206);
+    expect(response.headers.get('Accept-Ranges')).toBe('bytes');
+    expect(response.headers.get('Content-Range')).toBe('bytes 0-2/5');
+    expect(response.headers.get('Content-Length')).toBe('3');
+    expect(rangedAudio).toBe('aud');
+  });
+
+  it('supports open-ended range requests from the audio element', async () => {
+    const audioStream = new PassThrough();
+    mockToStream.mockReturnValue({ audioStream });
+
+    const { GET } = await import('./route');
+    const responsePromise = GET(
+      new Request('http://localhost/api/tts?text=test', {
+        headers: {
+          Range: 'bytes=2-',
+        },
+      })
+    );
+
+    audioStream.end(Buffer.from('audio'));
+    const response = await responsePromise;
+    const rangedAudio = Buffer.from(await response.arrayBuffer()).toString('utf8');
+
+    expect(response.status).toBe(206);
+    expect(response.headers.get('Content-Range')).toBe('bytes 2-4/5');
+    expect(response.headers.get('Content-Length')).toBe('3');
+    expect(rangedAudio).toBe('dio');
+  });
 });
