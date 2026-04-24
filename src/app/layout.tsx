@@ -3,7 +3,7 @@ import { Outfit } from "next/font/google";
 import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { translations } from "@/lib/i18n";
+import { translations, type Language } from "@/lib/i18n";
 import { AuthProvider } from "@/components/AuthProvider";
 import StudySync from "@/components/StudySync";
 
@@ -16,7 +16,9 @@ const font = Outfit({
 export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
   const acceptLang = headersList.get('accept-language') || '';
-  const lang: 'en' | 'zh' = acceptLang.includes('zh') ? 'zh' : 'en';
+  const lang: Language = acceptLang.includes('zh') ? 'zh' : 
+                         acceptLang.includes('vi') ? 'vi' : 
+                         acceptLang.includes('ne') ? 'ne' : 'en';
   const t = translations[lang];
 
   return {
@@ -33,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t.metaDescription,
       url: '/',
       type: 'website',
-      locale: lang === 'zh' ? 'zh_CN' : 'en_US',
+      locale: lang === 'zh' ? 'zh_CN' : lang === 'vi' ? 'vi_VN' : lang === 'ne' ? 'ne_NP' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',

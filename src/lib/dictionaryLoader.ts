@@ -5,11 +5,13 @@ import baseData from '../data/dictionaries/base.json';
 import enMeanings from '../data/dictionaries/en.json';
 import zhMeanings from '../data/dictionaries/zh.json';
 import viMeanings from '../data/dictionaries/vi.json';
+import neMeanings from '../data/dictionaries/ne.json';
 
 const meaningMaps: Record<Language, Record<string, string>> = {
   en: enMeanings as Record<string, string>,
   zh: zhMeanings as Record<string, string>,
   vi: viMeanings as Record<string, string>,
+  ne: neMeanings as Record<string, string>,
 };
 
 export function loadDictionary(language: Language): WordEntry[] {
