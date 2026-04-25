@@ -182,6 +182,10 @@ export const translations = {
     loginWithCode: 'Sign in with code',
     loginWithPassword: 'Sign in with password',
     otpNotice: 'Enter your email to sign in. If you don’t have an account, one will be created automatically.',
+    pwaInstallPrompt: 'Install Katachi on your home screen for offline practice.',
+    pwaInstallInstructions: 'Tap Share, then Add to Home Screen.',
+    add: 'Add',
+    dismiss: 'Dismiss',
   },
   zh: {
     // Common
@@ -362,6 +366,10 @@ export const translations = {
     loginWithCode: '使用验证码登录',
     loginWithPassword: '使用密码登录',
     otpNotice: '输入邮箱即可登录。如果没有账号，系统将自动为您创建。',
+    pwaInstallPrompt: '将 Katachi 添加到主屏幕，即可随时随地离线练习。',
+    pwaInstallInstructions: '点击分享，然后选择“添加到主屏幕”。',
+    add: '添加',
+    dismiss: '忽略',
   },
   vi: {
     // Common
@@ -542,6 +550,10 @@ export const translations = {
     loginWithCode: 'Đăng nhập bằng mã',
     loginWithPassword: 'Đăng nhập bằng mật khẩu',
     otpNotice: 'Nhập email để đăng nhập. Nếu chưa có tài khoản, hệ thống sẽ tự động tạo cho bạn.',
+    pwaInstallPrompt: 'Cài đặt Katachi vào màn hình chính để luyện tập ngoại tuyến.',
+    pwaInstallInstructions: 'Nhấn Chia sẻ, rồi chọn Thêm vào Màn hình chính.',
+    add: 'Thêm',
+    dismiss: 'Bỏ qua',
   },
   ne: {
     // Common
@@ -722,6 +734,10 @@ export const translations = {
     loginWithCode: 'कोडको साथ साइन इन गर्नुहोस्',
     loginWithPassword: 'पासवर्डको साथ साइन in गर्नुहोस्',
     otpNotice: 'साइन इन गर्न आफ्नो इमेल प्रविष्ट गर्नुहोस्। यदि तपाइँसँग खाता छैन भने, एउटा स्वतः सिर्जना हुनेछ।',
+    pwaInstallPrompt: 'अफलाइन अभ्यासका लागि Katachi लाई आफ्नो गृह स्क्रिनमा राख्नुहोस्।',
+    pwaInstallInstructions: 'Share मा ट्याप गर्नुहोस्, त्यसपछि Add to Home Screen छान्नुहोस्।',
+    add: 'थप्नुहोस्',
+    dismiss: 'हटाउनुहोस्',
   },
   my: {
     // Common
@@ -902,8 +918,13 @@ export const translations = {
     invalidOtp: 'ကုဒ်မှားယွင်းနေသည် သို့မဟုတ် သက်တမ်းကုန်ဆုံးသွားပါပြီ။',
     loginWithCode: 'ကုဒ်ဖြင့် ဝင်ရောက်ရန်',
     loginWithPassword: 'လျှို့ဝှက်နံပါတ်ဖြင့် ဝင်ရောက်ရန်',
-    otpNotice: 'ဝင်ရောက်ရန် အီးမေးလ်ကို ရိုက်ထည့်ပါ။ အကောင့်မရှိပါက အလိုအလျောက် ဖွင့်ပေးပါမည်။',
-  },
+    otpNotice: 'ဝင်ရောက်ရန် အီးမေးလ်ကို ရိုက်ထည့်ပါ။ အကောင့်မရှိပါက အလိုအလျောက် ဖွင့်ပေးပါမည်।',
+    pwaInstallPrompt: 'အော့ဖ်လိုင်းလေ့ကျင့်ရန် Katachi ကို မူလစခရင်တွင် ထည့်ပါ။',
+    pwaInstallInstructions: 'Share ကိုနှိပ်ပြီး Add to Home Screen ကိုရွေးပါ။',
+    add: 'ထည့်ရန်',
+    dismiss: 'ပိတ်ရန်',
+    },
+
 } as const;
 
 export type Translations = typeof translations.en;

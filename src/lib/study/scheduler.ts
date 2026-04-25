@@ -88,7 +88,7 @@ function takeDiversifiedUnits(
   }
 
   // Identify active meta-groups that have at least one unique word left
-  let activeMetaGroups = Object.keys(groupBuckets).filter(mg => 
+  const activeMetaGroups = Object.keys(groupBuckets).filter(mg => 
     groupBuckets[mg].some(u => !selectedWordIds.has(u.word.id))
   );
 
@@ -127,7 +127,7 @@ function takeDiversifiedUnits(
   // Fallback: fill remaining slots from units ignoring wordId uniqueness, but keeping group interleaving if possible
   if (selected.length < total) {
     const selectedUnitKeys = new Set(selected.map((u) => u.unitKey));
-    let remainingActiveGroups = Object.keys(groupBuckets).filter(mg => 
+    const remainingActiveGroups = Object.keys(groupBuckets).filter(mg => 
       groupBuckets[mg].some(u => !selectedUnitKeys.has(u.unitKey))
     );
     remainingActiveGroups.sort();

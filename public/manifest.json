@@ -1,0 +1,37 @@
+{
+  "name": "Katachi ✦ 形",
+  "short_name": "Katachi",
+  "description": "Master Japanese Conjugations through practice",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f4ea",
+  "theme_color": "#f4f4ea",
+  "categories": ["education", "languages"],
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

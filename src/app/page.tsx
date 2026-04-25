@@ -12,6 +12,8 @@ import { buildSetupSummary } from '@/components/setupMenu.helpers';
 import { buildPracticeSession } from '@/lib/sessionBuilder';
 import { useStore } from '@/lib/store';
 import { useTranslation } from '@/lib/i18n';
+import { APP_VERSION } from '@/lib/appVersion';
+import DynamicStatusBar from '@/components/DynamicStatusBar';
 
 import Logo from '@/components/Logo';
 
@@ -61,6 +63,7 @@ function HomeContent() {
 
   return (
     <main className="relative min-h-dvh overflow-x-hidden bg-[color:var(--bg)] selection:bg-[color:var(--accent-soft)] selection:text-[color:var(--accent)]">
+      <DynamicStatusBar color="#f4f4ea" />
       <HtmlLangSync />
       <div className="blob-bg" />
       
@@ -174,7 +177,7 @@ function HomeContent() {
         <footer className="mt-12 flex w-full flex-col items-center gap-8 animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
           <div className="flex flex-col items-center gap-4">
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[color:var(--ink)]/20">
-              {t('appName')} &copy; {new Date().getFullYear()}
+              {t('appName')} &copy; {new Date().getFullYear()} · v{APP_VERSION}
             </p>
             <div className="h-px w-12 bg-[color:var(--ink)]/10" />
             <LanguageSwitcher />

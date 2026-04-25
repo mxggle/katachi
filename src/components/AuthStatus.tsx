@@ -28,14 +28,24 @@ export default function AuthStatus() {
   const hasMounted = useSyncExternalStore(subscribeToClientSnapshot, getClientSnapshot, getServerSnapshot);
 
   useEffect(() => {
-    // If user just transitioned from null to defined while the form was open, it's a manual login success
-    if (!prevUserRef.current && user && isOpen) {
-      setIsOpen(false);
-      setShowSuccess(true);
-      const timer = setTimeout(() => setShowSuccess(false), 4000);
-      return () => clearTimeout(timer);
-    }
+    const wasSignedOut = !prevUserRef.current;
     prevUserRef.current = user;
+
+    if (wasSignedOut && user && isOpen) {
+      let hideTimer: ReturnType<typeof setTimeout> | undefined;
+      const successTimer = setTimeout(() => {
+        setIsOpen(false);
+        setShowSuccess(true);
+        hideTimer = setTimeout(() => setShowSuccess(false), 4000);
+      }, 0);
+
+      return () => {
+        clearTimeout(successTimer);
+        if (hideTimer) {
+          clearTimeout(hideTimer);
+        }
+      };
+    }
   }, [user, isOpen]);
 
   if (!hasMounted || isLoading) {

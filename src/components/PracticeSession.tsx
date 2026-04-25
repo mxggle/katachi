@@ -9,6 +9,7 @@ import { collectTtsPreloadTexts } from '@/lib/audioPreload';
 import { getChoiceInteraction } from '@/lib/practiceChoiceInteraction';
 import * as wanakana from 'wanakana';
 import Logo from '@/components/Logo';
+import DynamicStatusBar from '@/components/DynamicStatusBar';
 
 const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -168,6 +169,7 @@ export default function PracticeSession() {
     if (isFinished) {
         return (
             <div className="h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-4 sm:p-8 animate-fade-in relative overflow-hidden">
+                <DynamicStatusBar color="#f4f4ea" />
                 <div className="blob-bg" />
                 <div className="w-full max-w-md relative z-10">
                     <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-6 sm:p-8 shadow-[8px_8px_0px_0px_var(--ink)] text-center space-y-6 flex flex-col items-center">
@@ -206,6 +208,7 @@ export default function PracticeSession() {
 
     return (
         <div className="h-dvh bg-[color:var(--bg)] flex flex-col p-3 sm:p-6 animate-fade-in relative overflow-hidden">
+            <DynamicStatusBar color="#f4f4ea" />
             <div className="blob-bg" />
             
             <div className="mx-auto w-full max-w-2xl flex flex-col h-full relative z-10 gap-3">

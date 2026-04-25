@@ -1,0 +1,25 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Solid Background for iOS (Mandatory: No transparency) -->
+  <rect width="180" height="180" fill="#f4f4ea" />
+  
+  <!-- Centered Neobrutalist Icon -->
+  <g transform="translate(10, 10)">
+    <!-- Shadow -->
+    <rect x="15" y="15" width="140" height="140" rx="24" fill="#111111" />
+    <!-- Main Card -->
+    <rect x="5" y="5" width="140" height="140" rx="24" fill="white" stroke="#111111" stroke-width="8" />
+    <!-- Kanji -->
+    <text 
+      x="75" 
+      y="82" 
+      text-anchor="middle" 
+      dominant-baseline="middle" 
+      fill="#111111" 
+      font-family="system-ui, 'Hiragino Sans', 'MS Mincho', serif" 
+      font-weight="900" 
+      font-size="90"
+    >形</text>
+    <!-- Red dot -->
+    <circle cx="130" cy="25" r="8" fill="#FF3B22" stroke="#111111" stroke-width="3" />
+  </g>
+</svg>
