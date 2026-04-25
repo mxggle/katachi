@@ -24,4 +24,9 @@ describe('homepage entry layout', () => {
     expect(pageSource).toContain('flex items-center gap-4 shrink-0');
     expect(pageSource).toContain('whitespace-nowrap text-lg font-black');
   });
+
+  it('shows the app package version in the footer for release tracking', () => {
+    expect(pageSource).toContain("import { APP_VERSION } from '@/lib/appVersion'");
+    expect(pageSource).toContain('v{APP_VERSION}');
+  });
 });

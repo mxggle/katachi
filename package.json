@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4399",
-    "build": "next build",
+    "dev": "next dev --webpack -p 4399",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "check:supabase": "node scripts/check-supabase-study-states.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "generate:icons": "node scripts/generate-icons.js"
+    "generate:icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@serwist/next": "^9.5.7",

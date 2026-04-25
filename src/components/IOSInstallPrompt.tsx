@@ -1,9 +1,38 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useStore } from '@/lib/store';
-import { useTranslation } from '@/lib/i18n';
-import Logo from './Logo';
+import { useEffect, useState } from "react";
+import { useStore } from "@/lib/store";
+import { useTranslation } from "@/lib/i18n";
+import Logo from "./Logo";
+
+interface IOSNavigator extends Navigator {
+  standalone?: boolean;
+}
+
+interface IOSWindow extends Window {
+  MSStream?: unknown;
+}
+
+export interface IOSInstallPromptEnvironment {
+  userAgent: string;
+  hasMSStream: boolean;
+  isStandalone: boolean;
+  standaloneNavigator: boolean;
+  viewportWidth: number;
+}
+
+export function shouldShowIOSInstallPrompt({
+  userAgent,
+  hasMSStream,
+  isStandalone,
+  standaloneNavigator,
+  viewportWidth,
+}: IOSInstallPromptEnvironment) {
+  const isIOSPhone = /iPhone|iPod/.test(userAgent);
+  const isNarrowIPad = /iPad/.test(userAgent) && viewportWidth < 768;
+
+  return (isIOSPhone || isNarrowIPad) && !hasMSStream && !isStandalone && !standaloneNavigator;
+}
 
 export default function IOSInstallPrompt() {
   const { language } = useStore();
@@ -11,21 +40,27 @@ export default function IOSInstallPrompt() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // Check if it's iOS and not already in standalone mode
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+    const iosWindow = window as IOSWindow;
+    const iosNavigator = window.navigator as IOSNavigator;
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || Boolean(iosNavigator.standalone);
 
-    if (isIOS && !isStandalone) {
-      // Show only if not dismissed in this session
-      const dismissed = sessionStorage.getItem('ios-prompt-dismissed');
+    if (shouldShowIOSInstallPrompt({
+      userAgent: navigator.userAgent,
+      hasMSStream: Boolean(iosWindow.MSStream),
+      isStandalone,
+      standaloneNavigator: Boolean(iosNavigator.standalone),
+      viewportWidth: window.innerWidth,
+    })) {
+      const dismissed = sessionStorage.getItem("ios-prompt-dismissed");
       if (!dismissed) {
-        setShow(true);
+        const showTimer = window.setTimeout(() => setShow(true), 0);
+        return () => window.clearTimeout(showTimer);
       }
     }
   }, []);
 
   const handleDismiss = () => {
-    sessionStorage.setItem('ios-prompt-dismissed', 'true');
+    sessionStorage.setItem("ios-prompt-dismissed", "true");
     setShow(false);
   };
 
@@ -42,7 +77,7 @@ export default function IOSInstallPrompt() {
             {t('pwaInstallPrompt')}
           </p>
           <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1 uppercase tracking-wider font-semibold">
-            Tap Share ➔ Add to Home Screen
+            {t('pwaInstallInstructions')}
           </p>
         </div>
         <div className="flex flex-col gap-1">

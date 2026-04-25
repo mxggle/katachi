@@ -1,37 +1,38 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import Logo from '@/components/Logo';
+import { useEffect, useState } from "react";
+import Logo from "@/components/Logo";
 
 export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
 
   useEffect(() => {
-    // Check if splash has been shown in this session
-    const hasShown = sessionStorage.getItem('splash-shown');
-    
+    const hasShown = sessionStorage.getItem("splash-shown");
+
     if (!hasShown) {
-      setIsRendered(true);
-      // Small delay to trigger entry animation
+      let removeTimer: ReturnType<typeof setTimeout> | undefined;
+      const renderTimer = setTimeout(() => {
+        setIsRendered(true);
+      }, 0);
       const entryTimer = setTimeout(() => {
         setIsVisible(true);
       }, 50);
-
-      // Total duration of splash screen
       const exitTimer = setTimeout(() => {
         setIsVisible(false);
-        // Remove from DOM after exit animation
-        const removeTimer = setTimeout(() => {
+        removeTimer = setTimeout(() => {
           setIsRendered(false);
-          sessionStorage.setItem('splash-shown', 'true');
+          sessionStorage.setItem("splash-shown", "true");
         }, 500);
-        return () => clearTimeout(removeTimer);
       }, 2000);
 
       return () => {
+        clearTimeout(renderTimer);
         clearTimeout(entryTimer);
         clearTimeout(exitTimer);
+        if (removeTimer) {
+          clearTimeout(removeTimer);
+        }
       };
     }
   }, []);
