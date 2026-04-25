@@ -157,8 +157,12 @@ export default function PracticeSession() {
 
     if (!activeSession) return null;
 
-    const progress = totalWords > 0 ? (currentIdx / totalWords) * 100 : 0;
-    const pct = Math.round((activeSession.sessionCorrect / totalWords) * 100);
+    const totalUniqueItems = activeSession.words.filter(w => w.retryCount === 0).length;
+    const masteredCount = activeSession.results.filter(r => r).length;
+    const progress = totalUniqueItems > 0 ? (masteredCount / totalUniqueItems) * 100 : 0;
+    const pct = activeSession.results.length > 0 
+        ? Math.round((masteredCount / activeSession.results.length) * 100) 
+        : 0;
     const message = pct >= 80 ? 'すごい！' : pct >= 50 ? 'いい調子！' : 'がんばって！';
 
     if (isFinished) {
@@ -225,10 +229,6 @@ export default function PracticeSession() {
                             className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[2px] border-[color:var(--ink)] transition-all duration-300"
                             style={{ width: `${progress}%` }}
                         />
-                    </div>
-
-                    <div className="inline-flex items-center px-3 h-10 rounded-xl border-[2px] border-[color:var(--ink)] bg-[#fde68a] shadow-[2px_2px_0px_0px_var(--ink)] font-bold text-xs">
-                        {currentIdx + 1}/{totalWords}
                     </div>
                 </div>
 
