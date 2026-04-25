@@ -18,4 +18,14 @@ const serwist = new Serwist({
   runtimeCaching: defaultCache,
 });
 
+serwist.setCatchHandler(async ({ request }) => {
+  if (request.mode === 'navigate') {
+    const fallback = await serwist.matchPrecache('/');
+    if (fallback) return fallback;
+    const indexFallback = await serwist.matchPrecache('index.html');
+    if (indexFallback) return indexFallback;
+  }
+  return Response.error();
+});
+
 serwist.addEventListeners();
