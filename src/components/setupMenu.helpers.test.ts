@@ -19,7 +19,7 @@ const config: SessionConfig = {
 describe('setup menu helpers', () => {
   it('builds a compact plain-language setup summary', () => {
     expect(buildSetupSummary(config, 'en')).toBe(
-      'Daily practice • N5 • verbs, i-adjectives • 2 forms • multiple choice • 10 questions'
+      'Daily practice • N5 • verbs, i-adjectives • 2 forms • Multiple choice • 10 questions'
     );
   });
 

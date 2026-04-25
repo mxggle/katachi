@@ -37,24 +37,38 @@ function buildEligibleUnits({
 
   for (const word of words) {
     const allowedForms = config.forms.filter((form) => CONJS_FOR_WORD_TYPE[word.word_type].includes(form));
+    let bestUnit: PracticeUnit | null = null;
+
     for (const conjugationType of allowedForms) {
       const unitKey = makeUnitKey(word.id, conjugationType, config.mode);
       if (seen.has(unitKey)) continue;
       seen.add(unitKey);
 
       const progress = unitProgress[unitKey];
-      units.push({
+      const unit: PracticeUnit = {
         unitKey,
         word,
         conjugationType,
         mode: config.mode,
         wordType: word.word_type,
         weaknessScore: progress ? calculateWeaknessScore(progress, now) : 0,
-      });
+      };
+
+      if (!bestUnit || unit.weaknessScore > bestUnit.weaknessScore) {
+        bestUnit = unit;
+      }
+    }
+    if (bestUnit) {
+      units.push(bestUnit);
     }
   }
 
   return units;
+}
+
+function getMetaGroup(group: string): string {
+  if (group === 'suru' || group === 'kuru') return 'irregular';
+  return group;
 }
 
 function takeDiversifiedUnits(
@@ -64,25 +78,82 @@ function takeDiversifiedUnits(
 ): DiversifiedSelection {
   const selected: PracticeUnit[] = [];
   const selectedWordIds = new Set(blockedWordIds);
-  const leftovers: PracticeUnit[] = [];
 
+  // Group units by meta-group while preserving their internal order (priority)
+  const groupBuckets: Record<string, PracticeUnit[]> = {};
   for (const unit of units) {
-    if (selected.length >= total) break;
-
-    if (selectedWordIds.has(unit.word.id)) {
-      leftovers.push(unit);
-      continue;
-    }
-
-    selected.push(unit);
-    selectedWordIds.add(unit.word.id);
+    const mg = getMetaGroup(unit.word.group);
+    if (!groupBuckets[mg]) groupBuckets[mg] = [];
+    groupBuckets[mg].push(unit);
   }
 
+  // Identify active meta-groups that have at least one unique word left
+  let activeMetaGroups = Object.keys(groupBuckets).filter(mg => 
+    groupBuckets[mg].some(u => !selectedWordIds.has(u.word.id))
+  );
+
+  // Sort meta-groups to ensure consistent round-robin starting point (optional but good for tests)
+  activeMetaGroups.sort();
+
+  let mgIndex = 0;
+  const bucketPointers: Record<string, number> = Object.fromEntries(
+    Object.keys(groupBuckets).map(mg => [mg, 0])
+  );
+
+  while (selected.length < total && activeMetaGroups.length > 0) {
+    const mg = activeMetaGroups[mgIndex % activeMetaGroups.length];
+    let foundUnique = false;
+
+    for (let i = bucketPointers[mg]; i < groupBuckets[mg].length; i++) {
+      const unit = groupBuckets[mg][i];
+      if (!selectedWordIds.has(unit.word.id)) {
+        selected.push(unit);
+        selectedWordIds.add(unit.word.id);
+        bucketPointers[mg] = i + 1;
+        foundUnique = true;
+        break;
+      }
+    }
+
+    if (!foundUnique) {
+      // Exhausted unique words for this meta-group
+      activeMetaGroups.splice(mgIndex % activeMetaGroups.length, 1);
+      // Don't increment mgIndex
+    } else {
+      mgIndex++;
+    }
+  }
+
+  // Fallback: fill remaining slots from units ignoring wordId uniqueness, but keeping group interleaving if possible
   if (selected.length < total) {
-    for (const unit of units) {
-      if (selected.length >= total) break;
-      if (selected.includes(unit)) continue;
-      selected.push(unit);
+    const selectedUnitKeys = new Set(selected.map((u) => u.unitKey));
+    let remainingActiveGroups = Object.keys(groupBuckets).filter(mg => 
+      groupBuckets[mg].some(u => !selectedUnitKeys.has(u.unitKey))
+    );
+    remainingActiveGroups.sort();
+    
+    let fallbackMgIndex = 0;
+    while (selected.length < total && remainingActiveGroups.length > 0) {
+      const mg = remainingActiveGroups[fallbackMgIndex % remainingActiveGroups.length];
+      let foundUnit = false;
+
+      for (let i = bucketPointers[mg]; i < groupBuckets[mg].length; i++) {
+        const unit = groupBuckets[mg][i];
+        if (!selectedUnitKeys.has(unit.unitKey)) {
+          selected.push(unit);
+          selectedUnitKeys.add(unit.unitKey);
+          selectedWordIds.add(unit.word.id);
+          bucketPointers[mg] = i + 1;
+          foundUnit = true;
+          break;
+        }
+      }
+
+      if (!foundUnit) {
+        remainingActiveGroups.splice(fallbackMgIndex % remainingActiveGroups.length, 1);
+      } else {
+        fallbackMgIndex++;
+      }
     }
   }
 

@@ -22,6 +22,6 @@ describe('displayText', () => {
 
   it('returns localized practice mode labels', () => {
     expect(getPracticeModeLabel('choice', 'zh')).toBe('选择题');
-    expect(getPracticeModeLabel('input', 'en')).toBe('typing');
+    expect(getPracticeModeLabel('input', 'en')).toBe('Typing');
   });
 });

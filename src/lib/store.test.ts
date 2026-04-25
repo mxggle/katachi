@@ -68,7 +68,7 @@ describe('useStore session flow', () => {
     expect(getLocalDateString(new Date('2026-04-23T00:30:00+09:00'))).toBe('2026-04-23');
   });
 
-  it('does not reinsert the same word into the active session after a wrong answer', () => {
+  it('re-queues the word at the end of the session after a wrong answer', () => {
     const word = buildWord('word-1');
 
     useStore.setState({
@@ -96,7 +96,73 @@ describe('useStore session flow', () => {
     useStore.getState().submitAnswer(false);
 
     const { activeSession } = useStore.getState();
-    expect(activeSession?.words).toHaveLength(1);
+    // It should now have 2 words: the original and the re-queued one
+    expect(activeSession?.words).toHaveLength(2);
     expect(activeSession?.currentIndex).toBe(1);
+    expect(activeSession?.words[1].word.id).toBe('word-1');
+    expect(activeSession?.words[1].retryCount).toBe(1);
+  });
+
+  it('completes the session only after all re-queued words are answered correctly', () => {
+    const word1 = buildWord('word-1');
+    const word2 = buildWord('word-2');
+
+    useStore.setState({
+      ...useStore.getInitialState(),
+      studyState: DEFAULT_STUDY_STATE('en'),
+      config: {
+        levels: ['N5'],
+        wordTypes: ['verb'],
+        forms: ['te_form'],
+        questionCount: 2,
+        mode: 'choice',
+        practiceType: 'daily',
+      },
+    });
+
+    useStore.getState().startSession([
+      {
+        unitKey: 'word-1::te_form::choice',
+        word: word1,
+        type: 'te_form',
+        choices: ['word-1-te', 'word-1-polite'],
+      },
+      {
+        unitKey: 'word-2::te_form::choice',
+        word: word2,
+        type: 'te_form',
+        choices: ['word-2-te', 'word-2-polite'],
+      },
+    ]);
+
+    // Answer word-1 incorrectly -> re-queued
+    useStore.getState().submitAnswer(false);
+    let state = useStore.getState();
+    expect(state.activeSession?.words).toHaveLength(3);
+    expect(state.activeSession?.currentIndex).toBe(1);
+    expect(state.activeSession?.words[2].word.id).toBe('word-1');
+    expect(state.activeSession?.words[2].retryCount).toBe(1);
+
+    // Answer word-2 correctly
+    useStore.getState().submitAnswer(true);
+    state = useStore.getState();
+    expect(state.activeSession?.currentIndex).toBe(2);
+    expect(state.activeSession?.words).toHaveLength(3);
+
+    // Answer re-queued word-1 incorrectly again -> re-queued again
+    useStore.getState().submitAnswer(false);
+    state = useStore.getState();
+    expect(state.activeSession?.words).toHaveLength(4);
+    expect(state.activeSession?.currentIndex).toBe(3);
+    expect(state.activeSession?.words[3].word.id).toBe('word-1');
+    expect(state.activeSession?.words[3].retryCount).toBe(2);
+
+    // Answer re-queued word-1 correctly -> session should complete
+    useStore.getState().submitAnswer(true);
+    state = useStore.getState();
+    expect(state.activeSession?.currentIndex).toBe(4);
+    expect(state.studyState.sessionHistory).toHaveLength(1);
+    expect(state.studyState.sessionHistory[0].totalAnswered).toBe(4);
+    expect(state.studyState.sessionHistory[0].totalCorrect).toBe(2);
   });
 });
