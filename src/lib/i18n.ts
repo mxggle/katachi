@@ -182,6 +182,9 @@ export const translations = {
     loginWithCode: 'Sign in with code',
     loginWithPassword: 'Sign in with password',
     otpNotice: 'Enter your email to sign in. If you don’t have an account, one will be created automatically.',
+    pwaInstallPrompt: 'Install Katachi on your home screen for offline practice.',
+    add: 'Add',
+    dismiss: 'Dismiss',
   },
   zh: {
     // Common
@@ -362,6 +365,9 @@ export const translations = {
     loginWithCode: '使用验证码登录',
     loginWithPassword: '使用密码登录',
     otpNotice: '输入邮箱即可登录。如果没有账号，系统将自动为您创建。',
+    pwaInstallPrompt: '将 Katachi 添加到主屏幕，即可随时随地离线练习。',
+    add: '添加',
+    dismiss: '忽略',
   },
   vi: {
     // Common
@@ -542,6 +548,9 @@ export const translations = {
     loginWithCode: 'Đăng nhập bằng mã',
     loginWithPassword: 'Đăng nhập bằng mật khẩu',
     otpNotice: 'Nhập email để đăng nhập. Nếu chưa có tài khoản, hệ thống sẽ tự động tạo cho bạn.',
+    pwaInstallPrompt: 'Cài đặt Katachi vào màn hình chính để luyện tập ngoại tuyến.',
+    add: 'Thêm',
+    dismiss: 'Bỏ qua',
   },
   ne: {
     // Common
@@ -722,6 +731,9 @@ export const translations = {
     loginWithCode: 'कोडको साथ साइन इन गर्नुहोस्',
     loginWithPassword: 'पासवर्डको साथ साइन in गर्नुहोस्',
     otpNotice: 'साइन इन गर्न आफ्नो इमेल प्रविष्ट गर्नुहोस्। यदि तपाइँसँग खाता छैन भने, एउटा स्वतः सिर्जना हुनेछ।',
+    pwaInstallPrompt: 'Install Katachi on your home screen for offline practice.',
+    add: 'Add',
+    dismiss: 'Dismiss',
   },
   my: {
     // Common
@@ -902,8 +914,12 @@ export const translations = {
     invalidOtp: 'ကုဒ်မှားယွင်းနေသည် သို့မဟုတ် သက်တမ်းကုန်ဆုံးသွားပါပြီ။',
     loginWithCode: 'ကုဒ်ဖြင့် ဝင်ရောက်ရန်',
     loginWithPassword: 'လျှို့ဝှက်နံပါတ်ဖြင့် ဝင်ရောက်ရန်',
-    otpNotice: 'ဝင်ရောက်ရန် အီးမေးလ်ကို ရိုက်ထည့်ပါ။ အကောင့်မရှိပါက အလိုအလျောက် ဖွင့်ပေးပါမည်။',
-  },
+    otpNotice: 'ဝင်ရောက်ရန် အီးမေးလ်ကို ရိုက်ထည့်ပါ။ အကောင့်မရှိပါက အလိုအလျောက် ဖွင့်ပေးပါမည်।',
+    pwaInstallPrompt: 'Install Katachi on your home screen for offline practice.',
+    add: 'Add',
+    dismiss: 'Dismiss',
+    },
+
 } as const;
 
 export type Translations = typeof translations.en;

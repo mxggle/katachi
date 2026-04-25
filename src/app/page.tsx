@@ -12,6 +12,7 @@ import { buildSetupSummary } from '@/components/setupMenu.helpers';
 import { buildPracticeSession } from '@/lib/sessionBuilder';
 import { useStore } from '@/lib/store';
 import { useTranslation } from '@/lib/i18n';
+import DynamicStatusBar from '@/components/DynamicStatusBar';
 
 import Logo from '@/components/Logo';
 
@@ -61,6 +62,7 @@ function HomeContent() {
 
   return (
     <main className="relative min-h-dvh overflow-x-hidden bg-[color:var(--bg)] selection:bg-[color:var(--accent-soft)] selection:text-[color:var(--accent)]">
+      <DynamicStatusBar color="#f4f4ea" />
       <HtmlLangSync />
       <div className="blob-bg" />
       

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import LandingLanguageSwitcher from '@/components/LandingLanguageSwitcher';
 import Logo from '@/components/Logo';
+import DynamicStatusBar from '@/components/DynamicStatusBar';
 import { getLandingCopy, type LandingLanguage } from '@/lib/landing-i18n';
 
 interface PageProps {
@@ -83,6 +84,7 @@ export default async function LandingPage({ searchParams }: PageProps) {
         aria-label="Conjugation Lab landing"
         className="min-h-dvh overflow-x-hidden bg-[#f7f2e8] text-[#20242b] selection:bg-[#ffd7cc] selection:text-[#20242b]"
       >
+        <DynamicStatusBar color="#f7f2e8" />
         <div className="border-b border-[#ded6c3] bg-[#fbf8f0]/90">
           <header className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
             <Link href="/" className="group flex items-center gap-3">
