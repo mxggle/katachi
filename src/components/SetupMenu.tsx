@@ -10,7 +10,7 @@ const LEVELS = ['N5', 'N4', 'N3'] as const;
 const QUESTION_COUNTS = [10, 20, 30];
 
 export default function SetupMenu() {
-  const { config, updateConfig, language } = useStore();
+  const { config, updateConfig, updateDailyGoal, language, studyState } = useStore();
   const { t } = useTranslation(language);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -234,14 +234,14 @@ export default function SetupMenu() {
               </ChipRow>
             </ConfigSection>
 
-            <ConfigSection title={t('questionCount')}>
+            <ConfigSection title={t('dailyGoal')}>
               <ChipRow>
-                {QUESTION_COUNTS.map((questionCount) => (
+                {QUESTION_COUNTS.map((count) => (
                   <ToggleChip
-                    key={questionCount}
-                    active={config.questionCount === questionCount}
-                    onClick={() => updateConfig({ questionCount })}
-                    label={questionCount.toString()}
+                    key={count}
+                    active={studyState.preferences.dailyQuestionGoal === count}
+                    onClick={() => updateDailyGoal(count)}
+                    label={count.toString()}
                   />
                 ))}
               </ChipRow>

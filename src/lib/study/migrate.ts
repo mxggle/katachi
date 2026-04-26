@@ -8,7 +8,6 @@ import {
   type StudyState,
   type UnitProgress,
 } from '@/lib/study/types';
-import { getInitialSRS } from '@/lib/study/srs';
 
 interface LegacyProgressStats {
   totalAnswered: number;
@@ -69,34 +68,41 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
           Object.entries(legacy.unitProgress).map(([key, progress]) => {
             if (progress.nextReviewDate) return [key, progress]; // Already migrated
             
-            // Migrate to SRS
-            const srs = getInitialSRS();
+            // Migrate to SRS — compute nextReviewDate from lastSeenAt, not wall-clock time
+            const lastSeenDate = progress.lastSeenAt ? progress.lastSeenAt : new Date().toISOString();
+
+            let status: 'learning' | 'review' | 'graduated' = 'learning';
+            let interval = 0;
+            let ease = 2.5;
+
             if (progress.consecutiveCorrect >= 3) {
-              srs.status = 'graduated';
-              srs.interval = 21;
-              srs.ease = 2.8;
+              status = 'graduated';
+              interval = 21;
+              ease = 2.8;
             } else if (progress.consecutiveCorrect > 0) {
-              srs.status = 'review';
-              srs.interval = Math.pow(2.5, progress.consecutiveCorrect);
-              srs.ease = 2.5;
-            } else {
-              srs.status = 'learning';
-              srs.interval = 0;
+              status = 'review';
+              interval = Math.pow(2.5, progress.consecutiveCorrect);
+              ease = 2.5;
             }
-            
-            let nextReviewDate = new Date();
-            if (progress.lastSeenAt && srs.interval > 0) {
+
+            let nextReviewDate: string;
+            if (interval > 0 && progress.lastSeenAt) {
               const last = new Date(progress.lastSeenAt);
-              last.setHours(last.getHours() + srs.interval * 24);
-              nextReviewDate = last;
+              last.setHours(last.getHours() + interval * 24);
+              nextReviewDate = last.toISOString();
+            } else {
+              // Learning items or items without lastSeenAt: make them immediately due
+              nextReviewDate = lastSeenDate;
             }
-            srs.nextReviewDate = nextReviewDate.toISOString();
 
             return [
               key,
               {
                 ...progress,
-                ...srs,
+                status,
+                interval,
+                ease,
+                nextReviewDate,
               },
             ];
           })

@@ -3,6 +3,7 @@ import type { Database } from './database.types';
 import type { Json } from './json';
 import type { TranslationKey } from '@/lib/i18n';
 import type { AttemptRecord, SessionRecord, StudyState, UnitProgress } from '@/lib/study/types';
+import { DEFAULT_STUDY_STATE } from '@/lib/study/types';
 
 export const SYNC_META_STORAGE_KEY = 'katachi-sync-meta';
 
@@ -88,6 +89,12 @@ function latestNullableDate(left: string | null, right: string | null): string |
 }
 
 function mergeUnitProgress(local: UnitProgress, remote: UnitProgress): UnitProgress {
+  // Pick the SRS state from whichever side was computed most recently.
+  // A later nextReviewDate generally means a more recent correct answer advanced the schedule.
+  const localReviewMs = local.nextReviewDate ? new Date(local.nextReviewDate).getTime() : 0;
+  const remoteReviewMs = remote.nextReviewDate ? new Date(remote.nextReviewDate).getTime() : 0;
+  const srsSource = localReviewMs >= remoteReviewMs ? local : remote;
+
   return {
     ...remote,
     ...local,
@@ -101,6 +108,11 @@ function mergeUnitProgress(local: UnitProgress, remote: UnitProgress): UnitProgr
     lastWrongAt: latestNullableDate(local.lastWrongAt, remote.lastWrongAt),
     sameDayExposureCount: Math.max(local.sameDayExposureCount, remote.sameDayExposureCount),
     sameSessionRetryCount: Math.max(local.sameSessionRetryCount, remote.sameSessionRetryCount),
+    // SRS fields: use the most recently computed scheduling state
+    status: srsSource.status,
+    interval: srsSource.interval,
+    ease: srsSource.ease,
+    nextReviewDate: srsSource.nextReviewDate,
   };
 }
 
@@ -163,6 +175,25 @@ export function mergeStudyStates(local: StudyState, remote: StudyState | null): 
   };
 }
 
+export function repairStudyState(state: StudyState): StudyState {
+  const base = DEFAULT_STUDY_STATE(state.preferences.language);
+  return {
+    ...state,
+    preferences: {
+      ...base.preferences,
+      ...state.preferences,
+      defaultSessionConfig: {
+        ...base.preferences.defaultSessionConfig,
+        ...state.preferences.defaultSessionConfig,
+      },
+    },
+    learnerSummary: {
+      ...base.learnerSummary,
+      ...state.learnerSummary,
+    },
+  };
+}
+
 export function resolveStudyStateForHydration(
   localState: StudyState,
   options: {
@@ -174,14 +205,14 @@ export function resolveStudyStateForHydration(
   const { userId, remoteState, syncMeta } = options;
 
   if (!remoteState) {
-    return localState;
+    return repairStudyState(localState);
   }
 
   if (syncMeta?.userId === userId && syncMeta.syncedStateJson === stringifyStudyState(localState)) {
-    return remoteState;
+    return repairStudyState(remoteState);
   }
 
-  return mergeStudyStates(localState, remoteState);
+  return repairStudyState(mergeStudyStates(localState, remoteState));
 }
 
 export async function fetchRemoteStudyState(

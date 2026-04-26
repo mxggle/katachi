@@ -165,4 +165,26 @@ describe('useStore session flow', () => {
     expect(state.studyState.sessionHistory[0].totalAnswered).toBe(4);
     expect(state.studyState.sessionHistory[0].totalCorrect).toBe(2);
   });
+
+  it('updates daily question goal and derives new limit from it', () => {
+    useStore.getState().updateDailyGoal(40);
+
+    const state = useStore.getState();
+    expect(state.studyState.preferences.dailyQuestionGoal).toBe(40);
+    expect(state.studyState.preferences.dailyNewLimit).toBe(10);
+  });
+
+  it('does not persist questionCount changes through updateConfig', () => {
+    useStore.setState({
+      ...useStore.getInitialState(),
+      studyState: DEFAULT_STUDY_STATE('en'),
+    });
+
+    useStore.getState().updateConfig({ levels: ['N4'] });
+
+    const state = useStore.getState();
+    expect(state.studyState.preferences.defaultSessionConfig.levels).toEqual(['N4']);
+    // questionCount should remain the default, not overwritten by transient config
+    expect(state.studyState.preferences.defaultSessionConfig.questionCount).toBe(10);
+  });
 });

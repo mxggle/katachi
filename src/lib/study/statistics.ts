@@ -1,4 +1,4 @@
-import type { StudyState } from './types';
+import type { StudyState, StudySessionConfig } from './types';
 import type { WordEntry } from '@/lib/distractorEngine';
 
 export interface DailyStats {
@@ -11,29 +11,28 @@ export interface DailyStats {
 export function getDailyPlanStats(
   studyState: StudyState,
   availableWords: WordEntry[],
-  now: string
+  now: string,
+  config: StudySessionConfig
 ): DailyStats {
   let dueReview = 0;
   let mistakes = 0;
   let unstable = 0;
 
   const nowMs = new Date(now).getTime();
+  const availableWordIds = new Set(availableWords.map((w) => w.id));
+  const configForms = new Set(config.forms);
 
-  // Find unused words
-  const seenKeys = new Set(Object.keys(studyState.unitProgress).map(k => k.split('::')[0]));
-  const unusedWords = availableWords.filter(w => !seenKeys.has(w.id));
-  const newQuestions = Math.min(unusedWords.length, studyState.preferences.dailyNewLimit);
-
+  // Only count progress for units that match the current session config
   for (const progress of Object.values(studyState.unitProgress)) {
-    // Skip if it doesn't match the current level/type config
-    // Actually, progress holds what the user HAS studied. We should probably count everything due.
-    // Or we only count words that are in `availableWords`? Usually, reviews are independent of current level config.
-    
-    // Is Due
+    if (!availableWordIds.has(progress.wordId)) continue;
+    if (progress.mode !== config.mode) continue;
+    if (!configForms.has(progress.conjugationType)) continue;
+
     const isDue = new Date(progress.nextReviewDate).getTime() <= nowMs;
-    
+
     // Mistakes (e.g. wrong recently and not yet graduated)
-    const isMistake = progress.consecutiveWrong > 0 || (progress.wrongCount > 0 && progress.status === 'learning');
+    const isMistake =
+      progress.consecutiveWrong > 0 || (progress.wrongCount > 0 && progress.status === 'learning');
 
     // Unstable (accuracy < 0.8)
     const seenCount = Math.max(progress.seenCount, 1);
@@ -48,6 +47,20 @@ export function getDailyPlanStats(
       dueReview++;
     }
   }
+
+  // New questions: words in availableWords that have NO progress at all for the current config
+  const seenWordIds = new Set(
+    Object.values(studyState.unitProgress)
+      .filter(
+        (progress) =>
+          availableWordIds.has(progress.wordId) &&
+          progress.mode === config.mode &&
+          configForms.has(progress.conjugationType)
+      )
+      .map((progress) => progress.wordId)
+  );
+  const unusedWords = availableWords.filter((w) => !seenWordIds.has(w.id));
+  const newQuestions = Math.min(unusedWords.length, studyState.preferences.dailyNewLimit);
 
   return { dueReview, mistakes, unstable, newQuestions };
 }

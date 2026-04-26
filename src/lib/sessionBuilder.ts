@@ -90,7 +90,7 @@ export function buildPracticeSession(
             conjugationType: focusedUnit.conjugationType,
             mode: config.mode,
             wordType: focusWord.word_type,
-            weaknessScore: Number.MAX_SAFE_INTEGER,
+            nextReviewDate: new Date(0).toISOString(),
           },
           ...orderedUnits,
         ].slice(0, effectiveConfig.questionCount);

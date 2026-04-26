@@ -18,6 +18,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useMemo, useState } from 'react';
 import SetupMenu from '@/components/SetupMenu';
 import PracticeSession from '@/components/PracticeSession';
+import PracticeCountDialog from '@/components/PracticeCountDialog';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { HtmlLangSync } from '@/components/HtmlLangSync';
 import AuthStatus from '@/components/AuthStatus';
@@ -45,6 +46,8 @@ function HomeContent() {
   const { activeSession, config, dailyStreak, startSession, updateConfig, language, studyState } = useStore();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [pendingPracticeType, setPendingPracticeType] = useState<typeof config.practiceType | null>(null);
   const { t } = useTranslation(language);
   const authError = searchParams.get('error');
   const authErrorMessage =
@@ -67,7 +70,7 @@ function HomeContent() {
   );
 
   const dailyStats = useMemo(
-    () => getDailyPlanStats(studyState, availableWords, new Date().toISOString()),
+    () => getDailyPlanStats(studyState, availableWords, new Date().toISOString(), studyState.preferences.defaultSessionConfig),
     [studyState, availableWords]
   );
 
@@ -78,7 +81,7 @@ function HomeContent() {
     { label: t('newQuestions'), count: dailyStats.newQuestions, icon: Sparkles, color: 'text-[#3b82a0]', bg: 'bg-[#eef9ff]' },
   ];
 
-  const handleStart = (practiceType: typeof config.practiceType, questionCount = config.questionCount) => {
+  const handleStart = (practiceType: typeof config.practiceType, questionCount: number) => {
     const nextConfig = { ...config, practiceType, questionCount };
     updateConfig(nextConfig);
     const result = buildPracticeSession(nextConfig, studyState, language);
@@ -90,6 +93,22 @@ function HomeContent() {
 
     setError(null);
     startSession(result.words);
+  };
+
+  const handleStartDaily = () => {
+    handleStart('daily', studyState.preferences.dailyQuestionGoal);
+  };
+
+  const handleOpenDialog = (practiceType: typeof config.practiceType) => {
+    setPendingPracticeType(practiceType);
+    setDialogOpen(true);
+  };
+
+  const handleDialogConfirm = (count: number) => {
+    if (pendingPracticeType) {
+      handleStart(pendingPracticeType, count);
+      setPendingPracticeType(null);
+    }
   };
 
   if (activeSession) {
@@ -157,7 +176,7 @@ function HomeContent() {
                     <span>{t('goal')}</span>
                   </div>
                   <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-[color:var(--ink)] sm:text-5xl lg:text-6xl">{config.questionCount}</span>
+                    <span className="text-4xl font-black text-[color:var(--ink)] sm:text-5xl lg:text-6xl">{studyState.preferences.dailyQuestionGoal}</span>
                     <span className="text-sm font-bold text-[color:var(--muted)]">{t('prompts')}</span>
                   </div>
                 </div>
@@ -202,7 +221,7 @@ function HomeContent() {
                       })}
                     </div>
                     <button
-                      onClick={() => handleStart('daily', config.questionCount)}
+                      onClick={handleStartDaily}
                       className="group relative inline-flex w-full items-center justify-center gap-4 rounded-[1.75rem] border-[4px] border-[color:var(--ink)] bg-[color:var(--accent)] px-6 py-4 text-xl font-black text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none sm:px-8 sm:py-5 sm:text-2xl lg:text-3xl"
                     >
                       <span className="whitespace-nowrap">{t('startTodayPractice')}</span>
@@ -213,7 +232,7 @@ function HomeContent() {
                   <div className="grid gap-4 sm:grid-cols-2">
                     <button
                       type="button"
-                      onClick={() => handleStart('weakness', 5)}
+                      onClick={() => handleOpenDialog('weakness')}
                       className="group flex min-h-28 flex-col items-center justify-center gap-2 rounded-[1.75rem] border-[3px] border-[color:var(--ink)] bg-[#fffbeb] px-5 py-5 text-center shadow-[5px_5px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_var(--ink)]"
                     >
                       <Dumbbell className="h-8 w-8 text-[color:var(--accent)]" strokeWidth={3} aria-hidden="true" />
@@ -222,7 +241,7 @@ function HomeContent() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => handleStart('free')}
+                      onClick={() => handleOpenDialog('free')}
                       className="group flex min-h-28 flex-col items-center justify-center gap-2 rounded-[1.75rem] border-[3px] border-[color:var(--ink)] bg-[#fffbeb] px-5 py-5 text-center shadow-[5px_5px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_var(--ink)]"
                     >
                       <Shuffle className="h-8 w-8 text-[color:var(--accent)]" strokeWidth={3} aria-hidden="true" />
@@ -258,6 +277,13 @@ function HomeContent() {
         <section className="w-full animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
           <SetupMenu />
         </section>
+
+        <PracticeCountDialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+          onConfirm={handleDialogConfirm}
+          language={language}
+        />
 
         <footer className="mt-12 flex w-full flex-col items-center gap-8 animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
           <div className="flex flex-col items-center gap-4">

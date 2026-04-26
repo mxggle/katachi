@@ -1,11 +1,11 @@
 import type { UnitProgress } from './types';
 
-export function getInitialSRS() {
+export function getInitialSRS(now?: string) {
   return {
     status: 'learning' as const,
     interval: 0,
     ease: 2.5,
-    nextReviewDate: new Date().toISOString(),
+    nextReviewDate: now ?? new Date().toISOString(),
   };
 }
 

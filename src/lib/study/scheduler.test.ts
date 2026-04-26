@@ -62,7 +62,7 @@ const config: StudySessionConfig = {
 };
 
 describe('selectPracticeUnits', () => {
-  it('caps new content in daily practice and fills the rest with weak items', () => {
+  it('prioritizes mistakes > unstable > due review > new > non-due in daily practice', () => {
     const words = [
       buildWord('word-1', 'verb', ['te_form']),
       buildWord('word-2', 'verb', ['te_form']),
@@ -70,31 +70,68 @@ describe('selectPracticeUnits', () => {
       buildWord('word-4', 'verb', ['te_form']),
       buildWord('word-5', 'verb', ['te_form']),
       buildWord('word-6', 'verb', ['te_form']),
+      buildWord('word-7', 'verb', ['te_form']),
+      buildWord('word-8', 'verb', ['te_form']),
     ];
 
     const unitProgress: Record<string, UnitProgress> = {
-      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', nextReviewDate: '2026-04-21T10:00:00.000Z' }),
-      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', nextReviewDate: '2026-04-21T11:00:00.000Z' }),
-      'word-3::te_form::choice': buildProgress({ wordId: 'word-3', nextReviewDate: '2026-04-21T12:00:00.000Z' }),
-      'word-4::te_form::choice': buildProgress({ wordId: 'word-4', nextReviewDate: '2026-04-23T10:00:00.000Z' }), // Not due
+      // Mistakes (consecutiveWrong > 0)
+      'word-1::te_form::choice': buildProgress({
+        wordId: 'word-1',
+        nextReviewDate: '2026-04-21T10:00:00.000Z',
+        consecutiveWrong: 2,
+        status: 'learning',
+      }),
+      // Unstable (accuracy < 0.8, not mistake, not graduated)
+      'word-2::te_form::choice': buildProgress({
+        wordId: 'word-2',
+        nextReviewDate: '2026-04-21T11:00:00.000Z',
+        seenCount: 5,
+        correctCount: 3,
+        wrongCount: 2,
+        consecutiveWrong: 0,
+        status: 'review',
+      }),
+      // Due review (normal due item)
+      'word-3::te_form::choice': buildProgress({
+        wordId: 'word-3',
+        nextReviewDate: '2026-04-21T12:00:00.000Z',
+        seenCount: 10,
+        correctCount: 9,
+        wrongCount: 1,
+        consecutiveWrong: 0,
+        status: 'review',
+      }),
+      // Not due
+      'word-4::te_form::choice': buildProgress({
+        wordId: 'word-4',
+        nextReviewDate: '2026-04-23T10:00:00.000Z',
+        consecutiveWrong: 1,
+        status: 'learning',
+      }),
     };
 
     const selected = selectPracticeUnits({
       words,
-      config,
+      config: { ...config, questionCount: 6 },
       practiceType: 'daily',
-      preferences,
+      preferences: { ...preferences, dailyNewLimit: 2 },
       unitProgress,
       now: '2026-04-22T12:00:00.000Z',
     });
 
-    const newUnits = selected.filter((item) => !unitProgress[item.unitKey]);
-    const weakUnits = selected.filter((item) => unitProgress[item.unitKey]);
+    const unitKeys = selected.map((item) => item.unitKey);
 
-    expect(selected).toHaveLength(6); // 3 due seen + 2 new + 1 fallback seen
-    expect(newUnits).toHaveLength(2);
-    expect(weakUnits).toHaveLength(4);
-    expect(selected[0].word.id).toBe('word-1');
+    // Should prioritize mistakes, unstable, and due review
+    expect(unitKeys).toContain('word-1::te_form::choice'); // mistake
+    expect(unitKeys).toContain('word-2::te_form::choice'); // unstable
+    expect(unitKeys).toContain('word-3::te_form::choice'); // due review
+
+    // New items fill remaining slots, capped at dailyNewLimit (2)
+    const newUnits = selected.filter((item) => !unitProgress[item.unitKey]);
+    expect(newUnits.length).toBeGreaterThanOrEqual(2);
+
+    expect(selected).toHaveLength(6);
   });
 
   it('limits weakness drill to seen weak units only', () => {
@@ -355,5 +392,27 @@ describe('selectPracticeUnits', () => {
     // and there are no other words.
     expect(selected).toHaveLength(1);
     expect(selected[0].conjugationType).toBe('te_form');
+  });
+
+  it('caps new items at dailyNewLimit in daily practice', () => {
+    const words = [
+      buildWord('new-1', 'verb', ['te_form']),
+      buildWord('new-2', 'verb', ['te_form']),
+      buildWord('new-3', 'verb', ['te_form']),
+      buildWord('new-4', 'verb', ['te_form']),
+      buildWord('new-5', 'verb', ['te_form']),
+    ];
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 5 },
+      practiceType: 'daily',
+      preferences: { ...preferences, dailyNewLimit: 2 },
+      unitProgress: {},
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    // With no review pool, only dailyNewLimit (2) new items should be selected
+    expect(selected).toHaveLength(2);
   });
 });

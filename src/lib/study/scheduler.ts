@@ -171,28 +171,6 @@ function takeDiversifiedUnits(
   };
 }
 
-function fillRemainingUnits(
-  selected: PracticeUnit[],
-  total: number,
-  candidates: PracticeUnit[]
-): PracticeUnit[] {
-  if (selected.length >= total) {
-    return selected.slice(0, total);
-  }
-
-  const selectedKeys = new Set(selected.map((unit) => unit.unitKey));
-  const filled = [...selected];
-
-  for (const candidate of candidates) {
-    if (filled.length >= total) break;
-    if (selectedKeys.has(candidate.unitKey)) continue;
-    filled.push(candidate);
-    selectedKeys.add(candidate.unitKey);
-  }
-
-  return filled;
-}
-
 export function selectPracticeUnits(options: SelectPracticeUnitsOptions): PracticeUnit[] {
   const eligibleUnits = buildEligibleUnits(options);
   const total = options.config.questionCount;
@@ -209,21 +187,65 @@ export function selectPracticeUnits(options: SelectPracticeUnitsOptions): Practi
     return takeDiversifiedUnits(seenUnits, total).units;
   }
 
-  const newLimit = Math.min(options.preferences.dailyNewLimit, total);
-  
-  // Only select seen units that are actually due
-  const dueUnits = seenUnits.filter(unit => new Date(unit.nextReviewDate).getTime() <= new Date(options.now).getTime());
+  const nowMs = new Date(options.now).getTime();
   const unseenUnits = eligibleUnits.filter((unit) => !options.unitProgress[unit.unitKey]);
-  
-  const selectedDue = takeDiversifiedUnits(dueUnits, Math.max(0, total - newLimit));
-  const selectedUnseen = takeDiversifiedUnits(unseenUnits, newLimit, selectedDue.wordIds);
 
-  // Fallback: prioritize non-due seen units before extra unseen to respect dailyNewLimit
-  const nonDueSeenUnits = seenUnits.filter(unit => new Date(unit.nextReviewDate).getTime() > new Date(options.now).getTime());
+  // Categorize seen units by priority
+  const mistakeUnits: PracticeUnit[] = [];
+  const unstableUnits: PracticeUnit[] = [];
+  const dueReviewUnits: PracticeUnit[] = [];
+  const nonDueSeenUnits: PracticeUnit[] = [];
 
-  return fillRemainingUnits(
-    [...selectedDue.units, ...selectedUnseen.units],
-    total,
-    [...dueUnits, ...nonDueSeenUnits, ...unseenUnits]
-  );
+  for (const unit of seenUnits) {
+    const progress = options.unitProgress[unit.unitKey]!;
+    const isDue = new Date(unit.nextReviewDate).getTime() <= nowMs;
+
+    if (!isDue) {
+      nonDueSeenUnits.push(unit);
+      continue;
+    }
+
+    const isMistake =
+      progress.consecutiveWrong > 0 || (progress.wrongCount > 0 && progress.status === 'learning');
+    if (isMistake) {
+      mistakeUnits.push(unit);
+      continue;
+    }
+
+    const seenCount = Math.max(progress.seenCount, 1);
+    const accuracy = progress.correctCount / seenCount;
+    const isUnstable = accuracy < 0.8 && progress.status !== 'graduated';
+    if (isUnstable) {
+      unstableUnits.push(unit);
+      continue;
+    }
+
+    dueReviewUnits.push(unit);
+  }
+
+  // Select by priority: mistakes → unstable → due review → new → non-due fallback
+  const selected: PracticeUnit[] = [];
+  const selectedWordIds = new Set<string>();
+
+  function selectFromPool(pool: PracticeUnit[], maxCount: number) {
+    const remaining = maxCount - selected.length;
+    if (remaining <= 0) return;
+    const result = takeDiversifiedUnits(pool, remaining, selectedWordIds);
+    selected.push(...result.units);
+    for (const id of result.wordIds) {
+      selectedWordIds.add(id);
+    }
+  }
+
+  selectFromPool(mistakeUnits, total);
+  selectFromPool(unstableUnits, total);
+  selectFromPool(dueReviewUnits, total);
+
+  // Cap new items at dailyNewLimit to avoid flooding the learner
+  const newSlots = Math.min(options.preferences.dailyNewLimit, total - selected.length);
+  selectFromPool(unseenUnits, selected.length + newSlots);
+
+  selectFromPool(nonDueSeenUnits, total);
+
+  return selected.slice(0, total);
 }

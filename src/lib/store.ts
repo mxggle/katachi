@@ -58,6 +58,7 @@ export interface AppState {
   submitAnswer: (isCorrect: boolean) => void;
   endSession: () => void;
   updateConfig: (config: Partial<SessionConfig>) => void;
+  updateDailyGoal: (dailyQuestionGoal: number) => void;
   checkDailyStreak: () => void;
   setLanguage: (language: Language) => void;
   setStudyState: (studyState: StudyState) => void;
@@ -226,7 +227,7 @@ export const useStore = create<AppState>()(
                   levels: nextConfig.levels,
                   wordTypes: nextConfig.wordTypes,
                   forms: nextConfig.forms,
-                  questionCount: nextConfig.questionCount,
+                  questionCount: state.studyState.preferences.defaultSessionConfig.questionCount,
                   mode: nextConfig.mode,
                 },
               },
@@ -236,6 +237,23 @@ export const useStore = create<AppState>()(
               ...syncAliases(nextStudyState, nextConfig),
               studyState: nextStudyState,
               config: nextConfig,
+            };
+          }),
+
+        updateDailyGoal: (dailyQuestionGoal) =>
+          set((state) => {
+            const nextStudyState: StudyState = {
+              ...state.studyState,
+              preferences: {
+                ...state.studyState.preferences,
+                dailyQuestionGoal,
+                dailyNewLimit: Math.max(0, Math.floor(dailyQuestionGoal * 0.25)),
+              },
+            };
+
+            return {
+              ...syncAliases(nextStudyState, state.config),
+              studyState: nextStudyState,
             };
           }),
 
