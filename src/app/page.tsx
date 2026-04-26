@@ -58,16 +58,21 @@ function HomeContent() {
   const availableWords = useMemo(
     () =>
       dictionaryData.words.filter(
-        (word) =>
-          studyState.preferences.dailySessionConfig.levels.includes(word.level as 'N5' | 'N4' | 'N3') && 
-          studyState.preferences.dailySessionConfig.wordTypes.includes(word.word_type)
+        (word) => {
+          const config = studyState.preferences?.dailySessionConfig;
+          if (!config) return false;
+          return (
+            (config.levels || []).includes(word.level as 'N5' | 'N4' | 'N3') && 
+            (config.wordTypes || []).includes(word.word_type)
+          );
+        }
       ),
-    [dictionaryData, studyState.preferences.dailySessionConfig]
+    [dictionaryData, studyState.preferences?.dailySessionConfig]
   );
 
   const today = useMemo(() => getLocalDateString(), []);
   const dashboard = useMemo(
-    () => getDiagnosticDashboard(studyState, availableWords, studyState.preferences.dailySessionConfig, today),
+    () => getDiagnosticDashboard(studyState, availableWords, studyState.preferences?.dailySessionConfig, today),
     [studyState, availableWords, today]
   );
 
@@ -80,7 +85,7 @@ function HomeContent() {
     const nextConfig = { ...baseConfig, questionCount };
     
     if (practiceType === 'daily' || practiceType === 'weakness') {
-      updateDailyConfig({ questionCount: practiceType === 'daily' ? questionCount : baseConfig.questionCount });
+      updateDailyConfig({ questionCount: practiceType === 'daily' ? questionCount : (baseConfig?.questionCount ?? 10) });
     } else {
       updateFreeConfig({ questionCount });
     }
@@ -97,7 +102,7 @@ function HomeContent() {
   };
 
   const handleStartDaily = () => {
-    handleStart('daily', studyState.preferences.dailyQuestionGoal);
+    handleStart('daily', studyState.preferences?.dailyQuestionGoal ?? 20);
   };
 
   const handleOpenDialog = (practiceType: PracticeType) => {
@@ -210,7 +215,7 @@ function HomeContent() {
                       </div>
 
                       {/* Daily progress bar */}
-                      <div className="mx-auto w-full max-w-sm">
+                      <div className="mx-auto w-full max-sm:max-w-xs max-w-sm">
                         <div className="relative h-3 w-full overflow-hidden rounded-full bg-[color:var(--ink)]/10">
                           <div
                             className="absolute inset-y-0 left-0 rounded-full bg-[color:var(--accent)] transition-all duration-500"
@@ -283,7 +288,7 @@ function HomeContent() {
           onClose={() => setDialogOpen(false)}
           onConfirm={handleDialogConfirm}
           language={language}
-          defaultCount={pendingPracticeType === 'free' ? studyState.preferences.freeSessionConfig.questionCount : studyState.preferences.dailySessionConfig.questionCount}
+          defaultCount={pendingPracticeType === 'free' ? (studyState.preferences?.freeSessionConfig?.questionCount ?? 10) : (studyState.preferences?.dailySessionConfig?.questionCount ?? 10)}
         />
 
         <footer className="mt-12 flex w-full flex-col items-center gap-8 animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">

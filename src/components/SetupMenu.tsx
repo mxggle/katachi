@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { useStore } from '@/lib/store';
 import { useTranslation, translations } from '@/lib/i18n';
 import { WordType, ConjugationType, VERB_ONLY_CONJS, CONJS_FOR_WORD_TYPE } from '@/lib/distractorEngine';
+import { DEFAULT_STUDY_SESSION_CONFIG } from '@/lib/study/types';
 
 const LEVELS = ['N5', 'N4', 'N3'] as const;
 const QUESTION_COUNTS = [10, 20, 30];
@@ -16,9 +17,9 @@ export default function SetupMenu() {
   const [activeTab, setActiveTab] = useState<'daily' | 'free'>('daily');
 
   const isDaily = activeTab === 'daily';
-  const currentConfig = isDaily 
-    ? studyState.preferences.dailySessionConfig 
-    : studyState.preferences.freeSessionConfig;
+  const currentConfig = (isDaily 
+    ? studyState.preferences?.dailySessionConfig 
+    : studyState.preferences?.freeSessionConfig) || DEFAULT_STUDY_SESSION_CONFIG;
   const updateCurrentConfig = isDaily ? updateDailyConfig : updateFreeConfig;
 
   const dict = translations[language];
@@ -63,7 +64,8 @@ export default function SetupMenu() {
 
   const availableForms = useMemo(() => {
     const nextAvailable = new Set<ConjugationType>();
-    for (const wordType of currentConfig.wordTypes) {
+    const wordTypes = currentConfig.wordTypes || [];
+    for (const wordType of wordTypes) {
       for (const form of CONJS_FOR_WORD_TYPE[wordType]) {
         nextAvailable.add(form);
       }
@@ -72,9 +74,10 @@ export default function SetupMenu() {
   }, [currentConfig.wordTypes]);
 
   const toggleLevel = (level: (typeof LEVELS)[number]) => {
-    const nextLevels = currentConfig.levels.includes(level)
-      ? currentConfig.levels.filter((item) => item !== level)
-      : [...currentConfig.levels, level];
+    const levels = currentConfig.levels || [];
+    const nextLevels = levels.includes(level)
+      ? levels.filter((item) => item !== level)
+      : [...levels, level];
 
     if (nextLevels.length > 0) {
       updateCurrentConfig({ levels: nextLevels });
@@ -82,9 +85,10 @@ export default function SetupMenu() {
   };
 
   const toggleWordType = (wordType: WordType) => {
-    const nextWordTypes = currentConfig.wordTypes.includes(wordType)
-      ? currentConfig.wordTypes.filter((item) => item !== wordType)
-      : [...currentConfig.wordTypes, wordType];
+    const wordTypes = currentConfig.wordTypes || [];
+    const nextWordTypes = wordTypes.includes(wordType)
+      ? wordTypes.filter((item) => item !== wordType)
+      : [...wordTypes, wordType];
 
     if (nextWordTypes.length === 0) {
       return;
@@ -97,7 +101,8 @@ export default function SetupMenu() {
       }
     }
 
-    const nextForms = currentConfig.forms.filter((form) => nextAvailableForms.has(form));
+    const forms = currentConfig.forms || [];
+    const nextForms = forms.filter((form) => nextAvailableForms.has(form));
     updateCurrentConfig({
       wordTypes: nextWordTypes,
       forms: nextForms.length > 0 ? nextForms : ['polite'],
@@ -109,9 +114,10 @@ export default function SetupMenu() {
       return;
     }
 
-    const nextForms = currentConfig.forms.includes(form)
-      ? currentConfig.forms.filter((item) => item !== form)
-      : [...currentConfig.forms, form];
+    const forms = currentConfig.forms || [];
+    const nextForms = forms.includes(form)
+      ? forms.filter((item) => item !== form)
+      : [...forms, form];
 
     if (nextForms.length > 0) {
       updateCurrentConfig({ forms: nextForms });
@@ -188,7 +194,7 @@ export default function SetupMenu() {
               {LEVELS.map((level) => (
                 <ToggleChip
                   key={level}
-                  active={currentConfig.levels.includes(level)}
+                  active={(currentConfig.levels || []).includes(level)}
                   onClick={() => toggleLevel(level)}
                   label={level}
                 />
@@ -201,7 +207,7 @@ export default function SetupMenu() {
               {(['verb', 'i-adj', 'na-adj'] as const).map((wordType) => (
                 <ToggleChip
                   key={wordType}
-                  active={currentConfig.wordTypes.includes(wordType)}
+                  active={(currentConfig.wordTypes || []).includes(wordType)}
                   onClick={() => toggleWordType(wordType)}
                   label={wordTypeLabels[wordType]}
                 />
@@ -224,8 +230,8 @@ export default function SetupMenu() {
               {(Object.keys(verbFormLabels) as ConjugationType[]).map((form) => {
                 if (!availableForms.has(form)) return null;
 
-                const hasVerb = currentConfig.wordTypes.includes('verb');
-                const hasAdj = currentConfig.wordTypes.includes('i-adj') || currentConfig.wordTypes.includes('na-adj');
+                const hasVerb = (currentConfig.wordTypes || []).includes('verb');
+                const hasAdj = (currentConfig.wordTypes || []).includes('i-adj') || (currentConfig.wordTypes || []).includes('na-adj');
                 
                 let label = verbFormLabels[form];
                 if (hasVerb && hasAdj) {
@@ -240,7 +246,7 @@ export default function SetupMenu() {
                 return (
                   <ToggleChip
                     key={form}
-                    active={currentConfig.forms.includes(form)}
+                    active={(currentConfig.forms || []).includes(form)}
                     onClick={() => toggleForm(form)}
                     label={label}
                     tag={VERB_ONLY_CONJS.includes(form) ? 'V' : undefined}
@@ -269,7 +275,7 @@ export default function SetupMenu() {
                 {QUESTION_COUNTS.map((count) => (
                   <ToggleChip
                     key={count}
-                    active={isDaily ? studyState.preferences.dailyQuestionGoal === count : currentConfig.questionCount === count}
+                    active={isDaily ? (studyState.preferences?.dailyQuestionGoal === count) : currentConfig.questionCount === count}
                     onClick={() => {
                       if (isDaily) updateDailyGoal(count);
                       else updateCurrentConfig({ questionCount: count });
