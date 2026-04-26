@@ -9,6 +9,7 @@ import {
   type StudyState,
 } from '@/lib/study/types';
 import { migratePersistedStudyState } from '@/lib/study/migrate';
+import { getInitialSRS, updateSRS } from '@/lib/study/srs';
 
 export interface SessionConfig extends StudySessionConfig {
   practiceType: PracticeType;
@@ -139,6 +140,7 @@ function buildInitialProgress(word: WordEntry, type: ConjugationType, mode: Sess
     lastWrongAt: null,
     sameDayExposureCount: 0,
     sameSessionRetryCount: 0,
+    ...getInitialSRS(),
   };
 }
 
@@ -293,6 +295,7 @@ export const useStore = create<AppState>()(
               lastWrongAt: isCorrect ? existingProgress.lastWrongAt : now,
               sameDayExposureCount: existingProgress.sameDayExposureCount + 1,
               sameSessionRetryCount: existingProgress.sameSessionRetryCount,
+              ...updateSRS(existingProgress, isCorrect, now),
             };
 
             const nextWords = [...activeSession.words];

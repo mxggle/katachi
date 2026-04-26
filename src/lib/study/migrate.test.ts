@@ -30,7 +30,7 @@ describe('migratePersistedStudyState', () => {
       lastPracticeDate: '2026-04-20',
       totalAnswered: 42,
       totalCorrect: 30,
-      schemaVersion: 2,
+      schemaVersion: 3,
     });
     expect(migrated.unitProgress).toEqual({});
     expect(migrated.sessionHistory).toEqual([]);

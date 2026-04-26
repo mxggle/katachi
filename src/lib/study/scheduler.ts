@@ -1,6 +1,5 @@
 import type { ConjugationType, WordEntry, WordType } from '@/lib/distractorEngine';
 import { CONJS_FOR_WORD_TYPE } from '@/lib/distractorEngine';
-import { calculateWeaknessScore } from '@/lib/study/scoring';
 import { makeUnitKey, type PracticeType, type StudyPreferences, type StudySessionConfig, type UnitProgress } from '@/lib/study/types';
 
 export interface PracticeUnit {
@@ -9,7 +8,7 @@ export interface PracticeUnit {
   conjugationType: ConjugationType;
   mode: StudySessionConfig['mode'];
   wordType: WordType;
-  weaknessScore: number;
+  nextReviewDate: string;
 }
 
 interface SelectPracticeUnitsOptions {
@@ -51,10 +50,19 @@ function buildEligibleUnits({
         conjugationType,
         mode: config.mode,
         wordType: word.word_type,
-        weaknessScore: progress ? calculateWeaknessScore(progress, now) : 0,
+        nextReviewDate: progress ? progress.nextReviewDate : now,
       };
 
-      if (!bestUnit || unit.weaknessScore > bestUnit.weaknessScore) {
+      const hasProg = !!progress;
+      const bestHasProg = bestUnit ? !!unitProgress[bestUnit.unitKey] : false;
+
+      // Prefer forms that have progress (review) over unseen forms
+      // Among same category (both have progress or both unseen), prefer earliest nextReviewDate
+      const shouldReplace = !bestUnit
+        || (hasProg && !bestHasProg)
+        || (hasProg === bestHasProg && new Date(unit.nextReviewDate).getTime() < new Date(bestUnit.nextReviewDate).getTime());
+
+      if (shouldReplace) {
         bestUnit = unit;
       }
     }
@@ -195,20 +203,27 @@ export function selectPracticeUnits(options: SelectPracticeUnitsOptions): Practi
 
   const seenUnits = eligibleUnits
     .filter((unit) => options.unitProgress[unit.unitKey])
-    .sort((left, right) => right.weaknessScore - left.weaknessScore || left.word.id.localeCompare(right.word.id));
+    .sort((left, right) => new Date(left.nextReviewDate).getTime() - new Date(right.nextReviewDate).getTime() || left.word.id.localeCompare(right.word.id));
 
   if (options.practiceType === 'weakness') {
     return takeDiversifiedUnits(seenUnits, total).units;
   }
 
-  const unseenUnits = eligibleUnits.filter((unit) => !options.unitProgress[unit.unitKey]);
   const newLimit = Math.min(options.preferences.dailyNewLimit, total);
-  const selectedWeak = takeDiversifiedUnits(seenUnits, Math.max(0, total - newLimit));
-  const selectedUnseen = takeDiversifiedUnits(unseenUnits, newLimit, selectedWeak.wordIds);
+  
+  // Only select seen units that are actually due
+  const dueUnits = seenUnits.filter(unit => new Date(unit.nextReviewDate).getTime() <= new Date(options.now).getTime());
+  const unseenUnits = eligibleUnits.filter((unit) => !options.unitProgress[unit.unitKey]);
+  
+  const selectedDue = takeDiversifiedUnits(dueUnits, Math.max(0, total - newLimit));
+  const selectedUnseen = takeDiversifiedUnits(unseenUnits, newLimit, selectedDue.wordIds);
+
+  // Fallback: prioritize non-due seen units before extra unseen to respect dailyNewLimit
+  const nonDueSeenUnits = seenUnits.filter(unit => new Date(unit.nextReviewDate).getTime() > new Date(options.now).getTime());
 
   return fillRemainingUnits(
-    [...selectedWeak.units, ...selectedUnseen.units],
+    [...selectedDue.units, ...selectedUnseen.units],
     total,
-    [...seenUnits, ...unseenUnits]
+    [...dueUnits, ...nonDueSeenUnits, ...unseenUnits]
   );
 }

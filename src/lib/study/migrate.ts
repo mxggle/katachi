@@ -3,8 +3,12 @@ import type { Language } from '@/lib/i18n';
 import {
   DEFAULT_STUDY_SESSION_CONFIG,
   DEFAULT_STUDY_STATE,
+  type AttemptRecord,
+  type SessionRecord,
   type StudyState,
+  type UnitProgress,
 } from '@/lib/study/types';
+import { getInitialSRS } from '@/lib/study/srs';
 
 interface LegacyProgressStats {
   totalAnswered: number;
@@ -28,6 +32,9 @@ interface LegacyPersistedState {
     batchSize?: number;
     mode?: 'choice' | 'input';
   };
+  unitProgress?: Record<string, UnitProgress>;
+  sessionHistory?: SessionRecord[];
+  attemptHistory?: AttemptRecord[];
 }
 
 export function migratePersistedStudyState(legacy: LegacyPersistedState | undefined): StudyState {
@@ -57,8 +64,45 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
       totalAnswered: progress?.totalAnswered ?? 0,
       totalCorrect: progress?.totalCorrect ?? 0,
     },
-    unitProgress: {},
-    sessionHistory: [],
-    attemptHistory: [],
+    unitProgress: legacy?.unitProgress
+      ? Object.fromEntries(
+          Object.entries(legacy.unitProgress).map(([key, progress]) => {
+            if (progress.nextReviewDate) return [key, progress]; // Already migrated
+            
+            // Migrate to SRS
+            const srs = getInitialSRS();
+            if (progress.consecutiveCorrect >= 3) {
+              srs.status = 'graduated';
+              srs.interval = 21;
+              srs.ease = 2.8;
+            } else if (progress.consecutiveCorrect > 0) {
+              srs.status = 'review';
+              srs.interval = Math.pow(2.5, progress.consecutiveCorrect);
+              srs.ease = 2.5;
+            } else {
+              srs.status = 'learning';
+              srs.interval = 0;
+            }
+            
+            let nextReviewDate = new Date();
+            if (progress.lastSeenAt && srs.interval > 0) {
+              const last = new Date(progress.lastSeenAt);
+              last.setHours(last.getHours() + srs.interval * 24);
+              nextReviewDate = last;
+            }
+            srs.nextReviewDate = nextReviewDate.toISOString();
+
+            return [
+              key,
+              {
+                ...progress,
+                ...srs,
+              },
+            ];
+          })
+        )
+      : {},
+    sessionHistory: legacy?.sessionHistory ?? [],
+    attemptHistory: legacy?.attemptHistory ?? [],
   };
 }

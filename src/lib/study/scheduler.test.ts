@@ -32,6 +32,10 @@ function buildProgress(overrides: Partial<UnitProgress> = {}): UnitProgress {
     lastWrongAt: '2026-04-22T10:00:00.000Z',
     sameDayExposureCount: 1,
     sameSessionRetryCount: 0,
+    status: 'learning',
+    interval: 0,
+    ease: 2.5,
+    nextReviewDate: '2026-04-22T10:00:00.000Z',
     ...overrides,
   };
 }
@@ -69,10 +73,10 @@ describe('selectPracticeUnits', () => {
     ];
 
     const unitProgress: Record<string, UnitProgress> = {
-      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', consecutiveWrong: 3, wrongCount: 4 }),
-      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', consecutiveWrong: 2, wrongCount: 3 }),
-      'word-3::te_form::choice': buildProgress({ wordId: 'word-3', consecutiveWrong: 1, wrongCount: 2 }),
-      'word-4::te_form::choice': buildProgress({ wordId: 'word-4', consecutiveWrong: 1, wrongCount: 1 }),
+      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', nextReviewDate: '2026-04-21T10:00:00.000Z' }),
+      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', nextReviewDate: '2026-04-21T11:00:00.000Z' }),
+      'word-3::te_form::choice': buildProgress({ wordId: 'word-3', nextReviewDate: '2026-04-21T12:00:00.000Z' }),
+      'word-4::te_form::choice': buildProgress({ wordId: 'word-4', nextReviewDate: '2026-04-23T10:00:00.000Z' }), // Not due
     };
 
     const selected = selectPracticeUnits({
@@ -87,7 +91,7 @@ describe('selectPracticeUnits', () => {
     const newUnits = selected.filter((item) => !unitProgress[item.unitKey]);
     const weakUnits = selected.filter((item) => unitProgress[item.unitKey]);
 
-    expect(selected).toHaveLength(6);
+    expect(selected).toHaveLength(6); // 3 due seen + 2 new + 1 fallback seen
     expect(newUnits).toHaveLength(2);
     expect(weakUnits).toHaveLength(4);
     expect(selected[0].word.id).toBe('word-1');
@@ -101,8 +105,8 @@ describe('selectPracticeUnits', () => {
     ];
 
     const unitProgress: Record<string, UnitProgress> = {
-      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', wrongCount: 4, consecutiveWrong: 2 }),
-      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', wrongCount: 2, consecutiveWrong: 1 }),
+      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', nextReviewDate: '2026-04-21T10:00:00.000Z' }),
+      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', nextReviewDate: '2026-04-21T11:00:00.000Z' }),
     };
 
     const selected = selectPracticeUnits({
@@ -186,10 +190,10 @@ describe('selectPracticeUnits', () => {
     ];
 
     const unitProgress: Record<string, UnitProgress> = {
-      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', wrongCount: 5, consecutiveWrong: 3 }),
-      'word-1::polite::choice': buildProgress({ wordId: 'word-1', conjugationType: 'polite', wrongCount: 4, consecutiveWrong: 2 }),
-      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', wrongCount: 3, consecutiveWrong: 2 }),
-      'word-3::polite::choice': buildProgress({ wordId: 'word-3', conjugationType: 'polite', wrongCount: 2, consecutiveWrong: 1 }),
+      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', nextReviewDate: '2026-04-22T08:00:00.000Z' }),
+      'word-1::polite::choice': buildProgress({ wordId: 'word-1', conjugationType: 'polite', nextReviewDate: '2026-04-22T09:00:00.000Z' }),
+      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', nextReviewDate: '2026-04-22T10:00:00.000Z' }),
+      'word-3::polite::choice': buildProgress({ wordId: 'word-3', conjugationType: 'polite', nextReviewDate: '2026-04-22T11:00:00.000Z' }),
     };
 
     const selected = selectPracticeUnits({
@@ -303,23 +307,15 @@ describe('selectPracticeUnits', () => {
     ];
 
     const now = '2026-04-22T12:00:00.000Z';
-    const oneHourAgo = '2026-04-22T11:00:00.000Z';
-    const twoDaysAgo = '2026-04-20T12:00:00.000Z';
 
     const unitProgress: Record<string, UnitProgress> = {
       'recent-word::te_form::choice': buildProgress({
         wordId: 'recent-word',
-        wrongCount: 10,
-        consecutiveWrong: 5,
-        lastSeenAt: oneHourAgo,
-        lastWrongAt: oneHourAgo,
+        nextReviewDate: '2026-04-22T13:00:00.000Z', // Not due
       }),
       'old-word::te_form::choice': buildProgress({
         wordId: 'old-word',
-        wrongCount: 2,
-        consecutiveWrong: 1,
-        lastSeenAt: twoDaysAgo,
-        lastWrongAt: twoDaysAgo,
+        nextReviewDate: '2026-04-20T12:00:00.000Z', // Due
       }),
     };
 
@@ -342,8 +338,8 @@ describe('selectPracticeUnits', () => {
     ];
 
     const unitProgress: Record<string, UnitProgress> = {
-      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', wrongCount: 10 }),
-      'word-1::polite::choice': buildProgress({ wordId: 'word-1', conjugationType: 'polite', wrongCount: 5 }),
+      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', nextReviewDate: '2026-04-21T10:00:00.000Z' }),
+      'word-1::polite::choice': buildProgress({ wordId: 'word-1', conjugationType: 'polite', nextReviewDate: '2026-04-21T11:00:00.000Z' }),
     };
 
     const selected = selectPracticeUnits({

@@ -43,6 +43,10 @@ export interface UnitProgress {
   lastWrongAt: string | null;
   sameDayExposureCount: number;
   sameSessionRetryCount: number;
+  status: 'learning' | 'review' | 'graduated';
+  interval: number;
+  ease: number;
+  nextReviewDate: string;
 }
 
 export interface SessionRecord {
@@ -94,7 +98,7 @@ export const DEFAULT_STUDY_STATE = (language: Language): StudyState => ({
     lastSessionAt: null,
     totalAnswered: 0,
     totalCorrect: 0,
-    schemaVersion: 2,
+    schemaVersion: 3,
   },
   unitProgress: {},
   sessionHistory: [],

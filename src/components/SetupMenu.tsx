@@ -1,10 +1,10 @@
 'use client';
 
+import { ChevronDown, Settings2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useStore } from '@/lib/store';
 import { useTranslation, translations } from '@/lib/i18n';
 import { WordType, ConjugationType, VERB_ONLY_CONJS, CONJS_FOR_WORD_TYPE } from '@/lib/distractorEngine';
-import type { PracticeType } from '@/lib/study/types';
 
 const LEVELS = ['N5', 'N4', 'N3'] as const;
 const QUESTION_COUNTS = [10, 20, 30];
@@ -52,12 +52,6 @@ export default function SetupMenu() {
     verb: t('verb'),
     'i-adj': t('iAdj'),
     'na-adj': t('naAdj'),
-  };
-
-  const practiceTypeLabels: Record<PracticeType, string> = {
-    daily: t('dailyPractice'),
-    weakness: t('weaknessDrill'),
-    free: t('freePractice'),
   };
 
   const availableForms = useMemo(() => {
@@ -131,9 +125,12 @@ export default function SetupMenu() {
     <section className="rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-6 shadow-[8px_8px_0px_0px_var(--ink)] transition-all sm:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <h3 className="text-2xl font-bold text-[color:var(--ink)]">
-            {t('setupOptions')}
-          </h3>
+          <div className="flex items-center gap-2">
+            <Settings2 className="h-6 w-6 text-[color:var(--accent)]" strokeWidth={3} aria-hidden="true" />
+            <h3 className="text-2xl font-bold text-[color:var(--ink)]">
+              {t('setupOptions')}
+            </h3>
+          </div>
           <p className="text-sm font-medium text-[color:var(--muted)]">
             {t('setupDescription')}
           </p>
@@ -143,27 +140,19 @@ export default function SetupMenu() {
           type="button"
           aria-expanded={isExpanded}
           onClick={() => setIsExpanded((value) => !value)}
-          className="inline-flex min-h-11 items-center justify-center rounded-xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
         >
-          {isExpanded ? t('hideOptions') : t('showOptions')}
+          <span>{isExpanded ? t('hideOptions') : t('showOptions')}</span>
+          <ChevronDown
+            className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+            strokeWidth={3}
+            aria-hidden="true"
+          />
         </button>
       </div>
 
       {isExpanded && (
         <div className="mt-8 space-y-8 border-t-[3px] border-dashed border-[color:var(--border-strong)] pt-8">
-          <ConfigSection title={t('practiceType')}>
-            <ChipRow>
-              {(['daily', 'weakness', 'free'] as const).map((practiceType) => (
-                <ToggleChip
-                  key={practiceType}
-                  active={config.practiceType === practiceType}
-                  onClick={() => updateConfig({ practiceType })}
-                  label={practiceTypeLabels[practiceType]}
-                />
-              ))}
-            </ChipRow>
-          </ConfigSection>
-
           <ConfigSection title={t('levels')}>
             <ChipRow>
               {LEVELS.map((level) => (
