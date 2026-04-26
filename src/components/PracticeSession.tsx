@@ -13,6 +13,8 @@ import { buildPracticeSession } from '@/lib/sessionBuilder';
 import * as wanakana from 'wanakana';
 import Logo from '@/components/Logo';
 import DynamicStatusBar from '@/components/DynamicStatusBar';
+import Portal from '@/components/Portal';
+import { feedbackSounds } from '@/lib/feedbackSounds';
 
 const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -53,6 +55,9 @@ export default function PracticeSession() {
     const [showFeedback, setShowFeedback] = useState(false);
     const [lastSelected, setLastSelected] = useState<string | null>(null);
     const [showTodayEnd, setShowTodayEnd] = useState(false);
+    const [isAnimatingNext, setIsAnimatingNext] = useState(false);
+    const [justCorrect, setJustCorrect] = useState(false);
+    const [justWrong, setJustWrong] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -135,13 +140,30 @@ export default function PracticeSession() {
         }
     }, [currentIdx, isFinished, playAudio, showFeedback, word?.dictionary_form.kanji]);
 
+    useEffect(() => {
+        if (isFinished) {
+            feedbackSounds.playComplete();
+        }
+    }, [isFinished]);
+
     const handleChoice = (choice: string) => {
         if (showFeedback) return;
         const correct = choice === correctAnswer;
         setLastSelected(choice);
         setIsCorrect(correct);
         setShowFeedback(true);
-        playAudio(correctAnswer);
+        if (correct) {
+            setJustCorrect(true);
+            feedbackSounds.playSuccess();
+            setTimeout(() => setJustCorrect(false), 1000);
+            playAudio(correctAnswer);
+        } else {
+            setJustWrong(true);
+            feedbackSounds.playError();
+            setTimeout(() => setJustWrong(false), 500);
+            // Delay TTS slightly so error sound is clearly heard
+            setTimeout(() => playAudio(correctAnswer), 350);
+        }
     };
 
     const handleChoiceButtonClick = (choice: string) => {
@@ -163,19 +185,35 @@ export default function PracticeSession() {
             handleNext();
             return;
         }
-        if (!inputValue.trim()) return;
-        const correct = wanakana.toHiragana(inputValue.trim()) === wanakana.toHiragana(correctAnswer);
+        const normalizedInput = wanakana.toHiragana(inputValue.trim());
+        const correct = normalizedInput === correctAnswer;
         setIsCorrect(correct);
         setShowFeedback(true);
-        playAudio(correctAnswer);
+        if (correct) {
+            setJustCorrect(true);
+            feedbackSounds.playSuccess();
+            setTimeout(() => setJustCorrect(false), 1000);
+            playAudio(correctAnswer);
+        } else {
+            setJustWrong(true);
+            feedbackSounds.playError();
+            setTimeout(() => setJustWrong(false), 500);
+            // Delay TTS slightly so error sound is clearly heard
+            setTimeout(() => playAudio(correctAnswer), 350);
+        }
     };
 
     const handleNext = () => {
-        audioControllerRef.current?.stop();
-        submitAnswer(isCorrect);
-        setInputValue('');
-        setShowFeedback(false);
-        setLastSelected(null);
+        setIsAnimatingNext(true);
+        // Wait for fade-out to complete before updating state
+        setTimeout(() => {
+            audioControllerRef.current?.stop();
+            submitAnswer(isCorrect);
+            setInputValue('');
+            setShowFeedback(false);
+            setLastSelected(null);
+            setIsAnimatingNext(false);
+        }, 250); // Match the 0.25s duration of animate-katachi-exit
     };
 
     const handleEndSession = () => {
@@ -424,191 +462,208 @@ export default function PracticeSession() {
                         </svg>
                     </button>
 
-                    <div className="flex-1 h-4 rounded-full border-[2px] border-[color:var(--ink)] bg-white shadow-[2px_2px_0px_0px_var(--ink)] overflow-hidden relative">
+                    <div className="flex-1 h-4 rounded-full border-[2px] border-[color:var(--ink)] bg-white shadow-[2px_2px_0px_0px_var(--ink)] overflow-hidden relative progress-glow">
                         <div
-                            className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[2px] border-[color:var(--ink)] transition-all duration-300"
+                            className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[2px] border-[color:var(--ink)] progress-spring"
                             style={{ width: `${progress}%` }}
                         />
                     </div>
                 </div>
 
                 {/* Main Card - Reduced padding and optimized spacing */}
-                <div className="flex-1 flex flex-col rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-4 pb-8 sm:pb-8 sm:p-8 shadow-[4px_4px_0px_0px_var(--ink)] min-h-0">
-                    <div className="flex items-center justify-between gap-2 shrink-0">
-                        <div className="flex gap-1.5 overflow-hidden">
-                            {word?.is_common && (
-                                <span className="px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-[#fde68a] text-[9px] font-bold uppercase tracking-wider truncate">{t('common')}</span>
-                            )}
-                            {word?.jlpt && (
-                                <span className="px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-white text-[9px] font-bold uppercase tracking-wider shrink-0">{word.jlpt}</span>
-                            )}
-                        </div>
-                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-[color:var(--accent-soft)] shrink-0">
-                            <span className="text-xs">🔥</span>
-                            <span className="text-xs font-bold text-[color:var(--accent)]">{activeSession.sessionStreak}</span>
-                        </div>
-                    </div>
-
-                    <div className="flex-1 flex flex-col items-center justify-center text-center py-2 min-h-0">
-                        <p className="text-[10px] sm:text-sm font-bold uppercase tracking-[0.15em] text-[color:var(--muted)] mb-1 sm:mb-2 line-clamp-2 px-4">{word?.meaning || '---'}</p>
-                        
-                        <div className="flex items-center justify-center w-full gap-3 px-4">
-                            <h2 className="text-4xl sm:text-6xl font-bold tracking-tight text-[color:var(--ink)] break-all leading-tight">
-                                {word?.dictionary_form.kanji || '---'}
-                            </h2>
-                            <button
-                                onClick={() => playAudio(word?.dictionary_form.kanji || '')}
-                                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] flex items-center justify-center shadow-[2.5px_2.5px_0px_0px_var(--ink)] active:translate-x-[1.5px] active:translate-y-[1.5px] active:shadow-none transition-all shrink-0"
-                            >
-                                <SpeakerIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-                            </button>
-                        </div>
-                        <p className="text-lg sm:text-xl font-bold text-[color:var(--muted)] mt-0.5 sm:mt-1">{word?.dictionary_form.kana}</p>
-
-                        <div className="mt-4 sm:mt-6 flex flex-col items-center gap-1.5 shrink-0">
-                            <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('question')}</span>
-                            <div className="px-4 py-1.5 rounded-lg border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] shadow-[3px_3px_0px_0px_var(--ink)] text-sm sm:text-lg font-black">
-                                {type && word ? getConjugationLabel(type, word.word_type, language) : '---'}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Action Area - Responsive layout for different counts/modes */}
-                    <div className="mt-auto pt-4 pb-2 sm:pb-0 shrink-0">
-                        {config.mode === 'choice' ? (
-                            <div className="flex flex-col gap-2.5">
-                                <div className={`grid gap-2 sm:gap-3 ${choices.length > 4 || choices.some(c => c.length > 8) ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                                    {choices.map((choice, i) => {
-                                        const interaction = getChoiceInteraction({ choice, correctAnswer, showFeedback });
-                                        let variantClasses = "bg-white text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none";
-                                        
-                                        if (showFeedback) {
-                                            if (choice === correctAnswer) {
-                                                variantClasses = "bg-[color:var(--primary-green)] text-white shadow-[2px_2px_0px_0px_var(--ink)] scale-[0.98] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_var(--ink)]";
-                                            } else if (choice === lastSelected) {
-                                                variantClasses = "bg-[color:var(--accent)] text-white shadow-[2px_2px_0px_0px_var(--ink)] scale-[0.98]";
-                                            } else {
-                                                variantClasses = "bg-white text-[color:var(--ink)] opacity-30 border-dashed shadow-none translate-x-0 translate-y-0 grayscale";
-                                            }
-                                        } else {
-                                            variantClasses += " hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)]";
-                                        }
-
-                                        return (
-                                            <button
-                                                key={i}
-                                                disabled={interaction.disabled}
-                                                onClick={() => handleChoiceButtonClick(choice)}
-                                                className={`group relative p-2.5 min-h-[3rem] sm:min-h-[3.5rem] rounded-xl border-[2.5px] border-[color:var(--ink)] font-bold text-sm sm:text-base transition-all flex items-center justify-center text-center leading-none ${variantClasses}`}
-                                            >
-                                                {showFeedback && choice === correctAnswer && (
-                                                    <div className="absolute left-2 top-1/2 -translate-y-1/2 opacity-90">
-                                                        <SpeakerIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                                                    </div>
-                                                )}
-                                                <span className={`whitespace-nowrap overflow-hidden text-ellipsis ${showFeedback && choice === correctAnswer ? 'px-7' : 'px-1'}`}>{choice}</span>
-                                                {showFeedback && choice === correctAnswer && (
-                                                    <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                                                        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                        </svg>
-                                                    </div>
-                                                )}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-                                {showFeedback && (
-                                    <button
-                                        onClick={handleNext}
-                                        className="w-full py-3.5 sm:py-4 rounded-xl border-[3px] border-[color:var(--ink)] bg-[color:var(--ink)] text-white text-base sm:text-xl font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2"
-                                    >
-                                        <span>{t('nextQuestion')}</span>
-                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                        </svg>
-                                    </button>
+                <div 
+                    className="flex-1 flex flex-col rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-4 pb-8 sm:pb-8 sm:p-8 shadow-[4px_4px_0px_0px_var(--ink)] min-h-0 relative"
+                >
+                    <div 
+                        key={currentIdx}
+                        className={`flex-1 flex flex-col ${isAnimatingNext ? 'animate-katachi-exit' : 'animate-katachi-entry'}`}
+                    >
+                        <div className="flex items-center justify-between gap-2 shrink-0 animate-fade-in stagger-1">
+                            <div className="flex gap-1.5 overflow-hidden">
+                                {word?.is_common && (
+                                    <span className="px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-[#fde68a] text-[9px] font-bold uppercase tracking-wider truncate animate-badge-shimmer">{t('common')}</span>
+                                )}
+                                {word?.jlpt && (
+                                    <span className="px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-white text-[9px] font-bold uppercase tracking-wider shrink-0 animate-badge-shimmer">{word.jlpt}</span>
                                 )}
                             </div>
-                        ) : (
-                            <div className="space-y-3">
-                                <form onSubmit={handleInputSubmit} className="relative">
-                                    <input
-                                        ref={inputRef}
-                                        type="text"
-                                        value={inputValue}
-                                        onChange={(e) => setInputValue(e.target.value)}
-                                        disabled={showFeedback}
-                                        placeholder={t('placeholder')}
-                                        className={`w-full text-center text-xl sm:text-2xl font-bold p-3.5 sm:p-5 rounded-xl border-[3px] border-[color:var(--ink)] bg-white outline-none transition-all ${
-                                            showFeedback
-                                                ? isCorrect
-                                                    ? 'border-[color:var(--primary-green)] bg-[color:var(--primary-green)]/10'
-                                                    : 'border-[color:var(--accent)] bg-[color:var(--accent)]/10'
-                                                : 'focus:shadow-[4px_4px_0px_0px_var(--ink)]'
-                                        }`}
-                                        autoComplete="off"
-                                    />
-                                    {showFeedback && (
-                                        <div className={`mt-3 p-3 rounded-lg border-[2px] border-[color:var(--ink)] ${isCorrect ? 'bg-[color:var(--primary-green)] text-white' : 'bg-[#fde68a] text-[color:var(--ink)]'} flex items-center justify-between`}>
-                                            <div className="flex flex-col items-start overflow-hidden">
-                                                <span className="text-[8px] font-black uppercase tracking-widest opacity-70 leading-none mb-1">{t('correctAnswer')}</span>
-                                                <span className="text-base font-bold truncate w-full">{correctAnswer}</span>
-                                            </div>
-                                            <button 
-                                                type="button"
-                                                onClick={() => playAudio(correctAnswer)}
-                                                className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center shrink-0 ml-2"
-                                            >
-                                                <SpeakerIcon className="w-4 h-4" />
-                                            </button>
-                                        </div>
-                                    )}
-                                </form>
+                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-md border-[1.5px] border-[color:var(--ink)] bg-[color:var(--accent-soft)] shrink-0">
+                                <span className="text-xs animate-fire-glow">🔥</span>
+                                <span className="text-xs font-bold text-[color:var(--accent)]">{activeSession.sessionStreak}</span>
+                            </div>
+                        </div>
+
+                        <div className="flex-1 flex flex-col items-center justify-center text-center py-2 min-h-0">
+                            <p className="text-[10px] sm:text-sm font-bold uppercase tracking-[0.15em] text-[color:var(--muted)] mb-1 sm:mb-2 line-clamp-2 px-4 animate-fade-in stagger-2">{word?.meaning || '---'}</p>
+                            
+                            <div className="flex items-center justify-center w-full gap-3 px-4 animate-pop-in stagger-3">
+                                <h2 className="text-4xl sm:text-6xl font-bold tracking-tight text-[color:var(--ink)] break-all leading-tight">
+                                    {word?.dictionary_form.kanji || '---'}
+                                </h2>
                                 <button
-                                    onClick={showFeedback ? handleNext : handleInputSubmit}
-                                    className={`w-full py-3.5 sm:py-4 rounded-xl border-[3px] border-[color:var(--ink)] font-bold text-base sm:text-xl shadow-[4px_4px_0px_0px_var(--ink)] transition-all active:translate-x-[3px] active:translate-y-[3px] active:shadow-none flex items-center justify-center gap-2 ${
-                                        showFeedback ? 'bg-[color:var(--ink)] text-white' : 'bg-[color:var(--accent)] text-white'
-                                    }`}
+                                    onClick={() => playAudio(word?.dictionary_form.kanji || '')}
+                                    className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] flex items-center justify-center shadow-[2.5px_2.5px_0px_0px_var(--ink)] active:translate-x-[1.5px] active:translate-y-[1.5px] active:shadow-none transition-all shrink-0 rebound-sm hover-icon-bounce"
                                 >
-                                    <span>{showFeedback ? t('nextQuestion') : t('checkAnswer')}</span>
-                                    {showFeedback && (
-                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                        </svg>
-                                    )}
+                                    <SpeakerIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </button>
                             </div>
-                        )}
+                            <p className="text-lg sm:text-xl font-bold text-[color:var(--muted)] mt-0.5 sm:mt-1 animate-fade-in stagger-4">{word?.dictionary_form.kana}</p>
+
+                            <div className="mt-4 sm:mt-6 flex flex-col items-center gap-1.5 shrink-0 animate-fade-in stagger-5">
+                                <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('question')}</span>
+                                <div className="px-4 py-1.5 rounded-lg border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] shadow-[3px_3px_0px_0px_var(--ink)] text-sm sm:text-lg font-black motion-prompt-pop">
+                                    {type && word ? getConjugationLabel(type, word.word_type, language) : '---'}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Action Area - Responsive layout for different counts/modes */}
+                        <div className="mt-auto pt-4 pb-2 sm:pb-0 shrink-0 animate-fade-in stagger-6">
+                            {config.mode === 'choice' ? (
+                                <div className="flex flex-col gap-2.5">
+                                    <div className={`grid gap-2 sm:gap-3 ${choices.length > 4 || choices.some(c => c.length > 8) ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                                        {choices.map((choice, i) => {
+                                            const interaction = getChoiceInteraction({ choice, correctAnswer, showFeedback });
+                                            let variantClasses = "bg-white text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] rebound-sm";
+                                            
+                                            if (showFeedback) {
+                                                if (choice === correctAnswer) {
+                                                    variantClasses = `bg-[color:var(--primary-green)] text-white shadow-[2px_2px_0px_0px_var(--ink)] scale-[1.02] ${justCorrect ? 'motion-correct-pulse' : ''}`;
+                                                } else if (choice === lastSelected) {
+                                                    variantClasses = `bg-[color:var(--accent)] text-white shadow-[2px_2px_0px_0px_var(--ink)] ${justWrong ? 'animate-shake motion-thud' : ''}`;
+                                                } else {
+                                                    variantClasses = "bg-white text-[color:var(--ink)] opacity-30 border-dashed shadow-none grayscale scale-95";
+                                                }
+                                            } else {
+                                                variantClasses += " motion-answer-option";
+                                            }
+
+                                            return (
+                                                <button
+                                                    key={i}
+                                                    disabled={interaction.disabled}
+                                                    onClick={() => handleChoiceButtonClick(choice)}
+                                                    style={{ animationDelay: `${180 + (i * 30)}ms` }}
+                                                    className={`group relative p-2.5 min-h-[3rem] sm:min-h-[3.5rem] rounded-xl border-[2.5px] border-[color:var(--ink)] font-bold text-sm sm:text-base transition-all flex items-center justify-center text-center leading-none ${variantClasses}`}
+                                                >
+                                                    {showFeedback && choice === correctAnswer && (
+                                                        <div className="absolute left-2 top-1/2 -translate-y-1/2 opacity-90">
+                                                            <SpeakerIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                                                        </div>
+                                                    )}
+                                                    <span className={`whitespace-nowrap overflow-hidden text-ellipsis ${showFeedback && choice === correctAnswer ? 'px-7' : 'px-1'}`}>{choice}</span>
+                                                    {showFeedback && choice === correctAnswer && (
+                                                        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                                                            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                            </svg>
+                                                        </div>
+                                                    )}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                    {showFeedback && (
+                                        <button
+                                            onClick={handleNext}
+                                            className="w-full py-3.5 sm:py-4 rounded-xl border-[3px] border-[color:var(--ink)] bg-[color:var(--ink)] text-white text-base sm:text-xl font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] rebound-md flex items-center justify-center gap-2 animate-pop-in"
+                                        >
+                                            <span>{t('nextQuestion')}</span>
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        </button>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="space-y-3">
+                                    <form onSubmit={handleInputSubmit} className="relative animate-fade-in stagger-6">
+                                        <input
+                                            ref={(node) => {
+                                                // @ts-expect-error wanakana.bind requires mutable ref
+                                                inputRef.current = node;
+                                                if (node) {
+                                                    wanakana.bind(node, { IMEMode: true });
+                                                }
+                                            }}
+                                            type="text"
+                                            value={inputValue}
+                                            onChange={(e) => setInputValue(e.target.value)}
+                                            disabled={showFeedback}
+                                            placeholder={t('placeholder')}
+                                            className={`w-full text-center text-xl sm:text-2xl font-bold p-3.5 sm:p-5 rounded-xl border-[3px] border-[color:var(--ink)] bg-white outline-none transition-all ${
+                                                showFeedback
+                                                    ? isCorrect
+                                                        ? 'border-[color:var(--primary-green)] bg-[color:var(--primary-green)]/10'
+                                                        : 'border-[color:var(--accent)] bg-[color:var(--accent)]/10'
+                                                    : 'focus:shadow-[4px_4px_0px_0px_var(--ink)]'
+                                            }`}
+                                            autoComplete="off"
+                                        />
+                                        {showFeedback && (
+                                            <div className={`mt-3 p-3 rounded-lg border-[2px] border-[color:var(--ink)] ${isCorrect ? 'bg-[color:var(--primary-green)] text-white' : 'bg-[#fde68a] text-[color:var(--ink)]'} flex items-center justify-between`}>
+                                                <div className="flex flex-col items-start overflow-hidden">
+                                                    <span className="text-[8px] font-black uppercase tracking-widest opacity-70 leading-none mb-1">{t('correctAnswer')}</span>
+                                                    <span className="text-base font-bold truncate w-full">{correctAnswer}</span>
+                                                </div>
+                                                <button 
+                                                    type="button"
+                                                    onClick={() => playAudio(correctAnswer)}
+                                                    className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center shrink-0 ml-2"
+                                                >
+                                                    <SpeakerIcon className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </form>
+                                    <button
+                                        onClick={showFeedback ? handleNext : handleInputSubmit}
+                                        className={`w-full py-3.5 sm:py-4 rounded-xl border-[3px] border-[color:var(--ink)] font-bold text-base sm:text-xl shadow-[4px_4px_0px_0px_var(--ink)] rebound-md flex items-center justify-center gap-2 animate-fade-in stagger-7 ${
+                                            showFeedback ? 'bg-[color:var(--ink)] text-white' : 'bg-[color:var(--accent)] text-white'
+                                        }`}
+                                    >
+                                        <span>{showFeedback ? t('nextQuestion') : t('checkAnswer')}</span>
+                                        {showFeedback && (
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        )}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
 
             {/* Confirm Modal */}
             {showConfirm && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
-                    <div className="w-full max-w-[280px] rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-white p-6 space-y-4 text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)]">
-                        <div className="text-4xl">😿</div>
-                        <div className="space-y-1">
-                            <h3 className="text-xl font-black text-[color:var(--ink)]">{t('quit')}</h3>
-                            <p className="text-xs font-bold text-[color:var(--muted)] leading-tight">{t('quitMessage')}</p>
-                        </div>
-                        <div className="grid grid-cols-1 gap-2 pt-2">
-                            <button
-                                onClick={handleEndSession}
-                                className="py-3 rounded-xl border-[2px] border-[color:var(--ink)] bg-[color:var(--accent)] text-white text-sm font-bold shadow-[3px_3px_0px_0px_var(--ink)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all"
-                            >
-                                {t('quitSession')}
-                            </button>
-                            <button
-                                onClick={() => setShowConfirm(false)}
-                                className="py-3 rounded-xl border-[2px] border-[color:var(--ink)] bg-white text-[color:var(--ink)] text-sm font-bold active:bg-[color:var(--surface-soft)] transition-all"
-                            >
-                                {t('keepGoing')}
-                            </button>
+                <Portal>
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                        <div className="absolute inset-0 bg-black/40 animate-backdrop" onClick={() => setShowConfirm(false)} />
+                        <div className="relative w-full max-w-[300px] rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-8 space-y-6 text-center shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)] animate-modal-enter">
+                            <div className="text-5xl animate-bounce">😿</div>
+                            <div className="space-y-2">
+                                <h3 className="text-2xl font-black text-[color:var(--ink)]">{t('quit')}</h3>
+                                <p className="text-sm font-bold text-[color:var(--muted)] leading-relaxed">{t('quitMessage')}</p>
+                            </div>
+                            <div className="grid grid-cols-1 gap-3 pt-2">
+                                <button
+                                    onClick={handleEndSession}
+                                    className="py-4 rounded-xl border-[2px] border-[color:var(--ink)] bg-[color:var(--accent)] text-white text-base font-bold shadow-[4px_4px_0px_0px_var(--ink)] rebound-md"
+                                >
+                                    {t('quitSession')}
+                                </button>
+                                <button
+                                    onClick={() => setShowConfirm(false)}
+                                    className="py-3 rounded-xl border-[2px] border-[color:var(--ink)] bg-white text-[color:var(--ink)] text-sm font-bold rebound-sm"
+                                >
+                                    {t('keepGoing')}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </Portal>
             )}
         </div>
     );

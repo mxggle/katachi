@@ -66,10 +66,10 @@ export default function ProgressPage() {
     <main className="relative min-h-dvh overflow-x-hidden bg-[color:var(--bg)] px-4 py-10 selection:bg-[color:var(--accent-soft)] selection:text-[color:var(--accent)] sm:px-6 lg:px-8">
       <div className="blob-bg" />
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <section className="hero-panel rounded-[2rem] border-[3px] border-[color:var(--ink)] p-6 shadow-[8px_8px_0px_0px_var(--ink)] sm:p-8">
+        <section className="hero-panel rounded-[2rem] border-[3px] border-[color:var(--ink)] p-6 shadow-[10px_10px_0px_0px_var(--ink)] sm:p-8 motion-drill-panel">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div>
+                <div className="animate-fade-in">
                   <p className="text-sm font-black uppercase tracking-[0.22em] text-[color:var(--muted)]">{t('viewProgress')}</p>
                   <h1 className="mt-3 max-w-2xl text-4xl font-bold tracking-tight text-[color:var(--ink)] sm:text-5xl">
                     {t('progressPageTitle')}
@@ -85,7 +85,7 @@ export default function ProgressPage() {
                 </div>
                 <Link
                   href="/"
-                  className="inline-flex items-center gap-2 self-start rounded-full border-[2px] border-[color:var(--ink)] bg-white px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)]"
+                  className="inline-flex items-center gap-2 self-start rounded-full border-[2px] border-[color:var(--ink)] bg-white px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all rebound-sm"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 18l-6-6 6-6" />
@@ -123,7 +123,7 @@ export default function ProgressPage() {
                         updateConfig(nextConfig);
                         launchDrill(nextConfig, { focusUnitKey });
                       }}
-                      className="inline-flex items-center justify-center rounded-full border-[2px] border-[color:var(--ink)] bg-white px-5 py-3 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)]"
+                      className="inline-flex items-center justify-center rounded-full border-[2px] border-[color:var(--ink)] bg-white px-5 py-3 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all rebound-md"
                     >
                       {t('practiceThisWeakness')}
                     </button>

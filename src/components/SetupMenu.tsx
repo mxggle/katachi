@@ -165,11 +165,11 @@ export default function SetupMenu() {
       </div>
 
       {isExpanded && (
-        <div className="mt-8 space-y-8 border-t-[3px] border-dashed border-[color:var(--border-strong)] pt-8">
+        <div className="mt-8 space-y-8 border-t-[3px] border-dashed border-[color:var(--border-strong)] pt-8 animate-fade-in">
           <div className="flex w-full gap-2 rounded-xl bg-[color:var(--surface-soft)] p-1.5 border-[2px] border-[color:var(--border)]">
             <button
               onClick={() => setActiveTab('daily')}
-              className={`flex-1 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
+              className={`flex-1 rounded-lg px-4 py-2 text-sm font-bold transition-all rebound-sm ${
                 isDaily 
                   ? 'bg-white text-[color:var(--ink)] shadow-sm border-2 border-[color:var(--ink)]' 
                   : 'text-[color:var(--muted)] hover:text-[color:var(--ink)] border-2 border-transparent'
@@ -179,7 +179,7 @@ export default function SetupMenu() {
             </button>
             <button
               onClick={() => setActiveTab('free')}
-              className={`flex-1 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
+              className={`flex-1 rounded-lg px-4 py-2 text-sm font-bold transition-all rebound-sm ${
                 !isDaily 
                   ? 'bg-white text-[color:var(--ink)] shadow-sm border-2 border-[color:var(--ink)]' 
                   : 'text-[color:var(--muted)] hover:text-[color:var(--ink)] border-2 border-transparent'
@@ -191,12 +191,13 @@ export default function SetupMenu() {
 
           <ConfigSection title={t('levels')}>
             <ChipRow>
-              {LEVELS.map((level) => (
+              {LEVELS.map((level, i) => (
                 <ToggleChip
                   key={level}
                   active={(currentConfig.levels || []).includes(level)}
                   onClick={() => toggleLevel(level)}
                   label={level}
+                  delay={i * 30}
                 />
               ))}
             </ChipRow>
@@ -204,12 +205,13 @@ export default function SetupMenu() {
 
           <ConfigSection title={t('wordTypes')}>
             <ChipRow>
-              {(['verb', 'i-adj', 'na-adj'] as const).map((wordType) => (
+              {(['verb', 'i-adj', 'na-adj'] as const).map((wordType, i) => (
                 <ToggleChip
                   key={wordType}
                   active={(currentConfig.wordTypes || []).includes(wordType)}
                   onClick={() => toggleWordType(wordType)}
                   label={wordTypeLabels[wordType]}
+                  delay={i * 30}
                 />
               ))}
             </ChipRow>
@@ -220,14 +222,14 @@ export default function SetupMenu() {
             helper={t('formsHelper')}
             action={
               <div className="flex gap-2">
-                <button onClick={selectAllForms} className="text-xs font-bold text-[color:var(--accent)] hover:underline">{t('selectAll')}</button>
+                <button onClick={selectAllForms} className="text-xs font-bold text-[color:var(--accent)] hover:underline rebound-sm">{t('selectAll')}</button>
                 <span className="text-xs text-[color:var(--muted)]">|</span>
-                <button onClick={clearAllForms} className="text-xs font-bold text-[color:var(--muted)] hover:underline">{t('resetForms')}</button>
+                <button onClick={clearAllForms} className="text-xs font-bold text-[color:var(--muted)] hover:underline rebound-sm">{t('resetForms')}</button>
               </div>
             }
           >
             <ChipRow>
-              {(Object.keys(verbFormLabels) as ConjugationType[]).map((form) => {
+              {(Object.keys(verbFormLabels) as ConjugationType[]).map((form, i) => {
                 if (!availableForms.has(form)) return null;
 
                 const hasVerb = (currentConfig.wordTypes || []).includes('verb');
@@ -250,6 +252,7 @@ export default function SetupMenu() {
                     onClick={() => toggleForm(form)}
                     label={label}
                     tag={VERB_ONLY_CONJS.includes(form) ? 'V' : undefined}
+                    delay={i * 20}
                   />
                 );
               })}
@@ -259,12 +262,13 @@ export default function SetupMenu() {
           <div className="grid gap-8 md:grid-cols-2">
             <ConfigSection title={t('practiceMode')}>
               <ChipRow>
-                {(['choice', 'input'] as const).map((mode) => (
+                {(['choice', 'input'] as const).map((mode, i) => (
                   <ToggleChip
                     key={mode}
                     active={currentConfig.mode === mode}
                     onClick={() => updateCurrentConfig({ mode })}
                     label={mode === 'choice' ? t('multipleChoice') : t('typing')}
+                    delay={i * 30}
                   />
                 ))}
               </ChipRow>
@@ -272,7 +276,7 @@ export default function SetupMenu() {
 
             <ConfigSection title={isDaily ? t('dailyGoal') : t('questionCount')}>
               <ChipRow>
-                {QUESTION_COUNTS.map((count) => (
+                {QUESTION_COUNTS.map((count, i) => (
                   <ToggleChip
                     key={count}
                     active={isDaily ? (studyState.preferences?.dailyQuestionGoal === count) : currentConfig.questionCount === count}
@@ -281,6 +285,7 @@ export default function SetupMenu() {
                       else updateCurrentConfig({ questionCount: count });
                     }}
                     label={count.toString()}
+                    delay={i * 30}
                   />
                 ))}
               </ChipRow>
@@ -327,26 +332,29 @@ function ToggleChip({
   label,
   onClick,
   tag,
+  delay = 0,
 }: {
   active: boolean;
   disabled?: boolean;
   label: string;
   onClick: () => void;
   tag?: string;
+  delay?: number;
 }) {
   return (
     <button
       type="button"
       disabled={disabled}
       onClick={onClick}
-      className={`relative inline-flex min-h-[2.5rem] items-center gap-2 rounded-xl border-[2px] border-[color:var(--ink)] px-4 py-1.5 text-sm font-bold transition-all ${
+      style={{ animationDelay: `${delay}ms` }}
+      className={`relative inline-flex min-h-[2.5rem] items-center gap-2 rounded-xl border-[2px] border-[color:var(--ink)] px-4 py-1.5 text-sm font-bold transition-all animate-pop-in rebound-sm ${
         active
-          ? 'bg-[color:var(--accent)] text-white shadow-[3px_3px_0px_0px_var(--ink)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none'
-          : 'bg-[#f4f4ea] text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] hover:bg-[#e9e9d8] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none'
-      } ${disabled ? 'cursor-not-allowed border-[color:var(--border)] bg-[color:var(--surface-soft)] text-[color:var(--muted)] shadow-none hover:translate-x-0 hover:translate-y-0 hover:bg-[color:var(--surface-soft)] hover:shadow-none active:translate-x-0 active:translate-y-0' : ''}`}
+          ? 'bg-[color:var(--accent)] text-white shadow-[3px_3px_0px_0px_var(--ink)]'
+          : 'bg-[#f4f4ea] text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] hover:bg-[#e9e9d8]'
+      } ${disabled ? 'cursor-not-allowed border-[color:var(--border)] bg-[color:var(--surface-soft)] text-[color:var(--muted)] shadow-none grayscale' : ''}`}
     >
       <span>{label}</span>
-      {tag && <span className={`text-[10px] uppercase tracking-wider ${active ? 'text-[color:var(--ink)]' : 'text-[color:var(--muted)]'}`}>{tag}</span>}
+      {tag && <span className={`text-[10px] uppercase tracking-wider ${active ? 'text-white/80' : 'text-[color:var(--muted)]'}`}>{tag}</span>}
     </button>
   );
 }
