@@ -49,7 +49,7 @@ export default function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute bottom-full mb-3 w-full min-w-[120px] animate-fade-in flex flex-col overflow-hidden rounded-2xl border-[3px] border-[color:var(--ink)] bg-white shadow-[3px_3px_0px_0px_var(--ink)] origin-bottom z-50">
+        <div className="absolute bottom-full mb-3 w-full min-w-[120px] animate-pop-in flex flex-col overflow-hidden rounded-2xl border-[3px] border-[color:var(--ink)] bg-white shadow-[3px_3px_0px_0px_var(--ink)] origin-bottom z-50">
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}

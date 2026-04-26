@@ -67,8 +67,8 @@ export default function IOSInstallPrompt() {
   if (!show) return null;
 
   return (
-    <div className="fixed top-4 left-4 right-4 z-[100] animate-in fade-in slide-in-from-top-4 duration-500">
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl p-4 flex items-center gap-4">
+    <div className="fixed top-4 left-4 right-4 z-[100] animate-banner-enter">
+      <div className="bg-white border-[3px] border-[color:var(--ink)] rounded-2xl shadow-[0_12px_24px_rgba(0,0,0,0.15),8px_8px_0px_0px_var(--ink)] p-4 flex items-center gap-4">
         <div className="bg-zinc-100 dark:bg-zinc-800 p-2 rounded-xl">
           <Logo size={32} />
         </div>

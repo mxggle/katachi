@@ -119,7 +119,7 @@ function HomeContent() {
 
   if (activeSession) {
     return (
-      <main className="min-h-dvh bg-[color:var(--bg)]">
+      <main className="min-h-dvh bg-[color:var(--bg)] animate-page-enter">
         <HtmlLangSync />
         <PracticeSession />
       </main>
@@ -132,7 +132,7 @@ function HomeContent() {
       <HtmlLangSync />
       <div className="blob-bg" />
       
-      <div className="absolute left-0 top-0 z-30 w-full">
+      <div className="absolute left-0 top-0 z-30 w-full animate-katachi-entry">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-6 sm:px-8">
           <div className="flex items-center gap-4 shrink-0">
             <Logo size={40} className="shrink-0 text-[color:var(--ink)]" />
@@ -144,9 +144,9 @@ function HomeContent() {
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-start gap-5 px-4 pb-24 pt-20 sm:px-6 sm:pt-[5.5rem] lg:px-8">
+      <div className="mx-auto flex w-full max-w-4xl flex-col items-center justify-start gap-5 px-4 pb-24 pt-20 sm:px-6 sm:pt-[5.5rem] lg:px-8 animate-page-enter">
         
-        <header className="relative flex w-full flex-col items-center gap-2 text-center animate-fade-in sm:gap-3">
+        <header className="relative flex w-full flex-col items-center gap-2 text-center animate-katachi-entry sm:gap-3" style={{ animationDelay: '100ms' }}>
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[color:var(--muted)] opacity-60 sm:text-xs">
             {t('heroSubtitle')}
           </p>
@@ -162,17 +162,17 @@ function HomeContent() {
           </h1>
         </header>
 
-        <section className="w-full animate-fade-in [animation-delay:100ms] opacity-0 [animation-fill-mode:forwards]">
-          <div className="relative overflow-hidden rounded-[2rem] border-[4px] border-[color:var(--ink)] bg-white shadow-[8px_8px_0px_0px_var(--ink)] sm:rounded-[2.5rem]">
+        <section className="w-full animate-katachi-entry" style={{ animationDelay: '200ms' }}>
+          <div className="relative overflow-hidden rounded-[2rem] border-[4px] border-[color:var(--ink)] bg-white shadow-[8px_8px_0px_0px_var(--ink)] sm:rounded-[2.5rem] animate-morphic-card">
             <div className="flex flex-col">
               <div className="grid grid-cols-2 divide-x-[4px] divide-[color:var(--ink)] border-b-[4px] border-[color:var(--ink)]">
                 <div className="flex flex-col items-center justify-center bg-[#fffbeb] p-4 sm:p-6">
                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-[color:var(--muted)]">
-                    <Flame className="h-3.5 w-3.5 text-[color:var(--accent)]" strokeWidth={3} />
+                    <Flame className="h-3.5 w-3.5 text-[color:var(--accent)] animate-fire-glow" strokeWidth={3} />
                     <span>{t('streak')}</span>
                   </div>
                   <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-[color:var(--accent)] sm:text-5xl lg:text-6xl">{dailyStreak}</span>
+                    <span className="text-4xl font-black text-[color:var(--accent)] sm:text-5xl lg:text-6xl animate-fire-glow">{dailyStreak}</span>
                     <span className="text-sm font-bold text-[color:var(--ink)]">{t('days')}</span>
                   </div>
                 </div>
@@ -216,7 +216,7 @@ function HomeContent() {
 
                       {/* Daily progress bar */}
                       <div className="mx-auto w-full max-sm:max-w-xs max-w-sm">
-                        <div className="relative h-3 w-full overflow-hidden rounded-full bg-[color:var(--ink)]/10">
+                        <div className="relative h-3 w-full overflow-hidden rounded-full bg-[color:var(--ink)]/10 progress-glow">
                           <div
                             className="absolute inset-y-0 left-0 rounded-full bg-[color:var(--accent)] transition-all duration-500"
                             style={{ width: `${progressPercent}%` }}
@@ -229,7 +229,7 @@ function HomeContent() {
 
                       <button
                         onClick={handleStartDaily}
-                        className="group relative inline-flex w-full items-center justify-center gap-4 rounded-[1.75rem] border-[4px] border-[color:var(--ink)] bg-[color:var(--accent)] px-6 py-4 text-xl font-black text-white shadow-[6px_6px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_0px_var(--ink)] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none sm:px-8 sm:py-5 sm:text-2xl lg:text-3xl"
+                        className="group relative inline-flex w-full items-center justify-center gap-4 rounded-[1.75rem] border-[4px] border-[color:var(--ink)] bg-[color:var(--accent)] px-6 py-4 text-xl font-black text-white shadow-[6px_6px_0px_0px_var(--ink)] rebound-md sm:px-8 sm:py-5 sm:text-2xl lg:text-3xl"
                       >
                         <span className="whitespace-nowrap">{t('startTodayPractice')}</span>
                         <ArrowRight className="h-7 w-7 shrink-0 transition-transform group-hover:translate-x-2 sm:h-8 sm:w-8" strokeWidth={3.5} aria-hidden="true" />
@@ -237,11 +237,11 @@ function HomeContent() {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4 animate-fade-in" style={{ animationDelay: '200ms' }}>
                     <button
                       type="button"
                       onClick={() => handleOpenDialog('weakness')}
-                      className="group flex min-h-24 flex-col items-center justify-center gap-2 rounded-[1.75rem] border-[3px] border-[color:var(--ink)] bg-[#fffbeb] px-3 py-4 text-center shadow-[5px_5px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_var(--ink)] sm:min-h-28 sm:px-5 sm:py-5"
+                      className="group flex min-h-24 flex-col items-center justify-center gap-2 rounded-[1.75rem] border-[3px] border-[color:var(--ink)] bg-[#fffbeb] px-3 py-4 text-center shadow-[5px_5px_0px_0px_var(--ink)] rebound-sm hover-icon-bounce sm:min-h-28 sm:px-5 sm:py-5"
                     >
                       <Dumbbell className="h-7 w-7 text-[color:var(--accent)] sm:h-8 sm:w-8" strokeWidth={3} aria-hidden="true" />
                       <span className="text-lg font-black leading-tight text-[color:var(--ink)] sm:text-xl">{t('weaknessConsolidation')}</span>
@@ -250,7 +250,7 @@ function HomeContent() {
                     <button
                       type="button"
                       onClick={() => handleOpenDialog('free')}
-                      className="group flex min-h-24 flex-col items-center justify-center gap-2 rounded-[1.75rem] border-[3px] border-[color:var(--ink)] bg-[#fffbeb] px-3 py-4 text-center shadow-[5px_5px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0px_0px_var(--ink)] sm:min-h-28 sm:px-5 sm:py-5"
+                      className="group flex min-h-24 flex-col items-center justify-center gap-2 rounded-[1.75rem] border-[3px] border-[color:var(--ink)] bg-[#fffbeb] px-3 py-4 text-center shadow-[5px_5px_0px_0px_var(--ink)] rebound-sm hover-icon-bounce sm:min-h-28 sm:px-5 sm:py-5"
                     >
                       <Shuffle className="h-7 w-7 text-[color:var(--accent)] sm:h-8 sm:w-8" strokeWidth={3} aria-hidden="true" />
                       <span className="text-lg font-black leading-tight text-[color:var(--ink)] sm:text-xl">{t('freePractice')}</span>
@@ -260,7 +260,8 @@ function HomeContent() {
 
                   <Link
                     href="/progress"
-                    className="group flex w-full items-center justify-between gap-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[#f4f4ea] px-5 py-4 text-left transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none hover:bg-[#fffbeb] shadow-[4px_4px_0px_0px_var(--ink)]"
+                    className="group flex w-full items-center justify-between gap-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[#f4f4ea] px-5 py-4 text-left transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none hover:bg-[#fffbeb] shadow-[4px_4px_0px_0px_var(--ink)] rebound-sm animate-fade-in"
+                    style={{ animationDelay: '300ms' }}
                   >
                     <div className="flex min-w-0 items-center gap-4">
                       <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[0.85rem] bg-white border-[3px] border-[color:var(--ink)]">
@@ -279,7 +280,7 @@ function HomeContent() {
           </div>
         </section>
 
-        <section className="w-full animate-fade-in [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
+        <section className="w-full animate-fade-in" style={{ animationDelay: '400ms' }}>
           <SetupMenu />
         </section>
 
@@ -291,7 +292,7 @@ function HomeContent() {
           defaultCount={pendingPracticeType === 'free' ? (studyState.preferences?.freeSessionConfig?.questionCount ?? 10) : (studyState.preferences?.dailySessionConfig?.questionCount ?? 10)}
         />
 
-        <footer className="mt-12 flex w-full flex-col items-center gap-8 animate-fade-in [animation-delay:300ms] opacity-0 [animation-fill-mode:forwards]">
+        <footer className="mt-12 flex w-full flex-col items-center gap-8 animate-fade-in" style={{ animationDelay: '500ms' }}>
           <div className="flex flex-col items-center gap-4">
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[color:var(--ink)]/20">
               {t('appName')} &copy; {new Date().getFullYear()} · v{APP_VERSION}
