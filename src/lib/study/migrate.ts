@@ -116,9 +116,8 @@ function rebuildStatsFromUnitProgress(
 }
 
 export function migratePersistedStudyState(legacy: LegacyPersistedState | undefined): StudyState {
-  const language = legacy?.language ?? 'en';
+  const language = legacy?.language ?? (legacy as any)?.preferences?.language ?? 'en';
   const base = DEFAULT_STUDY_STATE(language);
-  const legacyConfig = legacy?.config;
   const progress = legacy?.progress ?? legacy?.globalStats;
 
   const migratedUnitProgress = legacy?.unitProgress
@@ -177,6 +176,11 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
       }
     : rebuildStatsFromUnitProgress(migratedUnitProgress);
 
+  // Extract legacy config from various possible locations
+  const legacyConfig = legacy?.config ?? (legacy as any)?.preferences?.defaultSessionConfig;
+  const legacyDailyConfig = (legacy as any)?.preferences?.dailySessionConfig;
+  const legacyFreeConfig = (legacy as any)?.preferences?.freeSessionConfig;
+
   return {
     preferences: {
       ...base.preferences,
@@ -191,37 +195,37 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
         mode: legacyConfig?.mode ?? DEFAULT_STUDY_SESSION_CONFIG.mode,
       },
       dailySessionConfig: {
-        ...DEFAULT_STUDY_SESSION_CONFIG,
-        levels: legacyConfig?.levels ?? legacyConfig?.leves ?? DEFAULT_STUDY_SESSION_CONFIG.levels,
-        wordTypes: legacyConfig?.wordTypes ?? DEFAULT_STUDY_SESSION_CONFIG.wordTypes,
-        forms: legacyConfig?.forms ?? legacyConfig?.categories ?? DEFAULT_STUDY_SESSION_CONFIG.forms,
+        ...(legacyDailyConfig ?? legacyConfig ?? DEFAULT_STUDY_SESSION_CONFIG),
+        levels: legacyDailyConfig?.levels ?? legacyConfig?.levels ?? legacyConfig?.leves ?? DEFAULT_STUDY_SESSION_CONFIG.levels,
+        wordTypes: legacyDailyConfig?.wordTypes ?? legacyConfig?.wordTypes ?? DEFAULT_STUDY_SESSION_CONFIG.wordTypes,
+        forms: legacyDailyConfig?.forms ?? legacyConfig?.forms ?? legacyConfig?.categories ?? DEFAULT_STUDY_SESSION_CONFIG.forms,
         questionCount:
-          legacyConfig?.questionCount ?? legacyConfig?.batchSize ?? DEFAULT_STUDY_SESSION_CONFIG.questionCount,
-        mode: legacyConfig?.mode ?? DEFAULT_STUDY_SESSION_CONFIG.mode,
+          legacyDailyConfig?.questionCount ?? legacyConfig?.questionCount ?? legacyConfig?.batchSize ?? DEFAULT_STUDY_SESSION_CONFIG.questionCount,
+        mode: legacyDailyConfig?.mode ?? legacyConfig?.mode ?? DEFAULT_STUDY_SESSION_CONFIG.mode,
       },
       freeSessionConfig: {
-        ...DEFAULT_STUDY_SESSION_CONFIG,
-        levels: legacyConfig?.levels ?? legacyConfig?.leves ?? DEFAULT_STUDY_SESSION_CONFIG.levels,
-        wordTypes: legacyConfig?.wordTypes ?? DEFAULT_STUDY_SESSION_CONFIG.wordTypes,
-        forms: legacyConfig?.forms ?? legacyConfig?.categories ?? DEFAULT_STUDY_SESSION_CONFIG.forms,
+        ...(legacyFreeConfig ?? legacyConfig ?? DEFAULT_STUDY_SESSION_CONFIG),
+        levels: legacyFreeConfig?.levels ?? legacyConfig?.levels ?? legacyConfig?.leves ?? DEFAULT_STUDY_SESSION_CONFIG.levels,
+        wordTypes: legacyFreeConfig?.wordTypes ?? legacyConfig?.wordTypes ?? DEFAULT_STUDY_SESSION_CONFIG.wordTypes,
+        forms: legacyFreeConfig?.forms ?? legacyConfig?.forms ?? legacyConfig?.categories ?? DEFAULT_STUDY_SESSION_CONFIG.forms,
         questionCount:
-          legacyConfig?.questionCount ?? legacyConfig?.batchSize ?? DEFAULT_STUDY_SESSION_CONFIG.questionCount,
-        mode: legacyConfig?.mode ?? DEFAULT_STUDY_SESSION_CONFIG.mode,
+          legacyFreeConfig?.questionCount ?? legacyConfig?.questionCount ?? legacyConfig?.batchSize ?? DEFAULT_STUDY_SESSION_CONFIG.questionCount,
+        mode: legacyFreeConfig?.mode ?? legacyConfig?.mode ?? DEFAULT_STUDY_SESSION_CONFIG.mode,
       },
     },
     learnerSummary: {
       ...base.learnerSummary,
-      dailyStreak: legacy?.dailyStreak ?? 0,
-      lastPracticeDate: legacy?.lastPracticeDate ?? legacy?.lastLoginDate ?? null,
-      totalAnswered: progress?.totalAnswered ?? 0,
-      totalCorrect: progress?.totalCorrect ?? 0,
+      dailyStreak: legacy?.dailyStreak ?? (legacy as any)?.learnerSummary?.dailyStreak ?? 0,
+      lastPracticeDate: legacy?.lastPracticeDate ?? legacy?.lastLoginDate ?? (legacy as any)?.learnerSummary?.lastPracticeDate ?? null,
+      totalAnswered: progress?.totalAnswered ?? (legacy as any)?.learnerSummary?.totalAnswered ?? 0,
+      totalCorrect: progress?.totalCorrect ?? (legacy as any)?.learnerSummary?.totalCorrect ?? 0,
       schemaVersion: 5,
     },
     unitProgress: migratedUnitProgress,
     formStats,
     patternStats,
     wordStats,
-    sessionHistory: legacy?.sessionHistory ?? [],
-    attemptHistory: legacy?.attemptHistory ?? [],
+    sessionHistory: legacy?.sessionHistory ?? (legacy as any)?.sessionHistory ?? [],
+    attemptHistory: legacy?.attemptHistory ?? (legacy as any)?.attemptHistory ?? [],
   };
 }
