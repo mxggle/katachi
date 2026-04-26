@@ -88,6 +88,6 @@ describe('buildPracticeSession', () => {
       'en'
     );
 
-    expect(result).toEqual({ error: 'Daily practice is complete for today. Switch to Weakness Drill or Free Practice to keep going.' });
+    expect(result).toEqual({ error: 'Try the focused modes below to keep going.' });
   });
 });

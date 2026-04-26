@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useStore } from '@/lib/store';
 import { useTranslation } from '@/lib/i18n';
 import { getConjugationLabel } from '@/lib/displayText';
+import { WordEntry, ConjugationType } from '@/lib/distractorEngine';
 import { createTtsPlaybackController, type TtsPlaybackController } from '@/lib/audioPlayback';
 import { collectTtsPreloadTexts } from '@/lib/audioPreload';
 import { getChoiceInteraction } from '@/lib/practiceChoiceInteraction';
@@ -194,7 +195,7 @@ export default function PracticeSession() {
         }
 
         setShowTodayEnd(true);
-        startSession(result.words);
+        startSession(result.words, nextConfig, 'weakness');
     };
 
     const handleStartFreePractice = () => {
@@ -209,7 +210,7 @@ export default function PracticeSession() {
             return;
         }
 
-        startSession(result.words);
+        startSession(result.words, nextConfig, 'free');
     };
 
     const handleViewProgress = () => {

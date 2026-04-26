@@ -19,7 +19,6 @@ import PracticeCountDialog from '@/components/PracticeCountDialog';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { HtmlLangSync } from '@/components/HtmlLangSync';
 import AuthStatus from '@/components/AuthStatus';
-import { buildSetupSummary } from '@/components/setupMenu.helpers';
 import { buildPracticeSession } from '@/lib/sessionBuilder';
 import { getLocalDateString, useStore } from '@/lib/store';
 import { useTranslation } from '@/lib/i18n';
@@ -27,6 +26,7 @@ import { APP_VERSION } from '@/lib/appVersion';
 import DynamicStatusBar from '@/components/DynamicStatusBar';
 import { loadDictionary } from '@/lib/dictionaryLoader';
 import { getDiagnosticDashboard } from '@/lib/study/statistics';
+import type { PracticeType } from '@/lib/study/types';
 
 import Logo from '@/components/Logo';
 
@@ -40,11 +40,11 @@ export default function Home() {
 }
 
 function HomeContent() {
-  const { activeSession, config, dailyStreak, startSession, updateDailyConfig, updateFreeConfig, language, studyState } = useStore();
+  const { activeSession, dailyStreak, startSession, updateDailyConfig, updateFreeConfig, language, studyState } = useStore();
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [pendingPracticeType, setPendingPracticeType] = useState<typeof config.practiceType | null>(null);
+  const [pendingPracticeType, setPendingPracticeType] = useState<PracticeType | null>(null);
   const { t } = useTranslation(language);
   const authError = searchParams.get('error');
   const authErrorMessage =
@@ -53,8 +53,6 @@ function HomeContent() {
       : authError === 'auth_unconfigured'
         ? t('authUnavailable')
         : null;
-
-  const setupSummary = useMemo(() => buildSetupSummary(studyState.preferences.dailySessionConfig, language), [studyState.preferences.dailySessionConfig, language]);
 
   const dictionaryData = useMemo(() => ({ words: loadDictionary(language ?? 'en') }), [language]);
   const availableWords = useMemo(
@@ -77,7 +75,7 @@ function HomeContent() {
     ? Math.min(100, Math.round((dashboard.dailyProgress / dashboard.dailyGoal) * 100))
     : 0;
 
-  const handleStart = (practiceType: typeof config.practiceType, questionCount: number) => {
+  const handleStart = (practiceType: PracticeType, questionCount: number) => {
     const baseConfig = practiceType === 'free' ? studyState.preferences.freeSessionConfig : studyState.preferences.dailySessionConfig;
     const nextConfig = { ...baseConfig, questionCount };
     
@@ -102,7 +100,7 @@ function HomeContent() {
     handleStart('daily', studyState.preferences.dailyQuestionGoal);
   };
 
-  const handleOpenDialog = (practiceType: typeof config.practiceType) => {
+  const handleOpenDialog = (practiceType: PracticeType) => {
     setPendingPracticeType(practiceType);
     setDialogOpen(true);
   };
