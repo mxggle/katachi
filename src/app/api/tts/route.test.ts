@@ -1,120 +1,96 @@
-import { PassThrough } from 'node:stream';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-
-const mockSetMetadata = vi.fn();
-const mockToStream = vi.fn();
-
-vi.mock('msedge-tts', () => ({
-  MsEdgeTTS: vi.fn(() => ({
-    setMetadata: mockSetMetadata,
-    toStream: mockToStream,
-  })),
-  OUTPUT_FORMAT: {
-    AUDIO_24KHZ_48KBITRATE_MONO_MP3: 'audio-24khz-48kbitrate-mono-mp3',
-    AUDIO_24KHZ_96KBITRATE_MONO_MP3: 'audio-24khz-96kbitrate-mono-mp3',
-  },
-}));
 
 describe('GET /api/tts', () => {
   beforeEach(() => {
-    mockSetMetadata.mockResolvedValue(undefined);
-    mockToStream.mockReset();
+    vi.stubGlobal('fetch', vi.fn());
     vi.resetModules();
   });
 
-  it('ignores audio stream end events after the response body is canceled', async () => {
-    const audioStream = new PassThrough();
-    mockToStream.mockReturnValue({ audioStream });
-
+  it('requires text parameter', async () => {
     const { GET } = await import('./route');
-    const response = await GET(new Request('http://localhost/api/tts?text=test'));
-    const reader = response.body?.getReader();
-
-    expect(reader).toBeDefined();
-
-    await reader?.cancel();
-
-    expect(() => {
-      audioStream.emit('end');
-    }).not.toThrow();
+    const response = await GET(new Request('http://localhost/api/tts'));
+    expect(response.status).toBe(400);
+    expect(await response.text()).toBe('Text is required');
   });
 
-  it('uses the higher quality Japanese neural voice output format', async () => {
-    const audioStream = new PassThrough();
-    mockToStream.mockReturnValue({ audioStream });
+  it('uses Google Translate TTS and caches the result', async () => {
+    const mockAudio = new Uint8Array(Buffer.from('mock-audio-content'));
+    vi.mocked(fetch).mockResolvedValue({
+      ok: true,
+      arrayBuffer: () => Promise.resolve(mockAudio.buffer),
+    } as Response);
 
     const { GET } = await import('./route');
-    await GET(new Request('http://localhost/api/tts?text=test'));
-    audioStream.end();
+    
+    // First request
+    const response1 = await GET(new Request('http://localhost/api/tts?text=hello'));
+    expect(response1.status).toBe(200);
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(1);
 
-    expect(mockSetMetadata).toHaveBeenCalledWith(
-      'ja-JP-NanamiNeural',
-      'audio-24khz-96kbitrate-mono-mp3'
-    );
+    // Second request (cached)
+    const response2 = await GET(new Request('http://localhost/api/tts?text=hello'));
+    expect(response2.status).toBe(200);
+    expect(vi.mocked(fetch)).toHaveBeenCalledTimes(1); 
+    
+    const data = await response2.arrayBuffer();
+    expect(Buffer.from(data).toString()).toBe('mock-audio-content');
   });
 
-  it('serves repeated text from the in-memory audio cache', async () => {
-    const audioStream = new PassThrough();
-    mockToStream.mockReturnValue({ audioStream });
+  it('supports range requests', async () => {
+    const mockAudio = new Uint8Array(Buffer.from('0123456789'));
+    vi.mocked(fetch).mockResolvedValue({
+      ok: true,
+      arrayBuffer: () => Promise.resolve(mockAudio.buffer),
+    } as Response);
 
     const { GET } = await import('./route');
-    const firstResponse = await GET(new Request('http://localhost/api/tts?text=test'));
-    const firstRead = firstResponse.arrayBuffer();
-
-    audioStream.end(Buffer.from('audio'));
-    await firstRead;
-
-    const secondResponse = await GET(new Request('http://localhost/api/tts?text=test'));
-    const secondAudio = Buffer.from(await secondResponse.arrayBuffer()).toString('utf8');
-
-    expect(mockToStream).toHaveBeenCalledTimes(1);
-    expect(secondAudio).toBe('audio');
-  });
-
-  it('supports range requests for mobile audio playback', async () => {
-    const audioStream = new PassThrough();
-    mockToStream.mockReturnValue({ audioStream });
-
-    const { GET } = await import('./route');
-    const responsePromise = GET(
-      new Request('http://localhost/api/tts?text=test', {
-        headers: {
-          Range: 'bytes=0-2',
-        },
-      })
-    );
-
-    audioStream.end(Buffer.from('audio'));
-    const response = await responsePromise;
-    const rangedAudio = Buffer.from(await response.arrayBuffer()).toString('utf8');
+    
+    const response = await GET(new Request('http://localhost/api/tts?text=range-test', {
+      headers: {
+        'range': 'bytes=2-5'
+      }
+    }));
 
     expect(response.status).toBe(206);
-    expect(response.headers.get('Accept-Ranges')).toBe('bytes');
-    expect(response.headers.get('Content-Range')).toBe('bytes 0-2/5');
-    expect(response.headers.get('Content-Length')).toBe('3');
-    expect(rangedAudio).toBe('aud');
+    expect(response.headers.get('Content-Range')).toBe('bytes 2-5/10');
+    expect(response.headers.get('Content-Length')).toBe('4');
+    
+    const data = await response.arrayBuffer();
+    expect(Buffer.from(data).toString()).toBe('2345');
   });
 
-  it('supports open-ended range requests from the audio element', async () => {
-    const audioStream = new PassThrough();
-    mockToStream.mockReturnValue({ audioStream });
+  it('supports open-ended range requests', async () => {
+    const mockAudio = new Uint8Array(Buffer.from('0123456789'));
+    vi.mocked(fetch).mockResolvedValue({
+      ok: true,
+      arrayBuffer: () => Promise.resolve(mockAudio.buffer),
+    } as Response);
 
     const { GET } = await import('./route');
-    const responsePromise = GET(
-      new Request('http://localhost/api/tts?text=test', {
-        headers: {
-          Range: 'bytes=2-',
-        },
-      })
-    );
-
-    audioStream.end(Buffer.from('audio'));
-    const response = await responsePromise;
-    const rangedAudio = Buffer.from(await response.arrayBuffer()).toString('utf8');
+    
+    const response = await GET(new Request('http://localhost/api/tts?text=range-test-open', {
+      headers: {
+        'range': 'bytes=7-'
+      }
+    }));
 
     expect(response.status).toBe(206);
-    expect(response.headers.get('Content-Range')).toBe('bytes 2-4/5');
-    expect(response.headers.get('Content-Length')).toBe('3');
-    expect(rangedAudio).toBe('dio');
+    expect(response.headers.get('Content-Range')).toBe('bytes 7-9/10');
+    
+    const data = await response.arrayBuffer();
+    expect(Buffer.from(data).toString()).toBe('789');
+  });
+
+  it('handles Google TTS failures', async () => {
+    vi.mocked(fetch).mockResolvedValue({
+      ok: false,
+      status: 403,
+    } as Response);
+
+    const { GET } = await import('./route');
+    const response = await GET(new Request('http://localhost/api/tts?text=fail'));
+    
+    expect(response.status).toBe(500);
+    expect(await response.text()).toBe('Internal Server Error');
   });
 });

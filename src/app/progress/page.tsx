@@ -58,7 +58,7 @@ export default function ProgressPage() {
     }
 
     setError(null);
-    startSession(result.words);
+    startSession(result.words, nextConfig, nextConfig.practiceType);
     router.push('/');
   };
 

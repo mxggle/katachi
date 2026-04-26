@@ -1,12 +1,13 @@
 import type { ConjugationType } from '@/lib/distractorEngine';
+import { getLocalDateString, isSameLocalDate } from '@/lib/store';
 import { calculateWeaknessScore } from '@/lib/study/scoring';
 import type { PracticeMode, StudyState } from '@/lib/study/types';
 
-export function getOverviewStats(studyState: StudyState, today = new Date().toISOString().split('T')[0]) {
+export function getOverviewStats(studyState: StudyState, today = getLocalDateString()) {
   const totalAnswered = studyState.learnerSummary.totalAnswered;
   const totalCorrect = studyState.learnerSummary.totalCorrect;
   const studiedToday = today
-    ? studyState.attemptHistory.filter((attempt) => attempt.answeredAt.startsWith(today)).length
+    ? studyState.attemptHistory.filter((attempt) => isSameLocalDate(attempt.answeredAt, today)).length
     : 0;
 
   return {
@@ -18,6 +19,21 @@ export function getOverviewStats(studyState: StudyState, today = new Date().toIS
 }
 
 export function getWeakestConjugations(studyState: StudyState, limit = 5) {
+  // Prefer formStats if available; fallback to unitProgress aggregation
+  if (Object.keys(studyState.formStats).length > 0) {
+    return Object.values(studyState.formStats)
+      .filter((fs) => fs.totalAttempts > 0)
+      .map((fs) => ({
+        conjugationType: fs.form,
+        answered: fs.totalAttempts,
+        accuracy: Math.round(fs.accuracy * 100),
+        wrong: fs.totalAttempts - fs.correctAttempts,
+      }))
+      .sort((left, right) => left.accuracy - right.accuracy || right.wrong - left.wrong)
+      .slice(0, limit);
+  }
+
+  // Legacy fallback
   const grouped = new Map<ConjugationType, { answered: number; correct: number; wrong: number }>();
 
   for (const item of Object.values(studyState.unitProgress)) {
@@ -87,7 +103,7 @@ export function getRecentActivity(studyState: StudyState, days: number, endDate:
     const date = new Date(`${endDate}T00:00:00.000Z`);
     date.setUTCDate(date.getUTCDate() - index);
     const key = date.toISOString().split('T')[0];
-    const attempts = studyState.attemptHistory.filter((attempt) => attempt.answeredAt.startsWith(key));
+    const attempts = studyState.attemptHistory.filter((attempt) => isSameLocalDate(attempt.answeredAt, key));
 
     results.push({
       date: key,

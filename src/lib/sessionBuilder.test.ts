@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { buildPracticeSession } from '@/lib/sessionBuilder';
 import { DEFAULT_STUDY_STATE, makeUnitKey, type StudyState } from '@/lib/study/types';
 
@@ -27,6 +27,10 @@ function buildStudyState(): StudyState {
 }
 
 describe('buildPracticeSession', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('forces a focused unit to the front of the generated drill session', () => {
     const result = buildPracticeSession(
       {
@@ -45,5 +49,45 @@ describe('buildPracticeSession', () => {
     expect('error' in result).toBe(false);
     if ('error' in result) return;
     expect(result.words[0]?.unitKey).toBe(makeUnitKey('v_hashiru', 'polite', 'choice'));
+  });
+
+  it('counts daily budget by learner local day instead of UTC date prefix', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-04-23T10:00:00+09:00'));
+
+    const studyState = {
+      ...DEFAULT_STUDY_STATE('en'),
+      preferences: {
+        ...DEFAULT_STUDY_STATE('en').preferences,
+        dailyQuestionGoal: 1,
+      },
+      attemptHistory: [
+        {
+          attemptId: 'attempt-1',
+          sessionId: 'session-1',
+          wordId: 'v_hashiru',
+          conjugationType: 'polite',
+          mode: 'choice',
+          isCorrect: true,
+          answeredAt: '2026-04-22T15:30:00.000Z',
+          countsTowardDailyGoal: true,
+        },
+      ],
+    };
+
+    const result = buildPracticeSession(
+      {
+        levels: ['N5'],
+        wordTypes: ['verb'],
+        forms: ['polite'],
+        questionCount: 5,
+        mode: 'choice',
+        practiceType: 'daily',
+      },
+      studyState,
+      'en'
+    );
+
+    expect(result).toEqual({ error: 'Try the focused modes below to keep going.' });
   });
 });

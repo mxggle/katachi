@@ -2,7 +2,8 @@ import type { SupabaseClient, User } from '@supabase/supabase-js';
 import type { Database } from './database.types';
 import type { Json } from './json';
 import type { TranslationKey } from '@/lib/i18n';
-import type { AttemptRecord, SessionRecord, StudyState, UnitProgress } from '@/lib/study/types';
+import type { AttemptRecord, FormStats, PatternStats, SessionRecord, StudyState, UnitProgress, WordStats } from '@/lib/study/types';
+import { DEFAULT_STUDY_STATE, computeMasteryLevel } from '@/lib/study/types';
 
 export const SYNC_META_STORAGE_KEY = 'katachi-sync-meta';
 
@@ -88,6 +89,12 @@ function latestNullableDate(left: string | null, right: string | null): string |
 }
 
 function mergeUnitProgress(local: UnitProgress, remote: UnitProgress): UnitProgress {
+  // Pick the SRS state from whichever side was computed most recently.
+  // A later nextReviewDate generally means a more recent correct answer advanced the schedule.
+  const localReviewMs = local.nextReviewDate ? new Date(local.nextReviewDate).getTime() : 0;
+  const remoteReviewMs = remote.nextReviewDate ? new Date(remote.nextReviewDate).getTime() : 0;
+  const srsSource = localReviewMs >= remoteReviewMs ? local : remote;
+
   return {
     ...remote,
     ...local,
@@ -101,6 +108,11 @@ function mergeUnitProgress(local: UnitProgress, remote: UnitProgress): UnitProgr
     lastWrongAt: latestNullableDate(local.lastWrongAt, remote.lastWrongAt),
     sameDayExposureCount: Math.max(local.sameDayExposureCount, remote.sameDayExposureCount),
     sameSessionRetryCount: Math.max(local.sameSessionRetryCount, remote.sameSessionRetryCount),
+    // SRS fields: use the most recently computed scheduling state
+    status: srsSource.status,
+    interval: srsSource.interval,
+    ease: srsSource.ease,
+    nextReviewDate: srsSource.nextReviewDate,
   };
 }
 
@@ -145,9 +157,39 @@ export function mergeStudyStates(local: StudyState, remote: StudyState | null): 
       : localProgress;
   }
 
+  // Merge FormStats
+  const formStats = { ...(remote.formStats ?? {}) };
+  for (const [key, localFS] of Object.entries(local.formStats ?? {})) {
+    formStats[key] = formStats[key]
+      ? mergeFormStats(localFS, formStats[key])
+      : localFS;
+  }
+
+  // Merge PatternStats
+  const patternStats = { ...(remote.patternStats ?? {}) };
+  for (const [key, localPS] of Object.entries(local.patternStats ?? {})) {
+    patternStats[key] = patternStats[key]
+      ? mergePatternStatsEntry(localPS, patternStats[key])
+      : localPS;
+  }
+
+  // Merge WordStats
+  const wordStats = { ...(remote.wordStats ?? {}) };
+  for (const [key, localWS] of Object.entries(local.wordStats ?? {})) {
+    wordStats[key] = wordStats[key]
+      ? mergeWordStatsEntry(localWS, wordStats[key])
+      : localWS;
+  }
+
   return {
     ...remote,
-    preferences: remote.preferences,
+    preferences: {
+      ...local.preferences,
+      ...remote.preferences,
+      defaultSessionConfig: remote.preferences?.defaultSessionConfig ?? local.preferences.defaultSessionConfig,
+      dailySessionConfig: remote.preferences?.dailySessionConfig ?? local.preferences.dailySessionConfig,
+      freeSessionConfig: remote.preferences?.freeSessionConfig ?? local.preferences.freeSessionConfig,
+    },
     learnerSummary: {
       ...remote.learnerSummary,
       dailyStreak: Math.max(local.learnerSummary.dailyStreak, remote.learnerSummary.dailyStreak),
@@ -158,8 +200,82 @@ export function mergeStudyStates(local: StudyState, remote: StudyState | null): 
       schemaVersion: Math.max(local.learnerSummary.schemaVersion, remote.learnerSummary.schemaVersion),
     },
     unitProgress,
+    formStats,
+    patternStats,
+    wordStats,
     sessionHistory: mergeSessionHistory(local.sessionHistory, remote.sessionHistory),
     attemptHistory: mergeAttemptHistory(local.attemptHistory, remote.attemptHistory),
+  };
+}
+
+function mergeFormStats(local: FormStats, remote: FormStats): FormStats {
+  const totalAttempts = Math.max(local.totalAttempts, remote.totalAttempts);
+  const correctAttempts = Math.max(local.correctAttempts, remote.correctAttempts);
+  const accuracy = totalAttempts > 0 ? correctAttempts / totalAttempts : 0;
+
+  return {
+    ...local,
+    totalAttempts,
+    correctAttempts,
+    accuracy,
+    masteryLevel: computeMasteryLevel(totalAttempts, accuracy),
+    lastAttemptAt: latestNullableDate(local.lastAttemptAt, remote.lastAttemptAt),
+    lastCorrectAt: latestNullableDate(local.lastCorrectAt, remote.lastCorrectAt),
+    lastWrongAt: latestNullableDate(local.lastWrongAt, remote.lastWrongAt),
+  };
+}
+
+function mergePatternStatsEntry(local: PatternStats, remote: PatternStats): PatternStats {
+  const totalAttempts = Math.max(local.totalAttempts, remote.totalAttempts);
+  const correctAttempts = Math.max(local.correctAttempts, remote.correctAttempts);
+  const accuracy = totalAttempts > 0 ? correctAttempts / totalAttempts : 0;
+
+  return {
+    ...local,
+    totalAttempts,
+    correctAttempts,
+    accuracy,
+    masteryLevel: computeMasteryLevel(totalAttempts, accuracy),
+    lastAttemptAt: latestNullableDate(local.lastAttemptAt, remote.lastAttemptAt),
+    lastCorrectAt: latestNullableDate(local.lastCorrectAt, remote.lastCorrectAt),
+    lastWrongAt: latestNullableDate(local.lastWrongAt, remote.lastWrongAt),
+  };
+}
+
+function mergeWordStatsEntry(local: WordStats, remote: WordStats): WordStats {
+  return {
+    ...local,
+    totalAttempts: Math.max(local.totalAttempts, remote.totalAttempts),
+    correctAttempts: Math.max(local.correctAttempts, remote.correctAttempts),
+    lastAttemptAt: latestNullableDate(local.lastAttemptAt, remote.lastAttemptAt),
+  };
+}
+
+export function repairStudyState(state: StudyState): StudyState {
+  const base = DEFAULT_STUDY_STATE(state.preferences?.language ?? 'en');
+  return {
+    ...state,
+    preferences: {
+      ...base.preferences,
+      ...state.preferences,
+      defaultSessionConfig: {
+        ...base.preferences.defaultSessionConfig,
+        ...state.preferences?.defaultSessionConfig,
+      },
+      dailySessionConfig: {
+        ...base.preferences.dailySessionConfig,
+        ...(state.preferences?.dailySessionConfig ?? state.preferences?.defaultSessionConfig),
+      },
+      freeSessionConfig: {
+        ...base.preferences.freeSessionConfig,
+        ...(state.preferences?.freeSessionConfig ?? state.preferences?.defaultSessionConfig),
+      },
+    },
+    learnerSummary: {
+      ...base.learnerSummary,
+      ...state.learnerSummary,
+      schemaVersion: 5,
+    },
   };
 }
 
@@ -174,14 +290,14 @@ export function resolveStudyStateForHydration(
   const { userId, remoteState, syncMeta } = options;
 
   if (!remoteState) {
-    return localState;
+    return repairStudyState(localState);
   }
 
   if (syncMeta?.userId === userId && syncMeta.syncedStateJson === stringifyStudyState(localState)) {
-    return remoteState;
+    return repairStudyState(remoteState);
   }
 
-  return mergeStudyStates(localState, remoteState);
+  return repairStudyState(mergeStudyStates(localState, remoteState));
 }
 
 export async function fetchRemoteStudyState(

@@ -1,12 +1,15 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useStore } from '@/lib/store';
 import { useTranslation } from '@/lib/i18n';
 import { getConjugationLabel } from '@/lib/displayText';
+import { WordEntry, ConjugationType } from '@/lib/distractorEngine';
 import { createTtsPlaybackController, type TtsPlaybackController } from '@/lib/audioPlayback';
 import { collectTtsPreloadTexts } from '@/lib/audioPreload';
 import { getChoiceInteraction } from '@/lib/practiceChoiceInteraction';
+import { buildPracticeSession } from '@/lib/sessionBuilder';
 import * as wanakana from 'wanakana';
 import Logo from '@/components/Logo';
 import DynamicStatusBar from '@/components/DynamicStatusBar';
@@ -18,14 +21,38 @@ const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
     </svg>
 );
 
+type CompletionWeaknessItem = {
+    unitKey: string;
+    type: ConjugationType;
+    word: WordEntry;
+};
+
+export function getCompletionWeaknessRows(
+    words: CompletionWeaknessItem[],
+    weaknessType: ConjugationType | undefined
+): CompletionWeaknessItem[] {
+    const seen = new Set<string>();
+
+    return words.filter((item) => {
+        if (item.type !== weaknessType || seen.has(item.unitKey)) {
+            return false;
+        }
+
+        seen.add(item.unitKey);
+        return true;
+    }).slice(0, 3);
+}
+
 export default function PracticeSession() {
-    const { activeSession, submitAnswer, endSession, config, language } = useStore();
+    const { activeSession, submitAnswer, endSession, startSession, updateConfig, config, language, studyState, dailyStreak } = useStore();
     const { t } = useTranslation(language);
+    const router = useRouter();
     const [inputValue, setInputValue] = useState('');
     const [isCorrect, setIsCorrect] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
     const [showFeedback, setShowFeedback] = useState(false);
     const [lastSelected, setLastSelected] = useState<string | null>(null);
+    const [showTodayEnd, setShowTodayEnd] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -156,6 +183,41 @@ export default function PracticeSession() {
         endSession();
     };
 
+    const handleStartWeaknessDrill = () => {
+        audioControllerRef.current?.stop();
+        const nextConfig = { ...config, practiceType: 'weakness' as const, questionCount: 5 };
+        updateConfig(nextConfig);
+        const result = buildPracticeSession(nextConfig, studyState, language);
+
+        if ('error' in result) {
+            setShowTodayEnd(true);
+            return;
+        }
+
+        setShowTodayEnd(true);
+        startSession(result.words, nextConfig, 'weakness');
+    };
+
+    const handleStartFreePractice = () => {
+        audioControllerRef.current?.stop();
+        setShowTodayEnd(false);
+        const nextConfig = { ...config, practiceType: 'free' as const };
+        updateConfig(nextConfig);
+        const result = buildPracticeSession(nextConfig, studyState, language);
+
+        if ('error' in result) {
+            handleEndSession();
+            return;
+        }
+
+        startSession(result.words, nextConfig, 'free');
+    };
+
+    const handleViewProgress = () => {
+        handleEndSession();
+        router.push('/progress');
+    };
+
     if (!activeSession) return null;
 
     const totalUniqueItems = activeSession.words.filter(w => w.retryCount === 0).length;
@@ -165,40 +227,175 @@ export default function PracticeSession() {
         ? Math.round((masteredCount / activeSession.results.length) * 100) 
         : 0;
     const message = pct >= 80 ? 'すごい！' : pct >= 50 ? 'いい調子！' : 'がんばって！';
+    const firstWrongItem = activeSession.words.find((_, index) => activeSession.results[index] === false);
+    const hasWeakness = Boolean(firstWrongItem);
+    const weaknessType = firstWrongItem?.type ?? activeSession.words[0]?.type;
+    const weaknessWordType = firstWrongItem?.word.word_type ?? activeSession.words[0]?.word.word_type;
+    const weaknessLabel = weaknessType && weaknessWordType ? getConjugationLabel(weaknessType, weaknessWordType, language) : 'て形';
+    const sampleWeaknessRows = getCompletionWeaknessRows(activeSession.words, weaknessType);
 
     if (isFinished) {
+        if (showTodayEnd) {
+            return (
+                <div className="min-h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-4 sm:p-8 animate-fade-in relative overflow-hidden">
+                    <DynamicStatusBar color="#f4f4ea" />
+                    <div className="blob-bg" />
+                    <div className="w-full max-w-md relative z-10">
+                        <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-6 sm:p-8 shadow-[8px_8px_0px_0px_var(--ink)] text-center space-y-5 flex flex-col items-center">
+                            <Logo size={96} className="text-[color:var(--ink)]" />
+                            <div className="space-y-2">
+                                <h2 className="text-3xl font-black text-[color:var(--ink)]">{t('todayHereIsGood')}</h2>
+                                <p className="text-sm font-bold text-[color:var(--muted)]">{t('todayCompleteAndWeaknessDone')}</p>
+                            </div>
+                            <div className="grid w-full grid-cols-3 overflow-hidden rounded-2xl border-[2px] border-[color:var(--ink)] bg-white">
+                                <div className="border-r border-[color:var(--border)] p-3">
+                                    <p className="text-[9px] font-black text-[color:var(--muted)]">{t('todayCompleted')}</p>
+                                    <p className="text-2xl font-black text-[color:var(--accent)]">{activeSession.results.length}</p>
+                                </div>
+                                <div className="border-r border-[color:var(--border)] p-3">
+                                    <p className="text-[9px] font-black text-[color:var(--muted)]">{t('accuracy')}</p>
+                                    <p className="text-2xl font-black text-[color:var(--ink)]">{pct}%</p>
+                                </div>
+                                <div className="p-3">
+                                    <p className="text-[9px] font-black text-[color:var(--muted)]">{t('streak')}</p>
+                                    <p className="text-2xl font-black text-[color:var(--ink)]">{dailyStreak}</p>
+                                </div>
+                            </div>
+                            <div className="w-full rounded-2xl border-[2px] border-[#e0b43f] bg-[#fffbeb] px-4 py-3 text-left">
+                                <p className="text-xs font-black text-[color:var(--ink)]">{t('tomorrowPreview')}</p>
+                            </div>
+                            <button
+                                onClick={handleViewProgress}
+                                className="w-full py-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-lg font-black text-white shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+                            >
+                                {t('viewProgress')}
+                            </button>
+                            <button
+                                onClick={handleStartFreePractice}
+                                className="w-full py-3 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-white text-base font-black text-[color:var(--ink)] transition-all active:bg-[color:var(--surface-soft)]"
+                            >
+                                {t('freePractice')}
+                            </button>
+                            <button
+                                onClick={handleEndSession}
+                                className="text-xs font-bold text-[color:var(--muted)] underline-offset-4 hover:underline"
+                            >
+                                {t('backToHome')}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        if (activeSession.practiceType !== 'daily') {
+            const completionTitle =
+                activeSession.practiceType === 'free' ? t('freePracticeComplete') : t('weaknessPracticeComplete');
+            const completionDescription =
+                activeSession.practiceType === 'free'
+                    ? t('freePracticeCompleteDescription')
+                    : t('weaknessPracticeCompleteDescription');
+
+            return (
+                <div className="min-h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-4 sm:p-8 animate-fade-in relative overflow-hidden">
+                    <DynamicStatusBar color="#f4f4ea" />
+                    <div className="blob-bg" />
+                    <div className="w-full max-w-md relative z-10">
+                        <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-6 sm:p-8 shadow-[8px_8px_0px_0px_var(--ink)] text-center space-y-5 flex flex-col items-center">
+                            <Logo size={96} className="text-[color:var(--ink)]" />
+                            <div className="space-y-2">
+                                <h2 className="text-3xl font-black text-[color:var(--ink)]">{completionTitle}</h2>
+                                <p className="text-sm font-bold text-[color:var(--muted)]">{completionDescription}</p>
+                            </div>
+                            <div className="grid w-full grid-cols-2 overflow-hidden rounded-2xl border-[2px] border-[color:var(--ink)] bg-white">
+                                <div className="border-r border-[color:var(--border)] p-3">
+                                    <p className="text-[9px] font-black text-[color:var(--muted)]">{t('answered')}</p>
+                                    <p className="text-2xl font-black text-[color:var(--accent)]">{activeSession.results.length}</p>
+                                </div>
+                                <div className="p-3">
+                                    <p className="text-[9px] font-black text-[color:var(--muted)]">{t('accuracy')}</p>
+                                    <p className="text-2xl font-black text-[color:var(--ink)]">{pct}%</p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={handleViewProgress}
+                                className="w-full py-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-lg font-black text-white shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+                            >
+                                {t('viewProgress')}
+                            </button>
+                            <button
+                                onClick={handleEndSession}
+                                className="w-full py-3 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-white text-base font-black text-[color:var(--ink)] transition-all active:bg-[color:var(--surface-soft)]"
+                            >
+                                {t('backToHome')}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
         return (
-            <div className="h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-4 sm:p-8 animate-fade-in relative overflow-hidden">
+            <div className="min-h-dvh bg-[color:var(--bg)] flex flex-col items-center justify-center p-4 sm:p-8 animate-fade-in relative overflow-hidden">
                 <DynamicStatusBar color="#f4f4ea" />
                 <div className="blob-bg" />
                 <div className="w-full max-w-md relative z-10">
-                    <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-6 sm:p-8 shadow-[8px_8px_0px_0px_var(--ink)] text-center space-y-6 flex flex-col items-center">
-                        <Logo size={100} className="text-[color:var(--ink)]" />
-                        
-                        <div className="inline-flex items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-1.5 shadow-[4px_4px_0px_0px_var(--ink)]">
-                            <span className="text-lg font-bold uppercase tracking-widest">{message}</span>
+                    <div className="relative rounded-[2.5rem] border-[4px] border-[color:var(--ink)] bg-white p-6 sm:p-8 shadow-[8px_8px_0px_0px_var(--ink)] text-center space-y-5 flex flex-col items-center">
+                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[color:var(--accent)] text-white shadow-[4px_4px_0px_0px_var(--ink)]">
+                            <svg className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
                         </div>
 
-                        <div className="space-y-1 w-full">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('sessionSummary')}</p>
-                            <div className="flex justify-center gap-6">
-                                <div className="text-center">
-                                    <div className="text-4xl font-black text-[color:var(--accent)]">{pct}%</div>
-                                    <div className="text-[9px] font-bold uppercase text-[color:var(--muted)] mt-0.5">{t('score')}</div>
-                                </div>
-                                <div className="w-[1.5px] bg-[color:var(--ink)] opacity-10" />
-                                <div className="text-center">
-                                    <div className="text-4xl font-black text-[color:var(--ink)]">{activeSession.sessionStreak}</div>
-                                    <div className="text-[9px] font-bold uppercase text-[color:var(--muted)] mt-0.5">{t('streak')}</div>
-                                </div>
-                            </div>
+                        <div className="space-y-1">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{message}</p>
+                            <h2 className="text-3xl font-black text-[color:var(--ink)]">{t('todayGoalComplete')}</h2>
+                            <p className="text-sm font-bold text-[color:var(--muted)]">
+                                {t('completedPromptCount')} {totalUniqueItems} / {totalUniqueItems} {t('prompts')} · {t('streak')} {dailyStreak} {t('days')}
+                            </p>
                         </div>
 
+                        {hasWeakness ? (
+                            <>
+                                <div className="w-full rounded-2xl border-[2px] border-[#e0b43f] bg-[#fffbeb] p-4 text-left">
+                                    <p className="mb-3 text-sm font-black text-[color:var(--ink)]">
+                                        {t('weaknessFoundPrefix')}「{weaknessLabel}」{t('weaknessFoundSuffix')}
+                                    </p>
+                                    <div className="overflow-hidden rounded-xl border border-[#e0b43f] bg-white">
+                                        {sampleWeaknessRows.map((item) => (
+                                            <div key={item.unitKey} className="grid grid-cols-[1fr_auto_1fr] items-center border-b border-[color:var(--border)] px-3 py-2 text-sm font-black last:border-b-0">
+                                                <span>{item.word.dictionary_form.kanji}</span>
+                                                <span className="text-[color:var(--muted)]">→</span>
+                                                <span className="text-right">{item.word.conjugations[item.type]}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <p className="text-sm font-black text-[color:var(--muted)]">{t('suggestWeaknessDrill')}</p>
+                                <button
+                                    onClick={handleStartWeaknessDrill}
+                                    className="w-full py-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-xl font-bold text-white shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+                                >
+                                    {t('drillFiveQuestions')} {weaknessLabel}
+                                </button>
+                            </>
+                        ) : (
+                            <p className="w-full rounded-2xl border-[2px] border-[#e0b43f] bg-[#fffbeb] px-4 py-3 text-sm font-black text-[color:var(--ink)]">
+                                {t('noWeaknessToday')}
+                            </p>
+                        )}
                         <button
-                            onClick={handleEndSession}
-                            className="w-full py-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] text-xl font-bold text-white shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+                            onClick={() => setShowTodayEnd(true)}
+                            className="w-full py-3 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-white text-base font-black text-[color:var(--ink)] transition-all active:bg-[color:var(--surface-soft)]"
                         >
-                            {t('backToHome')}
+                            {t('todayEndsHere')}
+                        </button>
+                        <button
+                            onClick={handleStartFreePractice}
+                            className="text-sm font-bold text-[color:var(--muted)] underline-offset-4 hover:underline"
+                        >
+                            {t('freePractice')}
                         </button>
                     </div>
                 </div>
@@ -207,7 +404,7 @@ export default function PracticeSession() {
     }
 
     return (
-        <div className="h-dvh bg-[color:var(--bg)] flex flex-col p-3 sm:p-6 animate-fade-in relative overflow-hidden">
+        <div className="h-dvh bg-[color:var(--bg)] flex flex-col p-3 pb-6 sm:p-6 sm:pb-8 animate-fade-in relative overflow-hidden">
             <DynamicStatusBar color="#f4f4ea" />
             <div className="blob-bg" />
             
@@ -236,7 +433,7 @@ export default function PracticeSession() {
                 </div>
 
                 {/* Main Card - Reduced padding and optimized spacing */}
-                <div className="flex-1 flex flex-col rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-4 sm:p-8 shadow-[4px_4px_0px_0px_var(--ink)] min-h-0">
+                <div className="flex-1 flex flex-col rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-4 pb-8 sm:pb-8 sm:p-8 shadow-[4px_4px_0px_0px_var(--ink)] min-h-0">
                     <div className="flex items-center justify-between gap-2 shrink-0">
                         <div className="flex gap-1.5 overflow-hidden">
                             {word?.is_common && (
@@ -277,7 +474,7 @@ export default function PracticeSession() {
                     </div>
 
                     {/* Action Area - Responsive layout for different counts/modes */}
-                    <div className="mt-auto pt-4 shrink-0">
+                    <div className="mt-auto pt-4 pb-2 sm:pb-0 shrink-0">
                         {config.mode === 'choice' ? (
                             <div className="flex flex-col gap-2.5">
                                 <div className={`grid gap-2 sm:gap-3 ${choices.length > 4 || choices.some(c => c.length > 8) ? 'grid-cols-1' : 'grid-cols-2'}`}>

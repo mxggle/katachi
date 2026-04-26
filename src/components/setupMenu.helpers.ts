@@ -21,9 +21,8 @@ export function buildSetupSummary(config: SessionConfig, language: Language) {
         
   const practiceType = PRACTICE_TYPE_SUMMARY[config.practiceType];
   const mode = getPracticeModeLabel(config.mode, language);
-  const questionsLabel = t.questions;
 
-  return `${practiceType} • ${levels} • ${wordTypes} • ${formCount} • ${mode} • ${config.questionCount} ${questionsLabel}`;
+  return `${practiceType} • ${levels} • ${wordTypes} • ${formCount} • ${mode}`;
 }
 
 export function getSetupHeading(totalAnswered: number, language: Language) {

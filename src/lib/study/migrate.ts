@@ -3,7 +3,17 @@ import type { Language } from '@/lib/i18n';
 import {
   DEFAULT_STUDY_SESSION_CONFIG,
   DEFAULT_STUDY_STATE,
+  computeMasteryLevel,
+  createEmptyFormStats,
+  createEmptyPatternStats,
+  createEmptyWordStats,
+  type AttemptRecord,
+  type FormStats,
+  type PatternStats,
+  type SessionRecord,
   type StudyState,
+  type UnitProgress,
+  type WordStats,
 } from '@/lib/study/types';
 
 interface LegacyProgressStats {
@@ -28,6 +38,81 @@ interface LegacyPersistedState {
     batchSize?: number;
     mode?: 'choice' | 'input';
   };
+  unitProgress?: Record<string, UnitProgress>;
+  sessionHistory?: SessionRecord[];
+  attemptHistory?: AttemptRecord[];
+  // V4 fields (may already exist in migrated state)
+  formStats?: Record<string, FormStats>;
+  patternStats?: Record<string, PatternStats>;
+  wordStats?: Record<string, WordStats>;
+}
+
+/**
+ * Rebuild formStats, patternStats, wordStats from unitProgress.
+ *
+ * This is used when migrating from schema v3 (word-level SRS) to v4
+ * (conjugation ability diagnostic). We aggregate per-unit data into
+ * form-level and pattern-level summaries.
+ *
+ * Note: pattern-level stats can only be partially reconstructed from
+ * unitProgress since we don't have the original word data to compute
+ * fine-grained rule patterns. We use conjugationType as a fallback.
+ */
+function rebuildStatsFromUnitProgress(
+  unitProgress: Record<string, UnitProgress>,
+): {
+  formStats: Record<string, FormStats>;
+  patternStats: Record<string, PatternStats>;
+  wordStats: Record<string, WordStats>;
+} {
+  const formStats: Record<string, FormStats> = {};
+  const patternStats: Record<string, PatternStats> = {};
+  const wordStats: Record<string, WordStats> = {};
+
+  for (const progress of Object.values(unitProgress)) {
+    // Aggregate into FormStats
+    const formKey = progress.conjugationType;
+    if (!formStats[formKey]) {
+      formStats[formKey] = createEmptyFormStats(progress.conjugationType);
+    }
+    formStats[formKey].totalAttempts += progress.seenCount;
+    formStats[formKey].correctAttempts += progress.correctCount;
+
+    // Best-effort pattern: use {conjugationType}::{wordType} as fallback
+    // (we can't determine godan sub-patterns without the original word data)
+    const patternKey = `${progress.conjugationType}::${progress.wordType}`;
+    if (!patternStats[patternKey]) {
+      patternStats[patternKey] = createEmptyPatternStats(patternKey, progress.conjugationType);
+    }
+    patternStats[patternKey].totalAttempts += progress.seenCount;
+    patternStats[patternKey].correctAttempts += progress.correctCount;
+
+    // Aggregate into WordStats
+    const wordId = progress.wordId;
+    if (!wordStats[wordId]) {
+      wordStats[wordId] = createEmptyWordStats(wordId);
+    }
+    wordStats[wordId].totalAttempts += progress.seenCount;
+    wordStats[wordId].correctAttempts += progress.correctCount;
+    if (progress.lastSeenAt) {
+      if (!wordStats[wordId].lastAttemptAt || progress.lastSeenAt > wordStats[wordId].lastAttemptAt!) {
+        wordStats[wordId].lastAttemptAt = progress.lastSeenAt;
+      }
+    }
+  }
+
+  // Compute accuracy and mastery levels
+  for (const fs of Object.values(formStats)) {
+    fs.accuracy = fs.totalAttempts > 0 ? fs.correctAttempts / fs.totalAttempts : 0;
+    fs.masteryLevel = computeMasteryLevel(fs.totalAttempts, fs.accuracy);
+  }
+
+  for (const ps of Object.values(patternStats)) {
+    ps.accuracy = ps.totalAttempts > 0 ? ps.correctAttempts / ps.totalAttempts : 0;
+    ps.masteryLevel = computeMasteryLevel(ps.totalAttempts, ps.accuracy);
+  }
+
+  return { formStats, patternStats, wordStats };
 }
 
 export function migratePersistedStudyState(legacy: LegacyPersistedState | undefined): StudyState {
@@ -36,11 +121,85 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
   const legacyConfig = legacy?.config;
   const progress = legacy?.progress ?? legacy?.globalStats;
 
+  const migratedUnitProgress = legacy?.unitProgress
+    ? Object.fromEntries(
+        Object.entries(legacy.unitProgress).map(([key, progress]) => {
+          if (progress.nextReviewDate) return [key, progress]; // Already migrated
+
+          // Migrate to SRS — compute nextReviewDate from lastSeenAt, not wall-clock time
+          const lastSeenDate = progress.lastSeenAt ? progress.lastSeenAt : new Date().toISOString();
+
+          let status: 'learning' | 'review' | 'graduated' = 'learning';
+          let interval = 0;
+          let ease = 2.5;
+
+          if (progress.consecutiveCorrect >= 3) {
+            status = 'graduated';
+            interval = 21;
+            ease = 2.8;
+          } else if (progress.consecutiveCorrect > 0) {
+            status = 'review';
+            interval = Math.pow(2.5, progress.consecutiveCorrect);
+            ease = 2.5;
+          }
+
+          let nextReviewDate: string;
+          if (interval > 0 && progress.lastSeenAt) {
+            const last = new Date(progress.lastSeenAt);
+            last.setHours(last.getHours() + interval * 24);
+            nextReviewDate = last.toISOString();
+          } else {
+            // Learning items or items without lastSeenAt: make them immediately due
+            nextReviewDate = lastSeenDate;
+          }
+
+          return [
+            key,
+            {
+              ...progress,
+              status,
+              interval,
+              ease,
+              nextReviewDate,
+            },
+          ];
+        })
+      )
+    : {};
+
+  // If already v4 or has formStats, use them directly
+  const hasV4Data = !!legacy?.formStats;
+  const { formStats, patternStats, wordStats } = hasV4Data
+    ? {
+        formStats: legacy.formStats!,
+        patternStats: legacy.patternStats ?? {},
+        wordStats: legacy.wordStats ?? {},
+      }
+    : rebuildStatsFromUnitProgress(migratedUnitProgress);
+
   return {
     preferences: {
       ...base.preferences,
       language,
       defaultSessionConfig: {
+        ...DEFAULT_STUDY_SESSION_CONFIG,
+        levels: legacyConfig?.levels ?? legacyConfig?.leves ?? DEFAULT_STUDY_SESSION_CONFIG.levels,
+        wordTypes: legacyConfig?.wordTypes ?? DEFAULT_STUDY_SESSION_CONFIG.wordTypes,
+        forms: legacyConfig?.forms ?? legacyConfig?.categories ?? DEFAULT_STUDY_SESSION_CONFIG.forms,
+        questionCount:
+          legacyConfig?.questionCount ?? legacyConfig?.batchSize ?? DEFAULT_STUDY_SESSION_CONFIG.questionCount,
+        mode: legacyConfig?.mode ?? DEFAULT_STUDY_SESSION_CONFIG.mode,
+      },
+      dailySessionConfig: {
+        ...DEFAULT_STUDY_SESSION_CONFIG,
+        levels: legacyConfig?.levels ?? legacyConfig?.leves ?? DEFAULT_STUDY_SESSION_CONFIG.levels,
+        wordTypes: legacyConfig?.wordTypes ?? DEFAULT_STUDY_SESSION_CONFIG.wordTypes,
+        forms: legacyConfig?.forms ?? legacyConfig?.categories ?? DEFAULT_STUDY_SESSION_CONFIG.forms,
+        questionCount:
+          legacyConfig?.questionCount ?? legacyConfig?.batchSize ?? DEFAULT_STUDY_SESSION_CONFIG.questionCount,
+        mode: legacyConfig?.mode ?? DEFAULT_STUDY_SESSION_CONFIG.mode,
+      },
+      freeSessionConfig: {
         ...DEFAULT_STUDY_SESSION_CONFIG,
         levels: legacyConfig?.levels ?? legacyConfig?.leves ?? DEFAULT_STUDY_SESSION_CONFIG.levels,
         wordTypes: legacyConfig?.wordTypes ?? DEFAULT_STUDY_SESSION_CONFIG.wordTypes,
@@ -56,9 +215,13 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
       lastPracticeDate: legacy?.lastPracticeDate ?? legacy?.lastLoginDate ?? null,
       totalAnswered: progress?.totalAnswered ?? 0,
       totalCorrect: progress?.totalCorrect ?? 0,
+      schemaVersion: 5,
     },
-    unitProgress: {},
-    sessionHistory: [],
-    attemptHistory: [],
+    unitProgress: migratedUnitProgress,
+    formStats,
+    patternStats,
+    wordStats,
+    sessionHistory: legacy?.sessionHistory ?? [],
+    attemptHistory: legacy?.attemptHistory ?? [],
   };
 }

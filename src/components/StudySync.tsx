@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useAuth } from './AuthProvider';
 import { useTranslation } from '@/lib/i18n';
 import { useStore } from '@/lib/store';
+import type { StudyState } from '@/lib/study/types';
 import {
   fetchRemoteStudySnapshot,
   getStudySyncErrorMessageKey,
@@ -23,6 +24,20 @@ export default function StudySync() {
   const [isReady, setIsReady] = useState(false);
   const [syncErrorKey, setSyncErrorKey] = useState<ReturnType<typeof getStudySyncErrorMessageKey> | null>(null);
   const lastSavedJsonRef = useRef<string | null>(null);
+  const preLoginSnapshotRef = useRef<StudyState | null>(null);
+
+  // Capture a snapshot of the local study state BEFORE any auth change triggers hydration.
+  // This protects against race conditions where the store might be reset during sign-in.
+  useEffect(() => {
+    if (!isLoading && user) {
+      // Only capture if we haven't already (first login detection)
+      if (!preLoginSnapshotRef.current) {
+        preLoginSnapshotRef.current = useStore.getState().studyState;
+      }
+    } else if (!user) {
+      preLoginSnapshotRef.current = null;
+    }
+  }, [isLoading, user]);
 
   useEffect(() => {
     let isCancelled = false;
@@ -40,7 +55,9 @@ export default function StudySync() {
       }
 
       try {
-        const localState = useStore.getState().studyState;
+        // Use the pre-login snapshot if available (guards against race-condition resets),
+        // otherwise fall back to current store state.
+        const localState = preLoginSnapshotRef.current ?? useStore.getState().studyState;
         const remoteSnapshot = await fetchRemoteStudySnapshot(supabase, user);
         const nextState = resolveStudyStateForHydration(localState, {
           userId: user.id,
@@ -56,6 +73,7 @@ export default function StudySync() {
         const savedSnapshot = await saveRemoteStudyState(supabase, user, nextState);
         writeStudySyncMeta(user.id, savedSnapshot);
         lastSavedJsonRef.current = stringifyStudyState(savedSnapshot.studyState);
+        preLoginSnapshotRef.current = null; // Clear snapshot after successful hydration
         setSyncErrorKey(null);
         setIsReady(true);
       } catch (error) {

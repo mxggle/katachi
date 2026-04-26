@@ -1,18 +1,25 @@
 'use client';
 
+import { ChevronDown, Settings2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useStore } from '@/lib/store';
 import { useTranslation, translations } from '@/lib/i18n';
 import { WordType, ConjugationType, VERB_ONLY_CONJS, CONJS_FOR_WORD_TYPE } from '@/lib/distractorEngine';
-import type { PracticeType } from '@/lib/study/types';
 
 const LEVELS = ['N5', 'N4', 'N3'] as const;
 const QUESTION_COUNTS = [10, 20, 30];
 
 export default function SetupMenu() {
-  const { config, updateConfig, language } = useStore();
+  const { updateDailyGoal, language, studyState, updateDailyConfig, updateFreeConfig } = useStore();
   const { t } = useTranslation(language);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [activeTab, setActiveTab] = useState<'daily' | 'free'>('daily');
+
+  const isDaily = activeTab === 'daily';
+  const currentConfig = isDaily 
+    ? studyState.preferences.dailySessionConfig 
+    : studyState.preferences.freeSessionConfig;
+  const updateCurrentConfig = isDaily ? updateDailyConfig : updateFreeConfig;
 
   const dict = translations[language];
 
@@ -54,36 +61,30 @@ export default function SetupMenu() {
     'na-adj': t('naAdj'),
   };
 
-  const practiceTypeLabels: Record<PracticeType, string> = {
-    daily: t('dailyPractice'),
-    weakness: t('weaknessDrill'),
-    free: t('freePractice'),
-  };
-
   const availableForms = useMemo(() => {
     const nextAvailable = new Set<ConjugationType>();
-    for (const wordType of config.wordTypes) {
+    for (const wordType of currentConfig.wordTypes) {
       for (const form of CONJS_FOR_WORD_TYPE[wordType]) {
         nextAvailable.add(form);
       }
     }
     return nextAvailable;
-  }, [config.wordTypes]);
+  }, [currentConfig.wordTypes]);
 
   const toggleLevel = (level: (typeof LEVELS)[number]) => {
-    const nextLevels = config.levels.includes(level)
-      ? config.levels.filter((item) => item !== level)
-      : [...config.levels, level];
+    const nextLevels = currentConfig.levels.includes(level)
+      ? currentConfig.levels.filter((item) => item !== level)
+      : [...currentConfig.levels, level];
 
     if (nextLevels.length > 0) {
-      updateConfig({ levels: nextLevels });
+      updateCurrentConfig({ levels: nextLevels });
     }
   };
 
   const toggleWordType = (wordType: WordType) => {
-    const nextWordTypes = config.wordTypes.includes(wordType)
-      ? config.wordTypes.filter((item) => item !== wordType)
-      : [...config.wordTypes, wordType];
+    const nextWordTypes = currentConfig.wordTypes.includes(wordType)
+      ? currentConfig.wordTypes.filter((item) => item !== wordType)
+      : [...currentConfig.wordTypes, wordType];
 
     if (nextWordTypes.length === 0) {
       return;
@@ -96,8 +97,8 @@ export default function SetupMenu() {
       }
     }
 
-    const nextForms = config.forms.filter((form) => nextAvailableForms.has(form));
-    updateConfig({
+    const nextForms = currentConfig.forms.filter((form) => nextAvailableForms.has(form));
+    updateCurrentConfig({
       wordTypes: nextWordTypes,
       forms: nextForms.length > 0 ? nextForms : ['polite'],
     });
@@ -108,32 +109,35 @@ export default function SetupMenu() {
       return;
     }
 
-    const nextForms = config.forms.includes(form)
-      ? config.forms.filter((item) => item !== form)
-      : [...config.forms, form];
+    const nextForms = currentConfig.forms.includes(form)
+      ? currentConfig.forms.filter((item) => item !== form)
+      : [...currentConfig.forms, form];
 
     if (nextForms.length > 0) {
-      updateConfig({ forms: nextForms });
+      updateCurrentConfig({ forms: nextForms });
     }
   };
 
   const selectAllForms = () => {
     const allAvailable = Array.from(availableForms);
-    if (allAvailable.length > 0) updateConfig({ forms: allAvailable });
+    if (allAvailable.length > 0) updateCurrentConfig({ forms: allAvailable });
   };
 
   const clearAllForms = () => {
     // Keep at least polite form
-    updateConfig({ forms: ['polite'] });
+    updateCurrentConfig({ forms: ['polite'] });
   };
 
   return (
     <section className="rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-6 shadow-[8px_8px_0px_0px_var(--ink)] transition-all sm:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <h3 className="text-2xl font-bold text-[color:var(--ink)]">
-            {t('setupOptions')}
-          </h3>
+          <div className="flex items-center gap-2">
+            <Settings2 className="h-6 w-6 text-[color:var(--accent)]" strokeWidth={3} aria-hidden="true" />
+            <h3 className="text-2xl font-bold text-[color:var(--ink)]">
+              {t('setupOptions')}
+            </h3>
+          </div>
           <p className="text-sm font-medium text-[color:var(--muted)]">
             {t('setupDescription')}
           </p>
@@ -143,33 +147,48 @@ export default function SetupMenu() {
           type="button"
           aria-expanded={isExpanded}
           onClick={() => setIsExpanded((value) => !value)}
-          className="inline-flex min-h-11 items-center justify-center rounded-xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border-[3px] border-[color:var(--ink)] bg-[#fde68a] px-5 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
         >
-          {isExpanded ? t('hideOptions') : t('showOptions')}
+          <span>{isExpanded ? t('hideOptions') : t('showOptions')}</span>
+          <ChevronDown
+            className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+            strokeWidth={3}
+            aria-hidden="true"
+          />
         </button>
       </div>
 
       {isExpanded && (
         <div className="mt-8 space-y-8 border-t-[3px] border-dashed border-[color:var(--border-strong)] pt-8">
-          <ConfigSection title={t('practiceType')}>
-            <ChipRow>
-              {(['daily', 'weakness', 'free'] as const).map((practiceType) => (
-                <ToggleChip
-                  key={practiceType}
-                  active={config.practiceType === practiceType}
-                  onClick={() => updateConfig({ practiceType })}
-                  label={practiceTypeLabels[practiceType]}
-                />
-              ))}
-            </ChipRow>
-          </ConfigSection>
+          <div className="flex w-full gap-2 rounded-xl bg-[color:var(--surface-soft)] p-1.5 border-[2px] border-[color:var(--border)]">
+            <button
+              onClick={() => setActiveTab('daily')}
+              className={`flex-1 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
+                isDaily 
+                  ? 'bg-white text-[color:var(--ink)] shadow-sm border-2 border-[color:var(--ink)]' 
+                  : 'text-[color:var(--muted)] hover:text-[color:var(--ink)] border-2 border-transparent'
+              }`}
+            >
+              {t('dailyPractice')}
+            </button>
+            <button
+              onClick={() => setActiveTab('free')}
+              className={`flex-1 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
+                !isDaily 
+                  ? 'bg-white text-[color:var(--ink)] shadow-sm border-2 border-[color:var(--ink)]' 
+                  : 'text-[color:var(--muted)] hover:text-[color:var(--ink)] border-2 border-transparent'
+              }`}
+            >
+              {t('freePractice')}
+            </button>
+          </div>
 
           <ConfigSection title={t('levels')}>
             <ChipRow>
               {LEVELS.map((level) => (
                 <ToggleChip
                   key={level}
-                  active={config.levels.includes(level)}
+                  active={currentConfig.levels.includes(level)}
                   onClick={() => toggleLevel(level)}
                   label={level}
                 />
@@ -182,7 +201,7 @@ export default function SetupMenu() {
               {(['verb', 'i-adj', 'na-adj'] as const).map((wordType) => (
                 <ToggleChip
                   key={wordType}
-                  active={config.wordTypes.includes(wordType)}
+                  active={currentConfig.wordTypes.includes(wordType)}
                   onClick={() => toggleWordType(wordType)}
                   label={wordTypeLabels[wordType]}
                 />
@@ -205,8 +224,8 @@ export default function SetupMenu() {
               {(Object.keys(verbFormLabels) as ConjugationType[]).map((form) => {
                 if (!availableForms.has(form)) return null;
 
-                const hasVerb = config.wordTypes.includes('verb');
-                const hasAdj = config.wordTypes.includes('i-adj') || config.wordTypes.includes('na-adj');
+                const hasVerb = currentConfig.wordTypes.includes('verb');
+                const hasAdj = currentConfig.wordTypes.includes('i-adj') || currentConfig.wordTypes.includes('na-adj');
                 
                 let label = verbFormLabels[form];
                 if (hasVerb && hasAdj) {
@@ -221,7 +240,7 @@ export default function SetupMenu() {
                 return (
                   <ToggleChip
                     key={form}
-                    active={config.forms.includes(form)}
+                    active={currentConfig.forms.includes(form)}
                     onClick={() => toggleForm(form)}
                     label={label}
                     tag={VERB_ONLY_CONJS.includes(form) ? 'V' : undefined}
@@ -237,22 +256,25 @@ export default function SetupMenu() {
                 {(['choice', 'input'] as const).map((mode) => (
                   <ToggleChip
                     key={mode}
-                    active={config.mode === mode}
-                    onClick={() => updateConfig({ mode })}
+                    active={currentConfig.mode === mode}
+                    onClick={() => updateCurrentConfig({ mode })}
                     label={mode === 'choice' ? t('multipleChoice') : t('typing')}
                   />
                 ))}
               </ChipRow>
             </ConfigSection>
 
-            <ConfigSection title={t('questionCount')}>
+            <ConfigSection title={isDaily ? t('dailyGoal') : t('questionCount')}>
               <ChipRow>
-                {QUESTION_COUNTS.map((questionCount) => (
+                {QUESTION_COUNTS.map((count) => (
                   <ToggleChip
-                    key={questionCount}
-                    active={config.questionCount === questionCount}
-                    onClick={() => updateConfig({ questionCount })}
-                    label={questionCount.toString()}
+                    key={count}
+                    active={isDaily ? studyState.preferences.dailyQuestionGoal === count : currentConfig.questionCount === count}
+                    onClick={() => {
+                      if (isDaily) updateDailyGoal(count);
+                      else updateCurrentConfig({ questionCount: count });
+                    }}
+                    label={count.toString()}
                   />
                 ))}
               </ChipRow>
