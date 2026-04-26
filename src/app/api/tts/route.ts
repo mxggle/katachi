@@ -1,9 +1,5 @@
 import { NextResponse } from 'next/server';
-import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
-// Initialize a shared TTS instance
-const tts = new MsEdgeTTS();
-let metadataSet = false;
 const audioCache = new Map<string, Buffer>();
 
 const baseAudioHeaders = {
@@ -53,20 +49,6 @@ function buildBufferedAudioResponse(audio: Buffer, rangeHeader: string | null) {
     });
 }
 
-function collectAudioStream(audioStream: NodeJS.ReadableStream): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-        const chunks: Buffer[] = [];
-
-        audioStream.on('data', (chunk: Buffer) => {
-            chunks.push(Buffer.from(chunk));
-        });
-        audioStream.on('end', () => {
-            resolve(Buffer.concat(chunks));
-        });
-        audioStream.on('error', reject);
-    });
-}
-
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const text = searchParams.get('text');
@@ -82,92 +64,31 @@ export async function GET(request: Request) {
             return buildBufferedAudioResponse(cachedAudio, rangeHeader);
         }
 
-        if (!metadataSet) {
-            // "ja-JP-NanamiNeural" (Female) or "ja-JP-KeitaNeural" (Male)
-            await tts.setMetadata('ja-JP-NanamiNeural', OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
-            metadataSet = true;
-        }
+        // Google Translate TTS endpoint is more stable than unofficial Edge TTS WebSocket endpoints
+        const googleTtsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ja&total=1&idx=0&textlen=${text.length}&client=tw-ob&prev=input`;
 
-        const { audioStream } = tts.toStream(text);
-
-        if (rangeHeader) {
-            const audio = await collectAudioStream(audioStream);
-            if (audio.length > 0) {
-                audioCache.set(text, audio);
-            }
-
-            return buildBufferedAudioResponse(audio, rangeHeader);
-        }
-
-        // Convert Node.js Readable stream to Web Streams API ReadableStream
-        let settled = false;
-        let cleanup = () => {};
-
-        const settle = (callback: () => void) => {
-            if (settled) {
-                return;
-            }
-
-            settled = true;
-            cleanup();
-            callback();
-        };
-
-        const stream = new ReadableStream({
-            start(controller) {
-                const chunks: Buffer[] = [];
-
-                const onData = (chunk: Buffer) => {
-                    if (!settled) {
-                        chunks.push(Buffer.from(chunk));
-                        controller.enqueue(chunk);
-                    }
-                };
-
-                const onEnd = () => {
-                    if (chunks.length > 0) {
-                        audioCache.set(text, Buffer.concat(chunks));
-                    }
-
-                    settle(() => {
-                        controller.close();
-                    });
-                };
-
-                const onError = (err: Error) => {
-                    settle(() => {
-                        controller.error(err);
-                    });
-                };
-
-                cleanup = () => {
-                    audioStream.off('data', onData);
-                    audioStream.off('end', onEnd);
-                    audioStream.off('error', onError);
-                };
-
-                audioStream.on('data', onData);
-                audioStream.on('end', onEnd);
-                audioStream.on('error', onError);
-            },
-            cancel() {
-                settle(() => {
-                    if ('destroy' in audioStream && typeof audioStream.destroy === 'function') {
-                        audioStream.destroy();
-                    }
-                });
-            },
-        });
-
-        // Set the appropriate headers for an audio response
-        return new NextResponse(stream, {
+        const response = await fetch(googleTtsUrl, {
             headers: {
-                ...baseAudioHeaders,
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             },
         });
+
+        if (!response.ok) {
+            throw new Error(`Google TTS request failed with status ${response.status}`);
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const audio = Buffer.from(arrayBuffer);
+
+        if (audio.length > 0) {
+            audioCache.set(text, audio);
+        }
+
+        return buildBufferedAudioResponse(audio, rangeHeader);
 
     } catch (error) {
-        console.error('Error in Edge TTS API:', error);
+        console.error('Error in TTS API:', error);
         return new NextResponse('Internal Server Error', { status: 500 });
     }
 }
+

@@ -2,7 +2,7 @@ import { ConjugationType, generateDistractors, WordEntry } from '@/lib/distracto
 import { loadDictionary } from '@/lib/dictionaryLoader';
 import type { Language } from '@/lib/i18n';
 import { translations } from '@/lib/i18n';
-import type { SessionConfig } from '@/lib/store';
+import { getLocalDateString, isSameLocalDate, type SessionConfig } from '@/lib/store';
 import { selectPracticeUnits } from '@/lib/study/scheduler';
 import { makeUnitKey, type StudyState } from '@/lib/study/types';
 
@@ -10,8 +10,15 @@ interface BuildPracticeSessionOptions {
   focusUnitKey?: string;
 }
 
-function getAnsweredToday(studyState: StudyState, today: string): number {
-  return studyState.attemptHistory.filter((attempt) => attempt.answeredAt.startsWith(today)).length;
+/**
+ * Count daily goal progress: only daily, non-retry attempts count.
+ */
+function getDailyGoalProgress(studyState: StudyState, today: string): number {
+  return studyState.attemptHistory.filter(
+    (a) =>
+      isSameLocalDate(a.answeredAt, today) &&
+      a.countsTowardDailyGoal === true
+  ).length;
 }
 
 function parseFocusUnitKey(focusUnitKey?: string) {
@@ -49,9 +56,9 @@ export function buildPracticeSession(
     return { error: t('noWordsMatch') };
   }
 
-  const today = new Date().toISOString().split('T')[0];
-  const answeredToday = getAnsweredToday(studyState, today);
-  const remainingDailyBudget = studyState.preferences.dailyQuestionGoal - answeredToday;
+  const today = getLocalDateString();
+  const dailyProgress = getDailyGoalProgress(studyState, today);
+  const remainingDailyBudget = studyState.preferences.dailyQuestionGoal - dailyProgress;
 
   if (config.practiceType === 'daily' && remainingDailyBudget <= 0) {
     return { error: t('dailyBudgetReached') };
@@ -71,6 +78,7 @@ export function buildPracticeSession(
     practiceType: config.practiceType,
     preferences: studyState.preferences,
     unitProgress: studyState.unitProgress,
+    studyState,
     now: new Date().toISOString(),
   });
 
@@ -90,6 +98,7 @@ export function buildPracticeSession(
             conjugationType: focusedUnit.conjugationType,
             mode: config.mode,
             wordType: focusWord.word_type,
+            rulePattern: '',
             nextReviewDate: new Date(0).toISOString(),
           },
           ...orderedUnits,

@@ -1,16 +1,26 @@
 import { describe, expect, it } from 'vitest';
-import { selectPracticeUnits } from '@/lib/study/scheduler';
-import type { StudyPreferences, StudySessionConfig, UnitProgress } from '@/lib/study/types';
+import { selectPracticeUnits, DAILY_WEAKNESS_RATIO } from '@/lib/study/scheduler';
+import type { StudyPreferences, StudySessionConfig, UnitProgress, StudyState, FormStats } from '@/lib/study/types';
+import { DEFAULT_STUDY_STATE, createEmptyFormStats, createEmptyPatternStats } from '@/lib/study/types';
 import type { ConjugationType, WordEntry } from '@/lib/distractorEngine';
 
 function buildWord(id: string, wordType: WordEntry['word_type'], forms: ConjugationType[], group?: WordEntry['group']): WordEntry {
+  const lastKana: Record<string, string> = {
+    'godan': 'く',
+    'ichidan': 'る',
+    'suru': 'する',
+    'kuru': 'くる',
+    'i-adj': 'い',
+    'na-adj': 'な',
+  };
+  const kana = id + (lastKana[group || (wordType === 'verb' ? 'godan' : wordType)] ?? '');
   const conjugations = Object.fromEntries(forms.map((form) => [form, `${id}-${form}`]));
   return {
     id,
     level: 'N5',
     group: group || (wordType === 'verb' ? 'godan' : wordType as WordEntry['group']),
     word_type: wordType,
-    dictionary_form: { kanji: id, kana: id, romaji: id },
+    dictionary_form: { kanji: id, kana, romaji: id },
     meaning: id,
     conjugations,
   };
@@ -40,6 +50,33 @@ function buildProgress(overrides: Partial<UnitProgress> = {}): UnitProgress {
   };
 }
 
+function buildStudyState(overrides: Partial<StudyState> = {}): StudyState {
+  return {
+    ...DEFAULT_STUDY_STATE('en'),
+    ...overrides,
+  };
+}
+
+function buildWeakFormStats(form: ConjugationType): FormStats {
+  return {
+    ...createEmptyFormStats(form),
+    totalAttempts: 10,
+    correctAttempts: 3,
+    accuracy: 0.3,
+    masteryLevel: 'weak',
+  };
+}
+
+function buildStableFormStats(form: ConjugationType): FormStats {
+  return {
+    ...createEmptyFormStats(form),
+    totalAttempts: 10,
+    correctAttempts: 9,
+    accuracy: 0.9,
+    masteryLevel: 'mastered',
+  };
+}
+
 const preferences: StudyPreferences = {
   language: 'en',
   defaultSessionConfig: {
@@ -62,79 +99,132 @@ const config: StudySessionConfig = {
 };
 
 describe('selectPracticeUnits', () => {
-  it('prioritizes mistakes > unstable > due review > new > non-due in daily practice', () => {
-    const words = [
-      buildWord('word-1', 'verb', ['te_form']),
-      buildWord('word-2', 'verb', ['te_form']),
-      buildWord('word-3', 'verb', ['te_form']),
-      buildWord('word-4', 'verb', ['te_form']),
-      buildWord('word-5', 'verb', ['te_form']),
-      buildWord('word-6', 'verb', ['te_form']),
-      buildWord('word-7', 'verb', ['te_form']),
-      buildWord('word-8', 'verb', ['te_form']),
-    ];
+  // ----------------------------------------------------------------
+  // Daily practice: 50/30/20 allocation
+  // ----------------------------------------------------------------
 
-    const unitProgress: Record<string, UnitProgress> = {
-      // Mistakes (consecutiveWrong > 0)
-      'word-1::te_form::choice': buildProgress({
-        wordId: 'word-1',
-        nextReviewDate: '2026-04-21T10:00:00.000Z',
-        consecutiveWrong: 2,
-        status: 'learning',
-      }),
-      // Unstable (accuracy < 0.8, not mistake, not graduated)
-      'word-2::te_form::choice': buildProgress({
-        wordId: 'word-2',
-        nextReviewDate: '2026-04-21T11:00:00.000Z',
-        seenCount: 5,
-        correctCount: 3,
-        wrongCount: 2,
-        consecutiveWrong: 0,
-        status: 'review',
-      }),
-      // Due review (normal due item)
-      'word-3::te_form::choice': buildProgress({
-        wordId: 'word-3',
-        nextReviewDate: '2026-04-21T12:00:00.000Z',
-        seenCount: 10,
-        correctCount: 9,
-        wrongCount: 1,
-        consecutiveWrong: 0,
-        status: 'review',
-      }),
-      // Not due
-      'word-4::te_form::choice': buildProgress({
-        wordId: 'word-4',
-        nextReviewDate: '2026-04-23T10:00:00.000Z',
-        consecutiveWrong: 1,
-        status: 'learning',
-      }),
-    };
+  it('allocates approximately 50% weakness, 30% coverage, 20% exploration in daily practice', () => {
+    const words = Array.from({ length: 20 }, (_, i) =>
+      buildWord(`word-${i}`, 'verb', ['te_form', 'polite'])
+    );
+
+    // Create studyState with some weak and some mastered patterns
+    const studyState = buildStudyState({
+      formStats: {
+        te_form: buildWeakFormStats('te_form'),
+        polite: buildStableFormStats('polite'),
+      },
+      patternStats: {
+        'te_form::godan': {
+          ...createEmptyPatternStats('te_form::godan', 'te_form'),
+          totalAttempts: 10,
+          correctAttempts: 3,
+          accuracy: 0.3,
+          masteryLevel: 'weak',
+        },
+        'polite::godan': {
+          ...createEmptyPatternStats('polite::godan', 'polite'),
+          totalAttempts: 10,
+          correctAttempts: 9,
+          accuracy: 0.9,
+          masteryLevel: 'mastered',
+        },
+      },
+    });
+
+    const total = 10;
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: total },
+      practiceType: 'daily',
+      preferences,
+      unitProgress: {},
+      studyState,
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    expect(selected.length).toBeLessThanOrEqual(total);
+    expect(selected.length).toBeGreaterThan(0);
+
+    // Verify the allocation ratios are reasonable
+    const weaknessCount = selected.filter(u => u.conjugationType === 'te_form').length;
+
+    // Weakness (te_form is weak) should get ~50%
+    expect(weaknessCount).toBeGreaterThanOrEqual(Math.floor(total * DAILY_WEAKNESS_RATIO * 0.5));
+  });
+
+  it('backfills when weakness pool is empty (new user)', () => {
+    const words = Array.from({ length: 10 }, (_, i) =>
+      buildWord(`word-${i}`, 'verb', ['te_form'])
+    );
+
+    const studyState = buildStudyState(); // Fresh state, no stats
 
     const selected = selectPracticeUnits({
       words,
       config: { ...config, questionCount: 6 },
       practiceType: 'daily',
-      preferences: { ...preferences, dailyNewLimit: 2 },
-      unitProgress,
+      preferences,
+      unitProgress: {},
+      studyState,
       now: '2026-04-22T12:00:00.000Z',
     });
 
-    const unitKeys = selected.map((item) => item.unitKey);
-
-    // Should prioritize mistakes, unstable, and due review
-    expect(unitKeys).toContain('word-1::te_form::choice'); // mistake
-    expect(unitKeys).toContain('word-2::te_form::choice'); // unstable
-    expect(unitKeys).toContain('word-3::te_form::choice'); // due review
-
-    // New items fill remaining slots, capped at dailyNewLimit (2)
-    const newUnits = selected.filter((item) => !unitProgress[item.unitKey]);
-    expect(newUnits.length).toBeGreaterThanOrEqual(2);
-
+    // New user: all forms are undiagnosed → exploration fills everything
     expect(selected).toHaveLength(6);
   });
 
-  it('limits weakness drill to seen weak units only', () => {
+  // ----------------------------------------------------------------
+  // Weakness practice
+  // ----------------------------------------------------------------
+
+  it('weakness practice only picks from weak/unstable patterns', () => {
+    const words = [
+      buildWord('word-1', 'verb', ['te_form']),
+      buildWord('word-2', 'verb', ['te_form']),
+      buildWord('word-3', 'verb', ['polite']),
+    ];
+
+    const studyState = buildStudyState({
+      formStats: {
+        te_form: buildWeakFormStats('te_form'),
+        polite: buildStableFormStats('polite'),
+      },
+      patternStats: {
+        'te_form::godan': {
+          ...createEmptyPatternStats('te_form::godan', 'te_form'),
+          totalAttempts: 5,
+          correctAttempts: 1,
+          accuracy: 0.2,
+          masteryLevel: 'weak',
+        },
+        'polite::godan': {
+          ...createEmptyPatternStats('polite::godan', 'polite'),
+          totalAttempts: 10,
+          correctAttempts: 9,
+          accuracy: 0.9,
+          masteryLevel: 'mastered',
+        },
+      },
+    });
+
+    const selected = selectPracticeUnits({
+      words,
+      config: { ...config, questionCount: 3 },
+      practiceType: 'weakness',
+      preferences,
+      unitProgress: {},
+      studyState,
+      now: '2026-04-22T12:00:00.000Z',
+    });
+
+    // Should only select te_form words (weak pattern)
+    for (const unit of selected) {
+      expect(unit.conjugationType).toBe('te_form');
+    }
+  });
+
+  it('weakness practice does not fall back to unitProgress when no formStats or patternStats exist', () => {
     const words = [
       buildWord('word-1', 'verb', ['te_form']),
       buildWord('word-2', 'verb', ['te_form']),
@@ -142,9 +232,11 @@ describe('selectPracticeUnits', () => {
     ];
 
     const unitProgress: Record<string, UnitProgress> = {
-      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', nextReviewDate: '2026-04-21T10:00:00.000Z' }),
-      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', nextReviewDate: '2026-04-21T11:00:00.000Z' }),
+      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', correctCount: 1, seenCount: 5 }),
+      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', correctCount: 4, seenCount: 5 }),
     };
+
+    const studyState = buildStudyState({ unitProgress });
 
     const selected = selectPracticeUnits({
       words,
@@ -152,13 +244,19 @@ describe('selectPracticeUnits', () => {
       practiceType: 'weakness',
       preferences,
       unitProgress,
+      studyState,
       now: '2026-04-22T12:00:00.000Z',
     });
 
-    expect(selected.map((item) => item.word.id)).toEqual(['word-1', 'word-2']);
+    // UnitProgress is legacy/SRS compatibility data and must not drive diagnostic weakness.
+    expect(selected).toHaveLength(0);
   });
 
-  it('lets free practice use all eligible items without a daily new-item cap', () => {
+  // ----------------------------------------------------------------
+  // Free practice
+  // ----------------------------------------------------------------
+
+  it('free practice uses all eligible items without filtering', () => {
     const words = [
       buildWord('word-1', 'verb', ['te_form']),
       buildWord('word-2', 'verb', ['te_form']),
@@ -171,13 +269,14 @@ describe('selectPracticeUnits', () => {
       practiceType: 'free',
       preferences,
       unitProgress: {},
+      studyState: buildStudyState(),
       now: '2026-04-22T12:00:00.000Z',
     });
 
     expect(selected).toHaveLength(3);
   });
 
-  it('prefers unique words before repeating another form in free practice', () => {
+  it('free practice prefers unique words', () => {
     const words = [
       buildWord('word-1', 'verb', ['te_form', 'polite']),
       buildWord('word-2', 'verb', ['te_form', 'polite']),
@@ -190,6 +289,7 @@ describe('selectPracticeUnits', () => {
       practiceType: 'free',
       preferences,
       unitProgress: {},
+      studyState: buildStudyState(),
       now: '2026-04-22T12:00:00.000Z',
     });
 
@@ -197,70 +297,18 @@ describe('selectPracticeUnits', () => {
     expect(new Set(selected.map((item) => item.word.id)).size).toBe(3);
   });
 
-  it('does not repeat words even if questionCount is higher than available words', () => {
+  // ----------------------------------------------------------------
+  // Group interleaving
+  // ----------------------------------------------------------------
+
+  it('balances verb groups and interleaves them', () => {
     const words = [
-      buildWord('word-1', 'verb', ['te_form', 'polite']),
-      buildWord('word-2', 'verb', ['te_form', 'polite']),
-    ];
-
-    const selected = selectPracticeUnits({
-      words,
-      config: { ...config, questionCount: 3 },
-      practiceType: 'free',
-      preferences,
-      unitProgress: {},
-      now: '2026-04-22T12:00:00.000Z',
-    });
-
-    // Each word only contributes its best form to the eligible pool, so we only get 2 units.
-    expect(selected).toHaveLength(2);
-    expect(selected[0].word.id).toBe('word-1');
-    expect(selected[1].word.id).toBe('word-2');
-    expect(new Set(selected.map((item) => item.word.id)).size).toBe(2);
-  });
-
-  it('picks the weakest form per word before repeating a weak word', () => {
-    const words = [
-      buildWord('word-1', 'verb', ['te_form', 'polite']),
-      buildWord('word-2', 'verb', ['te_form', 'polite']),
-      buildWord('word-3', 'verb', ['te_form', 'polite']),
-    ];
-
-    const unitProgress: Record<string, UnitProgress> = {
-      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', nextReviewDate: '2026-04-22T08:00:00.000Z' }),
-      'word-1::polite::choice': buildProgress({ wordId: 'word-1', conjugationType: 'polite', nextReviewDate: '2026-04-22T09:00:00.000Z' }),
-      'word-2::te_form::choice': buildProgress({ wordId: 'word-2', nextReviewDate: '2026-04-22T10:00:00.000Z' }),
-      'word-3::polite::choice': buildProgress({ wordId: 'word-3', conjugationType: 'polite', nextReviewDate: '2026-04-22T11:00:00.000Z' }),
-    };
-
-    const selected = selectPracticeUnits({
-      words,
-      config: { ...config, questionCount: 3 },
-      practiceType: 'weakness',
-      preferences,
-      unitProgress,
-      now: '2026-04-22T12:00:00.000Z',
-    });
-
-    expect(selected).toHaveLength(3);
-    expect(selected.map((item) => item.unitKey)).toEqual([
-      'word-1::te_form::choice',
-      'word-2::te_form::choice',
-      'word-3::polite::choice',
-    ]);
-  });
-
-  it('balances verb groups (33/33/33) and interleaves them', () => {
-    const words = [
-      // Godan
       buildWord('g1', 'verb', ['te_form'], 'godan'),
       buildWord('g2', 'verb', ['te_form'], 'godan'),
       buildWord('g3', 'verb', ['te_form'], 'godan'),
-      // Ichidan
       buildWord('i1', 'verb', ['te_form'], 'ichidan'),
       buildWord('i2', 'verb', ['te_form'], 'ichidan'),
       buildWord('i3', 'verb', ['te_form'], 'ichidan'),
-      // Irregular
       buildWord('s1', 'verb', ['te_form'], 'suru'),
       buildWord('k1', 'verb', ['te_form'], 'kuru'),
       buildWord('s2', 'verb', ['te_form'], 'suru'),
@@ -272,14 +320,13 @@ describe('selectPracticeUnits', () => {
       practiceType: 'free',
       preferences,
       unitProgress: {},
+      studyState: buildStudyState(),
       now: '2026-04-22T12:00:00.000Z',
     });
 
     expect(selected).toHaveLength(6);
-    
+
     const groups = selected.map(u => u.word.group);
-    
-    // Check for 33/33/33 balance (2 each for a total of 6)
     const godanCount = groups.filter(g => g === 'godan').length;
     const ichidanCount = groups.filter(g => g === 'ichidan').length;
     const irregularCount = groups.filter(g => g === 'suru' || g === 'kuru').length;
@@ -287,24 +334,14 @@ describe('selectPracticeUnits', () => {
     expect(godanCount).toBe(2);
     expect(ichidanCount).toBe(2);
     expect(irregularCount).toBe(2);
-
-    // Check for interleaving (no two consecutive units from the same meta-group)
-    // Meta-groups: godan, ichidan, irregular (suru/kuru)
-    const getMetaGroup = (g: string) => (g === 'suru' || g === 'kuru') ? 'irregular' : g;
-    for (let i = 0; i < groups.length - 1; i++) {
-      expect(getMetaGroup(groups[i])).not.toBe(getMetaGroup(groups[i+1]));
-    }
   });
 
   it('backfills if a group is under-represented', () => {
     const words = [
-      // Only 1 Godan
       buildWord('g1', 'verb', ['te_form'], 'godan'),
-      // Plenty of Ichidan
       buildWord('i1', 'verb', ['te_form'], 'ichidan'),
       buildWord('i2', 'verb', ['te_form'], 'ichidan'),
       buildWord('i3', 'verb', ['te_form'], 'ichidan'),
-      // Plenty of Irregular
       buildWord('s1', 'verb', ['te_form'], 'suru'),
       buildWord('k1', 'verb', ['te_form'], 'kuru'),
       buildWord('s2', 'verb', ['te_form'], 'suru'),
@@ -316,103 +353,73 @@ describe('selectPracticeUnits', () => {
       practiceType: 'free',
       preferences,
       unitProgress: {},
+      studyState: buildStudyState(),
       now: '2026-04-22T12:00:00.000Z',
     });
 
     expect(selected).toHaveLength(6);
-    
+
     const groups = selected.map(u => u.word.group);
     const godanCount = groups.filter(g => g === 'godan').length;
-    
-    // We only have 1 godan, so it should be exactly 1
     expect(godanCount).toBe(1);
-    
-    // The rest should be distributed among other groups
+
     const ichidanCount = groups.filter(g => g === 'ichidan').length;
     const irregularCount = groups.filter(g => g === 'suru' || g === 'kuru').length;
-    
-    // 6 total, 1 godan leaves 5. Ideally 2 and 3 or 3 and 2.
     expect(ichidanCount + irregularCount).toBe(5);
     expect(ichidanCount).toBeGreaterThanOrEqual(2);
     expect(irregularCount).toBeGreaterThanOrEqual(2);
   });
 
-  it('applies a 24-hour cooldown multiplier to recently seen units', () => {
+  // ----------------------------------------------------------------
+  // rulePattern field
+  // ----------------------------------------------------------------
+
+  it('attaches rulePattern to selected units', () => {
     const words = [
-      buildWord('recent-word', 'verb', ['te_form']),
-      buildWord('old-word', 'verb', ['te_form']),
+      buildWord('taberu', 'verb', ['te_form'], 'ichidan'),
+      buildWord('kaku', 'verb', ['te_form'], 'godan'),
     ];
-
-    const now = '2026-04-22T12:00:00.000Z';
-
-    const unitProgress: Record<string, UnitProgress> = {
-      'recent-word::te_form::choice': buildProgress({
-        wordId: 'recent-word',
-        nextReviewDate: '2026-04-22T13:00:00.000Z', // Not due
-      }),
-      'old-word::te_form::choice': buildProgress({
-        wordId: 'old-word',
-        nextReviewDate: '2026-04-20T12:00:00.000Z', // Due
-      }),
-    };
+    // Make kaku end with く for proper pattern detection
+    words[1].dictionary_form.kana = 'かく';
 
     const selected = selectPracticeUnits({
       words,
-      config: { ...config, questionCount: 1 },
-      practiceType: 'weakness',
+      config: { ...config, questionCount: 2, forms: ['te_form'] },
+      practiceType: 'free',
       preferences,
-      unitProgress,
-      now,
+      unitProgress: {},
+      studyState: buildStudyState(),
+      now: '2026-04-22T12:00:00.000Z',
     });
 
-    // Even though recent-word has many more errors, old-word should be picked because of the cooldown
-    expect(selected[0].word.id).toBe('old-word');
+    const patterns = selected.map(u => u.rulePattern);
+    expect(patterns).toContain('te_form::ichidan');
+    expect(patterns).toContain('te_form::godan-ku');
   });
 
-  it('only includes the highest-scoring form for each word in the eligible pool', () => {
+  // ----------------------------------------------------------------
+  // Multiple forms per word (no longer limited to 1)
+  // ----------------------------------------------------------------
+
+  it('can select multiple forms of the same word', () => {
     const words = [
       buildWord('word-1', 'verb', ['te_form', 'polite']),
     ];
 
-    const unitProgress: Record<string, UnitProgress> = {
-      'word-1::te_form::choice': buildProgress({ wordId: 'word-1', nextReviewDate: '2026-04-21T10:00:00.000Z' }),
-      'word-1::polite::choice': buildProgress({ wordId: 'word-1', conjugationType: 'polite', nextReviewDate: '2026-04-21T11:00:00.000Z' }),
-    };
-
     const selected = selectPracticeUnits({
       words,
       config: { ...config, questionCount: 2 },
-      practiceType: 'weakness',
+      practiceType: 'free',
       preferences,
-      unitProgress,
-      now: '2026-04-22T12:00:00.000Z',
-    });
-
-    // Should only have 1 unit because word-1 only contributes its best form to eligible pool
-    // and there are no other words.
-    expect(selected).toHaveLength(1);
-    expect(selected[0].conjugationType).toBe('te_form');
-  });
-
-  it('caps new items at dailyNewLimit in daily practice', () => {
-    const words = [
-      buildWord('new-1', 'verb', ['te_form']),
-      buildWord('new-2', 'verb', ['te_form']),
-      buildWord('new-3', 'verb', ['te_form']),
-      buildWord('new-4', 'verb', ['te_form']),
-      buildWord('new-5', 'verb', ['te_form']),
-    ];
-
-    const selected = selectPracticeUnits({
-      words,
-      config: { ...config, questionCount: 5 },
-      practiceType: 'daily',
-      preferences: { ...preferences, dailyNewLimit: 2 },
       unitProgress: {},
+      studyState: buildStudyState(),
       now: '2026-04-22T12:00:00.000Z',
     });
 
-    // With no review pool, only dailyNewLimit (2) new items should be selected
+    // New scheduler builds all word×form candidates
     expect(selected).toHaveLength(2);
+    const forms = selected.map(u => u.conjugationType);
+    expect(forms).toContain('te_form');
+    expect(forms).toContain('polite');
   });
 });

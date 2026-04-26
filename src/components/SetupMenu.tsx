@@ -10,9 +10,16 @@ const LEVELS = ['N5', 'N4', 'N3'] as const;
 const QUESTION_COUNTS = [10, 20, 30];
 
 export default function SetupMenu() {
-  const { config, updateConfig, updateDailyGoal, language, studyState } = useStore();
+  const { updateDailyGoal, language, studyState, updateDailyConfig, updateFreeConfig } = useStore();
   const { t } = useTranslation(language);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [activeTab, setActiveTab] = useState<'daily' | 'free'>('daily');
+
+  const isDaily = activeTab === 'daily';
+  const currentConfig = isDaily 
+    ? studyState.preferences.dailySessionConfig 
+    : studyState.preferences.freeSessionConfig;
+  const updateCurrentConfig = isDaily ? updateDailyConfig : updateFreeConfig;
 
   const dict = translations[language];
 
@@ -56,28 +63,28 @@ export default function SetupMenu() {
 
   const availableForms = useMemo(() => {
     const nextAvailable = new Set<ConjugationType>();
-    for (const wordType of config.wordTypes) {
+    for (const wordType of currentConfig.wordTypes) {
       for (const form of CONJS_FOR_WORD_TYPE[wordType]) {
         nextAvailable.add(form);
       }
     }
     return nextAvailable;
-  }, [config.wordTypes]);
+  }, [currentConfig.wordTypes]);
 
   const toggleLevel = (level: (typeof LEVELS)[number]) => {
-    const nextLevels = config.levels.includes(level)
-      ? config.levels.filter((item) => item !== level)
-      : [...config.levels, level];
+    const nextLevels = currentConfig.levels.includes(level)
+      ? currentConfig.levels.filter((item) => item !== level)
+      : [...currentConfig.levels, level];
 
     if (nextLevels.length > 0) {
-      updateConfig({ levels: nextLevels });
+      updateCurrentConfig({ levels: nextLevels });
     }
   };
 
   const toggleWordType = (wordType: WordType) => {
-    const nextWordTypes = config.wordTypes.includes(wordType)
-      ? config.wordTypes.filter((item) => item !== wordType)
-      : [...config.wordTypes, wordType];
+    const nextWordTypes = currentConfig.wordTypes.includes(wordType)
+      ? currentConfig.wordTypes.filter((item) => item !== wordType)
+      : [...currentConfig.wordTypes, wordType];
 
     if (nextWordTypes.length === 0) {
       return;
@@ -90,8 +97,8 @@ export default function SetupMenu() {
       }
     }
 
-    const nextForms = config.forms.filter((form) => nextAvailableForms.has(form));
-    updateConfig({
+    const nextForms = currentConfig.forms.filter((form) => nextAvailableForms.has(form));
+    updateCurrentConfig({
       wordTypes: nextWordTypes,
       forms: nextForms.length > 0 ? nextForms : ['polite'],
     });
@@ -102,23 +109,23 @@ export default function SetupMenu() {
       return;
     }
 
-    const nextForms = config.forms.includes(form)
-      ? config.forms.filter((item) => item !== form)
-      : [...config.forms, form];
+    const nextForms = currentConfig.forms.includes(form)
+      ? currentConfig.forms.filter((item) => item !== form)
+      : [...currentConfig.forms, form];
 
     if (nextForms.length > 0) {
-      updateConfig({ forms: nextForms });
+      updateCurrentConfig({ forms: nextForms });
     }
   };
 
   const selectAllForms = () => {
     const allAvailable = Array.from(availableForms);
-    if (allAvailable.length > 0) updateConfig({ forms: allAvailable });
+    if (allAvailable.length > 0) updateCurrentConfig({ forms: allAvailable });
   };
 
   const clearAllForms = () => {
     // Keep at least polite form
-    updateConfig({ forms: ['polite'] });
+    updateCurrentConfig({ forms: ['polite'] });
   };
 
   return (
@@ -153,12 +160,35 @@ export default function SetupMenu() {
 
       {isExpanded && (
         <div className="mt-8 space-y-8 border-t-[3px] border-dashed border-[color:var(--border-strong)] pt-8">
+          <div className="flex w-full gap-2 rounded-xl bg-[color:var(--surface-soft)] p-1.5 border-[2px] border-[color:var(--border)]">
+            <button
+              onClick={() => setActiveTab('daily')}
+              className={`flex-1 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
+                isDaily 
+                  ? 'bg-white text-[color:var(--ink)] shadow-sm border-2 border-[color:var(--ink)]' 
+                  : 'text-[color:var(--muted)] hover:text-[color:var(--ink)] border-2 border-transparent'
+              }`}
+            >
+              {t('dailyPractice')}
+            </button>
+            <button
+              onClick={() => setActiveTab('free')}
+              className={`flex-1 rounded-lg px-4 py-2 text-sm font-bold transition-all ${
+                !isDaily 
+                  ? 'bg-white text-[color:var(--ink)] shadow-sm border-2 border-[color:var(--ink)]' 
+                  : 'text-[color:var(--muted)] hover:text-[color:var(--ink)] border-2 border-transparent'
+              }`}
+            >
+              {t('freePractice')}
+            </button>
+          </div>
+
           <ConfigSection title={t('levels')}>
             <ChipRow>
               {LEVELS.map((level) => (
                 <ToggleChip
                   key={level}
-                  active={config.levels.includes(level)}
+                  active={currentConfig.levels.includes(level)}
                   onClick={() => toggleLevel(level)}
                   label={level}
                 />
@@ -171,7 +201,7 @@ export default function SetupMenu() {
               {(['verb', 'i-adj', 'na-adj'] as const).map((wordType) => (
                 <ToggleChip
                   key={wordType}
-                  active={config.wordTypes.includes(wordType)}
+                  active={currentConfig.wordTypes.includes(wordType)}
                   onClick={() => toggleWordType(wordType)}
                   label={wordTypeLabels[wordType]}
                 />
@@ -194,8 +224,8 @@ export default function SetupMenu() {
               {(Object.keys(verbFormLabels) as ConjugationType[]).map((form) => {
                 if (!availableForms.has(form)) return null;
 
-                const hasVerb = config.wordTypes.includes('verb');
-                const hasAdj = config.wordTypes.includes('i-adj') || config.wordTypes.includes('na-adj');
+                const hasVerb = currentConfig.wordTypes.includes('verb');
+                const hasAdj = currentConfig.wordTypes.includes('i-adj') || currentConfig.wordTypes.includes('na-adj');
                 
                 let label = verbFormLabels[form];
                 if (hasVerb && hasAdj) {
@@ -210,7 +240,7 @@ export default function SetupMenu() {
                 return (
                   <ToggleChip
                     key={form}
-                    active={config.forms.includes(form)}
+                    active={currentConfig.forms.includes(form)}
                     onClick={() => toggleForm(form)}
                     label={label}
                     tag={VERB_ONLY_CONJS.includes(form) ? 'V' : undefined}
@@ -226,21 +256,24 @@ export default function SetupMenu() {
                 {(['choice', 'input'] as const).map((mode) => (
                   <ToggleChip
                     key={mode}
-                    active={config.mode === mode}
-                    onClick={() => updateConfig({ mode })}
+                    active={currentConfig.mode === mode}
+                    onClick={() => updateCurrentConfig({ mode })}
                     label={mode === 'choice' ? t('multipleChoice') : t('typing')}
                   />
                 ))}
               </ChipRow>
             </ConfigSection>
 
-            <ConfigSection title={t('dailyGoal')}>
+            <ConfigSection title={isDaily ? t('dailyGoal') : t('questionCount')}>
               <ChipRow>
                 {QUESTION_COUNTS.map((count) => (
                   <ToggleChip
                     key={count}
-                    active={studyState.preferences.dailyQuestionGoal === count}
-                    onClick={() => updateDailyGoal(count)}
+                    active={isDaily ? studyState.preferences.dailyQuestionGoal === count : currentConfig.questionCount === count}
+                    onClick={() => {
+                      if (isDaily) updateDailyGoal(count);
+                      else updateCurrentConfig({ questionCount: count });
+                    }}
                     label={count.toString()}
                   />
                 ))}

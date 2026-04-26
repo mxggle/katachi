@@ -10,13 +10,28 @@ describe('homepage entry layout', () => {
     expect(pageSource).toContain("t('todayPractice')");
     expect(pageSource).toContain("t('todayPracticeDescription')");
     expect(pageSource).toContain("t('startTodayPractice')");
-    expect(pageSource).toContain("t('wrongReview')");
-    expect(pageSource).toContain("t('unstableItems')");
-    expect(pageSource).toContain("t('dueReview')");
-    expect(pageSource).toContain("t('newQuestions')");
     expect(pageSource).toContain("t('weaknessConsolidation')");
     expect(pageSource).toContain("t('freePractice')");
     expect(pageSource).toContain("t('streak')");
+  });
+
+  it('keeps the daily start area focused by omitting secondary daily hints', () => {
+    expect(pageSource).not.toContain("t('todayPracticeReady')");
+    expect(pageSource).not.toContain("t('todayPracticeRemaining')");
+    expect(pageSource).not.toContain("t('todayPracticeStartWith')");
+    expect(pageSource).not.toContain('remainingToday');
+    expect(pageSource).not.toContain('dailyFocusLabel');
+  });
+
+  it('does not expose diagnostic labels or raw scheduler keys on the homepage', () => {
+    expect(pageSource).not.toContain("t('weakestForm')");
+    expect(pageSource).not.toContain("t('weakestPattern')");
+    expect(pageSource).not.toContain("t('undiagnosed')");
+    expect(pageSource).not.toContain("t('recommendExplore')");
+    expect(pageSource).not.toContain("t('recommendFocus')");
+    expect(pageSource).not.toContain('weakestPattern.pattern');
+    expect(pageSource).not.toContain('return focus;');
+    expect(pageSource).not.toContain('return targetLabel;');
   });
 
   it('uses semantic icon components instead of placeholder glyphs on learning actions', () => {

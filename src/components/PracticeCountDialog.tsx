@@ -13,6 +13,7 @@ interface PracticeCountDialogProps {
   onConfirm: (count: number) => void;
   language: Language;
   title?: string;
+  defaultCount?: number;
 }
 
 export default function PracticeCountDialog({
@@ -20,9 +21,18 @@ export default function PracticeCountDialog({
   onClose,
   onConfirm,
   language,
+  defaultCount = 10,
 }: PracticeCountDialogProps) {
   const { t } = useTranslation(language);
-  const [selected, setSelected] = useState(10);
+  const [selected, setSelected] = useState(defaultCount);
+  const [prevOpen, setPrevOpen] = useState(open);
+
+  if (open !== prevOpen) {
+    setPrevOpen(open);
+    if (open) {
+      setSelected(defaultCount);
+    }
+  }
 
   if (!open) return null;
 
