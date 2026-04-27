@@ -580,7 +580,6 @@ export default function PracticeSession() {
                                     <form onSubmit={handleInputSubmit} className="relative animate-fade-in stagger-6">
                                         <input
                                             ref={(node) => {
-                                                // @ts-expect-error wanakana.bind requires mutable ref
                                                 inputRef.current = node;
                                                 if (node) {
                                                     wanakana.bind(node, { IMEMode: true });
