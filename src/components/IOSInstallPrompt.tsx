@@ -69,21 +69,21 @@ export default function IOSInstallPrompt() {
   return (
     <div className="fixed top-4 left-4 right-4 z-[100] animate-banner-enter">
       <div className="bg-white border-[3px] border-[color:var(--ink)] rounded-2xl shadow-[0_12px_24px_rgba(0,0,0,0.15),8px_8px_0px_0px_var(--ink)] p-4 flex items-center gap-4">
-        <div className="bg-zinc-100 dark:bg-zinc-800 p-2 rounded-xl">
+        <div className="bg-zinc-100 p-2 rounded-xl">
           <Logo size={32} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 leading-tight">
+          <p className="text-sm font-medium text-zinc-900 leading-tight">
             {t('pwaInstallPrompt')}
           </p>
-          <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-1 uppercase tracking-wider font-semibold">
+          <p className="text-[10px] text-zinc-500 mt-1 uppercase tracking-wider font-semibold">
             {t('pwaInstallInstructions')}
           </p>
         </div>
         <div className="flex flex-col gap-1">
           <button
             onClick={handleDismiss}
-            className="px-3 py-1.5 text-xs font-bold text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+            className="px-3 py-1.5 text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
           >
             {t('dismiss')}
           </button>
