@@ -80,7 +80,7 @@ export interface LandingCopy {
   };
 }
 
-export type LandingLanguage = 'en' | 'zh' | 'vi' | 'ne' | 'my';
+export type LandingLanguage = 'en' | 'zh' | 'vi' | 'ne' | 'my' | 'ko';
 
 export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   en: {
@@ -626,6 +626,115 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     footer: {
       copyright: '© ၂၀၂၆ Katachi. ဂျပန်စာလေ့လာသူတစ်ဦးမှ ဖန်တီးထားပါသည်။',
       practiceLink: 'လေ့ကျင့်ရေး အက်ပ်',
+    },
+  },
+  ko: {
+    meta: {
+      title: 'Katachi — 일본어 변형 마스터 | 매일 연습으로 JLPT N5 & N4 정복',
+      description: '일본어 학습자를 위한 집중 변형 연습 도구. 동사와 형용사 변형을 스마트 오답 추출과 약점 분석으로 효과적으로 학습하세요. JLPT N5 & N4 문법 형태를 전부 다룹니다.',
+    },
+    hero: {
+      eyebrow: '변형 연구소',
+      h1: '일본어 변형을 근육 기억으로 만들어보세요.',
+      subtitle: 'Katachi는 하나의 기술에 집중합니다: 짧은 연습, 스마트 오답, 목표 지향적 반복을 통해 일본어 동사와 형용사 변형을 빠르고 정확하게 만듭니다.',
+      cta: '연습 시작하기',
+      ctaLink: '/',
+      proof: ['무료 연습', '회원가입 불필요', 'JLPT N5-N3 패턴'],
+    },
+    drillPanel: {
+      label: '라이브 연습 미리보기',
+      promptLabel: '사전형',
+      prompt: '泳ぐ',
+      targetLabel: 'て형 만들기',
+      target: '다음 중 문장을 올바르게 연결하는 답은?',
+      choices: ['泳いで', '泳って', '泳んで'],
+      helper: '오답은 실제 학습자가 자주 하는 실수와 유사하게 설계되어, 매 학습이 진정한 반복 훈련이 되도록 합니다.',
+      stats: [
+        { value: '12', label: '문제' },
+        { value: '4', label: '혼합 형태' },
+        { value: '1', label: '약점 발견' },
+      ],
+    },
+    trainingStats: [
+      { value: 'N5-N3', label: '커버 레벨' },
+      { value: '2', label: '연습 모드' },
+      { value: '0', label: '설정 필요' },
+    ],
+    sectionLabels: {
+      problem: '왜 중요한가',
+      modes: '연습 설정',
+    },
+    problem: {
+      heading: '변형에 집중 연습이 필요한 이유',
+      body1: '많은 학습자가 변형 규칙을 개별적으로는 이해하지만, 문장에서 과거형, 부정형, て형, 가능형, 수동형, 사역형, 조건형을 올바르게 사용해야 할 때 머뭇거립니다.',
+      body2: '교과서는 규칙을 설명합니다. 플래시카드는 답을 보여줍니다. Katachi는 변형을 자동으로 만들기 위한 집중적인 반복 훈련을 제공합니다.',
+    },
+    features: {
+      heading: '설정 불필요. 방해 요소 없음. 오직 연습.',
+      items: [
+        {
+          title: '즉시 시작',
+          description: '레벨(N5, N4, N3)을 선택하고, 동사나 형용사 유형을 고른 후 시작하세요. 나머지는 시스템이 처리합니다.',
+        },
+        {
+          title: '스마트 약점 감지',
+          description: 'て형이 어려우신가요? 시스템이 이를 감지하고 더 많은 て형 연습을 제공합니다. 약점을 스스로 추적할 필요가 없습니다 — Katachi가 해드립니다.',
+        },
+        {
+          title: '이중 연습 모드',
+          description: '객관식은 빠른 인식용, 입력 모드는 능동적 회상용입니다. 언제든지 전환하세요.',
+        },
+        {
+          title: '연속 기록',
+          description: '실제로 유지할 수 있는 짧고 집중된 세션. 강도보다 꾸준함이 중요합니다.',
+        },
+      ],
+    },
+    modes: {
+      heading: '세 가지 연습 방법',
+      intro: '준비된 세션을 선택하거나, 약점을 집중적으로 공략하거나, 특정 문법 포인트를 완전히 자유롭게 연습할 수 있습니다.',
+      items: [
+        {
+          modeIndex: '01',
+          title: '일일 연습',
+          description: '매일 자동으로 생성되는 맞춤 세션. 앱을 열고 바로 시작하세요 — 아무 결정도 필요 없습니다.',
+        },
+        {
+          modeIndex: '02',
+          title: '약점 훈련',
+          description: 'Katachi가 실수를 분석하여 가장 약한 변형을 집중 공략하는 세션을 만듭니다. て형이 어렵다면? 익힐 때까지 더 많은 て형을 제공합니다.',
+        },
+        {
+          modeIndex: '03',
+          title: '자유 연습',
+          description: '완전한 자유도. 레벨, 품사, 변형 형태의 모든 조합을 선택할 수 있습니다. 시험 전 특정 문법 포인트를 집중 연습하기에 완벽합니다.',
+        },
+      ],
+    },
+    coverage: {
+      heading: 'N5 & N4에 필요한 모든 변형',
+      verbs: {
+        label: '동사',
+        list: 'ます형, ない형, た형/ました형, て형, 가능형, 수동형, 사역형, 명령형, 의지형, 조건형(ば/たら)',
+      },
+      adjectives: {
+        label: '형용사',
+        list: 'い형용사와 な형용사의 정중형, 부정형, 과거형, 조건형',
+      },
+    },
+    whyN3: {
+      heading: '왜 N3까지만인가요?',
+      body1: 'Katachi는 N5부터 N3까지 다룹니다. 하지만 N2와 N1이 중요하지 않다는 뜻이 아닙니다. 오히려 그 반대입니다 — 기본 변형 패턴을 근육 기억으로 만든 후에는 고급 어휘도 같은 규칙을 가진 다른 어간일 뿐입니다.',
+      body2: '이 앱은 단어 암기 앱이 아닙니다. 변형 연습 도구입니다. 변형을 마스터하기 위해 만 개의 단어를 외울 필요가 없습니다. 단어에 상관없이 패턴이 자동으로 나올 때까지 반복 훈련하면 됩니다.',
+    },
+    finalCta: {
+      heading: '일본어 변형을 근육 기억으로 만들 준비가 되셨나요?',
+      subtitle: '매일 일본어 문법을 연습하는 수천 명의 학습자와 함께하세요. 무료입니다. 회원가입이 필요 없습니다.',
+      cta: '지금 바로 연습 시작',
+    },
+    footer: {
+      copyright: '© 2026 Katachi. 일본어 학습자가 일본어 학습자를 위해 만들었습니다.',
+      practiceLink: '연습 앱',
     },
   },
 };
