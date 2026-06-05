@@ -6,8 +6,8 @@ Katachi is a modern, localized web application designed for mastering Japanese c
 
 - **Purpose:** Help Japanese learners practice and master verb and adjective conjugations through active recall and recognition.
 - **Main Technologies:**
-    - **Frontend:** Next.js 15 (App Router), React 19.
-    - **Styling:** Tailwind CSS 4, CSS Modules.
+    - **Frontend:** Next.js 16 (App Router), React 19.
+    - **Styling:** Tailwind CSS 4.
     - **State Management:** Zustand with persistence to `localStorage`.
     - **Authentication & Backend:** Supabase (Auth & Database for progress syncing).
     - **Utilities:** WanaKana (Romaji-to-Hiragana), Serwist (PWA support).
