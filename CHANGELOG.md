@@ -5,6 +5,15 @@ All notable changes to Katachi will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-06-06
+
+### Fixed
+
+- Improved mobile route transitions by removing the pathname-keyed app template that forced page subtree remounts on navigation.
+- Reduced expensive mobile repaint work by removing full-page blur transitions, lowering decorative background cost, and stopping the homepage card's infinite pulse animation.
+- Cached localized dictionary loading and memoized progress-page derived statistics to reduce repeated work when navigating between pages.
+- Narrowed several Zustand subscriptions to avoid unnecessary large component rerenders.
+
 ## [0.2.0] - 2026-06-05
 
 ### Fixed
