@@ -18,4 +18,10 @@ describe('progress page', () => {
     expect(pageSource.indexOf('<OverviewPanel')).toBeGreaterThan(-1);
     expect(pageSource.indexOf('<WeaknessPanels')).toBeLessThan(pageSource.indexOf('<OverviewPanel'));
   });
+
+  it('starts drills before returning home so the practice view is ready on arrival', () => {
+    expect(pageSource.indexOf('startSession(result.words, nextConfig, nextConfig.practiceType);')).toBeLessThan(
+      pageSource.indexOf("router.push('/');")
+    );
+  });
 });

@@ -34,6 +34,12 @@ describe('practice session completion flow', () => {
     expect(practiceSessionSource).toContain("t('tomorrowPreview')");
   });
 
+  it('keeps progress navigation from briefly rendering the home page first', () => {
+    expect(practiceSessionSource).toContain('shouldEndSessionOnUnmountRef');
+    expect(practiceSessionSource).toContain("router.push('/progress')");
+    expect(practiceSessionSource).not.toContain("const handleViewProgress = () => {\n        handleEndSession();\n        router.push('/progress');\n    };");
+  });
+
   it('shows each weak session item once when retries duplicated it', () => {
     const weakItem = {
       unitKey: 'kaiko::negative_plain::choice',

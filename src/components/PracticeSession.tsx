@@ -60,6 +60,7 @@ export default function PracticeSession() {
     const [justWrong, setJustWrong] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
+    const shouldEndSessionOnUnmountRef = useRef(false);
 
     const currentIdx = activeSession?.currentIndex ?? 0;
     const totalWords = activeSession?.words.length ?? 0;
@@ -98,6 +99,14 @@ export default function PracticeSession() {
             audioControllerRef.current?.stop();
         };
     }, []);
+
+    useEffect(() => {
+        return () => {
+            if (shouldEndSessionOnUnmountRef.current) {
+                endSession();
+            }
+        };
+    }, [endSession]);
 
     useEffect(() => {
         if (config.mode === 'input' && !showFeedback && inputRef.current) {
@@ -252,7 +261,8 @@ export default function PracticeSession() {
     };
 
     const handleViewProgress = () => {
-        handleEndSession();
+        audioControllerRef.current?.stop();
+        shouldEndSessionOnUnmountRef.current = true;
         router.push('/progress');
     };
 
