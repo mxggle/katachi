@@ -19,6 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const headersList = await headers();
   const acceptLang = headersList.get('accept-language') || '';
   const lang: Language = acceptLang.includes('zh') ? 'zh' : 
+                         acceptLang.includes('ko') ? 'ko' : 
                          acceptLang.includes('vi') ? 'vi' : 
                          acceptLang.includes('ne') ? 'ne' : 
                          acceptLang.includes('my') ? 'my' : 'en';
@@ -50,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t.metaDescription,
       url: '/',
       type: 'website',
-      locale: lang === 'zh' ? 'zh_CN' : lang === 'vi' ? 'vi_VN' : lang === 'ne' ? 'ne_NP' : lang === 'my' ? 'my_MM' : 'en_US',
+      locale: lang === 'zh' ? 'zh_CN' : lang === 'ko' ? 'ko_KR' : lang === 'vi' ? 'vi_VN' : lang === 'ne' ? 'ne_NP' : lang === 'my' ? 'my_MM' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
