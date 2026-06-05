@@ -40,7 +40,13 @@ export default function Home() {
 }
 
 function HomeContent() {
-  const { activeSession, dailyStreak, startSession, updateDailyConfig, updateFreeConfig, language, studyState } = useStore();
+  const activeSession = useStore((state) => state.activeSession);
+  const dailyStreak = useStore((state) => state.dailyStreak);
+  const startSession = useStore((state) => state.startSession);
+  const updateDailyConfig = useStore((state) => state.updateDailyConfig);
+  const updateFreeConfig = useStore((state) => state.updateFreeConfig);
+  const language = useStore((state) => state.language);
+  const studyState = useStore((state) => state.studyState);
   const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -54,12 +60,13 @@ function HomeContent() {
         ? t('authUnavailable')
         : null;
 
-  const dictionaryData = useMemo(() => ({ words: loadDictionary(language ?? 'en') }), [language]);
+  const dailySessionConfig = studyState.preferences.dailySessionConfig;
+  const dictionaryWords = useMemo(() => loadDictionary(language ?? 'en'), [language]);
   const availableWords = useMemo(
     () =>
-      dictionaryData.words.filter(
+      dictionaryWords.filter(
         (word) => {
-          const config = studyState.preferences?.dailySessionConfig;
+          const config = dailySessionConfig;
           if (!config) return false;
           return (
             (config.levels || []).includes(word.level as 'N5' | 'N4' | 'N3') && 
@@ -67,13 +74,13 @@ function HomeContent() {
           );
         }
       ),
-    [dictionaryData, studyState.preferences?.dailySessionConfig]
+    [dictionaryWords, dailySessionConfig]
   );
 
   const today = useMemo(() => getLocalDateString(), []);
   const dashboard = useMemo(
-    () => getDiagnosticDashboard(studyState, availableWords, studyState.preferences?.dailySessionConfig, today),
-    [studyState, availableWords, today]
+    () => getDiagnosticDashboard(studyState, availableWords, dailySessionConfig, today),
+    [studyState, availableWords, dailySessionConfig, today]
   );
 
   const progressPercent = dashboard.dailyGoal > 0

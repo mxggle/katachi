@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ModeBreakdownPanel } from '@/components/progress/ModeBreakdownPanel';
 import { OverviewPanel } from '@/components/progress/OverviewPanel';
 import { RecentActivityPanel } from '@/components/progress/RecentActivityPanel';
@@ -26,21 +26,25 @@ import {
 export default function ProgressPage() {
   const router = useRouter();
   const { user, isLoading } = useAuth();
-  const { config, language, startSession, studyState, updateConfig } = useStore();
+  const config = useStore((state) => state.config);
+  const language = useStore((state) => state.language);
+  const startSession = useStore((state) => state.startSession);
+  const studyState = useStore((state) => state.studyState);
+  const updateConfig = useStore((state) => state.updateConfig);
   const { t } = useTranslation(language);
   const [error, setError] = useState<string | null>(null);
-  const today = getLocalDateString();
-  const overview = getOverviewStats(studyState, today);
-  const weakestConjugations = getWeakestConjugations(studyState, 4);
-  const weakestItems = getWeakestItems(studyState, 4);
-  const modeBreakdown = getModeBreakdown(studyState);
-  const wordLabels = Object.fromEntries(
-    loadDictionary(language).map((word) => [word.id, getWordDisplayText(word)])
+  const today = useMemo(() => getLocalDateString(), []);
+  const overview = useMemo(() => getOverviewStats(studyState, today), [studyState, today]);
+  const weakestConjugations = useMemo(() => getWeakestConjugations(studyState, 4), [studyState]);
+  const weakestItems = useMemo(() => getWeakestItems(studyState, 4), [studyState]);
+  const modeBreakdown = useMemo(() => getModeBreakdown(studyState), [studyState]);
+  const wordLabels = useMemo(
+    () => Object.fromEntries(loadDictionary(language).map((word) => [word.id, getWordDisplayText(word)])),
+    [language]
   );
-  const recentActivity = getRecentActivity(
-    studyState,
-    7,
-    today
+  const recentActivity = useMemo(
+    () => getRecentActivity(studyState, 7, today),
+    [studyState, today]
   );
   const focusItem = weakestItems[0];
   const focusConjugation = weakestConjugations[0];
