@@ -84,6 +84,11 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png?v=20260425" />
         <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20260425" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem("splash-shown")){document.documentElement.dataset.splashShown = "true";}}catch{}`,
+          }}
+        />
       </head>
       <body className={`${font.variable} antialiased`}>
         <SplashScreen />

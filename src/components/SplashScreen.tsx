@@ -4,44 +4,57 @@ import { useEffect, useState } from "react";
 import Logo from "@/components/Logo";
 
 export default function SplashScreen() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isRendered, setIsRendered] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isRendered, setIsRendered] = useState(true);
 
   useEffect(() => {
-    const hasShown = sessionStorage.getItem("splash-shown");
+    let hasShown = false;
+    try {
+      hasShown = sessionStorage.getItem("splash-shown") === "true";
+    } catch {
+      hasShown = false;
+    }
 
-    if (!hasShown) {
-      let removeTimer: ReturnType<typeof setTimeout> | undefined;
-      const renderTimer = setTimeout(() => {
-        setIsRendered(true);
-      }, 0);
-      const entryTimer = setTimeout(() => {
-        setIsVisible(true);
-      }, 50);
-      const exitTimer = setTimeout(() => {
+    if (hasShown) {
+      const hideTimer = setTimeout(() => {
         setIsVisible(false);
-        removeTimer = setTimeout(() => {
-          setIsRendered(false);
-          sessionStorage.setItem("splash-shown", "true");
-        }, 500);
-      }, 2000);
+        setIsRendered(false);
+      }, 0);
 
       return () => {
-        clearTimeout(renderTimer);
-        clearTimeout(entryTimer);
-        clearTimeout(exitTimer);
-        if (removeTimer) {
-          clearTimeout(removeTimer);
-        }
+        clearTimeout(hideTimer);
       };
     }
+
+    document.documentElement.dataset.splashShown = "false";
+
+    let removeTimer: ReturnType<typeof setTimeout> | undefined;
+    const exitTimer = setTimeout(() => {
+      setIsVisible(false);
+      removeTimer = setTimeout(() => {
+        setIsRendered(false);
+        try {
+          sessionStorage.setItem("splash-shown", "true");
+        } catch {
+          // Storage can be unavailable in restricted browser modes.
+        }
+        document.documentElement.dataset.splashShown = "true";
+      }, 500);
+    }, 2000);
+
+    return () => {
+      clearTimeout(exitTimer);
+      if (removeTimer) {
+        clearTimeout(removeTimer);
+      }
+    };
   }, []);
 
   if (!isRendered) return null;
 
   return (
     <div 
-      className={`fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#f4f4ea] transition-opacity duration-500 ease-in-out ${
+      className={`splash-screen fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#f4f4ea] transition-opacity duration-500 ease-in-out ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >

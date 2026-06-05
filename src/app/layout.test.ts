@@ -8,6 +8,16 @@ describe('root layout hydration guards', () => {
   it('suppresses hydration warnings on the root html element for extension-mutated attributes', () => {
     expect(layoutSource).toContain('<html lang="en" suppressHydrationWarning>');
   });
+
+  it('checks splash session state before the body can paint repeat visits', () => {
+    const headSource = layoutSource.slice(
+      layoutSource.indexOf('<head>'),
+      layoutSource.indexOf('<body'),
+    );
+
+    expect(headSource).toContain('sessionStorage.getItem("splash-shown")');
+    expect(headSource).toContain('document.documentElement.dataset.splashShown = "true"');
+  });
 });
 
 describe('root layout app icons', () => {
