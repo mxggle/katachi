@@ -321,29 +321,6 @@
       }
     },
     {
-      "id": "na_otona",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "大人",
-        "kana": "おとな",
-        "romaji": "otona"
-      },
-      "conjugations": {
-        "polite": "おとなです",
-        "negative_plain": "おとなじゃない",
-        "negative_polite": "おとなじゃありません",
-        "past_plain": "おとなだった",
-        "past_polite": "おとなでした",
-        "past_negative_plain": "おとなじゃなかった",
-        "past_negative_polite": "おとなじゃありませんでした",
-        "te_form": "おとなで",
-        "conditional_ba": "おとなであれば",
-        "conditional_tara": "おとなだったら"
-      }
-    },
-    {
       "id": "v_sakubunsuru",
       "level": "N5",
       "group": "suru",
@@ -399,29 +376,6 @@
         "volitional": "せんたくしよう",
         "conditional_ba": "せんたくすれば",
         "conditional_tara": "せんたくしたら"
-      }
-    },
-    {
-      "id": "na_kiiro",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "黄色",
-        "kana": "きいろ",
-        "romaji": "kiiro"
-      },
-      "conjugations": {
-        "polite": "きいろです",
-        "negative_plain": "きいろじゃない",
-        "negative_polite": "きいろじゃありません",
-        "past_plain": "きいろだった",
-        "past_polite": "きいろでした",
-        "past_negative_plain": "きいろじゃなかった",
-        "past_negative_polite": "きいろじゃありませんでした",
-        "te_form": "きいろで",
-        "conditional_ba": "きいろであれば",
-        "conditional_tara": "きいろだったら"
       }
     },
     {
@@ -553,12 +507,6 @@
         "past_negative_plain": "なかった",
         "past_negative_polite": "ありませんでした",
         "te_form": "あって",
-        "potential": "あれる",
-        "passive": "あられる",
-        "causative": "あらせる",
-        "causative_passive": "あらせられる",
-        "imperative": "あれ",
-        "volitional": "あろう",
         "conditional_ba": "あれば",
         "conditional_tara": "あったら"
       }
@@ -611,12 +559,6 @@
         "past_negative_plain": "できなかった",
         "past_negative_polite": "できませんでした",
         "te_form": "できて",
-        "potential": "できられる",
-        "passive": "できられる",
-        "causative": "できさせる",
-        "causative_passive": "できさせられる",
-        "imperative": "できろ",
-        "volitional": "できよう",
         "conditional_ba": "できれば",
         "conditional_tara": "できたら"
       }
@@ -696,8 +638,6 @@
         "passive": "しられる",
         "causative": "しらせる",
         "causative_passive": "しらせられる",
-        "imperative": "しれ",
-        "volitional": "しろう",
         "conditional_ba": "しれば",
         "conditional_tara": "しったら"
       }
@@ -1195,29 +1135,6 @@
       }
     },
     {
-      "id": "na_amari",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "余り",
-        "kana": "あまり",
-        "romaji": "amari"
-      },
-      "conjugations": {
-        "polite": "あまりです",
-        "negative_plain": "あまりじゃない",
-        "negative_polite": "あまりじゃありません",
-        "past_plain": "あまりだった",
-        "past_polite": "あまりでした",
-        "past_negative_plain": "あまりじゃなかった",
-        "past_negative_polite": "あまりじゃありませんでした",
-        "te_form": "あまりで",
-        "conditional_ba": "あまりであれば",
-        "conditional_tara": "あまりだったら"
-      }
-    },
-    {
       "id": "ia_muzukashii",
       "level": "N5",
       "group": "i-adj",
@@ -1408,7 +1325,7 @@
       "group": "i-adj",
       "word_type": "i-adj",
       "dictionary_form": {
-        "kanji": "早い",
+        "kanji": "速い",
         "kana": "はやい",
         "romaji": "hayai"
       },
@@ -2350,29 +2267,6 @@
       }
     },
     {
-      "id": "na_tabun",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "多分",
-        "kana": "たぶん",
-        "romaji": "tabun"
-      },
-      "conjugations": {
-        "polite": "たぶんです",
-        "negative_plain": "たぶんじゃない",
-        "negative_polite": "たぶんじゃありません",
-        "past_plain": "たぶんだった",
-        "past_polite": "たぶんでした",
-        "past_negative_plain": "たぶんじゃなかった",
-        "past_negative_polite": "たぶんじゃありませんでした",
-        "te_form": "たぶんで",
-        "conditional_ba": "たぶんであれば",
-        "conditional_tara": "たぶんだったら"
-      }
-    },
-    {
       "id": "na_iya",
       "level": "N5",
       "group": "na-adj",
@@ -3118,12 +3012,6 @@
         "past_negative_plain": "わからなかった",
         "past_negative_polite": "わかりませんでした",
         "te_form": "わかって",
-        "potential": "わかれる",
-        "passive": "わかられる",
-        "causative": "わからせる",
-        "causative_passive": "わからせられる",
-        "imperative": "わかれ",
-        "volitional": "わかろう",
         "conditional_ba": "わかれば",
         "conditional_tara": "わかったら"
       }
@@ -3184,29 +3072,6 @@
         "volitional": "かこう",
         "conditional_ba": "かけば",
         "conditional_tara": "かいたら"
-      }
-    },
-    {
-      "id": "na_takusan",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "沢山",
-        "kana": "たくさん",
-        "romaji": "takusan"
-      },
-      "conjugations": {
-        "polite": "たくさんです",
-        "negative_plain": "たくさんじゃない",
-        "negative_polite": "たくさんじゃありません",
-        "past_plain": "たくさんだった",
-        "past_polite": "たくさんでした",
-        "past_negative_plain": "たくさんじゃなかった",
-        "past_negative_polite": "たくさんじゃありませんでした",
-        "te_form": "たくさんで",
-        "conditional_ba": "たくさんであれば",
-        "conditional_tara": "たくさんだったら"
       }
     },
     {
@@ -3487,8 +3352,6 @@
         "passive": "ふられる",
         "causative": "ふらせる",
         "causative_passive": "ふらせられる",
-        "imperative": "ふれ",
-        "volitional": "ふろう",
         "conditional_ba": "ふれば",
         "conditional_tara": "ふったら"
       }
@@ -3649,8 +3512,6 @@
         "passive": "かかられる",
         "causative": "かからせる",
         "causative_passive": "かからせられる",
-        "imperative": "かかれ",
-        "volitional": "かかろう",
         "conditional_ba": "かかれば",
         "conditional_tara": "かかったら"
       }
@@ -3788,8 +3649,6 @@
         "passive": "つかれられる",
         "causative": "つかれさせる",
         "causative_passive": "つかれさせられる",
-        "imperative": "つかれろ",
-        "volitional": "つかれよう",
         "conditional_ba": "つかれれば",
         "conditional_tara": "つかれたら"
       }
@@ -3898,8 +3757,6 @@
         "passive": "ちがわれる",
         "causative": "ちがわせる",
         "causative_passive": "ちがわせられる",
-        "imperative": "ちがえ",
-        "volitional": "ちがおう",
         "conditional_ba": "ちがえば",
         "conditional_tara": "ちがったら"
       }
@@ -3985,8 +3842,6 @@
         "passive": "こまられる",
         "causative": "こまらせる",
         "causative_passive": "こまらせられる",
-        "imperative": "こまれ",
-        "volitional": "こまろう",
         "conditional_ba": "こまれば",
         "conditional_tara": "こまったら"
       }
@@ -4010,12 +3865,6 @@
         "past_negative_plain": "うまれなかった",
         "past_negative_polite": "うまれませんでした",
         "te_form": "うまれて",
-        "potential": "うまれられる",
-        "passive": "うまれられる",
-        "causative": "うまれさせる",
-        "causative_passive": "うまれさせられる",
-        "imperative": "うまれろ",
-        "volitional": "うまれよう",
         "conditional_ba": "うまれれば",
         "conditional_tara": "うまれたら"
       }
@@ -4043,8 +3892,6 @@
         "passive": "はじまられる",
         "causative": "はじまらせる",
         "causative_passive": "はじまらせられる",
-        "imperative": "はじまれ",
-        "volitional": "はじまろう",
         "conditional_ba": "はじまれば",
         "conditional_tara": "はじまったら"
       }
@@ -4702,7 +4549,7 @@
       "group": "i-adj",
       "word_type": "i-adj",
       "dictionary_form": {
-        "kanji": "煩い",
+        "kanji": "うるさい",
         "kana": "うるさい",
         "romaji": "urusai"
       },
@@ -4771,8 +4618,6 @@
         "passive": "しまられる",
         "causative": "しまらせる",
         "causative_passive": "しまらせられる",
-        "imperative": "しまれ",
-        "volitional": "しまろう",
         "conditional_ba": "しまれば",
         "conditional_tara": "しまったら"
       }
@@ -4783,7 +4628,7 @@
       "group": "i-adj",
       "word_type": "i-adj",
       "dictionary_form": {
-        "kanji": "詰らない",
+        "kanji": "つまらない",
         "kana": "つまらない",
         "romaji": "tsumaranai"
       },
@@ -4823,8 +4668,6 @@
         "passive": "さかれる",
         "causative": "さかせる",
         "causative_passive": "さかせられる",
-        "imperative": "さけ",
-        "volitional": "さこう",
         "conditional_ba": "さけば",
         "conditional_tara": "さいたら"
       }
@@ -4996,8 +4839,6 @@
         "passive": "くもられる",
         "causative": "くもらせる",
         "causative_passive": "くもらせられる",
-        "imperative": "くもれ",
-        "volitional": "くもろう",
         "conditional_ba": "くもれば",
         "conditional_tara": "くもったら"
       }
@@ -5129,8 +4970,6 @@
         "passive": "さされる",
         "causative": "ささせる",
         "causative_passive": "ささせられる",
-        "imperative": "させ",
-        "volitional": "さそう",
         "conditional_ba": "させば",
         "conditional_tara": "さしたら"
       }
@@ -5172,7 +5011,7 @@
       "dictionary_form": {
         "kanji": "プールする",
         "kana": "プールする",
-        "romaji": "プルsuru"
+        "romaji": "puurusuru"
       },
       "conjugations": {
         "polite": "プールします",
@@ -5201,7 +5040,7 @@
       "dictionary_form": {
         "kanji": "テストする",
         "kana": "テストする",
-        "romaji": "テストsuru"
+        "romaji": "tesutosuru"
       },
       "conjugations": {
         "polite": "テストします",
@@ -5230,7 +5069,7 @@
       "dictionary_form": {
         "kanji": "ポストする",
         "kana": "ポストする",
-        "romaji": "ポストsuru"
+        "romaji": "posutosuru"
       },
       "conjugations": {
         "polite": "ポストします",
@@ -5259,7 +5098,7 @@
       "dictionary_form": {
         "kanji": "コピーする",
         "kana": "コピーする",
-        "romaji": "コピsuru"
+        "romaji": "kopiisuru"
       },
       "conjugations": {
         "polite": "コピーします",
@@ -5286,7 +5125,7 @@
       "group": "suru",
       "word_type": "verb",
       "dictionary_form": {
-        "kanji": "為るする",
+        "kanji": "する",
         "kana": "する",
         "romaji": "suru"
       },
@@ -5362,29 +5201,6 @@
       }
     },
     {
-      "id": "na_mada",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "未だ",
-        "kana": "まだ",
-        "romaji": "mada"
-      },
-      "conjugations": {
-        "polite": "まだです",
-        "negative_plain": "まだじゃない",
-        "negative_polite": "まだじゃありません",
-        "past_plain": "まだだった",
-        "past_polite": "まだでした",
-        "past_negative_plain": "まだじゃなかった",
-        "past_negative_polite": "まだじゃありませんでした",
-        "te_form": "まだで",
-        "conditional_ba": "まだであれば",
-        "conditional_tara": "まだだったら"
-      }
-    },
-    {
       "id": "v_aku",
       "level": "N5",
       "group": "godan",
@@ -5411,35 +5227,6 @@
         "volitional": "あこう",
         "conditional_ba": "あけば",
         "conditional_tara": "あいたら"
-      }
-    },
-    {
-      "id": "v_douzosuru",
-      "level": "N5",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "どうぞする",
-        "kana": "どうぞする",
-        "romaji": "douzosuru"
-      },
-      "conjugations": {
-        "polite": "どうぞします",
-        "negative_plain": "どうぞしない",
-        "negative_polite": "どうぞしません",
-        "past_plain": "どうぞした",
-        "past_polite": "どうぞしました",
-        "past_negative_plain": "どうぞしなかった",
-        "past_negative_polite": "どうぞしませんでした",
-        "te_form": "どうぞして",
-        "potential": "どうぞできる",
-        "passive": "どうぞされる",
-        "causative": "どうぞさせる",
-        "causative_passive": "どうぞさせられる",
-        "imperative": "どうぞしろ",
-        "volitional": "どうぞしよう",
-        "conditional_ba": "どうぞすれば",
-        "conditional_tara": "どうぞしたら"
       }
     },
     {
@@ -5479,7 +5266,7 @@
       "dictionary_form": {
         "kanji": "ノートする",
         "kana": "ノートする",
-        "romaji": "ノトsuru"
+        "romaji": "nootosuru"
       },
       "conjugations": {
         "polite": "ノートします",
@@ -5560,7 +5347,7 @@
       "dictionary_form": {
         "kanji": "マッチする",
         "kana": "マッチする",
-        "romaji": "マッチsuru"
+        "romaji": "matchisuru"
       },
       "conjugations": {
         "polite": "マッチします",
@@ -5993,35 +5780,6 @@
       }
     },
     {
-      "id": "v_kagakusuru",
-      "level": "N4",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "科学する",
-        "kana": "かがくする",
-        "romaji": "kagakusuru"
-      },
-      "conjugations": {
-        "polite": "かがくします",
-        "negative_plain": "かがくしない",
-        "negative_polite": "かがくしません",
-        "past_plain": "かがくした",
-        "past_polite": "かがくしました",
-        "past_negative_plain": "かがくしなかった",
-        "past_negative_polite": "かがくしませんでした",
-        "te_form": "かがくして",
-        "potential": "かがくできる",
-        "passive": "かがくされる",
-        "causative": "かがくさせる",
-        "causative_passive": "かがくさせられる",
-        "imperative": "かがくしろ",
-        "volitional": "かがくしよう",
-        "conditional_ba": "かがくすれば",
-        "conditional_tara": "かがくしたら"
-      }
-    },
-    {
       "id": "na_tokubetsu",
       "level": "N4",
       "group": "na-adj",
@@ -6216,35 +5974,6 @@
         "volitional": "ぼうえきしよう",
         "conditional_ba": "ぼうえきすれば",
         "conditional_tara": "ぼうえきしたら"
-      }
-    },
-    {
-      "id": "v_koutsuusuru",
-      "level": "N4",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "交通する",
-        "kana": "こうつうする",
-        "romaji": "koutsuusuru"
-      },
-      "conjugations": {
-        "polite": "こうつうします",
-        "negative_plain": "こうつうしない",
-        "negative_polite": "こうつうしません",
-        "past_plain": "こうつうした",
-        "past_polite": "こうつうしました",
-        "past_negative_plain": "こうつうしなかった",
-        "past_negative_polite": "こうつうしませんでした",
-        "te_form": "こうつうして",
-        "potential": "こうつうできる",
-        "passive": "こうつうされる",
-        "causative": "こうつうさせる",
-        "causative_passive": "こうつうさせられる",
-        "imperative": "こうつうしろ",
-        "volitional": "こうつうしよう",
-        "conditional_ba": "こうつうすれば",
-        "conditional_tara": "こうつうしたら"
       }
     },
     {
@@ -6492,12 +6221,6 @@
         "past_negative_plain": "みえなかった",
         "past_negative_polite": "みえませんでした",
         "te_form": "みえて",
-        "potential": "みえられる",
-        "passive": "みえられる",
-        "causative": "みえさせる",
-        "causative_passive": "みえさせられる",
-        "imperative": "みえろ",
-        "volitional": "みえよう",
         "conditional_ba": "みえれば",
         "conditional_tara": "みえたら"
       }
@@ -6723,35 +6446,6 @@
       }
     },
     {
-      "id": "v_juubunsuru",
-      "level": "N4",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "十分する",
-        "kana": "じゅうぶんする",
-        "romaji": "juubunsuru"
-      },
-      "conjugations": {
-        "polite": "じゅうぶんします",
-        "negative_plain": "じゅうぶんしない",
-        "negative_polite": "じゅうぶんしません",
-        "past_plain": "じゅうぶんした",
-        "past_polite": "じゅうぶんしました",
-        "past_negative_plain": "じゅうぶんしなかった",
-        "past_negative_polite": "じゅうぶんしませんでした",
-        "te_form": "じゅうぶんして",
-        "potential": "じゅうぶんできる",
-        "passive": "じゅうぶんされる",
-        "causative": "じゅうぶんさせる",
-        "causative_passive": "じゅうぶんさせられる",
-        "imperative": "じゅうぶんしろ",
-        "volitional": "じゅうぶんしよう",
-        "conditional_ba": "じゅうぶんすれば",
-        "conditional_tara": "じゅうぶんしたら"
-      }
-    },
-    {
       "id": "v_shiaisuru",
       "level": "N4",
       "group": "suru",
@@ -6778,29 +6472,6 @@
         "volitional": "しあいしよう",
         "conditional_ba": "しあいすれば",
         "conditional_tara": "しあいしたら"
-      }
-    },
-    {
-      "id": "na_isshoukenmei",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "一生懸命",
-        "kana": "いっしょうけんめい",
-        "romaji": "isshoukenmei"
-      },
-      "conjugations": {
-        "polite": "いっしょうけんめいです",
-        "negative_plain": "いっしょうけんめいじゃない",
-        "negative_polite": "いっしょうけんめいじゃありません",
-        "past_plain": "いっしょうけんめいだった",
-        "past_polite": "いっしょうけんめいでした",
-        "past_negative_plain": "いっしょうけんめいじゃなかった",
-        "past_negative_polite": "いっしょうけんめいじゃありませんでした",
-        "te_form": "いっしょうけんめいで",
-        "conditional_ba": "いっしょうけんめいであれば",
-        "conditional_tara": "いっしょうけんめいだったら"
       }
     },
     {
@@ -7174,8 +6845,6 @@
         "passive": "かわられる",
         "causative": "かわらせる",
         "causative_passive": "かわらせられる",
-        "imperative": "かわれ",
-        "volitional": "かわろう",
         "conditional_ba": "かわれば",
         "conditional_tara": "かわったら"
       }
@@ -7226,8 +6895,6 @@
         "passive": "おちられる",
         "causative": "おちさせる",
         "causative_passive": "おちさせられる",
-        "imperative": "おちろ",
-        "volitional": "おちよう",
         "conditional_ba": "おちれば",
         "conditional_tara": "おちたら"
       }
@@ -7313,8 +6980,6 @@
         "passive": "まにあわれる",
         "causative": "まにあわせる",
         "causative_passive": "まにあわせられる",
-        "imperative": "まにあえ",
-        "volitional": "まにあおう",
         "conditional_ba": "まにあえば",
         "conditional_tara": "まにあったら"
       }
@@ -7627,29 +7292,6 @@
       }
     },
     {
-      "id": "na_taitei",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "大抵",
-        "kana": "たいてい",
-        "romaji": "taitei"
-      },
-      "conjugations": {
-        "polite": "たいていです",
-        "negative_plain": "たいていじゃない",
-        "negative_polite": "たいていじゃありません",
-        "past_plain": "たいていだった",
-        "past_polite": "たいていでした",
-        "past_negative_plain": "たいていじゃなかった",
-        "past_negative_polite": "たいていじゃありませんでした",
-        "te_form": "たいていで",
-        "conditional_ba": "たいていであれば",
-        "conditional_tara": "たいていだったら"
-      }
-    },
-    {
       "id": "v_nokoru",
       "level": "N4",
       "group": "godan",
@@ -7817,8 +7459,6 @@
         "passive": "やくにたたれる",
         "causative": "やくにたたせる",
         "causative_passive": "やくにたたせられる",
-        "imperative": "やくにたて",
-        "volitional": "やくにたとう",
         "conditional_ba": "やくにたてば",
         "conditional_tara": "やくにたったら"
       }
@@ -7962,8 +7602,6 @@
         "passive": "みつかられる",
         "causative": "みつからせる",
         "causative_passive": "みつからせられる",
-        "imperative": "みつかれ",
-        "volitional": "みつかろう",
         "conditional_ba": "みつかれば",
         "conditional_tara": "みつかったら"
       }
@@ -8327,8 +7965,6 @@
         "passive": "こわれられる",
         "causative": "こわれさせる",
         "causative_passive": "こわれさせられる",
-        "imperative": "こわれろ",
-        "volitional": "こわれよう",
         "conditional_ba": "こわれれば",
         "conditional_tara": "こわれたら"
       }
@@ -8356,33 +7992,8 @@
         "passive": "たおれられる",
         "causative": "たおれさせる",
         "causative_passive": "たおれさせられる",
-        "imperative": "たおれろ",
-        "volitional": "たおれよう",
         "conditional_ba": "たおれれば",
         "conditional_tara": "たおれたら"
-      }
-    },
-    {
-      "id": "na_aji",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "味",
-        "kana": "あじ",
-        "romaji": "aji"
-      },
-      "conjugations": {
-        "polite": "あじです",
-        "negative_plain": "あじじゃない",
-        "negative_polite": "あじじゃありません",
-        "past_plain": "あじだった",
-        "past_polite": "あじでした",
-        "past_negative_plain": "あじじゃなかった",
-        "past_negative_polite": "あじじゃありませんでした",
-        "te_form": "あじで",
-        "conditional_ba": "あじであれば",
-        "conditional_tara": "あじだったら"
       }
     },
     {
@@ -8564,8 +8175,6 @@
         "passive": "きまられる",
         "causative": "きまらせる",
         "causative_passive": "きまらせられる",
-        "imperative": "きまれ",
-        "volitional": "きまろう",
         "conditional_ba": "きまれば",
         "conditional_tara": "きまったら"
       }
@@ -9727,8 +9336,6 @@
         "passive": "おくれられる",
         "causative": "おくれさせる",
         "causative_passive": "おくれさせられる",
-        "imperative": "おくれろ",
-        "volitional": "おくれよう",
         "conditional_ba": "おくれれば",
         "conditional_tara": "おくれたら"
       }
@@ -9955,12 +9562,6 @@
         "past_negative_plain": "きこえなかった",
         "past_negative_polite": "きこえませんでした",
         "te_form": "きこえて",
-        "potential": "きこえられる",
-        "passive": "きこえられる",
-        "causative": "きこえさせる",
-        "causative_passive": "きこえさせられる",
-        "imperative": "きこえろ",
-        "volitional": "きこえよう",
         "conditional_ba": "きこえれば",
         "conditional_tara": "きこえたら"
       }
@@ -10133,8 +9734,6 @@
         "passive": "なくなられる",
         "causative": "なくならせる",
         "causative_passive": "なくならせられる",
-        "imperative": "なくなれ",
-        "volitional": "なくなろう",
         "conditional_ba": "なくなれば",
         "conditional_tara": "なくなったら"
       }
@@ -10724,8 +10323,6 @@
         "passive": "たりられる",
         "causative": "たりさせる",
         "causative_passive": "たりさせられる",
-        "imperative": "たりろ",
-        "volitional": "たりよう",
         "conditional_ba": "たりれば",
         "conditional_tara": "たりたら"
       }
@@ -10753,8 +10350,6 @@
         "passive": "なおられる",
         "causative": "なおらせる",
         "causative_passive": "なおらせられる",
-        "imperative": "なおれ",
-        "volitional": "なおろう",
         "conditional_ba": "なおれば",
         "conditional_tara": "なおったら"
       }
@@ -10770,19 +10365,19 @@
         "romaji": "nasaru"
       },
       "conjugations": {
-        "polite": "なさります",
+        "polite": "なさいます",
         "negative_plain": "なさらない",
-        "negative_polite": "なさりません",
+        "negative_polite": "なさいません",
         "past_plain": "なさった",
-        "past_polite": "なさりました",
+        "past_polite": "なさいました",
         "past_negative_plain": "なさらなかった",
-        "past_negative_polite": "なさりませんでした",
+        "past_negative_polite": "なさいませんでした",
         "te_form": "なさって",
         "potential": "なされる",
         "passive": "なさられる",
         "causative": "なさらせる",
         "causative_passive": "なさらせられる",
-        "imperative": "なされ",
+        "imperative": "なさい",
         "volitional": "なさろう",
         "conditional_ba": "なされば",
         "conditional_tara": "なさったら"
@@ -10938,8 +10533,6 @@
         "passive": "ぬれられる",
         "causative": "ぬれさせる",
         "causative_passive": "ぬれさせられる",
-        "imperative": "ぬれろ",
-        "volitional": "ぬれよう",
         "conditional_ba": "ぬれれば",
         "conditional_tara": "ぬれたら"
       }
@@ -10996,8 +10589,6 @@
         "passive": "ふとられる",
         "causative": "ふとらせる",
         "causative_passive": "ふとらせられる",
-        "imperative": "ふとれ",
-        "volitional": "ふとろう",
         "conditional_ba": "ふとれば",
         "conditional_tara": "ふとったら"
       }
@@ -11274,8 +10865,6 @@
         "passive": "やせられる",
         "causative": "やせさせる",
         "causative_passive": "やせさせられる",
-        "imperative": "やせろ",
-        "volitional": "やせよう",
         "conditional_ba": "やせれば",
         "conditional_tara": "やせたら"
       }
@@ -11419,8 +11008,6 @@
         "passive": "われられる",
         "causative": "われさせる",
         "causative_passive": "われさせられる",
-        "imperative": "われろ",
-        "volitional": "われよう",
         "conditional_ba": "われれば",
         "conditional_tara": "われたら"
       }
@@ -11448,8 +11035,6 @@
         "passive": "おれられる",
         "causative": "おれさせる",
         "causative_passive": "おれさせられる",
-        "imperative": "おれろ",
-        "volitional": "おれよう",
         "conditional_ba": "おれれば",
         "conditional_tara": "おれたら"
       }
@@ -11593,8 +11178,6 @@
         "passive": "やけられる",
         "causative": "やけさせる",
         "causative_passive": "やけさせられる",
-        "imperative": "やけろ",
-        "volitional": "やけよう",
         "conditional_ba": "やければ",
         "conditional_tara": "やけたら"
       }
@@ -11680,8 +11263,6 @@
         "passive": "かわかれる",
         "causative": "かわかせる",
         "causative_passive": "かわかせられる",
-        "imperative": "かわけ",
-        "volitional": "かわこう",
         "conditional_ba": "かわけば",
         "conditional_tara": "かわいたら"
       }
@@ -12001,7 +11582,7 @@
       "dictionary_form": {
         "kanji": "チェックする",
         "kana": "チェックする",
-        "romaji": "チェックsuru"
+        "romaji": "chekkusuru"
       },
       "conjugations": {
         "polite": "チェックします",
@@ -12020,29 +11601,6 @@
         "volitional": "チェックしよう",
         "conditional_ba": "チェックすれば",
         "conditional_tara": "チェックしたら"
-      }
-    },
-    {
-      "id": "na_ippai",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "一杯",
-        "kana": "いっぱい",
-        "romaji": "ippai"
-      },
-      "conjugations": {
-        "polite": "いっぱいです",
-        "negative_plain": "いっぱいじゃない",
-        "negative_polite": "いっぱいじゃありません",
-        "past_plain": "いっぱいだった",
-        "past_polite": "いっぱいでした",
-        "past_negative_plain": "いっぱいじゃなかった",
-        "past_negative_polite": "いっぱいじゃありませんでした",
-        "te_form": "いっぱいで",
-        "conditional_ba": "いっぱいであれば",
-        "conditional_tara": "いっぱいだったら"
       }
     },
     {
@@ -12072,29 +11630,6 @@
         "volitional": "つつもう",
         "conditional_ba": "つつめば",
         "conditional_tara": "つつんだら"
-      }
-    },
-    {
-      "id": "na_sou",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "そう",
-        "kana": "そう",
-        "romaji": "sou"
-      },
-      "conjugations": {
-        "polite": "そうです",
-        "negative_plain": "そうじゃない",
-        "negative_polite": "そうじゃありません",
-        "past_plain": "そうだった",
-        "past_polite": "そうでした",
-        "past_negative_plain": "そうじゃなかった",
-        "past_negative_polite": "そうじゃありませんでした",
-        "te_form": "そうで",
-        "conditional_ba": "そうであれば",
-        "conditional_tara": "そうだったら"
       }
     },
     {
@@ -12163,7 +11698,7 @@
       "dictionary_form": {
         "kanji": "プレゼントする",
         "kana": "プレゼントする",
-        "romaji": "プレゼントsuru"
+        "romaji": "purezentosuru"
       },
       "conjugations": {
         "polite": "プレゼントします",
@@ -12192,7 +11727,7 @@
       "dictionary_form": {
         "kanji": "タイプする",
         "kana": "タイプする",
-        "romaji": "タイプsuru"
+        "romaji": "taipusuru"
       },
       "conjugations": {
         "polite": "タイプします",
@@ -12221,7 +11756,7 @@
       "dictionary_form": {
         "kanji": "レポートする",
         "kana": "レポートする",
-        "romaji": "レポトsuru"
+        "romaji": "repootosuru"
       },
       "conjugations": {
         "polite": "レポートします",
@@ -12253,19 +11788,19 @@
         "romaji": "ossharu"
       },
       "conjugations": {
-        "polite": "おっしゃります",
+        "polite": "おっしゃいます",
         "negative_plain": "おっしゃらない",
-        "negative_polite": "おっしゃりません",
+        "negative_polite": "おっしゃいません",
         "past_plain": "おっしゃった",
-        "past_polite": "おっしゃりました",
+        "past_polite": "おっしゃいました",
         "past_negative_plain": "おっしゃらなかった",
-        "past_negative_polite": "おっしゃりませんでした",
+        "past_negative_polite": "おっしゃいませんでした",
         "te_form": "おっしゃって",
         "potential": "おっしゃれる",
         "passive": "おっしゃられる",
         "causative": "おっしゃらせる",
         "causative_passive": "おっしゃらせられる",
-        "imperative": "おっしゃれ",
+        "imperative": "おっしゃい",
         "volitional": "おっしゃろう",
         "conditional_ba": "おっしゃれば",
         "conditional_tara": "おっしゃったら"
@@ -12282,19 +11817,19 @@
         "romaji": "irassharu"
       },
       "conjugations": {
-        "polite": "いらっしゃります",
+        "polite": "いらっしゃいます",
         "negative_plain": "いらっしゃらない",
-        "negative_polite": "いらっしゃりません",
+        "negative_polite": "いらっしゃいません",
         "past_plain": "いらっしゃった",
-        "past_polite": "いらっしゃりました",
+        "past_polite": "いらっしゃいました",
         "past_negative_plain": "いらっしゃらなかった",
-        "past_negative_polite": "いらっしゃりませんでした",
+        "past_negative_polite": "いらっしゃいませんでした",
         "te_form": "いらっしゃって",
         "potential": "いらっしゃれる",
         "passive": "いらっしゃられる",
         "causative": "いらっしゃらせる",
         "causative_passive": "いらっしゃらせられる",
-        "imperative": "いらっしゃれ",
+        "imperative": "いらっしゃい",
         "volitional": "いらっしゃろう",
         "conditional_ba": "いらっしゃれば",
         "conditional_tara": "いらっしゃったら"
@@ -12323,8 +11858,6 @@
         "passive": "よごれられる",
         "causative": "よごれさせる",
         "causative_passive": "よごれさせられる",
-        "imperative": "よごれろ",
-        "volitional": "よごれよう",
         "conditional_ba": "よごれれば",
         "conditional_tara": "よごれたら"
       }
@@ -12366,7 +11899,7 @@
       "dictionary_form": {
         "kanji": "ＦＡＸする",
         "kana": "ファックスする",
-        "romaji": "ファックスsuru"
+        "romaji": "fakkususuru"
       },
       "conjugations": {
         "polite": "ファックスします",
@@ -12482,7 +12015,7 @@
       "dictionary_form": {
         "kanji": "アルバイトする",
         "kana": "アルバイトする",
-        "romaji": "アルバイトsuru"
+        "romaji": "arubaitosuru"
       },
       "conjugations": {
         "polite": "アルバイトします",
@@ -12961,35 +12494,6 @@
       }
     },
     {
-      "id": "v_genzaisuru",
-      "level": "N3",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "現在する",
-        "kana": "げんざいする",
-        "romaji": "genzaisuru"
-      },
-      "conjugations": {
-        "polite": "げんざいします",
-        "negative_plain": "げんざいしない",
-        "negative_polite": "げんざいしません",
-        "past_plain": "げんざいした",
-        "past_polite": "げんざいしました",
-        "past_negative_plain": "げんざいしなかった",
-        "past_negative_polite": "げんざいしませんでした",
-        "te_form": "げんざいして",
-        "potential": "げんざいできる",
-        "passive": "げんざいされる",
-        "causative": "げんざいさせる",
-        "causative_passive": "げんざいさせられる",
-        "imperative": "げんざいしろ",
-        "volitional": "げんざいしよう",
-        "conditional_ba": "げんざいすれば",
-        "conditional_tara": "げんざいしたら"
-      }
-    },
-    {
       "id": "v_kitaisuru",
       "level": "N3",
       "group": "suru",
@@ -13074,29 +12578,6 @@
         "volitional": "えんぜつしよう",
         "conditional_ba": "えんぜつすれば",
         "conditional_tara": "えんぜつしたら"
-      }
-    },
-    {
-      "id": "na_kami",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "神",
-        "kana": "かみ",
-        "romaji": "kami"
-      },
-      "conjugations": {
-        "polite": "かみです",
-        "negative_plain": "かみじゃない",
-        "negative_polite": "かみじゃありません",
-        "past_plain": "かみだった",
-        "past_polite": "かみでした",
-        "past_negative_plain": "かみじゃなかった",
-        "past_negative_polite": "かみじゃありませんでした",
-        "te_form": "かみで",
-        "conditional_ba": "かみであれば",
-        "conditional_tara": "かみだったら"
       }
     },
     {
@@ -15726,29 +15207,6 @@
       }
     },
     {
-      "id": "na_cha",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "茶",
-        "kana": "ちゃ",
-        "romaji": "cha"
-      },
-      "conjugations": {
-        "polite": "ちゃです",
-        "negative_plain": "ちゃじゃない",
-        "negative_polite": "ちゃじゃありません",
-        "past_plain": "ちゃだった",
-        "past_polite": "ちゃでした",
-        "past_negative_plain": "ちゃじゃなかった",
-        "past_negative_polite": "ちゃじゃありませんでした",
-        "te_form": "ちゃで",
-        "conditional_ba": "ちゃであれば",
-        "conditional_tara": "ちゃだったら"
-      }
-    },
-    {
       "id": "na_baka",
       "level": "N3",
       "group": "na-adj",
@@ -16593,19 +16051,19 @@
         "romaji": "kudasaru"
       },
       "conjugations": {
-        "polite": "くださります",
+        "polite": "くださいます",
         "negative_plain": "くださらない",
-        "negative_polite": "くださりません",
+        "negative_polite": "くださいません",
         "past_plain": "くださった",
-        "past_polite": "くださりました",
+        "past_polite": "くださいました",
         "past_negative_plain": "くださらなかった",
-        "past_negative_polite": "くださりませんでした",
+        "past_negative_polite": "くださいませんでした",
         "te_form": "くださって",
         "potential": "くだされる",
         "passive": "くださられる",
         "causative": "くださらせる",
         "causative_passive": "くださらせられる",
-        "imperative": "くだされ",
+        "imperative": "ください",
         "volitional": "くださろう",
         "conditional_ba": "くだされば",
         "conditional_tara": "くださったら"
@@ -18701,8 +18159,6 @@
         "passive": "もえられる",
         "causative": "もえさせる",
         "causative_passive": "もえさせられる",
-        "imperative": "もえろ",
-        "volitional": "もえよう",
         "conditional_ba": "もえれば",
         "conditional_tara": "もえたら"
       }
@@ -25898,29 +25354,6 @@
       }
     },
     {
-      "id": "na_kanari",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "可也",
-        "kana": "かなり",
-        "romaji": "kanari"
-      },
-      "conjugations": {
-        "polite": "かなりです",
-        "negative_plain": "かなりじゃない",
-        "negative_polite": "かなりじゃありません",
-        "past_plain": "かなりだった",
-        "past_polite": "かなりでした",
-        "past_negative_plain": "かなりじゃなかった",
-        "past_negative_polite": "かなりじゃありませんでした",
-        "te_form": "かなりで",
-        "conditional_ba": "かなりであれば",
-        "conditional_tara": "かなりだったら"
-      }
-    },
-    {
       "id": "v_manabu",
       "level": "N3",
       "group": "godan",
@@ -26495,29 +25928,6 @@
       }
     },
     {
-      "id": "na_nakanaka",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "中々",
-        "kana": "なかなか",
-        "romaji": "nakanaka"
-      },
-      "conjugations": {
-        "polite": "なかなかです",
-        "negative_plain": "なかなかじゃない",
-        "negative_polite": "なかなかじゃありません",
-        "past_plain": "なかなかだった",
-        "past_polite": "なかなかでした",
-        "past_negative_plain": "なかなかじゃなかった",
-        "past_negative_polite": "なかなかじゃありませんでした",
-        "te_form": "なかなかで",
-        "conditional_ba": "なかなかであれば",
-        "conditional_tara": "なかなかだったら"
-      }
-    },
-    {
       "id": "v_sakeru",
       "level": "N3",
       "group": "ichidan",
@@ -26696,33 +26106,8 @@
         "passive": "ことなられる",
         "causative": "ことならせる",
         "causative_passive": "ことならせられる",
-        "imperative": "ことなれ",
-        "volitional": "ことなろう",
         "conditional_ba": "ことなれば",
         "conditional_tara": "ことなったら"
-      }
-    },
-    {
-      "id": "na_zuibun",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "随分",
-        "kana": "ずいぶん",
-        "romaji": "zuibun"
-      },
-      "conjugations": {
-        "polite": "ずいぶんです",
-        "negative_plain": "ずいぶんじゃない",
-        "negative_polite": "ずいぶんじゃありません",
-        "past_plain": "ずいぶんだった",
-        "past_polite": "ずいぶんでした",
-        "past_negative_plain": "ずいぶんじゃなかった",
-        "past_negative_polite": "ずいぶんじゃありませんでした",
-        "te_form": "ずいぶんで",
-        "conditional_ba": "ずいぶんであれば",
-        "conditional_tara": "ずいぶんだったら"
       }
     },
     {
@@ -27073,7 +26458,7 @@
       "group": "suru",
       "word_type": "verb",
       "dictionary_form": {
-        "kanji": "凝乎とする",
+        "kanji": "じっとする",
         "kana": "じっとする",
         "romaji": "jittosuru"
       },
@@ -29797,7 +29182,7 @@
       "dictionary_form": {
         "kanji": "ダンスする",
         "kana": "ダンスする",
-        "romaji": "ダンスsuru"
+        "romaji": "dansusuru"
       },
       "conjugations": {
         "polite": "ダンスします",
@@ -29826,7 +29211,7 @@
       "dictionary_form": {
         "kanji": "サービスする",
         "kana": "サービスする",
-        "romaji": "サビスsuru"
+        "romaji": "saabisusuru"
       },
       "conjugations": {
         "polite": "サービスします",
@@ -29855,7 +29240,7 @@
       "dictionary_form": {
         "kanji": "デートする",
         "kana": "デートする",
-        "romaji": "デトsuru"
+        "romaji": "deetosuru"
       },
       "conjugations": {
         "polite": "デートします",
@@ -29884,7 +29269,7 @@
       "dictionary_form": {
         "kanji": "スケートする",
         "kana": "スケートする",
-        "romaji": "スケトsuru"
+        "romaji": "sukeetosuru"
       },
       "conjugations": {
         "polite": "スケートします",
@@ -29913,7 +29298,7 @@
       "dictionary_form": {
         "kanji": "ドライブする",
         "kana": "ドライブする",
-        "romaji": "ドライブsuru"
+        "romaji": "doraibusuru"
       },
       "conjugations": {
         "polite": "ドライブします",
@@ -29942,7 +29327,7 @@
       "dictionary_form": {
         "kanji": "ノックする",
         "kana": "ノックする",
-        "romaji": "ノックsuru"
+        "romaji": "nokkusuru"
       },
       "conjugations": {
         "polite": "ノックします",
@@ -29971,7 +29356,7 @@
       "dictionary_form": {
         "kanji": "キャンプする",
         "kana": "キャンプする",
-        "romaji": "キャンプsuru"
+        "romaji": "kyanpusuru"
       },
       "conjugations": {
         "polite": "キャンプします",
@@ -30000,7 +29385,7 @@
       "dictionary_form": {
         "kanji": "トンネルする",
         "kana": "トンネルする",
-        "romaji": "トンネルsuru"
+        "romaji": "tonnerusuru"
       },
       "conjugations": {
         "polite": "トンネルします",
@@ -30029,7 +29414,7 @@
       "dictionary_form": {
         "kanji": "コーチする",
         "kana": "コーチする",
-        "romaji": "コチsuru"
+        "romaji": "kouchisuru"
       },
       "conjugations": {
         "polite": "コーチします",
@@ -30081,7 +29466,7 @@
       "dictionary_form": {
         "kanji": "プラスする",
         "kana": "プラスする",
-        "romaji": "プラスsuru"
+        "romaji": "purasusuru"
       },
       "conjugations": {
         "polite": "プラスします",
@@ -30110,7 +29495,7 @@
       "dictionary_form": {
         "kanji": "マスターする",
         "kana": "マスターする",
-        "romaji": "マスタsuru"
+        "romaji": "masutaasuru"
       },
       "conjugations": {
         "polite": "マスターします",
@@ -30139,7 +29524,7 @@
       "dictionary_form": {
         "kanji": "パスする",
         "kana": "パスする",
-        "romaji": "パスsuru"
+        "romaji": "pasusuru"
       },
       "conjugations": {
         "polite": "パスします",
@@ -30168,7 +29553,7 @@
       "dictionary_form": {
         "kanji": "セットする",
         "kana": "セットする",
-        "romaji": "セットsuru"
+        "romaji": "settosuru"
       },
       "conjugations": {
         "polite": "セットします",
@@ -30712,7 +30097,7 @@
       "dictionary_form": {
         "kanji": "メモする",
         "kana": "メモする",
-        "romaji": "メモsuru"
+        "romaji": "memosuru"
       },
       "conjugations": {
         "polite": "メモします",
@@ -30741,7 +30126,7 @@
       "dictionary_form": {
         "kanji": "スイッチする",
         "kana": "スイッチする",
-        "romaji": "スイッチsuru"
+        "romaji": "suitchisuru"
       },
       "conjugations": {
         "polite": "スイッチします",
@@ -31012,35 +30397,6 @@
       }
     },
     {
-      "id": "v_moushiwakesuru",
-      "level": "N3",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "申し訳する",
-        "kana": "もうしわけする",
-        "romaji": "moushiwakesuru"
-      },
-      "conjugations": {
-        "polite": "もうしわけします",
-        "negative_plain": "もうしわけしない",
-        "negative_polite": "もうしわけしません",
-        "past_plain": "もうしわけした",
-        "past_polite": "もうしわけしました",
-        "past_negative_plain": "もうしわけしなかった",
-        "past_negative_polite": "もうしわけしませんでした",
-        "te_form": "もうしわけして",
-        "potential": "もうしわけできる",
-        "passive": "もうしわけされる",
-        "causative": "もうしわけさせる",
-        "causative_passive": "もうしわけさせられる",
-        "imperative": "もうしわけしろ",
-        "volitional": "もうしわけしよう",
-        "conditional_ba": "もうしわけすれば",
-        "conditional_tara": "もうしわけしたら"
-      }
-    },
-    {
       "id": "ia_ikenai",
       "level": "N3",
       "group": "i-adj",
@@ -31113,29 +30469,6 @@
         "te_form": "つらくて",
         "conditional_ba": "つらければ",
         "conditional_tara": "つらかったら"
-      }
-    },
-    {
-      "id": "na_mottomo",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "尤も",
-        "kana": "もっとも",
-        "romaji": "mottomo"
-      },
-      "conjugations": {
-        "polite": "もっともです",
-        "negative_plain": "もっともじゃない",
-        "negative_polite": "もっともじゃありません",
-        "past_plain": "もっともだった",
-        "past_polite": "もっともでした",
-        "past_negative_plain": "もっともじゃなかった",
-        "past_negative_polite": "もっともじゃありませんでした",
-        "te_form": "もっともで",
-        "conditional_ba": "もっともであれば",
-        "conditional_tara": "もっともだったら"
       }
     },
     {
@@ -31279,7 +30612,7 @@
       "dictionary_form": {
         "kanji": "ゴールする",
         "kana": "ゴールする",
-        "romaji": "ゴルsuru"
+        "romaji": "goorusuru"
       },
       "conjugations": {
         "polite": "ゴールします",
@@ -31308,7 +30641,7 @@
       "dictionary_form": {
         "kanji": "サインする",
         "kana": "サインする",
-        "romaji": "サインsuru"
+        "romaji": "sainsuru"
       },
       "conjugations": {
         "polite": "サインします",
@@ -31337,7 +30670,7 @@
       "dictionary_form": {
         "kanji": "ミスする",
         "kana": "ミスする",
-        "romaji": "ミスsuru"
+        "romaji": "misusuru"
       },
       "conjugations": {
         "polite": "ミスします",
@@ -31356,29 +30689,6 @@
         "volitional": "ミスしよう",
         "conditional_ba": "ミスすれば",
         "conditional_tara": "ミスしたら"
-      }
-    },
-    {
-      "id": "na_nao",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "直",
-        "kana": "なお",
-        "romaji": "nao"
-      },
-      "conjugations": {
-        "polite": "なおです",
-        "negative_plain": "なおじゃない",
-        "negative_polite": "なおじゃありません",
-        "past_plain": "なおだった",
-        "past_polite": "なおでした",
-        "past_negative_plain": "なおじゃなかった",
-        "past_negative_polite": "なおじゃありませんでした",
-        "te_form": "なおで",
-        "conditional_ba": "なおであれば",
-        "conditional_tara": "なおだったら"
       }
     }
   ]
