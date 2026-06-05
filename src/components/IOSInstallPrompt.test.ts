@@ -58,6 +58,6 @@ describe('iOS install prompt copy', () => {
   });
 
   it('provides install instruction translations for supported app languages', () => {
-    expect(i18nSource.match(/pwaInstallInstructions:/g)).toHaveLength(5);
+    expect(i18nSource.match(/pwaInstallInstructions:/g)).toHaveLength(6);
   });
 });
