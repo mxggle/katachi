@@ -11,7 +11,11 @@ const LEVELS = ['N5', 'N4', 'N3'] as const;
 const QUESTION_COUNTS = [10, 20, 30];
 
 export default function SetupMenu() {
-  const { updateDailyGoal, language, studyState, updateDailyConfig, updateFreeConfig } = useStore();
+  const updateDailyGoal = useStore((state) => state.updateDailyGoal);
+  const language = useStore((state) => state.language);
+  const studyState = useStore((state) => state.studyState);
+  const updateDailyConfig = useStore((state) => state.updateDailyConfig);
+  const updateFreeConfig = useStore((state) => state.updateFreeConfig);
   const { t } = useTranslation(language);
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<'daily' | 'free'>('daily');

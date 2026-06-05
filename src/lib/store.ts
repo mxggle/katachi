@@ -268,7 +268,7 @@ export function getDailyGoalProgress(studyState: StudyState, today: string): num
 export function extractPersistedStudyState(persisted: unknown): StudyState {
   const envelope = (persisted as PersistedStudyEnvelope & Record<string, unknown>) ?? {};
   const rawState = envelope.studyState ?? envelope.state?.studyState ?? envelope;
-  return migratePersistedStudyState(rawState as any);
+  return migratePersistedStudyState(rawState as Parameters<typeof migratePersistedStudyState>[0]);
 }
 
 export const STORE_STORAGE_KEY = 'katachi-storage';

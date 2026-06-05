@@ -1,4 +1,3 @@
-import type { ConjugationType } from '@/lib/distractorEngine';
 import type { Language } from '@/lib/i18n';
 import {
   DEFAULT_STUDY_SESSION_CONFIG,
@@ -9,7 +8,10 @@ import {
   createEmptyWordStats,
   type AttemptRecord,
   type FormStats,
+  type LearnerSummary,
   type PatternStats,
+  type StudyPreferences,
+  type StudySessionConfig,
   type SessionRecord,
   type StudyState,
   type UnitProgress,
@@ -21,6 +23,12 @@ interface LegacyProgressStats {
   totalCorrect: number;
 }
 
+type LegacySessionConfig = Partial<StudySessionConfig> & {
+  leves?: StudySessionConfig['levels'];
+  categories?: StudySessionConfig['forms'];
+  batchSize?: number;
+};
+
 interface LegacyPersistedState {
   dailyStreak?: number;
   lastLoginDate?: string | null;
@@ -28,16 +36,13 @@ interface LegacyPersistedState {
   globalStats?: LegacyProgressStats;
   progress?: LegacyProgressStats;
   language?: Language;
-  config?: {
-    levels?: ('N5' | 'N4' | 'N3')[];
-    leves?: ('N5' | 'N4' | 'N3')[];
-    wordTypes?: ('verb' | 'i-adj' | 'na-adj')[];
-    forms?: ConjugationType[];
-    categories?: ConjugationType[];
-    questionCount?: number;
-    batchSize?: number;
-    mode?: 'choice' | 'input';
+  preferences?: Partial<StudyPreferences> & {
+    defaultSessionConfig?: LegacySessionConfig;
+    dailySessionConfig?: LegacySessionConfig;
+    freeSessionConfig?: LegacySessionConfig;
   };
+  learnerSummary?: Partial<LearnerSummary>;
+  config?: LegacySessionConfig;
   unitProgress?: Record<string, UnitProgress>;
   sessionHistory?: SessionRecord[];
   attemptHistory?: AttemptRecord[];
@@ -116,7 +121,7 @@ function rebuildStatsFromUnitProgress(
 }
 
 export function migratePersistedStudyState(legacy: LegacyPersistedState | undefined): StudyState {
-  const language = legacy?.language ?? (legacy as any)?.preferences?.language ?? 'en';
+  const language = legacy?.language ?? legacy?.preferences?.language ?? 'en';
   const base = DEFAULT_STUDY_STATE(language);
   const progress = legacy?.progress ?? legacy?.globalStats;
 
@@ -172,14 +177,14 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
     ? {
         formStats: legacy.formStats!,
         patternStats: legacy.patternStats ?? {},
-        wordStats: legacy.wordStats ?? {},
-      }
+      wordStats: legacy.wordStats ?? {},
+    }
     : rebuildStatsFromUnitProgress(migratedUnitProgress);
 
   // Extract legacy config from various possible locations
-  const legacyConfig = legacy?.config ?? (legacy as any)?.preferences?.defaultSessionConfig;
-  const legacyDailyConfig = (legacy as any)?.preferences?.dailySessionConfig;
-  const legacyFreeConfig = (legacy as any)?.preferences?.freeSessionConfig;
+  const legacyConfig = legacy?.config ?? legacy?.preferences?.defaultSessionConfig;
+  const legacyDailyConfig = legacy?.preferences?.dailySessionConfig;
+  const legacyFreeConfig = legacy?.preferences?.freeSessionConfig;
 
   return {
     preferences: {
@@ -215,17 +220,17 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
     },
     learnerSummary: {
       ...base.learnerSummary,
-      dailyStreak: legacy?.dailyStreak ?? (legacy as any)?.learnerSummary?.dailyStreak ?? 0,
-      lastPracticeDate: legacy?.lastPracticeDate ?? legacy?.lastLoginDate ?? (legacy as any)?.learnerSummary?.lastPracticeDate ?? null,
-      totalAnswered: progress?.totalAnswered ?? (legacy as any)?.learnerSummary?.totalAnswered ?? 0,
-      totalCorrect: progress?.totalCorrect ?? (legacy as any)?.learnerSummary?.totalCorrect ?? 0,
+      dailyStreak: legacy?.dailyStreak ?? legacy?.learnerSummary?.dailyStreak ?? 0,
+      lastPracticeDate: legacy?.lastPracticeDate ?? legacy?.lastLoginDate ?? legacy?.learnerSummary?.lastPracticeDate ?? null,
+      totalAnswered: progress?.totalAnswered ?? legacy?.learnerSummary?.totalAnswered ?? 0,
+      totalCorrect: progress?.totalCorrect ?? legacy?.learnerSummary?.totalCorrect ?? 0,
       schemaVersion: 5,
     },
     unitProgress: migratedUnitProgress,
     formStats,
     patternStats,
     wordStats,
-    sessionHistory: legacy?.sessionHistory ?? (legacy as any)?.sessionHistory ?? [],
-    attemptHistory: legacy?.attemptHistory ?? (legacy as any)?.attemptHistory ?? [],
+    sessionHistory: legacy?.sessionHistory ?? [],
+    attemptHistory: legacy?.attemptHistory ?? [],
   };
 }

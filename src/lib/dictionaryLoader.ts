@@ -18,10 +18,20 @@ const meaningMaps: Record<Language, Record<string, string>> = {
   ko: koMeanings as Record<string, string>,
 };
 
+const dictionaryCache = new Map<Language, WordEntry[]>();
+
 export function loadDictionary(language: Language): WordEntry[] {
+  const cached = dictionaryCache.get(language);
+  if (cached) {
+    return cached;
+  }
+
   const meanings = meaningMaps[language] ?? meaningMaps.en;
-  return (baseData as { words: Omit<WordEntry, 'meaning'>[] }).words.map((word) => ({
+  const words = (baseData as { words: Omit<WordEntry, 'meaning'>[] }).words.map((word) => ({
     ...word,
     meaning: meanings[word.id] ?? enMeanings[word.id as keyof typeof enMeanings] ?? getWordDisplayText(word),
   }));
+
+  dictionaryCache.set(language, words);
+  return words;
 }
