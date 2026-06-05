@@ -11,7 +11,7 @@
         "kana": "しごとする",
         "romaji": "shigotosuru"
       },
-      "meaning": "work; job",
+      "meaning": "to work; to do a job",
       "conjugations": {
         "polite": "しごとします",
         "negative_plain": "しごとしない",
@@ -41,7 +41,7 @@
         "kana": "でんわする",
         "romaji": "denwasuru"
       },
-      "meaning": "telephone call; phone call",
+      "meaning": "to call; to telephone",
       "conjugations": {
         "polite": "でんわします",
         "negative_plain": "でんわしない",
@@ -71,7 +71,7 @@
         "kana": "けっこんする",
         "romaji": "kekkonsuru"
       },
-      "meaning": "marriage",
+      "meaning": "to get married; to marry",
       "conjugations": {
         "polite": "けっこんします",
         "negative_plain": "けっこんしない",
@@ -131,7 +131,7 @@
         "kana": "りょこうする",
         "romaji": "ryokousuru"
       },
-      "meaning": "travel; trip",
+      "meaning": "to travel; to go on a trip",
       "conjugations": {
         "polite": "りょこうします",
         "negative_plain": "りょこうしない",
@@ -161,7 +161,7 @@
         "kana": "りょうりする",
         "romaji": "ryourisuru"
       },
-      "meaning": "cooking; cookery",
+      "meaning": "to cook; to prepare food",
       "conjugations": {
         "polite": "りょうりします",
         "negative_plain": "りょうりしない",
@@ -191,7 +191,7 @@
         "kana": "いみする",
         "romaji": "imisuru"
       },
-      "meaning": "meaning; significance",
+      "meaning": "to mean; to signify",
       "conjugations": {
         "polite": "いみします",
         "negative_plain": "いみしない",
@@ -221,7 +221,7 @@
         "kana": "さんぽする",
         "romaji": "sanposuru"
       },
-      "meaning": "walk; stroll",
+      "meaning": "to take a walk; to stroll",
       "conjugations": {
         "polite": "さんぽします",
         "negative_plain": "さんぽしない",
@@ -251,7 +251,7 @@
         "kana": "じゅぎょうする",
         "romaji": "jugyousuru"
       },
-      "meaning": "lesson; class",
+      "meaning": "to lesson; to class",
       "conjugations": {
         "polite": "じゅぎょうします",
         "negative_plain": "じゅぎょうしない",
@@ -281,7 +281,7 @@
         "kana": "かいものする",
         "romaji": "kaimonosuru"
       },
-      "meaning": "shopping; purchased goods",
+      "meaning": "to shop; to do shopping",
       "conjugations": {
         "polite": "かいものします",
         "negative_plain": "かいものしない",
@@ -311,7 +311,7 @@
         "kana": "そうじする",
         "romaji": "soujisuru"
       },
-      "meaning": "cleaning; sweeping",
+      "meaning": "to clean; to sweep",
       "conjugations": {
         "polite": "そうじします",
         "negative_plain": "そうじしない",
@@ -332,30 +332,6 @@
       }
     },
     {
-      "id": "na_otona",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "大人",
-        "kana": "おとな",
-        "romaji": "otona"
-      },
-      "meaning": "adult; grown-up",
-      "conjugations": {
-        "polite": "おとなです",
-        "negative_plain": "おとなじゃない",
-        "negative_polite": "おとなじゃありません",
-        "past_plain": "おとなだった",
-        "past_polite": "おとなでした",
-        "past_negative_plain": "おとなじゃなかった",
-        "past_negative_polite": "おとなじゃありませんでした",
-        "te_form": "おとなで",
-        "conditional_ba": "おとなであれば",
-        "conditional_tara": "おとなだったら"
-      }
-    },
-    {
       "id": "v_sakubunsuru",
       "level": "N5",
       "group": "suru",
@@ -365,7 +341,7 @@
         "kana": "さくぶんする",
         "romaji": "sakubunsuru"
       },
-      "meaning": "writing (an essay, prose, etc.); composition",
+      "meaning": "to write an essay; to compose",
       "conjugations": {
         "polite": "さくぶんします",
         "negative_plain": "さくぶんしない",
@@ -395,7 +371,7 @@
         "kana": "せんたくする",
         "romaji": "sentakusuru"
       },
-      "meaning": "washing; laundry",
+      "meaning": "to do laundry; to wash",
       "conjugations": {
         "polite": "せんたくします",
         "negative_plain": "せんたくしない",
@@ -413,30 +389,6 @@
         "volitional": "せんたくしよう",
         "conditional_ba": "せんたくすれば",
         "conditional_tara": "せんたくしたら"
-      }
-    },
-    {
-      "id": "na_kiiro",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "黄色",
-        "kana": "きいろ",
-        "romaji": "kiiro"
-      },
-      "meaning": "yellow; amber",
-      "conjugations": {
-        "polite": "きいろです",
-        "negative_plain": "きいろじゃない",
-        "negative_polite": "きいろじゃありません",
-        "past_plain": "きいろだった",
-        "past_polite": "きいろでした",
-        "past_negative_plain": "きいろじゃなかった",
-        "past_negative_polite": "きいろじゃありませんでした",
-        "te_form": "きいろで",
-        "conditional_ba": "きいろであれば",
-        "conditional_tara": "きいろだったら"
       }
     },
     {
@@ -573,12 +525,6 @@
         "past_negative_plain": "なかった",
         "past_negative_polite": "ありませんでした",
         "te_form": "あって",
-        "potential": "あれる",
-        "passive": "あられる",
-        "causative": "あらせる",
-        "causative_passive": "あらせられる",
-        "imperative": "あれ",
-        "volitional": "あろう",
         "conditional_ba": "あれば",
         "conditional_tara": "あったら"
       }
@@ -633,12 +579,6 @@
         "past_negative_plain": "できなかった",
         "past_negative_polite": "できませんでした",
         "te_form": "できて",
-        "potential": "できられる",
-        "passive": "できられる",
-        "causative": "できさせる",
-        "causative_passive": "できさせられる",
-        "imperative": "できろ",
-        "volitional": "できよう",
         "conditional_ba": "できれば",
         "conditional_tara": "できたら"
       }
@@ -707,7 +647,7 @@
         "kana": "しる",
         "romaji": "shiru"
       },
-      "meaning": "to know; to be aware (of)",
+      "meaning": "to know",
       "conjugations": {
         "polite": "しります",
         "negative_plain": "しらない",
@@ -721,8 +661,6 @@
         "passive": "しられる",
         "causative": "しらせる",
         "causative_passive": "しらせられる",
-        "imperative": "しれ",
-        "volitional": "しろう",
         "conditional_ba": "しれば",
         "conditional_tara": "しったら"
       }
@@ -911,7 +849,7 @@
         "kana": "べんきょうする",
         "romaji": "benkyousuru"
       },
-      "meaning": "study",
+      "meaning": "to study",
       "conjugations": {
         "polite": "べんきょうします",
         "negative_plain": "べんきょうしない",
@@ -1238,30 +1176,6 @@
       }
     },
     {
-      "id": "na_amari",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "余り",
-        "kana": "あまり",
-        "romaji": "amari"
-      },
-      "meaning": "remainder; remnant",
-      "conjugations": {
-        "polite": "あまりです",
-        "negative_plain": "あまりじゃない",
-        "negative_polite": "あまりじゃありません",
-        "past_plain": "あまりだった",
-        "past_polite": "あまりでした",
-        "past_negative_plain": "あまりじゃなかった",
-        "past_negative_polite": "あまりじゃありませんでした",
-        "te_form": "あまりで",
-        "conditional_ba": "あまりであれば",
-        "conditional_tara": "あまりだったら"
-      }
-    },
-    {
       "id": "ia_muzukashii",
       "level": "N5",
       "group": "i-adj",
@@ -1459,7 +1373,7 @@
       "group": "i-adj",
       "word_type": "i-adj",
       "dictionary_form": {
-        "kanji": "早い",
+        "kanji": "速い",
         "kana": "はやい",
         "romaji": "hayai"
       },
@@ -1721,7 +1635,7 @@
         "kana": "しつもんする",
         "romaji": "shitsumonsuru"
       },
-      "meaning": "question; inquiry",
+      "meaning": "to question; to inquiry",
       "conjugations": {
         "polite": "しつもんします",
         "negative_plain": "しつもんしない",
@@ -2339,7 +2253,7 @@
         "kana": "ひまする",
         "romaji": "himasuru"
       },
-      "meaning": "spare time; free time",
+      "meaning": "to have free time; to be idle",
       "conjugations": {
         "polite": "ひまします",
         "negative_plain": "ひましない",
@@ -2369,7 +2283,7 @@
         "kana": "おちゃする",
         "romaji": "ochasuru"
       },
-      "meaning": "tea (esp. green or barley)",
+      "meaning": "to go for tea; to go to a cafe",
       "conjugations": {
         "polite": "おちゃします",
         "negative_plain": "おちゃしない",
@@ -2435,30 +2349,6 @@
         "te_form": "だいすきで",
         "conditional_ba": "だいすきであれば",
         "conditional_tara": "だいすきだったら"
-      }
-    },
-    {
-      "id": "na_tabun",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "多分",
-        "kana": "たぶん",
-        "romaji": "tabun"
-      },
-      "meaning": "probably; likely",
-      "conjugations": {
-        "polite": "たぶんです",
-        "negative_plain": "たぶんじゃない",
-        "negative_polite": "たぶんじゃありません",
-        "past_plain": "たぶんだった",
-        "past_polite": "たぶんでした",
-        "past_negative_plain": "たぶんじゃなかった",
-        "past_negative_polite": "たぶんじゃありませんでした",
-        "te_form": "たぶんで",
-        "conditional_ba": "たぶんであれば",
-        "conditional_tara": "たぶんだったら"
       }
     },
     {
@@ -2597,7 +2487,7 @@
         "kana": "れんしゅうする",
         "romaji": "renshuusuru"
       },
-      "meaning": "practice; training",
+      "meaning": "to practice; to training",
       "conjugations": {
         "polite": "れんしゅうします",
         "negative_plain": "れんしゅうしない",
@@ -3237,12 +3127,6 @@
         "past_negative_plain": "わからなかった",
         "past_negative_polite": "わかりませんでした",
         "te_form": "わかって",
-        "potential": "わかれる",
-        "passive": "わかられる",
-        "causative": "わからせる",
-        "causative_passive": "わからせられる",
-        "imperative": "わかれ",
-        "volitional": "わかろう",
         "conditional_ba": "わかれば",
         "conditional_tara": "わかったら"
       }
@@ -3305,30 +3189,6 @@
         "volitional": "かこう",
         "conditional_ba": "かけば",
         "conditional_tara": "かいたら"
-      }
-    },
-    {
-      "id": "na_takusan",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "沢山",
-        "kana": "たくさん",
-        "romaji": "takusan"
-      },
-      "meaning": "a lot; lots",
-      "conjugations": {
-        "polite": "たくさんです",
-        "negative_plain": "たくさんじゃない",
-        "negative_polite": "たくさんじゃありません",
-        "past_plain": "たくさんだった",
-        "past_polite": "たくさんでした",
-        "past_negative_plain": "たくさんじゃなかった",
-        "past_negative_polite": "たくさんじゃありませんでした",
-        "te_form": "たくさんで",
-        "conditional_ba": "たくさんであれば",
-        "conditional_tara": "たくさんだったら"
       }
     },
     {
@@ -3619,8 +3479,6 @@
         "passive": "ふられる",
         "causative": "ふらせる",
         "causative_passive": "ふらせられる",
-        "imperative": "ふれ",
-        "volitional": "ふろう",
         "conditional_ba": "ふれば",
         "conditional_tara": "ふったら"
       }
@@ -3787,8 +3645,6 @@
         "passive": "かかられる",
         "causative": "かからせる",
         "causative_passive": "かからせられる",
-        "imperative": "かかれ",
-        "volitional": "かかろう",
         "conditional_ba": "かかれば",
         "conditional_tara": "かかったら"
       }
@@ -3917,7 +3773,7 @@
         "kana": "つかれる",
         "romaji": "tsukareru"
       },
-      "meaning": "to get tired; to tire",
+      "meaning": "to get tired; to become fatigued",
       "conjugations": {
         "polite": "つかれます",
         "negative_plain": "つかれない",
@@ -3931,8 +3787,6 @@
         "passive": "つかれられる",
         "causative": "つかれさせる",
         "causative_passive": "つかれさせられる",
-        "imperative": "つかれろ",
-        "volitional": "つかれよう",
         "conditional_ba": "つかれれば",
         "conditional_tara": "つかれたら"
       }
@@ -4031,7 +3885,7 @@
         "kana": "ちがう",
         "romaji": "chigau"
       },
-      "meaning": "to differ (from); to be different",
+      "meaning": "to differ; to be different",
       "conjugations": {
         "polite": "ちがいます",
         "negative_plain": "ちがわない",
@@ -4045,8 +3899,6 @@
         "passive": "ちがわれる",
         "causative": "ちがわせる",
         "causative_passive": "ちがわせられる",
-        "imperative": "ちがえ",
-        "volitional": "ちがおう",
         "conditional_ba": "ちがえば",
         "conditional_tara": "ちがったら"
       }
@@ -4121,7 +3973,7 @@
         "kana": "こまる",
         "romaji": "komaru"
       },
-      "meaning": "to be troubled; to have difficulty",
+      "meaning": "to be troubled; to be at a loss",
       "conjugations": {
         "polite": "こまります",
         "negative_plain": "こまらない",
@@ -4135,8 +3987,6 @@
         "passive": "こまられる",
         "causative": "こまらせる",
         "causative_passive": "こまらせられる",
-        "imperative": "こまれ",
-        "volitional": "こまろう",
         "conditional_ba": "こまれば",
         "conditional_tara": "こまったら"
       }
@@ -4161,12 +4011,6 @@
         "past_negative_plain": "うまれなかった",
         "past_negative_polite": "うまれませんでした",
         "te_form": "うまれて",
-        "potential": "うまれられる",
-        "passive": "うまれられる",
-        "causative": "うまれさせる",
-        "causative_passive": "うまれさせられる",
-        "imperative": "うまれろ",
-        "volitional": "うまれよう",
         "conditional_ba": "うまれれば",
         "conditional_tara": "うまれたら"
       }
@@ -4195,8 +4039,6 @@
         "passive": "はじまられる",
         "causative": "はじまらせる",
         "causative_passive": "はじまらせられる",
-        "imperative": "はじまれ",
-        "volitional": "はじまろう",
         "conditional_ba": "はじまれば",
         "conditional_tara": "はじまったら"
       }
@@ -4879,7 +4721,7 @@
       "group": "i-adj",
       "word_type": "i-adj",
       "dictionary_form": {
-        "kanji": "煩い",
+        "kanji": "うるさい",
         "kana": "うるさい",
         "romaji": "urusai"
       },
@@ -4951,8 +4793,6 @@
         "passive": "しまられる",
         "causative": "しまらせる",
         "causative_passive": "しまらせられる",
-        "imperative": "しまれ",
-        "volitional": "しまろう",
         "conditional_ba": "しまれば",
         "conditional_tara": "しまったら"
       }
@@ -4963,7 +4803,7 @@
       "group": "i-adj",
       "word_type": "i-adj",
       "dictionary_form": {
-        "kanji": "詰らない",
+        "kanji": "つまらない",
         "kana": "つまらない",
         "romaji": "tsumaranai"
       },
@@ -5005,8 +4845,6 @@
         "passive": "さかれる",
         "causative": "さかせる",
         "causative_passive": "さかせられる",
-        "imperative": "さけ",
-        "volitional": "さこう",
         "conditional_ba": "さけば",
         "conditional_tara": "さいたら"
       }
@@ -5185,8 +5023,6 @@
         "passive": "くもられる",
         "causative": "くもらせる",
         "causative_passive": "くもらせられる",
-        "imperative": "くもれ",
-        "volitional": "くもろう",
         "conditional_ba": "くもれば",
         "conditional_tara": "くもったら"
       }
@@ -5323,8 +5159,6 @@
         "passive": "さされる",
         "causative": "ささせる",
         "causative_passive": "ささせられる",
-        "imperative": "させ",
-        "volitional": "さそう",
         "conditional_ba": "させば",
         "conditional_tara": "さしたら"
       }
@@ -5367,9 +5201,9 @@
       "dictionary_form": {
         "kanji": "プールする",
         "kana": "プールする",
-        "romaji": "プルsuru"
+        "romaji": "puurusuru"
       },
-      "meaning": "(swimming) pool",
+      "meaning": "to swim; to go to the pool",
       "conjugations": {
         "polite": "プールします",
         "negative_plain": "プールしない",
@@ -5397,9 +5231,9 @@
       "dictionary_form": {
         "kanji": "テストする",
         "kana": "テストする",
-        "romaji": "テストsuru"
+        "romaji": "tesutosuru"
       },
-      "meaning": "test (of ability, knowledge, etc.); exam",
+      "meaning": "to test; to take a test",
       "conjugations": {
         "polite": "テストします",
         "negative_plain": "テストしない",
@@ -5427,9 +5261,9 @@
       "dictionary_form": {
         "kanji": "ポストする",
         "kana": "ポストする",
-        "romaji": "ポストsuru"
+        "romaji": "posutosuru"
       },
-      "meaning": "postbox; mailbox",
+      "meaning": "to post; to mail; to put in a mailbox",
       "conjugations": {
         "polite": "ポストします",
         "negative_plain": "ポストしない",
@@ -5457,9 +5291,9 @@
       "dictionary_form": {
         "kanji": "コピーする",
         "kana": "コピーする",
-        "romaji": "コピsuru"
+        "romaji": "kopiisuru"
       },
-      "meaning": "copy; photocopy",
+      "meaning": "to copy; to photocopy",
       "conjugations": {
         "polite": "コピーします",
         "negative_plain": "コピーしない",
@@ -5485,7 +5319,7 @@
       "group": "suru",
       "word_type": "verb",
       "dictionary_form": {
-        "kanji": "為るする",
+        "kanji": "する",
         "kana": "する",
         "romaji": "suru"
       },
@@ -5564,30 +5398,6 @@
       }
     },
     {
-      "id": "na_mada",
-      "level": "N5",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "未だ",
-        "kana": "まだ",
-        "romaji": "mada"
-      },
-      "meaning": "still; as yet",
-      "conjugations": {
-        "polite": "まだです",
-        "negative_plain": "まだじゃない",
-        "negative_polite": "まだじゃありません",
-        "past_plain": "まだだった",
-        "past_polite": "まだでした",
-        "past_negative_plain": "まだじゃなかった",
-        "past_negative_polite": "まだじゃありませんでした",
-        "te_form": "まだで",
-        "conditional_ba": "まだであれば",
-        "conditional_tara": "まだだったら"
-      }
-    },
-    {
       "id": "v_aku",
       "level": "N5",
       "group": "godan",
@@ -5618,36 +5428,6 @@
       }
     },
     {
-      "id": "v_douzosuru",
-      "level": "N5",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "どうぞする",
-        "kana": "どうぞする",
-        "romaji": "douzosuru"
-      },
-      "meaning": "please; kindly",
-      "conjugations": {
-        "polite": "どうぞします",
-        "negative_plain": "どうぞしない",
-        "negative_polite": "どうぞしません",
-        "past_plain": "どうぞした",
-        "past_polite": "どうぞしました",
-        "past_negative_plain": "どうぞしなかった",
-        "past_negative_polite": "どうぞしませんでした",
-        "te_form": "どうぞして",
-        "potential": "どうぞできる",
-        "passive": "どうぞされる",
-        "causative": "どうぞさせる",
-        "causative_passive": "どうぞさせられる",
-        "imperative": "どうぞしろ",
-        "volitional": "どうぞしよう",
-        "conditional_ba": "どうぞすれば",
-        "conditional_tara": "どうぞしたら"
-      }
-    },
-    {
       "id": "v_yukkurisuru",
       "level": "N5",
       "group": "suru",
@@ -5657,7 +5437,7 @@
         "kana": "ゆっくりする",
         "romaji": "yukkurisuru"
       },
-      "meaning": "slowly; unhurriedly",
+      "meaning": "to take it easy; to relax",
       "conjugations": {
         "polite": "ゆっくりします",
         "negative_plain": "ゆっくりしない",
@@ -5685,9 +5465,9 @@
       "dictionary_form": {
         "kanji": "ノートする",
         "kana": "ノートする",
-        "romaji": "ノトsuru"
+        "romaji": "nootosuru"
       },
-      "meaning": "notebook; copy-book",
+      "meaning": "to take notes; to jot down",
       "conjugations": {
         "polite": "ノートします",
         "negative_plain": "ノートしない",
@@ -5769,9 +5549,9 @@
       "dictionary_form": {
         "kanji": "マッチする",
         "kana": "マッチする",
-        "romaji": "マッチsuru"
+        "romaji": "matchisuru"
       },
-      "meaning": "match (contest)",
+      "meaning": "to match; to coincide; to go well with",
       "conjugations": {
         "polite": "マッチします",
         "negative_plain": "マッチしない",
@@ -5801,7 +5581,7 @@
         "kana": "せいかつする",
         "romaji": "seikatsusuru"
       },
-      "meaning": "life; living",
+      "meaning": "to life; to living",
       "conjugations": {
         "polite": "せいかつします",
         "negative_plain": "せいかつしない",
@@ -5831,7 +5611,7 @@
         "kana": "ちゅういする",
         "romaji": "chuuisuru"
       },
-      "meaning": "attention; notice",
+      "meaning": "to attention; to notice",
       "conjugations": {
         "polite": "ちゅういします",
         "negative_plain": "ちゅういしない",
@@ -5891,7 +5671,7 @@
         "kana": "せつめいする",
         "romaji": "setsumeisuru"
       },
-      "meaning": "explanation; exposition",
+      "meaning": "to explanation; to exposition",
       "conjugations": {
         "polite": "せつめいします",
         "negative_plain": "せつめいしない",
@@ -5945,7 +5725,7 @@
         "kana": "せんそうする",
         "romaji": "sensousuru"
       },
-      "meaning": "war",
+      "meaning": "to wage war; to fight a war",
       "conjugations": {
         "polite": "せんそうします",
         "negative_plain": "せんそうしない",
@@ -5975,7 +5755,7 @@
         "kana": "かんけいする",
         "romaji": "kankeisuru"
       },
-      "meaning": "relation; relationship",
+      "meaning": "to be related; to have a connection with",
       "conjugations": {
         "polite": "かんけいします",
         "negative_plain": "かんけいしない",
@@ -6005,7 +5785,7 @@
         "kana": "けんきゅうする",
         "romaji": "kenkyuusuru"
       },
-      "meaning": "research; study",
+      "meaning": "to research; to study",
       "conjugations": {
         "polite": "けんきゅうします",
         "negative_plain": "けんきゅうしない",
@@ -6035,7 +5815,7 @@
         "kana": "かいぎする",
         "romaji": "kaigisuru"
       },
-      "meaning": "meeting; conference",
+      "meaning": "to meeting; to conference",
       "conjugations": {
         "polite": "かいぎします",
         "negative_plain": "かいぎしない",
@@ -6089,7 +5869,7 @@
         "kana": "きょういくする",
         "romaji": "kyouikusuru"
       },
-      "meaning": "education; schooling",
+      "meaning": "to education; to schooling",
       "conjugations": {
         "polite": "きょういくします",
         "negative_plain": "きょういくしない",
@@ -6143,7 +5923,7 @@
         "kana": "こしょうする",
         "romaji": "koshousuru"
       },
-      "meaning": "fault; trouble",
+      "meaning": "to fault; to trouble",
       "conjugations": {
         "polite": "こしょうします",
         "negative_plain": "こしょうしない",
@@ -6197,7 +5977,7 @@
         "kana": "そつぎょうする",
         "romaji": "sotsugyousuru"
       },
-      "meaning": "graduation; completion (of a course)",
+      "meaning": "to graduation; to completion (of a course)",
       "conjugations": {
         "polite": "そつぎょうします",
         "negative_plain": "そつぎょうしない",
@@ -6215,36 +5995,6 @@
         "volitional": "そつぎょうしよう",
         "conditional_ba": "そつぎょうすれば",
         "conditional_tara": "そつぎょうしたら"
-      }
-    },
-    {
-      "id": "v_kagakusuru",
-      "level": "N4",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "科学する",
-        "kana": "かがくする",
-        "romaji": "kagakusuru"
-      },
-      "meaning": "science",
-      "conjugations": {
-        "polite": "かがくします",
-        "negative_plain": "かがくしない",
-        "negative_polite": "かがくしません",
-        "past_plain": "かがくした",
-        "past_polite": "かがくしました",
-        "past_negative_plain": "かがくしなかった",
-        "past_negative_polite": "かがくしませんでした",
-        "te_form": "かがくして",
-        "potential": "かがくできる",
-        "passive": "かがくされる",
-        "causative": "かがくさせる",
-        "causative_passive": "かがくさせられる",
-        "imperative": "かがくしろ",
-        "volitional": "かがくしよう",
-        "conditional_ba": "かがくすれば",
-        "conditional_tara": "かがくしたら"
       }
     },
     {
@@ -6281,7 +6031,7 @@
         "kana": "すいえいする",
         "romaji": "suieisuru"
       },
-      "meaning": "swimming",
+      "meaning": "to swim; to do swimming",
       "conjugations": {
         "polite": "すいえいします",
         "negative_plain": "すいえいしない",
@@ -6311,7 +6061,7 @@
         "kana": "こうぎする",
         "romaji": "kougisuru"
       },
-      "meaning": "lecture",
+      "meaning": "to lecture; to give a lecture",
       "conjugations": {
         "polite": "こうぎします",
         "negative_plain": "こうぎしない",
@@ -6341,7 +6091,7 @@
         "kana": "せいさんする",
         "romaji": "seisansuru"
       },
-      "meaning": "production; manufacture",
+      "meaning": "to production; to manufacture",
       "conjugations": {
         "polite": "せいさんします",
         "negative_plain": "せいさんしない",
@@ -6371,7 +6121,7 @@
         "kana": "かいわする",
         "romaji": "kaiwasuru"
       },
-      "meaning": "conversation; talk",
+      "meaning": "to conversation; to talk",
       "conjugations": {
         "polite": "かいわします",
         "negative_plain": "かいわしない",
@@ -6401,7 +6151,7 @@
         "kana": "ほんやくする",
         "romaji": "honyakusuru"
       },
-      "meaning": "translation",
+      "meaning": "to translate; to do translation",
       "conjugations": {
         "polite": "ほんやくします",
         "negative_plain": "ほんやくしない",
@@ -6431,7 +6181,7 @@
         "kana": "ぼうえきする",
         "romaji": "bouekisuru"
       },
-      "meaning": "(foreign) trade; (international) commerce",
+      "meaning": "to (foreign) trade; to (international) commerce",
       "conjugations": {
         "polite": "ぼうえきします",
         "negative_plain": "ぼうえきしない",
@@ -6452,36 +6202,6 @@
       }
     },
     {
-      "id": "v_koutsuusuru",
-      "level": "N4",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "交通する",
-        "kana": "こうつうする",
-        "romaji": "koutsuusuru"
-      },
-      "meaning": "traffic; transportation",
-      "conjugations": {
-        "polite": "こうつうします",
-        "negative_plain": "こうつうしない",
-        "negative_polite": "こうつうしません",
-        "past_plain": "こうつうした",
-        "past_polite": "こうつうしました",
-        "past_negative_plain": "こうつうしなかった",
-        "past_negative_polite": "こうつうしませんでした",
-        "te_form": "こうつうして",
-        "potential": "こうつうできる",
-        "passive": "こうつうされる",
-        "causative": "こうつうさせる",
-        "causative_passive": "こうつうさせられる",
-        "imperative": "こうつうしろ",
-        "volitional": "こうつうしよう",
-        "conditional_ba": "こうつうすれば",
-        "conditional_tara": "こうつうしたら"
-      }
-    },
-    {
       "id": "v_nyuugakusuru",
       "level": "N4",
       "group": "suru",
@@ -6491,7 +6211,7 @@
         "kana": "にゅうがくする",
         "romaji": "nyuugakusuru"
       },
-      "meaning": "admission (to a school or university); entrance",
+      "meaning": "to enter a school; to enroll; to be admitted",
       "conjugations": {
         "polite": "にゅうがくします",
         "negative_plain": "にゅうがくしない",
@@ -6521,7 +6241,7 @@
         "kana": "はつおんする",
         "romaji": "hatsuonsuru"
       },
-      "meaning": "pronunciation",
+      "meaning": "to pronounce; to articulate",
       "conjugations": {
         "polite": "はつおんします",
         "negative_plain": "はつおんしない",
@@ -6551,7 +6271,7 @@
         "kana": "ちゅうしゃする",
         "romaji": "chuushasuru"
       },
-      "meaning": "injection; jab",
+      "meaning": "to injection; to jab",
       "conjugations": {
         "polite": "ちゅうしゃします",
         "negative_plain": "ちゅうしゃしない",
@@ -6581,7 +6301,7 @@
         "kana": "はなみする",
         "romaji": "hanamisuru"
       },
-      "meaning": "cherry blossom viewing; flower viewing",
+      "meaning": "to cherry blossom viewing; to flower viewing",
       "conjugations": {
         "polite": "はなみします",
         "negative_plain": "はなみしない",
@@ -6611,7 +6331,7 @@
         "kana": "けんかする",
         "romaji": "kenkasuru"
       },
-      "meaning": "quarrel; brawl",
+      "meaning": "to quarrel; to brawl",
       "conjugations": {
         "polite": "けんかします",
         "negative_plain": "けんかしない",
@@ -6641,7 +6361,7 @@
         "kana": "けんぶつする",
         "romaji": "kenbutsusuru"
       },
-      "meaning": "sightseeing; watching",
+      "meaning": "to sightseeing; to watching",
       "conjugations": {
         "polite": "けんぶつします",
         "negative_plain": "けんぶつしない",
@@ -6735,12 +6455,6 @@
         "past_negative_plain": "みえなかった",
         "past_negative_polite": "みえませんでした",
         "te_form": "みえて",
-        "potential": "みえられる",
-        "passive": "みえられる",
-        "causative": "みえさせる",
-        "causative_passive": "みえさせられる",
-        "imperative": "みえろ",
-        "volitional": "みえよう",
         "conditional_ba": "みえれば",
         "conditional_tara": "みえたら"
       }
@@ -6869,7 +6583,7 @@
         "kana": "しけんする",
         "romaji": "shikensuru"
       },
-      "meaning": "examination; exam",
+      "meaning": "to examination; to exam",
       "conjugations": {
         "polite": "しけんします",
         "negative_plain": "しけんしない",
@@ -6923,7 +6637,7 @@
         "kana": "しっぱいする",
         "romaji": "shippaisuru"
       },
-      "meaning": "failure; mistake",
+      "meaning": "to failure; to mistake",
       "conjugations": {
         "polite": "しっぱいします",
         "negative_plain": "しっぱいしない",
@@ -6953,7 +6667,7 @@
         "kana": "いけんする",
         "romaji": "ikensuru"
       },
-      "meaning": "opinion; view",
+      "meaning": "to opinion; to view",
       "conjugations": {
         "polite": "いけんします",
         "negative_plain": "いけんしない",
@@ -6974,36 +6688,6 @@
       }
     },
     {
-      "id": "v_juubunsuru",
-      "level": "N4",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "十分する",
-        "kana": "じゅうぶんする",
-        "romaji": "juubunsuru"
-      },
-      "meaning": "enough; sufficient",
-      "conjugations": {
-        "polite": "じゅうぶんします",
-        "negative_plain": "じゅうぶんしない",
-        "negative_polite": "じゅうぶんしません",
-        "past_plain": "じゅうぶんした",
-        "past_polite": "じゅうぶんしました",
-        "past_negative_plain": "じゅうぶんしなかった",
-        "past_negative_polite": "じゅうぶんしませんでした",
-        "te_form": "じゅうぶんして",
-        "potential": "じゅうぶんできる",
-        "passive": "じゅうぶんされる",
-        "causative": "じゅうぶんさせる",
-        "causative_passive": "じゅうぶんさせられる",
-        "imperative": "じゅうぶんしろ",
-        "volitional": "じゅうぶんしよう",
-        "conditional_ba": "じゅうぶんすれば",
-        "conditional_tara": "じゅうぶんしたら"
-      }
-    },
-    {
       "id": "v_shiaisuru",
       "level": "N4",
       "group": "suru",
@@ -7013,7 +6697,7 @@
         "kana": "しあいする",
         "romaji": "shiaisuru"
       },
-      "meaning": "match; game",
+      "meaning": "to match; to game",
       "conjugations": {
         "polite": "しあいします",
         "negative_plain": "しあいしない",
@@ -7031,30 +6715,6 @@
         "volitional": "しあいしよう",
         "conditional_ba": "しあいすれば",
         "conditional_tara": "しあいしたら"
-      }
-    },
-    {
-      "id": "na_isshoukenmei",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "一生懸命",
-        "kana": "いっしょうけんめい",
-        "romaji": "isshoukenmei"
-      },
-      "meaning": "very hard; with utmost effort",
-      "conjugations": {
-        "polite": "いっしょうけんめいです",
-        "negative_plain": "いっしょうけんめいじゃない",
-        "negative_polite": "いっしょうけんめいじゃありません",
-        "past_plain": "いっしょうけんめいだった",
-        "past_polite": "いっしょうけんめいでした",
-        "past_negative_plain": "いっしょうけんめいじゃなかった",
-        "past_negative_polite": "いっしょうけんめいじゃありませんでした",
-        "te_form": "いっしょうけんめいで",
-        "conditional_ba": "いっしょうけんめいであれば",
-        "conditional_tara": "いっしょうけんめいだったら"
       }
     },
     {
@@ -7307,7 +6967,7 @@
         "kana": "はんたいする",
         "romaji": "hantaisuru"
       },
-      "meaning": "opposition; resistance",
+      "meaning": "to opposition; to resistance",
       "conjugations": {
         "polite": "はんたいします",
         "negative_plain": "はんたいしない",
@@ -7367,7 +7027,7 @@
         "kana": "やくそくする",
         "romaji": "yakusokusuru"
       },
-      "meaning": "promise; agreement",
+      "meaning": "to promise; to agreement",
       "conjugations": {
         "polite": "やくそくします",
         "negative_plain": "やくそくしない",
@@ -7441,8 +7101,6 @@
         "passive": "かわられる",
         "causative": "かわらせる",
         "causative_passive": "かわらせられる",
-        "imperative": "かわれ",
-        "volitional": "かわろう",
         "conditional_ba": "かわれば",
         "conditional_tara": "かわったら"
       }
@@ -7495,8 +7153,6 @@
         "passive": "おちられる",
         "causative": "おちさせる",
         "causative_passive": "おちさせられる",
-        "imperative": "おちろ",
-        "volitional": "おちよう",
         "conditional_ba": "おちれば",
         "conditional_tara": "おちたら"
       }
@@ -7511,7 +7167,7 @@
         "kana": "たのしむ",
         "romaji": "tanoshimu"
       },
-      "meaning": "to enjoy; to take pleasure in",
+      "meaning": "to enjoy; to have fun",
       "conjugations": {
         "polite": "たのしみます",
         "negative_plain": "たのしまない",
@@ -7541,7 +7197,7 @@
         "kana": "りようする",
         "romaji": "riyousuru"
       },
-      "meaning": "use; utilization",
+      "meaning": "to use; to utilization",
       "conjugations": {
         "polite": "りようします",
         "negative_plain": "りようしない",
@@ -7585,8 +7241,6 @@
         "passive": "まにあわれる",
         "causative": "まにあわせる",
         "causative_passive": "まにあわせられる",
-        "imperative": "まにあえ",
-        "volitional": "まにあおう",
         "conditional_ba": "まにあえば",
         "conditional_tara": "まにあったら"
       }
@@ -7601,7 +7255,7 @@
         "kana": "よていする",
         "romaji": "yoteisuru"
       },
-      "meaning": "plans; arrangement",
+      "meaning": "to plans; to arrangement",
       "conjugations": {
         "polite": "よていします",
         "negative_plain": "よていしない",
@@ -7751,7 +7405,7 @@
         "kana": "へんじする",
         "romaji": "henjisuru"
       },
-      "meaning": "reply; answer",
+      "meaning": "to reply; to answer",
       "conjugations": {
         "polite": "へんじします",
         "negative_plain": "へんじしない",
@@ -7910,30 +7564,6 @@
       }
     },
     {
-      "id": "na_taitei",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "大抵",
-        "kana": "たいてい",
-        "romaji": "taitei"
-      },
-      "meaning": "mostly; ordinarily",
-      "conjugations": {
-        "polite": "たいていです",
-        "negative_plain": "たいていじゃない",
-        "negative_polite": "たいていじゃありません",
-        "past_plain": "たいていだった",
-        "past_polite": "たいていでした",
-        "past_negative_plain": "たいていじゃなかった",
-        "past_negative_polite": "たいていじゃありませんでした",
-        "te_form": "たいていで",
-        "conditional_ba": "たいていであれば",
-        "conditional_tara": "たいていだったら"
-      }
-    },
-    {
       "id": "v_nokoru",
       "level": "N4",
       "group": "godan",
@@ -8003,7 +7633,7 @@
         "kana": "しょうらいする",
         "romaji": "shouraisuru"
       },
-      "meaning": "future; (future) prospects",
+      "meaning": "to future; to (future) prospects",
       "conjugations": {
         "polite": "しょうらいします",
         "negative_plain": "しょうらいしない",
@@ -8107,8 +7737,6 @@
         "passive": "やくにたたれる",
         "causative": "やくにたたせる",
         "causative_passive": "やくにたたせられる",
-        "imperative": "やくにたて",
-        "volitional": "やくにたとう",
         "conditional_ba": "やくにたてば",
         "conditional_tara": "やくにたったら"
       }
@@ -8123,7 +7751,7 @@
         "kana": "よやくする",
         "romaji": "yoyakusuru"
       },
-      "meaning": "reservation; appointment",
+      "meaning": "to reservation; to appointment",
       "conjugations": {
         "polite": "よやくします",
         "negative_plain": "よやくしない",
@@ -8153,7 +7781,7 @@
         "kana": "げんいんする",
         "romaji": "geninsuru"
       },
-      "meaning": "cause; origin",
+      "meaning": "to cause; to origin",
       "conjugations": {
         "polite": "げんいんします",
         "negative_plain": "げんいんしない",
@@ -8183,7 +7811,7 @@
         "kana": "どろぼうする",
         "romaji": "dorobousuru"
       },
-      "meaning": "thief; burglar",
+      "meaning": "to steal; to commit theft",
       "conjugations": {
         "polite": "どろぼうします",
         "negative_plain": "どろぼうしない",
@@ -8257,8 +7885,6 @@
         "passive": "みつかられる",
         "causative": "みつからせる",
         "causative_passive": "みつからせられる",
-        "imperative": "みつかれ",
-        "volitional": "みつかろう",
         "conditional_ba": "みつかれば",
         "conditional_tara": "みつかったら"
       }
@@ -8411,7 +8037,7 @@
         "kana": "しょうかいする",
         "romaji": "shoukaisuru"
       },
-      "meaning": "introduction; presentation",
+      "meaning": "to introduction; to presentation",
       "conjugations": {
         "polite": "しょうかいします",
         "negative_plain": "しょうかいしない",
@@ -8531,7 +8157,7 @@
         "kana": "むりする",
         "romaji": "murisuru"
       },
-      "meaning": "unreasonable; unnatural",
+      "meaning": "to overdo; to push too hard",
       "conjugations": {
         "polite": "むりします",
         "negative_plain": "むりしない",
@@ -8561,7 +8187,7 @@
         "kana": "よういする",
         "romaji": "youisuru"
       },
-      "meaning": "preparation; arrangements",
+      "meaning": "to preparation; to arrangements",
       "conjugations": {
         "polite": "よういします",
         "negative_plain": "よういしない",
@@ -8635,8 +8261,6 @@
         "passive": "こわれられる",
         "causative": "こわれさせる",
         "causative_passive": "こわれさせられる",
-        "imperative": "こわれろ",
-        "volitional": "こわれよう",
         "conditional_ba": "こわれれば",
         "conditional_tara": "こわれたら"
       }
@@ -8665,34 +8289,8 @@
         "passive": "たおれられる",
         "causative": "たおれさせる",
         "causative_passive": "たおれさせられる",
-        "imperative": "たおれろ",
-        "volitional": "たおれよう",
         "conditional_ba": "たおれれば",
         "conditional_tara": "たおれたら"
-      }
-    },
-    {
-      "id": "na_aji",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "味",
-        "kana": "あじ",
-        "romaji": "aji"
-      },
-      "meaning": "flavor; flavour",
-      "conjugations": {
-        "polite": "あじです",
-        "negative_plain": "あじじゃない",
-        "negative_polite": "あじじゃありません",
-        "past_plain": "あじだった",
-        "past_polite": "あじでした",
-        "past_negative_plain": "あじじゃなかった",
-        "past_negative_polite": "あじじゃありませんでした",
-        "te_form": "あじで",
-        "conditional_ba": "あじであれば",
-        "conditional_tara": "あじだったら"
       }
     },
     {
@@ -8753,7 +8351,7 @@
         "kana": "れんらくする",
         "romaji": "renrakusuru"
       },
-      "meaning": "contacting; (making) contact",
+      "meaning": "to contacting; to (making) contact",
       "conjugations": {
         "polite": "れんらくします",
         "negative_plain": "れんらくしない",
@@ -8881,8 +8479,6 @@
         "passive": "きまられる",
         "causative": "きまらせる",
         "causative_passive": "きまらせられる",
-        "imperative": "きまれ",
-        "volitional": "きまろう",
         "conditional_ba": "きまれば",
         "conditional_tara": "きまったら"
       }
@@ -8969,7 +8565,7 @@
         "kana": "きょうそうする",
         "romaji": "kyousousuru"
       },
-      "meaning": "competition; contest",
+      "meaning": "to competition; to contest",
       "conjugations": {
         "polite": "きょうそうします",
         "negative_plain": "きょうそうしない",
@@ -8999,7 +8595,7 @@
         "kana": "にゅういんする",
         "romaji": "nyuuinsuru"
       },
-      "meaning": "hospitalization; hospitalisation",
+      "meaning": "to be hospitalized; to be admitted to a hospital",
       "conjugations": {
         "polite": "にゅういんします",
         "negative_plain": "にゅういんしない",
@@ -9029,7 +8625,7 @@
         "kana": "るすする",
         "romaji": "rususuru"
       },
-      "meaning": "absence; being away from home",
+      "meaning": "to be away from home; to be absent",
       "conjugations": {
         "polite": "るすします",
         "negative_plain": "るすしない",
@@ -9089,7 +8685,7 @@
         "kana": "もうしあげる",
         "romaji": "moushiageru"
       },
-      "meaning": "to say; to tell",
+      "meaning": "to say (humble); to tell (humble)",
       "conjugations": {
         "polite": "もうしあげます",
         "negative_plain": "もうしあげない",
@@ -9173,7 +8769,7 @@
         "kana": "あんしんする",
         "romaji": "anshinsuru"
       },
-      "meaning": "peace of mind; relief",
+      "meaning": "to feel relieved; to be at ease",
       "conjugations": {
         "polite": "あんしんします",
         "negative_plain": "あんしんしない",
@@ -9401,7 +8997,7 @@
         "kana": "えんりょする",
         "romaji": "enryosuru"
       },
-      "meaning": "reserve; constraint",
+      "meaning": "to reserve; to constraint",
       "conjugations": {
         "polite": "えんりょします",
         "negative_plain": "えんりょしない",
@@ -9461,7 +9057,7 @@
         "kana": "つごうする",
         "romaji": "tsugousuru"
       },
-      "meaning": "circumstances; condition",
+      "meaning": "to circumstances; to condition",
       "conjugations": {
         "polite": "つごうします",
         "negative_plain": "つごうしない",
@@ -9569,7 +9165,7 @@
         "kana": "きゅうこうする",
         "romaji": "kyuukousuru"
       },
-      "meaning": "hurrying (to somewhere); rushing",
+      "meaning": "to hurry; to rush",
       "conjugations": {
         "polite": "きゅうこうします",
         "negative_plain": "きゅうこうしない",
@@ -9701,7 +9297,7 @@
         "kana": "だんぼうする",
         "romaji": "danbousuru"
       },
-      "meaning": "(indoor) heating",
+      "meaning": "to heat a room; to turn on the heater",
       "conjugations": {
         "polite": "だんぼうします",
         "negative_plain": "だんぼうしない",
@@ -9761,7 +9357,7 @@
         "kana": "たいいんする",
         "romaji": "taiinsuru"
       },
-      "meaning": "leaving hospital; discharge from hospital",
+      "meaning": "to be discharged from hospital",
       "conjugations": {
         "polite": "たいいんします",
         "negative_plain": "たいいんしない",
@@ -9815,7 +9411,7 @@
         "kana": "うけつけする",
         "romaji": "uketsukesuru"
       },
-      "meaning": "reception (desk); information desk",
+      "meaning": "to receive (at a desk); to handle reception",
       "conjugations": {
         "polite": "うけつけします",
         "negative_plain": "うけつけしない",
@@ -9845,7 +9441,7 @@
         "kana": "げしゅくする",
         "romaji": "geshukusuru"
       },
-      "meaning": "boarding; lodging",
+      "meaning": "to lodge; to board",
       "conjugations": {
         "polite": "げしゅくします",
         "negative_plain": "げしゅくしない",
@@ -9929,7 +9525,7 @@
         "kana": "れいぼうする",
         "romaji": "reibousuru"
       },
-      "meaning": "air conditioning; air cooling",
+      "meaning": "to cool a room; to turn on the air conditioning",
       "conjugations": {
         "polite": "れいぼうします",
         "negative_plain": "れいぼうしない",
@@ -10087,8 +9683,6 @@
         "passive": "おくれられる",
         "causative": "おくれさせる",
         "causative_passive": "おくれさせられる",
-        "imperative": "おくれろ",
-        "volitional": "おくれよう",
         "conditional_ba": "おくれれば",
         "conditional_tara": "おくれたら"
       }
@@ -10323,12 +9917,6 @@
         "past_negative_plain": "きこえなかった",
         "past_negative_polite": "きこえませんでした",
         "te_form": "きこえて",
-        "potential": "きこえられる",
-        "passive": "きこえられる",
-        "causative": "きこえさせる",
-        "causative_passive": "きこえさせられる",
-        "imperative": "きこえろ",
-        "volitional": "きこえよう",
         "conditional_ba": "きこえれば",
         "conditional_tara": "きこえたら"
       }
@@ -10507,8 +10095,6 @@
         "passive": "なくなられる",
         "causative": "なくならせる",
         "causative_passive": "なくならせられる",
-        "imperative": "なくなれ",
-        "volitional": "なくなろう",
         "conditional_ba": "なくなれば",
         "conditional_tara": "なくなったら"
       }
@@ -10721,7 +10307,7 @@
         "kana": "しばらくする",
         "romaji": "shibarakusuru"
       },
-      "meaning": "for a moment; for a minute",
+      "meaning": "to do for a while; to wait a moment",
       "conjugations": {
         "polite": "しばらくします",
         "negative_plain": "しばらくしない",
@@ -10841,7 +10427,7 @@
         "kana": "しっかりする",
         "romaji": "shikkarisuru"
       },
-      "meaning": "tightly (holding on); firmly",
+      "meaning": "to be firm; to pull oneself together",
       "conjugations": {
         "polite": "しっかりします",
         "negative_plain": "しっかりしない",
@@ -11119,8 +10705,6 @@
         "passive": "たりられる",
         "causative": "たりさせる",
         "causative_passive": "たりさせられる",
-        "imperative": "たりろ",
-        "volitional": "たりよう",
         "conditional_ba": "たりれば",
         "conditional_tara": "たりたら"
       }
@@ -11149,8 +10733,6 @@
         "passive": "なおられる",
         "causative": "なおらせる",
         "causative_passive": "なおらせられる",
-        "imperative": "なおれ",
-        "volitional": "なおろう",
         "conditional_ba": "なおれば",
         "conditional_tara": "なおったら"
       }
@@ -11167,19 +10749,19 @@
       },
       "meaning": "to do",
       "conjugations": {
-        "polite": "なさります",
+        "polite": "なさいます",
         "negative_plain": "なさらない",
-        "negative_polite": "なさりません",
+        "negative_polite": "なさいません",
         "past_plain": "なさった",
-        "past_polite": "なさりました",
+        "past_polite": "なさいました",
         "past_negative_plain": "なさらなかった",
-        "past_negative_polite": "なさりませんでした",
+        "past_negative_polite": "なさいませんでした",
         "te_form": "なさって",
         "potential": "なされる",
         "passive": "なさられる",
         "causative": "なさらせる",
         "causative_passive": "なさらせられる",
-        "imperative": "なされ",
+        "imperative": "なさい",
         "volitional": "なさろう",
         "conditional_ba": "なされば",
         "conditional_tara": "なさったら"
@@ -11341,8 +10923,6 @@
         "passive": "ぬれられる",
         "causative": "ぬれさせる",
         "causative_passive": "ぬれさせられる",
-        "imperative": "ぬれろ",
-        "volitional": "ぬれよう",
         "conditional_ba": "ぬれれば",
         "conditional_tara": "ぬれたら"
       }
@@ -11401,8 +10981,6 @@
         "passive": "ふとられる",
         "causative": "ふとらせる",
         "causative_passive": "ふとらせられる",
-        "imperative": "ふとれ",
-        "volitional": "ふとろう",
         "conditional_ba": "ふとれば",
         "conditional_tara": "ふとったら"
       }
@@ -11689,8 +11267,6 @@
         "passive": "やせられる",
         "causative": "やせさせる",
         "causative_passive": "やせさせられる",
-        "imperative": "やせろ",
-        "volitional": "やせよう",
         "conditional_ba": "やせれば",
         "conditional_tara": "やせたら"
       }
@@ -11839,8 +11415,6 @@
         "passive": "われられる",
         "causative": "われさせる",
         "causative_passive": "われさせられる",
-        "imperative": "われろ",
-        "volitional": "われよう",
         "conditional_ba": "われれば",
         "conditional_tara": "われたら"
       }
@@ -11869,8 +11443,6 @@
         "passive": "おれられる",
         "causative": "おれさせる",
         "causative_passive": "おれさせられる",
-        "imperative": "おれろ",
-        "volitional": "おれよう",
         "conditional_ba": "おれれば",
         "conditional_tara": "おれたら"
       }
@@ -12019,8 +11591,6 @@
         "passive": "やけられる",
         "causative": "やけさせる",
         "causative_passive": "やけさせられる",
-        "imperative": "やけろ",
-        "volitional": "やけよう",
         "conditional_ba": "やければ",
         "conditional_tara": "やけたら"
       }
@@ -12109,8 +11679,6 @@
         "passive": "かわかれる",
         "causative": "かわかせる",
         "causative_passive": "かわかせられる",
-        "imperative": "かわけ",
-        "volitional": "かわこう",
         "conditional_ba": "かわけば",
         "conditional_tara": "かわいたら"
       }
@@ -12209,7 +11777,7 @@
         "kana": "はいけんする",
         "romaji": "haikensuru"
       },
-      "meaning": "seeing; looking at",
+      "meaning": "to see (humble); to look at (humble)",
       "conjugations": {
         "polite": "はいけんします",
         "negative_plain": "はいけんしない",
@@ -12269,7 +11837,7 @@
         "kana": "よしゅうする",
         "romaji": "yoshuusuru"
       },
-      "meaning": "preparation for a lesson",
+      "meaning": "to prepare for a lesson; to preview",
       "conjugations": {
         "polite": "よしゅうします",
         "negative_plain": "よしゅうしない",
@@ -12299,7 +11867,7 @@
         "kana": "ねぼうする",
         "romaji": "nebousuru"
       },
-      "meaning": "sleeping in late; oversleeping",
+      "meaning": "to oversleep; to sleep in",
       "conjugations": {
         "polite": "ねぼうします",
         "negative_plain": "ねぼうしない",
@@ -12359,7 +11927,7 @@
         "kana": "ふくしゅうする",
         "romaji": "fukushuusuru"
       },
-      "meaning": "review (of learned material); revision",
+      "meaning": "to review; to revise",
       "conjugations": {
         "polite": "ふくしゅうします",
         "negative_plain": "ふくしゅうしない",
@@ -12441,9 +12009,9 @@
       "dictionary_form": {
         "kanji": "チェックする",
         "kana": "チェックする",
-        "romaji": "チェックsuru"
+        "romaji": "chekkusuru"
       },
-      "meaning": "check (pattern); plaid",
+      "meaning": "to check; to examine",
       "conjugations": {
         "polite": "チェックします",
         "negative_plain": "チェックしない",
@@ -12461,30 +12029,6 @@
         "volitional": "チェックしよう",
         "conditional_ba": "チェックすれば",
         "conditional_tara": "チェックしたら"
-      }
-    },
-    {
-      "id": "na_ippai",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "一杯",
-        "kana": "いっぱい",
-        "romaji": "ippai"
-      },
-      "meaning": "one cup (of); one glass (of)",
-      "conjugations": {
-        "polite": "いっぱいです",
-        "negative_plain": "いっぱいじゃない",
-        "negative_polite": "いっぱいじゃありません",
-        "past_plain": "いっぱいだった",
-        "past_polite": "いっぱいでした",
-        "past_negative_plain": "いっぱいじゃなかった",
-        "past_negative_polite": "いっぱいじゃありませんでした",
-        "te_form": "いっぱいで",
-        "conditional_ba": "いっぱいであれば",
-        "conditional_tara": "いっぱいだったら"
       }
     },
     {
@@ -12515,30 +12059,6 @@
         "volitional": "つつもう",
         "conditional_ba": "つつめば",
         "conditional_tara": "つつんだら"
-      }
-    },
-    {
-      "id": "na_sou",
-      "level": "N4",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "そう",
-        "kana": "そう",
-        "romaji": "sou"
-      },
-      "meaning": "appearing that; seeming that",
-      "conjugations": {
-        "polite": "そうです",
-        "negative_plain": "そうじゃない",
-        "negative_polite": "そうじゃありません",
-        "past_plain": "そうだった",
-        "past_polite": "そうでした",
-        "past_negative_plain": "そうじゃなかった",
-        "past_negative_polite": "そうじゃありませんでした",
-        "te_form": "そうで",
-        "conditional_ba": "そうであれば",
-        "conditional_tara": "そうだったら"
       }
     },
     {
@@ -12581,7 +12101,7 @@
         "kana": "はっきりする",
         "romaji": "hakkirisuru"
       },
-      "meaning": "clearly; plainly",
+      "meaning": "to be clear; to make clear; to clarify",
       "conjugations": {
         "polite": "はっきりします",
         "negative_plain": "はっきりしない",
@@ -12609,9 +12129,9 @@
       "dictionary_form": {
         "kanji": "プレゼントする",
         "kana": "プレゼントする",
-        "romaji": "プレゼントsuru"
+        "romaji": "purezentosuru"
       },
-      "meaning": "present; gift",
+      "meaning": "to give a present; to gift",
       "conjugations": {
         "polite": "プレゼントします",
         "negative_plain": "プレゼントしない",
@@ -12639,9 +12159,9 @@
       "dictionary_form": {
         "kanji": "タイプする",
         "kana": "タイプする",
-        "romaji": "タイプsuru"
+        "romaji": "taipusuru"
       },
-      "meaning": "type; kind",
+      "meaning": "to type",
       "conjugations": {
         "polite": "タイプします",
         "negative_plain": "タイプしない",
@@ -12669,9 +12189,9 @@
       "dictionary_form": {
         "kanji": "レポートする",
         "kana": "レポートする",
-        "romaji": "レポトsuru"
+        "romaji": "repootosuru"
       },
-      "meaning": "report; paper",
+      "meaning": "to report; to write a report",
       "conjugations": {
         "polite": "レポートします",
         "negative_plain": "レポートしない",
@@ -12703,19 +12223,19 @@
       },
       "meaning": "to say; to speak",
       "conjugations": {
-        "polite": "おっしゃります",
+        "polite": "おっしゃいます",
         "negative_plain": "おっしゃらない",
-        "negative_polite": "おっしゃりません",
+        "negative_polite": "おっしゃいません",
         "past_plain": "おっしゃった",
-        "past_polite": "おっしゃりました",
+        "past_polite": "おっしゃいました",
         "past_negative_plain": "おっしゃらなかった",
-        "past_negative_polite": "おっしゃりませんでした",
+        "past_negative_polite": "おっしゃいませんでした",
         "te_form": "おっしゃって",
         "potential": "おっしゃれる",
         "passive": "おっしゃられる",
         "causative": "おっしゃらせる",
         "causative_passive": "おっしゃらせられる",
-        "imperative": "おっしゃれ",
+        "imperative": "おっしゃい",
         "volitional": "おっしゃろう",
         "conditional_ba": "おっしゃれば",
         "conditional_tara": "おっしゃったら"
@@ -12733,19 +12253,19 @@
       },
       "meaning": "to come; to go",
       "conjugations": {
-        "polite": "いらっしゃります",
+        "polite": "いらっしゃいます",
         "negative_plain": "いらっしゃらない",
-        "negative_polite": "いらっしゃりません",
+        "negative_polite": "いらっしゃいません",
         "past_plain": "いらっしゃった",
-        "past_polite": "いらっしゃりました",
+        "past_polite": "いらっしゃいました",
         "past_negative_plain": "いらっしゃらなかった",
-        "past_negative_polite": "いらっしゃりませんでした",
+        "past_negative_polite": "いらっしゃいませんでした",
         "te_form": "いらっしゃって",
         "potential": "いらっしゃれる",
         "passive": "いらっしゃられる",
         "causative": "いらっしゃらせる",
         "causative_passive": "いらっしゃらせられる",
-        "imperative": "いらっしゃれ",
+        "imperative": "いらっしゃい",
         "volitional": "いらっしゃろう",
         "conditional_ba": "いらっしゃれば",
         "conditional_tara": "いらっしゃったら"
@@ -12775,8 +12295,6 @@
         "passive": "よごれられる",
         "causative": "よごれさせる",
         "causative_passive": "よごれさせられる",
-        "imperative": "よごれろ",
-        "volitional": "よごれよう",
         "conditional_ba": "よごれれば",
         "conditional_tara": "よごれたら"
       }
@@ -12791,7 +12309,7 @@
         "kana": "ごちそうする",
         "romaji": "gochisousuru"
       },
-      "meaning": "treat (esp. food and drink); entertainment",
+      "meaning": "to treat (to a meal); to entertain",
       "conjugations": {
         "polite": "ごちそうします",
         "negative_plain": "ごちそうしない",
@@ -12819,9 +12337,9 @@
       "dictionary_form": {
         "kanji": "ＦＡＸする",
         "kana": "ファックスする",
-        "romaji": "ファックスsuru"
+        "romaji": "fakkususuru"
       },
-      "meaning": "fax; facsimile",
+      "meaning": "to fax; to send a fax",
       "conjugations": {
         "polite": "ファックスします",
         "negative_plain": "ファックスしない",
@@ -12851,7 +12369,7 @@
         "kana": "すっとする",
         "romaji": "suttosuru"
       },
-      "meaning": "straight; quickly",
+      "meaning": "to do quickly; to act without hesitation",
       "conjugations": {
         "polite": "すっとします",
         "negative_plain": "すっとしない",
@@ -12939,9 +12457,9 @@
       "dictionary_form": {
         "kanji": "アルバイトする",
         "kana": "アルバイトする",
-        "romaji": "アルバイトsuru"
+        "romaji": "arubaitosuru"
       },
-      "meaning": "part-time job; side job",
+      "meaning": "to do a part-time job; to work part-time",
       "conjugations": {
         "polite": "アルバイトします",
         "negative_plain": "アルバイトしない",
@@ -12995,7 +12513,7 @@
         "kana": "いっちする",
         "romaji": "icchisuru"
       },
-      "meaning": "agreement; accord",
+      "meaning": "to agreement; to accord",
       "conjugations": {
         "polite": "いっちします",
         "negative_plain": "いっちしない",
@@ -13025,7 +12543,7 @@
         "kana": "きふする",
         "romaji": "kifusuru"
       },
-      "meaning": "contribution; donation",
+      "meaning": "to contribution; to donation",
       "conjugations": {
         "polite": "きふします",
         "negative_plain": "きふしない",
@@ -13079,7 +12597,7 @@
         "kana": "さゆうする",
         "romaji": "sayuusuru"
       },
-      "meaning": "left and right; right and left",
+      "meaning": "to influence; to control; to sway",
       "conjugations": {
         "polite": "さゆうします",
         "negative_plain": "さゆうしない",
@@ -13109,7 +12627,7 @@
         "kana": "けいかくする",
         "romaji": "keikakusuru"
       },
-      "meaning": "plan; project",
+      "meaning": "to plan; to make a plan",
       "conjugations": {
         "polite": "けいかくします",
         "negative_plain": "けいかくしない",
@@ -13163,7 +12681,7 @@
         "kana": "けっかする",
         "romaji": "kekkasuru"
       },
-      "meaning": "result; consequence",
+      "meaning": "to result; to consequence",
       "conjugations": {
         "polite": "けっかします",
         "negative_plain": "けっかしない",
@@ -13193,7 +12711,7 @@
         "kana": "りかいする",
         "romaji": "rikaisuru"
       },
-      "meaning": "understanding; comprehension",
+      "meaning": "to understanding; to comprehension",
       "conjugations": {
         "polite": "りかいします",
         "negative_plain": "りかいしない",
@@ -13223,7 +12741,7 @@
         "kana": "しょくじする",
         "romaji": "shokujisuru"
       },
-      "meaning": "meal (e.g. lunch, dinner)",
+      "meaning": "to have a meal; to eat",
       "conjugations": {
         "polite": "しょくじします",
         "negative_plain": "しょくじしない",
@@ -13253,7 +12771,7 @@
         "kana": "こうどうする",
         "romaji": "koudousuru"
       },
-      "meaning": "action; conduct",
+      "meaning": "to action; to conduct",
       "conjugations": {
         "polite": "こうどうします",
         "negative_plain": "こうどうしない",
@@ -13307,7 +12825,7 @@
         "kana": "けいけんする",
         "romaji": "keikensuru"
       },
-      "meaning": "experience",
+      "meaning": "to experience; to go through",
       "conjugations": {
         "polite": "けいけんします",
         "negative_plain": "けいけんしない",
@@ -13337,7 +12855,7 @@
         "kana": "がまんする",
         "romaji": "gamansuru"
       },
-      "meaning": "endurance; patience",
+      "meaning": "to endurance; to patience",
       "conjugations": {
         "polite": "がまんします",
         "negative_plain": "がまんしない",
@@ -13367,7 +12885,7 @@
         "kana": "うわさする",
         "romaji": "uwasasuru"
       },
-      "meaning": "rumour; rumor",
+      "meaning": "to rumour; to rumor",
       "conjugations": {
         "polite": "うわさします",
         "negative_plain": "うわさしない",
@@ -13436,36 +12954,6 @@
       }
     },
     {
-      "id": "v_genzaisuru",
-      "level": "N3",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "現在する",
-        "kana": "げんざいする",
-        "romaji": "genzaisuru"
-      },
-      "meaning": "the present; present time",
-      "conjugations": {
-        "polite": "げんざいします",
-        "negative_plain": "げんざいしない",
-        "negative_polite": "げんざいしません",
-        "past_plain": "げんざいした",
-        "past_polite": "げんざいしました",
-        "past_negative_plain": "げんざいしなかった",
-        "past_negative_polite": "げんざいしませんでした",
-        "te_form": "げんざいして",
-        "potential": "げんざいできる",
-        "passive": "げんざいされる",
-        "causative": "げんざいさせる",
-        "causative_passive": "げんざいさせられる",
-        "imperative": "げんざいしろ",
-        "volitional": "げんざいしよう",
-        "conditional_ba": "げんざいすれば",
-        "conditional_tara": "げんざいしたら"
-      }
-    },
-    {
       "id": "v_kitaisuru",
       "level": "N3",
       "group": "suru",
@@ -13475,7 +12963,7 @@
         "kana": "きたいする",
         "romaji": "kitaisuru"
       },
-      "meaning": "expectation; anticipation",
+      "meaning": "to expect; to look forward to",
       "conjugations": {
         "polite": "きたいします",
         "negative_plain": "きたいしない",
@@ -13505,7 +12993,7 @@
         "kana": "うんどうする",
         "romaji": "undousuru"
       },
-      "meaning": "exercise; physical training",
+      "meaning": "to exercise; to do physical training",
       "conjugations": {
         "polite": "うんどうします",
         "negative_plain": "うんどうしない",
@@ -13535,7 +13023,7 @@
         "kana": "えんぜつする",
         "romaji": "enzetsusuru"
       },
-      "meaning": "speech; address",
+      "meaning": "to give a speech; to make an address",
       "conjugations": {
         "polite": "えんぜつします",
         "negative_plain": "えんぜつしない",
@@ -13556,30 +13044,6 @@
       }
     },
     {
-      "id": "na_kami",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "神",
-        "kana": "かみ",
-        "romaji": "kami"
-      },
-      "meaning": "god; deity",
-      "conjugations": {
-        "polite": "かみです",
-        "negative_plain": "かみじゃない",
-        "negative_polite": "かみじゃありません",
-        "past_plain": "かみだった",
-        "past_polite": "かみでした",
-        "past_negative_plain": "かみじゃなかった",
-        "past_negative_polite": "かみじゃありませんでした",
-        "te_form": "かみで",
-        "conditional_ba": "かみであれば",
-        "conditional_tara": "かみだったら"
-      }
-    },
-    {
       "id": "v_dokushosuru",
       "level": "N3",
       "group": "suru",
@@ -13589,7 +13053,7 @@
         "kana": "どくしょする",
         "romaji": "dokushosuru"
       },
-      "meaning": "reading (books)",
+      "meaning": "to read books; to do reading",
       "conjugations": {
         "polite": "どくしょします",
         "negative_plain": "どくしょしない",
@@ -13619,7 +13083,7 @@
         "kana": "はっけんする",
         "romaji": "hakkensuru"
       },
-      "meaning": "discovery; detection",
+      "meaning": "to discovery; to detection",
       "conjugations": {
         "polite": "はっけんします",
         "negative_plain": "はっけんしない",
@@ -13649,7 +13113,7 @@
         "kana": "かいけつする",
         "romaji": "kaiketsusuru"
       },
-      "meaning": "settlement; solution",
+      "meaning": "to settlement; to solution",
       "conjugations": {
         "polite": "かいけつします",
         "negative_plain": "かいけつしない",
@@ -13679,7 +13143,7 @@
         "kana": "そんざいする",
         "romaji": "sonzaisuru"
       },
-      "meaning": "existence; being",
+      "meaning": "to exist; to be present",
       "conjugations": {
         "polite": "そんざいします",
         "negative_plain": "そんざいしない",
@@ -13709,7 +13173,7 @@
         "kana": "しんらいする",
         "romaji": "shinraisuru"
       },
-      "meaning": "trust (in); confidence",
+      "meaning": "to trust; to have confidence in",
       "conjugations": {
         "polite": "しんらいします",
         "negative_plain": "しんらいしない",
@@ -13763,7 +13227,7 @@
         "kana": "きぼうする",
         "romaji": "kibousuru"
       },
-      "meaning": "hope; wish",
+      "meaning": "to hope; to wish for",
       "conjugations": {
         "polite": "きぼうします",
         "negative_plain": "きぼうしない",
@@ -13793,7 +13257,7 @@
         "kana": "ちょうさする",
         "romaji": "chousasuru"
       },
-      "meaning": "investigation; examination",
+      "meaning": "to investigation; to examination",
       "conjugations": {
         "polite": "ちょうさします",
         "negative_plain": "ちょうさしない",
@@ -13823,7 +13287,7 @@
         "kana": "じっけんする",
         "romaji": "jikkensuru"
       },
-      "meaning": "experiment; experimentation",
+      "meaning": "to experiment; to experimentation",
       "conjugations": {
         "polite": "じっけんします",
         "negative_plain": "じっけんしない",
@@ -13853,7 +13317,7 @@
         "kana": "りえきする",
         "romaji": "riekisuru"
       },
-      "meaning": "profit; gains",
+      "meaning": "to profit; to make a profit",
       "conjugations": {
         "polite": "りえきします",
         "negative_plain": "りえきしない",
@@ -13883,7 +13347,7 @@
         "kana": "きょうじゅする",
         "romaji": "kyoujusuru"
       },
-      "meaning": "professor",
+      "meaning": "to teach; to be a professor of",
       "conjugations": {
         "polite": "きょうじゅします",
         "negative_plain": "きょうじゅしない",
@@ -13913,7 +13377,7 @@
         "kana": "はつめいする",
         "romaji": "hatsumeisuru"
       },
-      "meaning": "invention",
+      "meaning": "to invent; to make an invention",
       "conjugations": {
         "polite": "はつめいします",
         "negative_plain": "はつめいしない",
@@ -13943,7 +13407,7 @@
         "kana": "しんぽする",
         "romaji": "shinposuru"
       },
-      "meaning": "progress; advance",
+      "meaning": "to progress; to advance",
       "conjugations": {
         "polite": "しんぽします",
         "negative_plain": "しんぽしない",
@@ -13973,7 +13437,7 @@
         "kana": "きょうふする",
         "romaji": "kyoufusuru"
       },
-      "meaning": "fear; dread",
+      "meaning": "to fear; to be afraid of",
       "conjugations": {
         "polite": "きょうふします",
         "negative_plain": "きょうふしない",
@@ -14003,7 +13467,7 @@
         "kana": "ひていする",
         "romaji": "hiteisuru"
       },
-      "meaning": "denial; negation",
+      "meaning": "to deny; to negate",
       "conjugations": {
         "polite": "ひていします",
         "negative_plain": "ひていしない",
@@ -14033,7 +13497,7 @@
         "kana": "りゅうがくする",
         "romaji": "ryuugakusuru"
       },
-      "meaning": "studying abroad",
+      "meaning": "to studying abroad",
       "conjugations": {
         "polite": "りゅうがくします",
         "negative_plain": "りゅうがくしない",
@@ -14063,7 +13527,7 @@
         "kana": "ひょうかする",
         "romaji": "hyoukasuru"
       },
-      "meaning": "valuation; appraisal",
+      "meaning": "to evaluate; to assess",
       "conjugations": {
         "polite": "ひょうかします",
         "negative_plain": "ひょうかしない",
@@ -14141,7 +13605,7 @@
         "kana": "いしきする",
         "romaji": "ishikisuru"
       },
-      "meaning": "consciousness",
+      "meaning": "to be conscious of; to be aware of",
       "conjugations": {
         "polite": "いしきします",
         "negative_plain": "いしきしない",
@@ -14171,7 +13635,7 @@
         "kana": "じさつする",
         "romaji": "jisatsusuru"
       },
-      "meaning": "suicide",
+      "meaning": "to commit suicide",
       "conjugations": {
         "polite": "じさつします",
         "negative_plain": "じさつしない",
@@ -14201,7 +13665,7 @@
         "kana": "たいほする",
         "romaji": "taihosuru"
       },
-      "meaning": "arrest; apprehension",
+      "meaning": "to arrest; to apprehend",
       "conjugations": {
         "polite": "たいほします",
         "negative_plain": "たいほしない",
@@ -14231,7 +13695,7 @@
         "kana": "ばくはつする",
         "romaji": "bakuhatsusuru"
       },
-      "meaning": "explosion; detonation",
+      "meaning": "to explode; to detonate",
       "conjugations": {
         "polite": "ばくはつします",
         "negative_plain": "ばくはつしない",
@@ -14261,7 +13725,7 @@
         "kana": "きろくする",
         "romaji": "kirokusuru"
       },
-      "meaning": "record; document",
+      "meaning": "to record; to document",
       "conjugations": {
         "polite": "きろくします",
         "negative_plain": "きろくしない",
@@ -14291,7 +13755,7 @@
         "kana": "けいやくする",
         "romaji": "keiyakusuru"
       },
-      "meaning": "contract; compact",
+      "meaning": "to contract; to compact",
       "conjugations": {
         "polite": "けいやくします",
         "negative_plain": "けいやくしない",
@@ -14321,7 +13785,7 @@
         "kana": "きおくする",
         "romaji": "kiokusuru"
       },
-      "meaning": "memory; recollection",
+      "meaning": "to memory; to recollection",
       "conjugations": {
         "polite": "きおくします",
         "negative_plain": "きおくしない",
@@ -14351,7 +13815,7 @@
         "kana": "ゆうしょうする",
         "romaji": "yuushousuru"
       },
-      "meaning": "overall victory; championship",
+      "meaning": "to overall victory; to championship",
       "conjugations": {
         "polite": "ゆうしょうします",
         "negative_plain": "ゆうしょうしない",
@@ -14381,7 +13845,7 @@
         "kana": "どくりつする",
         "romaji": "dokuritsusuru"
       },
-      "meaning": "independence; self-reliance",
+      "meaning": "to become independent; to gain independence",
       "conjugations": {
         "polite": "どくりつします",
         "negative_plain": "どくりつしない",
@@ -14435,7 +13899,7 @@
         "kana": "めいれいする",
         "romaji": "meireisuru"
       },
-      "meaning": "order; command",
+      "meaning": "to order; to command",
       "conjugations": {
         "polite": "めいれいします",
         "negative_plain": "めいれいしない",
@@ -14465,7 +13929,7 @@
         "kana": "ゆにゅうする",
         "romaji": "yunyuusuru"
       },
-      "meaning": "import; importation",
+      "meaning": "to import; to importation",
       "conjugations": {
         "polite": "ゆにゅうします",
         "negative_plain": "ゆにゅうしない",
@@ -14495,7 +13959,7 @@
         "kana": "けいさんする",
         "romaji": "keisansuru"
       },
-      "meaning": "calculation; computation",
+      "meaning": "to calculation; to computation",
       "conjugations": {
         "polite": "けいさんします",
         "negative_plain": "けいさんしない",
@@ -14525,7 +13989,7 @@
         "kana": "あいずする",
         "romaji": "aizusuru"
       },
-      "meaning": "sign; signal",
+      "meaning": "to sign; to signal",
       "conjugations": {
         "polite": "あいずします",
         "negative_plain": "あいずしない",
@@ -14555,7 +14019,7 @@
         "kana": "きんえんする",
         "romaji": "kinensuru"
       },
-      "meaning": "abstaining from smoking; quitting smoking",
+      "meaning": "to abstaining from smoking; to quitting smoking",
       "conjugations": {
         "polite": "きんえんします",
         "negative_plain": "きんえんしない",
@@ -14585,7 +14049,7 @@
         "kana": "あくしゅする",
         "romaji": "akushusuru"
       },
-      "meaning": "handshake",
+      "meaning": "to shake hands; to give a handshake",
       "conjugations": {
         "polite": "あくしゅします",
         "negative_plain": "あくしゅしない",
@@ -14615,7 +14079,7 @@
         "kana": "こうげきする",
         "romaji": "kougekisuru"
       },
-      "meaning": "attack; assault",
+      "meaning": "to attack; to assault",
       "conjugations": {
         "polite": "こうげきします",
         "negative_plain": "こうげきしない",
@@ -14645,7 +14109,7 @@
         "kana": "くんれんする",
         "romaji": "kunrensuru"
       },
-      "meaning": "training; drill",
+      "meaning": "to train; to drill",
       "conjugations": {
         "polite": "くんれんします",
         "negative_plain": "くんれんしない",
@@ -14675,7 +14139,7 @@
         "kana": "こうこくする",
         "romaji": "koukokusuru"
       },
-      "meaning": "advertisement; advertising",
+      "meaning": "to advertisement; to advertising",
       "conjugations": {
         "polite": "こうこくします",
         "negative_plain": "こうこくしない",
@@ -14705,7 +14169,7 @@
         "kana": "しょめいする",
         "romaji": "shomeisuru"
       },
-      "meaning": "signature; autograph",
+      "meaning": "to signature; to autograph",
       "conjugations": {
         "polite": "しょめいします",
         "negative_plain": "しょめいしない",
@@ -14735,7 +14199,7 @@
         "kana": "しょうめいする",
         "romaji": "shoumeisuru"
       },
-      "meaning": "proof; testimony",
+      "meaning": "to proof; to testimony",
       "conjugations": {
         "polite": "しょうめいします",
         "negative_plain": "しょうめいしない",
@@ -14789,7 +14253,7 @@
         "kana": "しゅっぱんする",
         "romaji": "shuppansuru"
       },
-      "meaning": "publication",
+      "meaning": "to publish; to issue",
       "conjugations": {
         "polite": "しゅっぱんします",
         "negative_plain": "しゅっぱんしない",
@@ -14819,7 +14283,7 @@
         "kana": "ほしょうする",
         "romaji": "hoshousuru"
       },
-      "meaning": "guarantee; security",
+      "meaning": "to guarantee; to security",
       "conjugations": {
         "polite": "ほしょうします",
         "negative_plain": "ほしょうしない",
@@ -14849,7 +14313,7 @@
         "kana": "きょうぎする",
         "romaji": "kyougisuru"
       },
-      "meaning": "game; match",
+      "meaning": "to game; to match",
       "conjugations": {
         "polite": "きょうぎします",
         "negative_plain": "きょうぎしない",
@@ -14879,7 +14343,7 @@
         "kana": "りこんする",
         "romaji": "rikonsuru"
       },
-      "meaning": "divorce",
+      "meaning": "to get divorced",
       "conjugations": {
         "polite": "りこんします",
         "negative_plain": "りこんしない",
@@ -14909,7 +14373,7 @@
         "kana": "とうひょうする",
         "romaji": "touhyousuru"
       },
-      "meaning": "voting; ballot",
+      "meaning": "to voting; to ballot",
       "conjugations": {
         "polite": "とうひょうします",
         "negative_plain": "とうひょうしない",
@@ -14939,7 +14403,7 @@
         "kana": "しんさつする",
         "romaji": "shinsatsusuru"
       },
-      "meaning": "medical examination; checkup",
+      "meaning": "to medical examination; to checkup",
       "conjugations": {
         "polite": "しんさつします",
         "negative_plain": "しんさつしない",
@@ -14969,7 +14433,7 @@
         "kana": "しょうとつする",
         "romaji": "shoutotsusuru"
       },
-      "meaning": "collision; crash",
+      "meaning": "to collide; to crash",
       "conjugations": {
         "polite": "しょうとつします",
         "negative_plain": "しょうとつしない",
@@ -14999,7 +14463,7 @@
         "kana": "はんばいする",
         "romaji": "hanbaisuru"
       },
-      "meaning": "sale; sales",
+      "meaning": "to sale; to sales",
       "conjugations": {
         "polite": "はんばいします",
         "negative_plain": "はんばいしない",
@@ -15029,7 +14493,7 @@
         "kana": "ゆしゅつする",
         "romaji": "yushutsusuru"
       },
-      "meaning": "export; exportation",
+      "meaning": "to export; to exportation",
       "conjugations": {
         "polite": "ゆしゅつします",
         "negative_plain": "ゆしゅつしない",
@@ -15059,7 +14523,7 @@
         "kana": "へいきんする",
         "romaji": "heikinsuru"
       },
-      "meaning": "average; mean",
+      "meaning": "to average; to be average",
       "conjugations": {
         "polite": "へいきんします",
         "negative_plain": "へいきんしない",
@@ -15089,7 +14553,7 @@
         "kana": "ぼうけんする",
         "romaji": "boukensuru"
       },
-      "meaning": "adventure; venture",
+      "meaning": "to adventure; to venture",
       "conjugations": {
         "polite": "ぼうけんします",
         "negative_plain": "ぼうけんしない",
@@ -15143,7 +14607,7 @@
         "kana": "つうがくする",
         "romaji": "tsuugakusuru"
       },
-      "meaning": "commuting to school; school commute",
+      "meaning": "to commuting to school; to school commute",
       "conjugations": {
         "polite": "つうがくします",
         "negative_plain": "つうがくしない",
@@ -15173,7 +14637,7 @@
         "kana": "かいぜんする",
         "romaji": "kaizensuru"
       },
-      "meaning": "betterment; improvement",
+      "meaning": "to betterment; to improvement",
       "conjugations": {
         "polite": "かいぜんします",
         "negative_plain": "かいぜんしない",
@@ -15203,7 +14667,7 @@
         "kana": "ほうそうする",
         "romaji": "housousuru"
       },
-      "meaning": "broadcasting; broadcast",
+      "meaning": "to broadcasting; to broadcast",
       "conjugations": {
         "polite": "ほうそうします",
         "negative_plain": "ほうそうしない",
@@ -15233,7 +14697,7 @@
         "kana": "しゅうかくする",
         "romaji": "shuukakusuru"
       },
-      "meaning": "harvest; crop",
+      "meaning": "to harvest; to crop",
       "conjugations": {
         "polite": "しゅうかくします",
         "negative_plain": "しゅうかくしない",
@@ -15263,7 +14727,7 @@
         "kana": "しんごうする",
         "romaji": "shingousuru"
       },
-      "meaning": "signal; signalling",
+      "meaning": "to signal; to signalling",
       "conjugations": {
         "polite": "しんごうします",
         "negative_plain": "しんごうしない",
@@ -15293,7 +14757,7 @@
         "kana": "けんせつする",
         "romaji": "kensetsusuru"
       },
-      "meaning": "construction; establishment",
+      "meaning": "to construction; to establishment",
       "conjugations": {
         "polite": "けんせつします",
         "negative_plain": "けんせつしない",
@@ -15323,7 +14787,7 @@
         "kana": "せつやくする",
         "romaji": "setsuyakusuru"
       },
-      "meaning": "economising; saving",
+      "meaning": "to economising; to saving",
       "conjugations": {
         "polite": "せつやくします",
         "negative_plain": "せつやくしない",
@@ -15353,7 +14817,7 @@
         "kana": "たんじょうする",
         "romaji": "tanjousuru"
       },
-      "meaning": "birth (of a person); nativity",
+      "meaning": "to be born (of a person)",
       "conjugations": {
         "polite": "たんじょうします",
         "negative_plain": "たんじょうしない",
@@ -15383,7 +14847,7 @@
         "kana": "ろうどうする",
         "romaji": "roudousuru"
       },
-      "meaning": "labor; labour",
+      "meaning": "to labor; to labour",
       "conjugations": {
         "polite": "ろうどうします",
         "negative_plain": "ろうどうしない",
@@ -15413,7 +14877,7 @@
         "kana": "しつぎょうする",
         "romaji": "shitsugyousuru"
       },
-      "meaning": "unemployment",
+      "meaning": "to be unemployed; to lose one's job",
       "conjugations": {
         "polite": "しつぎょうします",
         "negative_plain": "しつぎょうしない",
@@ -15443,7 +14907,7 @@
         "kana": "かんこうする",
         "romaji": "kankousuru"
       },
-      "meaning": "sightseeing; tourism",
+      "meaning": "to sightseeing; to tourism",
       "conjugations": {
         "polite": "かんこうします",
         "negative_plain": "かんこうしない",
@@ -15473,7 +14937,7 @@
         "kana": "がくしゅうする",
         "romaji": "gakushuusuru"
       },
-      "meaning": "learning; study",
+      "meaning": "to learning; to study",
       "conjugations": {
         "polite": "がくしゅうします",
         "negative_plain": "がくしゅうしない",
@@ -15503,7 +14967,7 @@
         "kana": "こんやくする",
         "romaji": "konyakusuru"
       },
-      "meaning": "engagement; betrothal",
+      "meaning": "to get engaged; to become engaged",
       "conjugations": {
         "polite": "こんやくします",
         "negative_plain": "こんやくしない",
@@ -15533,7 +14997,7 @@
         "kana": "いんようする",
         "romaji": "inyousuru"
       },
-      "meaning": "quotation; citation",
+      "meaning": "to quotation; to citation",
       "conjugations": {
         "polite": "いんようします",
         "negative_plain": "いんようしない",
@@ -15563,7 +15027,7 @@
         "kana": "かんとくする",
         "romaji": "kantokusuru"
       },
-      "meaning": "supervision; control",
+      "meaning": "to supervision; to control",
       "conjugations": {
         "polite": "かんとくします",
         "negative_plain": "かんとくしない",
@@ -15617,7 +15081,7 @@
         "kana": "いちする",
         "romaji": "ichisuru"
       },
-      "meaning": "place; position",
+      "meaning": "to be located; to be positioned",
       "conjugations": {
         "polite": "いちします",
         "negative_plain": "いちしない",
@@ -15647,7 +15111,7 @@
         "kana": "はくしゅする",
         "romaji": "hakushusuru"
       },
-      "meaning": "clapping hands; applause",
+      "meaning": "to clap; to applaud",
       "conjugations": {
         "polite": "はくしゅします",
         "negative_plain": "はくしゅしない",
@@ -15677,7 +15141,7 @@
         "kana": "よさんする",
         "romaji": "yosansuru"
       },
-      "meaning": "estimate (of costs); budget",
+      "meaning": "to estimate (costs); to budget",
       "conjugations": {
         "polite": "よさんします",
         "negative_plain": "よさんしない",
@@ -15707,7 +15171,7 @@
         "kana": "あんていする",
         "romaji": "anteisuru"
       },
-      "meaning": "stability; steadiness",
+      "meaning": "to stability; to steadiness",
       "conjugations": {
         "polite": "あんていします",
         "negative_plain": "あんていしない",
@@ -15737,7 +15201,7 @@
         "kana": "ひひょうする",
         "romaji": "hihyousuru"
       },
-      "meaning": "criticism; critique",
+      "meaning": "to criticize; to critique",
       "conjugations": {
         "polite": "ひひょうします",
         "negative_plain": "ひひょうしない",
@@ -15767,7 +15231,7 @@
         "kana": "けんちくする",
         "romaji": "kenchikusuru"
       },
-      "meaning": "construction; architecture (of buildings)",
+      "meaning": "to construction; to architecture (of buildings)",
       "conjugations": {
         "polite": "けんちくします",
         "negative_plain": "けんちくしない",
@@ -15797,7 +15261,7 @@
         "kana": "きゅうしゅうする",
         "romaji": "kyuushuusuru"
       },
-      "meaning": "absorption; suction",
+      "meaning": "to absorption; to suction",
       "conjugations": {
         "polite": "きゅうしゅうします",
         "negative_plain": "きゅうしゅうしない",
@@ -15827,7 +15291,7 @@
         "kana": "かつようする",
         "romaji": "katsuyousuru"
       },
-      "meaning": "practical use; application",
+      "meaning": "to practical use; to application",
       "conjugations": {
         "polite": "かつようします",
         "negative_plain": "かつようしない",
@@ -15857,7 +15321,7 @@
         "kana": "しょうひする",
         "romaji": "shouhisuru"
       },
-      "meaning": "consumption; expenditure",
+      "meaning": "to consumption; to expenditure",
       "conjugations": {
         "polite": "しょうひします",
         "negative_plain": "しょうひしない",
@@ -15887,7 +15351,7 @@
         "kana": "しんこうする",
         "romaji": "shinkousuru"
       },
-      "meaning": "(religious) faith; belief",
+      "meaning": "to (religious) faith; to belief",
       "conjugations": {
         "polite": "しんこうします",
         "negative_plain": "しんこうしない",
@@ -15917,7 +15381,7 @@
         "kana": "えいぎょうする",
         "romaji": "eigyousuru"
       },
-      "meaning": "business; trade",
+      "meaning": "to business; to trade",
       "conjugations": {
         "polite": "えいぎょうします",
         "negative_plain": "えいぎょうしない",
@@ -15947,7 +15411,7 @@
         "kana": "さぎょうする",
         "romaji": "sagyousuru"
       },
-      "meaning": "work; operation",
+      "meaning": "to work; to operation",
       "conjugations": {
         "polite": "さぎょうします",
         "negative_plain": "さぎょうしない",
@@ -15977,7 +15441,7 @@
         "kana": "こきゅうする",
         "romaji": "kokyuusuru"
       },
-      "meaning": "breathing; respiration",
+      "meaning": "to breathing; to respiration",
       "conjugations": {
         "polite": "こきゅうします",
         "negative_plain": "こきゅうしない",
@@ -16007,7 +15471,7 @@
         "kana": "こっせつする",
         "romaji": "kossetsusuru"
       },
-      "meaning": "bone fracture",
+      "meaning": "to break a bone; to fracture",
       "conjugations": {
         "polite": "こっせつします",
         "negative_plain": "こっせつしない",
@@ -16037,7 +15501,7 @@
         "kana": "いんさつする",
         "romaji": "insatsusuru"
       },
-      "meaning": "printing",
+      "meaning": "to print; to do printing",
       "conjugations": {
         "polite": "いんさつします",
         "negative_plain": "いんさつしない",
@@ -16067,7 +15531,7 @@
         "kana": "だいりする",
         "romaji": "dairisuru"
       },
-      "meaning": "representation; agency",
+      "meaning": "to represent; to act as an agent for",
       "conjugations": {
         "polite": "だいりします",
         "negative_plain": "だいりしない",
@@ -16097,7 +15561,7 @@
         "kana": "とざんする",
         "romaji": "tozansuru"
       },
-      "meaning": "mountain climbing; mountaineering",
+      "meaning": "to mountain climbing; to mountaineering",
       "conjugations": {
         "polite": "とざんします",
         "negative_plain": "とざんしない",
@@ -16127,7 +15591,7 @@
         "kana": "そうぞくする",
         "romaji": "souzokusuru"
       },
-      "meaning": "succession",
+      "meaning": "to inherit; to succeed to",
       "conjugations": {
         "polite": "そうぞくします",
         "negative_plain": "そうぞくしない",
@@ -16157,7 +15621,7 @@
         "kana": "じゅうたいする",
         "romaji": "juutaisuru"
       },
-      "meaning": "(traffic) congestion; traffic jam",
+      "meaning": "to be congested; to have a traffic jam",
       "conjugations": {
         "polite": "じゅうたいします",
         "negative_plain": "じゅうたいしない",
@@ -16187,7 +15651,7 @@
         "kana": "めんきょする",
         "romaji": "menkyosuru"
       },
-      "meaning": "license; licence",
+      "meaning": "to get a license; to be licensed",
       "conjugations": {
         "polite": "めんきょします",
         "negative_plain": "めんきょしない",
@@ -16217,7 +15681,7 @@
         "kana": "かいけいする",
         "romaji": "kaikeisuru"
       },
-      "meaning": "accounting; finance",
+      "meaning": "to accounting; to finance",
       "conjugations": {
         "polite": "かいけいします",
         "negative_plain": "かいけいしない",
@@ -16247,7 +15711,7 @@
         "kana": "さべつする",
         "romaji": "sabetsusuru"
       },
-      "meaning": "distinction; differentiation",
+      "meaning": "to distinction; to differentiation",
       "conjugations": {
         "polite": "さべつします",
         "negative_plain": "さべつしない",
@@ -16277,7 +15741,7 @@
         "kana": "さっきょくする",
         "romaji": "sakkyokusuru"
       },
-      "meaning": "composition (of music); setting",
+      "meaning": "to compose music",
       "conjugations": {
         "polite": "さっきょくします",
         "negative_plain": "さっきょくしない",
@@ -16295,30 +15759,6 @@
         "volitional": "さっきょくしよう",
         "conditional_ba": "さっきょくすれば",
         "conditional_tara": "さっきょくしたら"
-      }
-    },
-    {
-      "id": "na_cha",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "茶",
-        "kana": "ちゃ",
-        "romaji": "cha"
-      },
-      "meaning": "tea",
-      "conjugations": {
-        "polite": "ちゃです",
-        "negative_plain": "ちゃじゃない",
-        "negative_polite": "ちゃじゃありません",
-        "past_plain": "ちゃだった",
-        "past_polite": "ちゃでした",
-        "past_negative_plain": "ちゃじゃなかった",
-        "past_negative_polite": "ちゃじゃありませんでした",
-        "te_form": "ちゃで",
-        "conditional_ba": "ちゃであれば",
-        "conditional_tara": "ちゃだったら"
       }
     },
     {
@@ -16355,7 +15795,7 @@
         "kana": "たいくつする",
         "romaji": "taikutsusuru"
       },
-      "meaning": "tedious; boring",
+      "meaning": "to be bored; to feel tedious",
       "conjugations": {
         "polite": "たいくつします",
         "negative_plain": "たいくつしない",
@@ -16415,7 +15855,7 @@
         "kana": "あんきする",
         "romaji": "ankisuru"
       },
-      "meaning": "memorization; memorisation",
+      "meaning": "to memorization; to memorisation",
       "conjugations": {
         "polite": "あんきします",
         "negative_plain": "あんきしない",
@@ -16469,7 +15909,7 @@
         "kana": "れんそうする",
         "romaji": "rensousuru"
       },
-      "meaning": "association (of ideas); being reminded (of something)",
+      "meaning": "to be reminded of; to associate ideas",
       "conjugations": {
         "polite": "れんそうします",
         "negative_plain": "れんそうしない",
@@ -16499,7 +15939,7 @@
         "kana": "がいしゅつする",
         "romaji": "gaishutsusuru"
       },
-      "meaning": "going out; outing",
+      "meaning": "to go out; to go on an outing",
       "conjugations": {
         "polite": "がいしゅつします",
         "negative_plain": "がいしゅつしない",
@@ -16529,7 +15969,7 @@
         "kana": "あんないする",
         "romaji": "annaisuru"
       },
-      "meaning": "guidance; leading (the way)",
+      "meaning": "to guidance; to leading (the way)",
       "conjugations": {
         "polite": "あんないします",
         "negative_plain": "あんないしない",
@@ -16559,7 +15999,7 @@
         "kana": "はってんする",
         "romaji": "hattensuru"
       },
-      "meaning": "development; growth",
+      "meaning": "to develop; to grow",
       "conjugations": {
         "polite": "はってんします",
         "negative_plain": "はってんしない",
@@ -16589,7 +16029,7 @@
         "kana": "きょうどうする",
         "romaji": "kyoudousuru"
       },
-      "meaning": "cooperation; collaboration",
+      "meaning": "to cooperation; to collaboration",
       "conjugations": {
         "polite": "きょうどうします",
         "negative_plain": "きょうどうしない",
@@ -16619,7 +16059,7 @@
         "kana": "せいこうする",
         "romaji": "seikousuru"
       },
-      "meaning": "success; achievement",
+      "meaning": "to success; to achievement",
       "conjugations": {
         "polite": "せいこうします",
         "negative_plain": "せいこうしない",
@@ -16649,7 +16089,7 @@
         "kana": "しゅっぱつする",
         "romaji": "shuppatsusuru"
       },
-      "meaning": "departure; leaving",
+      "meaning": "to departure; to leaving",
       "conjugations": {
         "polite": "しゅっぱつします",
         "negative_plain": "しゅっぱつしない",
@@ -16679,7 +16119,7 @@
         "kana": "どりょくする",
         "romaji": "doryokusuru"
       },
-      "meaning": "effort; exertion",
+      "meaning": "to make an effort; to endeavor",
       "conjugations": {
         "polite": "どりょくします",
         "negative_plain": "どりょくしない",
@@ -16763,7 +16203,7 @@
         "kana": "うんてんする",
         "romaji": "untensuru"
       },
-      "meaning": "operation (of a machine); running",
+      "meaning": "to drive; to operate (a machine)",
       "conjugations": {
         "polite": "うんてんします",
         "negative_plain": "うんてんしない",
@@ -16871,7 +16311,7 @@
         "kana": "しんぱいする",
         "romaji": "shinpaisuru"
       },
-      "meaning": "worry; concern",
+      "meaning": "to worry; to concern",
       "conjugations": {
         "polite": "しんぱいします",
         "negative_plain": "しんぱいしない",
@@ -16931,7 +16371,7 @@
         "kana": "ていあんする",
         "romaji": "teiansuru"
       },
-      "meaning": "proposal; proposition",
+      "meaning": "to proposal; to proposition",
       "conjugations": {
         "polite": "ていあんします",
         "negative_plain": "ていあんしない",
@@ -16961,7 +16401,7 @@
         "kana": "しゅっせきする",
         "romaji": "shussekisuru"
       },
-      "meaning": "attendance; presence",
+      "meaning": "to attendance; to presence",
       "conjugations": {
         "polite": "しゅっせきします",
         "negative_plain": "しゅっせきしない",
@@ -17015,7 +16455,7 @@
         "kana": "さんせいする",
         "romaji": "sanseisuru"
       },
-      "meaning": "approval; agreement",
+      "meaning": "to approval; to agreement",
       "conjugations": {
         "polite": "さんせいします",
         "negative_plain": "さんせいしない",
@@ -17075,7 +16515,7 @@
         "kana": "とうちゃくする",
         "romaji": "touchakusuru"
       },
-      "meaning": "arrival",
+      "meaning": "to arrive; to reach a destination",
       "conjugations": {
         "polite": "とうちゃくします",
         "negative_plain": "とうちゃくしない",
@@ -17105,7 +16545,7 @@
         "kana": "まんぞくする",
         "romaji": "manzokusuru"
       },
-      "meaning": "satisfaction; contentment",
+      "meaning": "to be satisfied; to be content",
       "conjugations": {
         "polite": "まんぞくします",
         "negative_plain": "まんぞくしない",
@@ -17197,19 +16637,19 @@
       },
       "meaning": "to give; to confer",
       "conjugations": {
-        "polite": "くださります",
+        "polite": "くださいます",
         "negative_plain": "くださらない",
-        "negative_polite": "くださりません",
+        "negative_polite": "くださいません",
         "past_plain": "くださった",
-        "past_polite": "くださりました",
+        "past_polite": "くださいました",
         "past_negative_plain": "くださらなかった",
-        "past_negative_polite": "くださりませんでした",
+        "past_negative_polite": "くださいませんでした",
         "te_form": "くださって",
         "potential": "くだされる",
         "passive": "くださられる",
         "causative": "くださらせる",
         "causative_passive": "くださらせられる",
-        "imperative": "くだされ",
+        "imperative": "ください",
         "volitional": "くださろう",
         "conditional_ba": "くだされば",
         "conditional_tara": "くださったら"
@@ -17249,7 +16689,7 @@
         "kana": "えんじょする",
         "romaji": "enjosuru"
       },
-      "meaning": "assistance; aid",
+      "meaning": "to assistance; to aid",
       "conjugations": {
         "polite": "えんじょします",
         "negative_plain": "えんじょしない",
@@ -17279,7 +16719,7 @@
         "kana": "ごうかくする",
         "romaji": "goukakusuru"
       },
-      "meaning": "passing (an exam); pass",
+      "meaning": "to pass (an exam); to succeed",
       "conjugations": {
         "polite": "ごうかくします",
         "negative_plain": "ごうかくしない",
@@ -17339,7 +16779,7 @@
         "kana": "せわする",
         "romaji": "sewasuru"
       },
-      "meaning": "care; looking after",
+      "meaning": "to care; to looking after",
       "conjugations": {
         "polite": "せわします",
         "negative_plain": "せわしない",
@@ -17369,7 +16809,7 @@
         "kana": "きたくする",
         "romaji": "kitakusuru"
       },
-      "meaning": "returning home; going home",
+      "meaning": "to returning home; to going home",
       "conjugations": {
         "polite": "きたくします",
         "negative_plain": "きたくしない",
@@ -17399,7 +16839,7 @@
         "kana": "かいごうする",
         "romaji": "kaigousuru"
       },
-      "meaning": "meeting; assembly",
+      "meaning": "to meeting; to assembly",
       "conjugations": {
         "polite": "かいごうします",
         "negative_plain": "かいごうしない",
@@ -17429,7 +16869,7 @@
         "kana": "ぎろんする",
         "romaji": "gironsuru"
       },
-      "meaning": "argument; discussion",
+      "meaning": "to argument; to discussion",
       "conjugations": {
         "polite": "ぎろんします",
         "negative_plain": "ぎろんしない",
@@ -17483,7 +16923,7 @@
         "kana": "けっしんする",
         "romaji": "kesshinsuru"
       },
-      "meaning": "determination; resolution",
+      "meaning": "to make up one's mind; to resolve",
       "conjugations": {
         "polite": "けっしんします",
         "negative_plain": "けっしんしない",
@@ -17513,7 +16953,7 @@
         "kana": "ようきゅうする",
         "romaji": "youkyuusuru"
       },
-      "meaning": "demand; firm request",
+      "meaning": "to demand; to firm request",
       "conjugations": {
         "polite": "ようきゅうします",
         "negative_plain": "ようきゅうしない",
@@ -17597,7 +17037,7 @@
         "kana": "そんけいする",
         "romaji": "sonkeisuru"
       },
-      "meaning": "respect; esteem",
+      "meaning": "to respect; to esteem",
       "conjugations": {
         "polite": "そんけいします",
         "negative_plain": "そんけいしない",
@@ -17651,7 +17091,7 @@
         "kana": "じゅんびする",
         "romaji": "junbisuru"
       },
-      "meaning": "preparation; arrangements",
+      "meaning": "to preparation; to arrangements",
       "conjugations": {
         "polite": "じゅんびします",
         "negative_plain": "じゅんびしない",
@@ -17681,7 +17121,7 @@
         "kana": "たいざいする",
         "romaji": "taizaisuru"
       },
-      "meaning": "stay; sojourn",
+      "meaning": "to stay; to sojourn",
       "conjugations": {
         "polite": "たいざいします",
         "negative_plain": "たいざいしない",
@@ -17771,7 +17211,7 @@
         "kana": "さんかする",
         "romaji": "sankasuru"
       },
-      "meaning": "participation; joining",
+      "meaning": "to participation; to joining",
       "conjugations": {
         "polite": "さんかします",
         "negative_plain": "さんかしない",
@@ -17831,7 +17271,7 @@
         "kana": "じっこうする",
         "romaji": "jikkousuru"
       },
-      "meaning": "execution (e.g. of a plan); carrying out",
+      "meaning": "to execute (a plan); to carry out",
       "conjugations": {
         "polite": "じっこうします",
         "negative_plain": "じっこうしない",
@@ -17939,7 +17379,7 @@
         "kana": "しゅうりする",
         "romaji": "shuurisuru"
       },
-      "meaning": "repair; mending",
+      "meaning": "to repair; to mending",
       "conjugations": {
         "polite": "しゅうりします",
         "negative_plain": "しゅうりしない",
@@ -17999,7 +17439,7 @@
         "kana": "しょうたいする",
         "romaji": "shoutaisuru"
       },
-      "meaning": "invitation",
+      "meaning": "to invite; to extend an invitation",
       "conjugations": {
         "polite": "しょうたいします",
         "negative_plain": "しょうたいしない",
@@ -18113,7 +17553,7 @@
         "kana": "じまんする",
         "romaji": "jimansuru"
       },
-      "meaning": "pride; boast",
+      "meaning": "to boast; to be proud of",
       "conjugations": {
         "polite": "じまんします",
         "negative_plain": "じまんしない",
@@ -18167,7 +17607,7 @@
         "kana": "かいふくする",
         "romaji": "kaifukusuru"
       },
-      "meaning": "restoration; recovery",
+      "meaning": "to recover; to restore",
       "conjugations": {
         "polite": "かいふくします",
         "negative_plain": "かいふくしない",
@@ -18221,7 +17661,7 @@
         "kana": "はんだんする",
         "romaji": "handansuru"
       },
-      "meaning": "judgment; judgement",
+      "meaning": "to judge; to decide",
       "conjugations": {
         "polite": "はんだんします",
         "negative_plain": "はんだんしない",
@@ -18251,7 +17691,7 @@
         "kana": "ほうもんする",
         "romaji": "houmonsuru"
       },
-      "meaning": "call; visit",
+      "meaning": "to call; to visit",
       "conjugations": {
         "polite": "ほうもんします",
         "negative_plain": "ほうもんしない",
@@ -18281,7 +17721,7 @@
         "kana": "ちゅうもんする",
         "romaji": "chuumonsuru"
       },
-      "meaning": "order (for an item)",
+      "meaning": "to order (for an item)",
       "conjugations": {
         "polite": "ちゅうもんします",
         "negative_plain": "ちゅうもんしない",
@@ -18311,7 +17751,7 @@
         "kana": "けっていする",
         "romaji": "ketteisuru"
       },
-      "meaning": "decision; determination",
+      "meaning": "to decision; to determination",
       "conjugations": {
         "polite": "けっていします",
         "negative_plain": "けっていしない",
@@ -18341,7 +17781,7 @@
         "kana": "えいきょうする",
         "romaji": "eikyousuru"
       },
-      "meaning": "influence; effect",
+      "meaning": "to influence; to affect",
       "conjugations": {
         "polite": "えいきょうします",
         "negative_plain": "えいきょうしない",
@@ -18371,7 +17811,7 @@
         "kana": "しゅちょうする",
         "romaji": "shuchousuru"
       },
-      "meaning": "claim; insistence",
+      "meaning": "to claim; to insist on; to advocate",
       "conjugations": {
         "polite": "しゅちょうします",
         "negative_plain": "しゅちょうしない",
@@ -18425,7 +17865,7 @@
         "kana": "たよりする",
         "romaji": "tayorisuru"
       },
-      "meaning": "news; tidings",
+      "meaning": "to rely on; to contact (with news)",
       "conjugations": {
         "polite": "たよりします",
         "negative_plain": "たよりしない",
@@ -18455,7 +17895,7 @@
         "kana": "えんきする",
         "romaji": "enkisuru"
       },
-      "meaning": "postponement; deferment",
+      "meaning": "to postponement; to deferment",
       "conjugations": {
         "polite": "えんきします",
         "negative_plain": "えんきしない",
@@ -18485,7 +17925,7 @@
         "kana": "しんようする",
         "romaji": "shinyousuru"
       },
-      "meaning": "confidence; trust",
+      "meaning": "to trust; to have faith in",
       "conjugations": {
         "polite": "しんようします",
         "negative_plain": "しんようしない",
@@ -18515,7 +17955,7 @@
         "kana": "しょうばいする",
         "romaji": "shoubaisuru"
       },
-      "meaning": "trade; business",
+      "meaning": "to trade; to business",
       "conjugations": {
         "polite": "しょうばいします",
         "negative_plain": "しょうばいしない",
@@ -18545,7 +17985,7 @@
         "kana": "くろうする",
         "romaji": "kurousuru"
       },
-      "meaning": "trouble; hardship",
+      "meaning": "to go through trouble; to have hardship",
       "conjugations": {
         "polite": "くろうします",
         "negative_plain": "くろうしない",
@@ -18605,7 +18045,7 @@
         "kana": "ていしゅつする",
         "romaji": "teishutsusuru"
       },
-      "meaning": "presentation (of documents); submission (of an application, report, etc.)",
+      "meaning": "to submit (documents); to present",
       "conjugations": {
         "polite": "ていしゅつします",
         "negative_plain": "ていしゅつしない",
@@ -18635,7 +18075,7 @@
         "kana": "ふそくする",
         "romaji": "fusokusuru"
       },
-      "meaning": "insufficiency; deficiency",
+      "meaning": "to insufficiency; to deficiency",
       "conjugations": {
         "polite": "ふそくします",
         "negative_plain": "ふそくしない",
@@ -18779,7 +18219,7 @@
         "kana": "じゃまする",
         "romaji": "jamasuru"
       },
-      "meaning": "hindrance; obstacle",
+      "meaning": "to hinder; to be in the way; to obstruct",
       "conjugations": {
         "polite": "じゃまします",
         "negative_plain": "じゃましない",
@@ -18809,7 +18249,7 @@
         "kana": "へんかする",
         "romaji": "henkasuru"
       },
-      "meaning": "change; variation",
+      "meaning": "to change; to vary",
       "conjugations": {
         "polite": "へんかします",
         "negative_plain": "へんかしない",
@@ -18971,7 +18411,7 @@
         "kana": "せいちょうする",
         "romaji": "seichousuru"
       },
-      "meaning": "growth; development",
+      "meaning": "to grow; to develop",
       "conjugations": {
         "polite": "せいちょうします",
         "negative_plain": "せいちょうしない",
@@ -19145,7 +18585,7 @@
         "kana": "ちゅうしする",
         "romaji": "chuushisuru"
       },
-      "meaning": "interruption; discontinuance",
+      "meaning": "to interruption; to discontinuance",
       "conjugations": {
         "polite": "ちゅうしします",
         "negative_plain": "ちゅうししない",
@@ -19175,7 +18615,7 @@
         "kana": "しゃっきんする",
         "romaji": "shakkinsuru"
       },
-      "meaning": "debt; loan",
+      "meaning": "to debt; to loan",
       "conjugations": {
         "polite": "しゃっきんします",
         "negative_plain": "しゃっきんしない",
@@ -19229,7 +18669,7 @@
         "kana": "ひとことする",
         "romaji": "hitokotosuru"
       },
-      "meaning": "single word; a few words",
+      "meaning": "to say a few words; to make a brief comment",
       "conjugations": {
         "polite": "ひとことします",
         "negative_plain": "ひとことしない",
@@ -19381,8 +18821,6 @@
         "passive": "もえられる",
         "causative": "もえさせる",
         "causative_passive": "もえさせられる",
-        "imperative": "もえろ",
-        "volitional": "もえよう",
         "conditional_ba": "もえれば",
         "conditional_tara": "もえたら"
       }
@@ -19427,7 +18865,7 @@
         "kana": "きょうきゅうする",
         "romaji": "kyoukyuusuru"
       },
-      "meaning": "supply; provision",
+      "meaning": "to supply; to provision",
       "conjugations": {
         "polite": "きょうきゅうします",
         "negative_plain": "きょうきゅうしない",
@@ -19511,7 +18949,7 @@
         "kana": "かんどうする",
         "romaji": "kandousuru"
       },
-      "meaning": "being deeply moved emotionally; excitement",
+      "meaning": "to be moved; to be emotionally touched",
       "conjugations": {
         "polite": "かんどうします",
         "negative_plain": "かんどうしない",
@@ -19571,7 +19009,7 @@
         "kana": "ひょうげんする",
         "romaji": "hyougensuru"
       },
-      "meaning": "expression; representation",
+      "meaning": "to expression; to representation",
       "conjugations": {
         "polite": "ひょうげんします",
         "negative_plain": "ひょうげんしない",
@@ -19601,7 +19039,7 @@
         "kana": "むしする",
         "romaji": "mushisuru"
       },
-      "meaning": "disregarding; ignoring",
+      "meaning": "to ignore; to disregard",
       "conjugations": {
         "polite": "むしします",
         "negative_plain": "むししない",
@@ -19685,7 +19123,7 @@
         "kana": "へんこうする",
         "romaji": "henkousuru"
       },
-      "meaning": "change; modification",
+      "meaning": "to change; to modification",
       "conjugations": {
         "polite": "へんこうします",
         "negative_plain": "へんこうしない",
@@ -19745,7 +19183,7 @@
         "kana": "じつげんする",
         "romaji": "jitsugensuru"
       },
-      "meaning": "implementation (e.g. of a system); materialization",
+      "meaning": "to realize; to implement",
       "conjugations": {
         "polite": "じつげんします",
         "negative_plain": "じつげんしない",
@@ -19859,7 +19297,7 @@
         "kana": "はっぴょうする",
         "romaji": "happyousuru"
       },
-      "meaning": "announcement; publication",
+      "meaning": "to announcement; to publication",
       "conjugations": {
         "polite": "はっぴょうします",
         "negative_plain": "はっぴょうしない",
@@ -19913,7 +19351,7 @@
         "kana": "かんげいする",
         "romaji": "kangeisuru"
       },
-      "meaning": "welcome; (warm) reception",
+      "meaning": "to welcome; to (warm) reception",
       "conjugations": {
         "polite": "かんげいします",
         "negative_plain": "かんげいしない",
@@ -19943,7 +19381,7 @@
         "kana": "きょかする",
         "romaji": "kyokasuru"
       },
-      "meaning": "permission; approval",
+      "meaning": "to permission; to approval",
       "conjugations": {
         "polite": "きょかします",
         "negative_plain": "きょかしない",
@@ -20033,7 +19471,7 @@
         "kana": "かんせいする",
         "romaji": "kanseisuru"
       },
-      "meaning": "completion; perfection",
+      "meaning": "to completion; to perfection",
       "conjugations": {
         "polite": "かんせいします",
         "negative_plain": "かんせいしない",
@@ -20063,7 +19501,7 @@
         "kana": "そうぞうする",
         "romaji": "souzousuru"
       },
-      "meaning": "imagination; supposition",
+      "meaning": "to create; to produce; to invent",
       "conjugations": {
         "polite": "そうぞうします",
         "negative_plain": "そうぞうしない",
@@ -20123,7 +19561,7 @@
         "kana": "けいえいする",
         "romaji": "keieisuru"
       },
-      "meaning": "management; administration",
+      "meaning": "to management; to administration",
       "conjugations": {
         "polite": "けいえいします",
         "negative_plain": "けいえいしない",
@@ -20153,7 +19591,7 @@
         "kana": "ぞうかする",
         "romaji": "zoukasuru"
       },
-      "meaning": "increase; rise",
+      "meaning": "to increase; to rise",
       "conjugations": {
         "polite": "ぞうかします",
         "negative_plain": "ぞうかしない",
@@ -20183,7 +19621,7 @@
         "kana": "おうだんする",
         "romaji": "oudansuru"
       },
-      "meaning": "crossing (a road, river, etc.); cutting through (e.g. of a river through a town)",
+      "meaning": "to cross (a road, river, etc.); to cut through",
       "conjugations": {
         "polite": "おうだんします",
         "negative_plain": "おうだんしない",
@@ -20273,7 +19711,7 @@
         "kana": "そうだんする",
         "romaji": "soudansuru"
       },
-      "meaning": "consultation; discussion",
+      "meaning": "to consultation; to discussion",
       "conjugations": {
         "polite": "そうだんします",
         "negative_plain": "そうだんしない",
@@ -20303,7 +19741,7 @@
         "kana": "かつどうする",
         "romaji": "katsudousuru"
       },
-      "meaning": "activity (of a person, organization, animal, volcano, etc.); action",
+      "meaning": "to be active; to engage in activity",
       "conjugations": {
         "polite": "かつどうします",
         "negative_plain": "かつどうしない",
@@ -20333,7 +19771,7 @@
         "kana": "ちょきんする",
         "romaji": "chokinsuru"
       },
-      "meaning": "putting money aside; savings",
+      "meaning": "to putting money aside; to savings",
       "conjugations": {
         "polite": "ちょきんします",
         "negative_plain": "ちょきんしない",
@@ -20363,7 +19801,7 @@
         "kana": "こうりょする",
         "romaji": "kouryosuru"
       },
-      "meaning": "consideration; taking into account",
+      "meaning": "to consideration; to taking into account",
       "conjugations": {
         "polite": "こうりょします",
         "negative_plain": "こうりょしない",
@@ -20393,7 +19831,7 @@
         "kana": "けつろんする",
         "romaji": "ketsuronsuru"
       },
-      "meaning": "conclusion (of an argument, discussion, study, etc.)",
+      "meaning": "to conclude; to reach a conclusion",
       "conjugations": {
         "polite": "けつろんします",
         "negative_plain": "けつろんしない",
@@ -20483,7 +19921,7 @@
         "kana": "きょうりょくする",
         "romaji": "kyouryokusuru"
       },
-      "meaning": "cooperation; collaboration",
+      "meaning": "to cooperation; to collaboration",
       "conjugations": {
         "polite": "きょうりょくします",
         "negative_plain": "きょうりょくしない",
@@ -20543,7 +19981,7 @@
         "kana": "しようする",
         "romaji": "shiyousuru"
       },
-      "meaning": "use; application",
+      "meaning": "to use; to application",
       "conjugations": {
         "polite": "しようします",
         "negative_plain": "しようしない",
@@ -20573,7 +20011,7 @@
         "kana": "しょりする",
         "romaji": "shorisuru"
       },
-      "meaning": "processing; dealing with",
+      "meaning": "to processing; to dealing with",
       "conjugations": {
         "polite": "しょりします",
         "negative_plain": "しょりしない",
@@ -20603,7 +20041,7 @@
         "kana": "かくにんする",
         "romaji": "kakuninsuru"
       },
-      "meaning": "confirmation; verification",
+      "meaning": "to confirmation; to verification",
       "conjugations": {
         "polite": "かくにんします",
         "negative_plain": "かくにんしない",
@@ -20663,7 +20101,7 @@
         "kana": "ほうこくする",
         "romaji": "houkokusuru"
       },
-      "meaning": "report; information",
+      "meaning": "to report; to information",
       "conjugations": {
         "polite": "ほうこくします",
         "negative_plain": "ほうこくしない",
@@ -20825,7 +20263,7 @@
         "kana": "きんしする",
         "romaji": "kinshisuru"
       },
-      "meaning": "prohibition; inhibition",
+      "meaning": "to prohibition; to inhibition",
       "conjugations": {
         "polite": "きんしします",
         "negative_plain": "きんししない",
@@ -20879,7 +20317,7 @@
         "kana": "けいこくする",
         "romaji": "keikokusuru"
       },
-      "meaning": "warning; caution",
+      "meaning": "to warning; to caution",
       "conjugations": {
         "polite": "けいこくします",
         "negative_plain": "けいこくしない",
@@ -20909,7 +20347,7 @@
         "kana": "しゅじゅつする",
         "romaji": "shujutsusuru"
       },
-      "meaning": "surgery; operation",
+      "meaning": "to surgery; to operation",
       "conjugations": {
         "polite": "しゅじゅつします",
         "negative_plain": "しゅじゅつしない",
@@ -20939,7 +20377,7 @@
         "kana": "ごかいする",
         "romaji": "gokaisuru"
       },
-      "meaning": "misunderstanding",
+      "meaning": "to misunderstand; to have a misunderstanding",
       "conjugations": {
         "polite": "ごかいします",
         "negative_plain": "ごかいしない",
@@ -20999,7 +20437,7 @@
         "kana": "せんこうする",
         "romaji": "senkousuru"
       },
-      "meaning": "major subject; special study",
+      "meaning": "to major subject; to special study",
       "conjugations": {
         "polite": "せんこうします",
         "negative_plain": "せんこうしない",
@@ -21137,7 +20575,7 @@
         "kana": "ひょうばんする",
         "romaji": "hyoubansuru"
       },
-      "meaning": "reputation; (public) estimation",
+      "meaning": "to reputation; to (public) estimation",
       "conjugations": {
         "polite": "ひょうばんします",
         "negative_plain": "ひょうばんしない",
@@ -21197,7 +20635,7 @@
         "kana": "みかたする",
         "romaji": "mikatasuru"
       },
-      "meaning": "friend; ally",
+      "meaning": "to friend; to ally",
       "conjugations": {
         "polite": "みかたします",
         "negative_plain": "みかたしない",
@@ -21251,7 +20689,7 @@
         "kana": "そんがいする",
         "romaji": "songaisuru"
       },
-      "meaning": "damage; injury",
+      "meaning": "to damage; to injury",
       "conjugations": {
         "polite": "そんがいします",
         "negative_plain": "そんがいしない",
@@ -21281,7 +20719,7 @@
         "kana": "こうかんする",
         "romaji": "koukansuru"
       },
-      "meaning": "exchange; interchange",
+      "meaning": "to exchange; to interchange",
       "conjugations": {
         "polite": "こうかんします",
         "negative_plain": "こうかんしない",
@@ -21341,7 +20779,7 @@
         "kana": "そうとうする",
         "romaji": "soutousuru"
       },
-      "meaning": "corresponding to (in meaning, function, etc.); being equivalent to",
+      "meaning": "to correspond to; to be equivalent to",
       "conjugations": {
         "polite": "そうとうします",
         "negative_plain": "そうとうしない",
@@ -21371,7 +20809,7 @@
         "kana": "えんそうする",
         "romaji": "ensousuru"
       },
-      "meaning": "musical performance",
+      "meaning": "to musical performance",
       "conjugations": {
         "polite": "えんそうします",
         "negative_plain": "えんそうしない",
@@ -21533,7 +20971,7 @@
         "kana": "ふじゆうする",
         "romaji": "fujiyuusuru"
       },
-      "meaning": "discomfort; inconvenience",
+      "meaning": "to lack; to be inconvenienced",
       "conjugations": {
         "polite": "ふじゆうします",
         "negative_plain": "ふじゆうしない",
@@ -21647,7 +21085,7 @@
         "kana": "くべつする",
         "romaji": "kubetsusuru"
       },
-      "meaning": "distinction; differentiation",
+      "meaning": "to distinction; to differentiation",
       "conjugations": {
         "polite": "くべつします",
         "negative_plain": "くべつしない",
@@ -21731,7 +21169,7 @@
         "kana": "しつぼうする",
         "romaji": "shitsubousuru"
       },
-      "meaning": "disappointment; despair",
+      "meaning": "to be disappointed; to lose hope",
       "conjugations": {
         "polite": "しつぼうします",
         "negative_plain": "しつぼうしない",
@@ -21887,7 +21325,7 @@
         "kana": "そしきする",
         "romaji": "soshikisuru"
       },
-      "meaning": "organization; organisation",
+      "meaning": "to organization; to organisation",
       "conjugations": {
         "polite": "そしきします",
         "negative_plain": "そしきしない",
@@ -21947,7 +21385,7 @@
         "kana": "ひはんする",
         "romaji": "hihansuru"
       },
-      "meaning": "criticism; judgement",
+      "meaning": "to criticize; to judge",
       "conjugations": {
         "polite": "ひはんします",
         "negative_plain": "ひはんしない",
@@ -21977,7 +21415,7 @@
         "kana": "けんさする",
         "romaji": "kensasuru"
       },
-      "meaning": "inspection (e.g. customs, factory); examination",
+      "meaning": "to inspect; to examine",
       "conjugations": {
         "polite": "けんさします",
         "negative_plain": "けんさしない",
@@ -22007,7 +21445,7 @@
         "kana": "せいぞうする",
         "romaji": "seizousuru"
       },
-      "meaning": "manufacture; production",
+      "meaning": "to manufacture; to production",
       "conjugations": {
         "polite": "せいぞうします",
         "negative_plain": "せいぞうしない",
@@ -22097,7 +21535,7 @@
         "kana": "ひかくする",
         "romaji": "hikakusuru"
       },
-      "meaning": "comparison",
+      "meaning": "to compare; to make a comparison",
       "conjugations": {
         "polite": "ひかくします",
         "negative_plain": "ひかくしない",
@@ -22199,7 +21637,7 @@
         "kana": "かんじょうする",
         "romaji": "kanjousuru"
       },
-      "meaning": "calculation; computation",
+      "meaning": "to calculation; to computation",
       "conjugations": {
         "polite": "かんじょうします",
         "negative_plain": "かんじょうしない",
@@ -22253,7 +21691,7 @@
         "kana": "こうせいする",
         "romaji": "kouseisuru"
       },
-      "meaning": "composition; construction",
+      "meaning": "to composition; to construction",
       "conjugations": {
         "polite": "こうせいします",
         "negative_plain": "こうせいしない",
@@ -22445,7 +21883,7 @@
         "kana": "けんとうする",
         "romaji": "kentousuru"
       },
-      "meaning": "consideration; examination",
+      "meaning": "to consideration; to examination",
       "conjugations": {
         "polite": "けんとうします",
         "negative_plain": "けんとうしない",
@@ -22535,7 +21973,7 @@
         "kana": "かいしゃくする",
         "romaji": "kaishakusuru"
       },
-      "meaning": "interpretation; explanation",
+      "meaning": "to interpretation; to explanation",
       "conjugations": {
         "polite": "かいしゃくします",
         "negative_plain": "かいしゃくしない",
@@ -22787,7 +22225,7 @@
         "kana": "おせんする",
         "romaji": "osensuru"
       },
-      "meaning": "pollution; contamination",
+      "meaning": "to pollution; to contamination",
       "conjugations": {
         "polite": "おせんします",
         "negative_plain": "おせんしない",
@@ -22841,7 +22279,7 @@
         "kana": "ちゅうもくする",
         "romaji": "chuumokusuru"
       },
-      "meaning": "notice; attention",
+      "meaning": "to notice; to attention",
       "conjugations": {
         "polite": "ちゅうもくします",
         "negative_plain": "ちゅうもくしない",
@@ -22871,7 +22309,7 @@
         "kana": "かんさつする",
         "romaji": "kansatsusuru"
       },
-      "meaning": "observation; survey",
+      "meaning": "to observation; to survey",
       "conjugations": {
         "polite": "かんさつします",
         "negative_plain": "かんさつしない",
@@ -22925,7 +22363,7 @@
         "kana": "きゅうけいする",
         "romaji": "kyuukeisuru"
       },
-      "meaning": "rest; break",
+      "meaning": "to take a break; to rest",
       "conjugations": {
         "polite": "きゅうけいします",
         "negative_plain": "きゅうけいしない",
@@ -22955,7 +22393,7 @@
         "kana": "しはいする",
         "romaji": "shihaisuru"
       },
-      "meaning": "rule; domination",
+      "meaning": "to rule; to dominate; to control",
       "conjugations": {
         "polite": "しはいします",
         "negative_plain": "しはいしない",
@@ -23039,7 +22477,7 @@
         "kana": "かくごする",
         "romaji": "kakugosuru"
       },
-      "meaning": "readiness; (mental) preparedness",
+      "meaning": "to prepare oneself; to be resolved",
       "conjugations": {
         "polite": "かくごします",
         "negative_plain": "かくごしない",
@@ -23069,7 +22507,7 @@
         "kana": "だいひょうする",
         "romaji": "daihyousuru"
       },
-      "meaning": "representation; representative",
+      "meaning": "to representation; to representative",
       "conjugations": {
         "polite": "だいひょうします",
         "negative_plain": "だいひょうしない",
@@ -23237,7 +22675,7 @@
         "kana": "こんざつする",
         "romaji": "konzatsusuru"
       },
-      "meaning": "congestion; crush",
+      "meaning": "to be congested; to be crowded",
       "conjugations": {
         "polite": "こんざつします",
         "negative_plain": "こんざつしない",
@@ -23315,7 +22753,7 @@
         "kana": "はいたつする",
         "romaji": "haitatsusuru"
       },
-      "meaning": "delivery",
+      "meaning": "to deliver; to make a delivery",
       "conjugations": {
         "polite": "はいたつします",
         "negative_plain": "はいたつしない",
@@ -23345,7 +22783,7 @@
         "kana": "こんらんする",
         "romaji": "konransuru"
       },
-      "meaning": "disorder; chaos",
+      "meaning": "to be in disorder; to be chaotic",
       "conjugations": {
         "polite": "こんらんします",
         "negative_plain": "こんらんしない",
@@ -23375,7 +22813,7 @@
         "kana": "しゅうしょくする",
         "romaji": "shuushokusuru"
       },
-      "meaning": "finding employment; getting a job",
+      "meaning": "to find employment; to get a job",
       "conjugations": {
         "polite": "しゅうしょくします",
         "negative_plain": "しゅうしょくしない",
@@ -23405,7 +22843,7 @@
         "kana": "なっとくする",
         "romaji": "nattokusuru"
       },
-      "meaning": "consent; agreement",
+      "meaning": "to be convinced; to be satisfied with an explanation",
       "conjugations": {
         "polite": "なっとくします",
         "negative_plain": "なっとくしない",
@@ -23435,7 +22873,7 @@
         "kana": "こうえんする",
         "romaji": "kouensuru"
       },
-      "meaning": "lecture; address",
+      "meaning": "to lecture; to address",
       "conjugations": {
         "polite": "こうえんします",
         "negative_plain": "こうえんしない",
@@ -23495,7 +22933,7 @@
         "kana": "きにゅうする",
         "romaji": "kinyuusuru"
       },
-      "meaning": "entry (in a form, register, diary, etc.); filling in",
+      "meaning": "to fill in (a form); to enter (data)",
       "conjugations": {
         "polite": "きにゅうします",
         "negative_plain": "きにゅうしない",
@@ -23525,7 +22963,7 @@
         "kana": "ごうけいする",
         "romaji": "goukeisuru"
       },
-      "meaning": "sum total; total amount",
+      "meaning": "to total; to add up to",
       "conjugations": {
         "polite": "ごうけいします",
         "negative_plain": "ごうけいしない",
@@ -23555,7 +22993,7 @@
         "kana": "てきようする",
         "romaji": "tekiyousuru"
       },
-      "meaning": "application (of a rule, law, method, etc.)",
+      "meaning": "to apply (a rule, law, method, etc.)",
       "conjugations": {
         "polite": "てきようします",
         "negative_plain": "てきようしない",
@@ -23585,7 +23023,7 @@
         "kana": "かんりする",
         "romaji": "kanrisuru"
       },
-      "meaning": "control; management (e.g. of a business)",
+      "meaning": "to control; to management (e.g. of a business)",
       "conjugations": {
         "polite": "かんりします",
         "negative_plain": "かんりしない",
@@ -23645,7 +23083,7 @@
         "kana": "しょうちする",
         "romaji": "shouchisuru"
       },
-      "meaning": "knowledge; awareness",
+      "meaning": "to knowledge; to awareness",
       "conjugations": {
         "polite": "しょうちします",
         "negative_plain": "しょうちしない",
@@ -23675,7 +23113,7 @@
         "kana": "せいげんする",
         "romaji": "seigensuru"
       },
-      "meaning": "restriction; restraint",
+      "meaning": "to restriction; to restraint",
       "conjugations": {
         "polite": "せいげんします",
         "negative_plain": "せいげんしない",
@@ -23705,7 +23143,7 @@
         "kana": "そんちょうする",
         "romaji": "sonchousuru"
       },
-      "meaning": "respect; esteem",
+      "meaning": "to respect; to esteem",
       "conjugations": {
         "polite": "そんちょうします",
         "negative_plain": "そんちょうしない",
@@ -23735,7 +23173,7 @@
         "kana": "こくふくする",
         "romaji": "kokufukusuru"
       },
-      "meaning": "conquest (of a difficulty, illness, crisis, etc.); overcoming",
+      "meaning": "to overcome; to conquer (a difficulty)",
       "conjugations": {
         "polite": "こくふくします",
         "negative_plain": "こくふくしない",
@@ -23765,7 +23203,7 @@
         "kana": "いじする",
         "romaji": "ijisuru"
       },
-      "meaning": "maintenance; preservation",
+      "meaning": "to maintenance; to preservation",
       "conjugations": {
         "polite": "いじします",
         "negative_plain": "いじしない",
@@ -23795,7 +23233,7 @@
         "kana": "ろんそうする",
         "romaji": "ronsousuru"
       },
-      "meaning": "dispute; controversy",
+      "meaning": "to dispute; to controversy",
       "conjugations": {
         "polite": "ろんそうします",
         "negative_plain": "ろんそうしない",
@@ -23825,7 +23263,7 @@
         "kana": "かんしんする",
         "romaji": "kanshinsuru"
       },
-      "meaning": "admiration; being impressed",
+      "meaning": "to be impressed; to admire",
       "conjugations": {
         "polite": "かんしんします",
         "negative_plain": "かんしんしない",
@@ -23879,7 +23317,7 @@
         "kana": "しょうがいする",
         "romaji": "shougaisuru"
       },
-      "meaning": "obstacle; impediment",
+      "meaning": "to obstacle; to impediment",
       "conjugations": {
         "polite": "しょうがいします",
         "negative_plain": "しょうがいしない",
@@ -23933,7 +23371,7 @@
         "kana": "いどうする",
         "romaji": "idousuru"
       },
-      "meaning": "movement; transfer",
+      "meaning": "to movement; to transfer",
       "conjugations": {
         "polite": "いどうします",
         "negative_plain": "いどうしない",
@@ -23963,7 +23401,7 @@
         "kana": "しょうにんする",
         "romaji": "shouninsuru"
       },
-      "meaning": "recognition; acknowledgement",
+      "meaning": "to recognition; to acknowledgement",
       "conjugations": {
         "polite": "しょうにんします",
         "negative_plain": "しょうにんしない",
@@ -23993,7 +23431,7 @@
         "kana": "こうけんする",
         "romaji": "koukensuru"
       },
-      "meaning": "contribution (furthering a goal or cause); services (to a cause)",
+      "meaning": "to contribute (to a goal or cause)",
       "conjugations": {
         "polite": "こうけんします",
         "negative_plain": "こうけんしない",
@@ -24023,7 +23461,7 @@
         "kana": "けいゆする",
         "romaji": "keiyusuru"
       },
-      "meaning": "going through; going via",
+      "meaning": "to going through; to going via",
       "conjugations": {
         "polite": "けいゆします",
         "negative_plain": "けいゆしない",
@@ -24077,7 +23515,7 @@
         "kana": "きんちょうする",
         "romaji": "kinchousuru"
       },
-      "meaning": "tension; strain",
+      "meaning": "to be tense; to be nervous",
       "conjugations": {
         "polite": "きんちょうします",
         "negative_plain": "きんちょうしない",
@@ -24107,7 +23545,7 @@
         "kana": "ほぞんする",
         "romaji": "hozonsuru"
       },
-      "meaning": "preservation; conservation",
+      "meaning": "to preservation; to conservation",
       "conjugations": {
         "polite": "ほぞんします",
         "negative_plain": "ほぞんしない",
@@ -24215,7 +23653,7 @@
         "kana": "きょうつうする",
         "romaji": "kyoutsuusuru"
       },
-      "meaning": "common; shared",
+      "meaning": "to be common; to be shared",
       "conjugations": {
         "polite": "きょうつうします",
         "negative_plain": "きょうつうしない",
@@ -24245,7 +23683,7 @@
         "kana": "はったつする",
         "romaji": "hattatsusuru"
       },
-      "meaning": "development; growth",
+      "meaning": "to develop; to grow",
       "conjugations": {
         "polite": "はったつします",
         "negative_plain": "はったつしない",
@@ -24275,7 +23713,7 @@
         "kana": "かんれんする",
         "romaji": "kanrensuru"
       },
-      "meaning": "relation; connection",
+      "meaning": "to be related; to have a relation to",
       "conjugations": {
         "polite": "かんれんします",
         "negative_plain": "かんれんしない",
@@ -24305,7 +23743,7 @@
         "kana": "いんたいする",
         "romaji": "intaisuru"
       },
-      "meaning": "retirement",
+      "meaning": "to retire; to step down",
       "conjugations": {
         "polite": "いんたいします",
         "negative_plain": "いんたいしない",
@@ -24335,7 +23773,7 @@
         "kana": "かいしする",
         "romaji": "kaishisuru"
       },
-      "meaning": "start; commencement",
+      "meaning": "to start; to commencement",
       "conjugations": {
         "polite": "かいしします",
         "negative_plain": "かいししない",
@@ -24365,7 +23803,7 @@
         "kana": "そんする",
         "romaji": "sonsuru"
       },
-      "meaning": "loss; damage",
+      "meaning": "to lose; to suffer a loss",
       "conjugations": {
         "polite": "そんします",
         "negative_plain": "そんしない",
@@ -24395,7 +23833,7 @@
         "kana": "つうかする",
         "romaji": "tsuukasuru"
       },
-      "meaning": "passing through (a tunnel, station, town, etc.); passing by (e.g. of a typhoon)",
+      "meaning": "to pass through; to go through",
       "conjugations": {
         "polite": "つうかします",
         "negative_plain": "つうかしない",
@@ -24425,7 +23863,7 @@
         "kana": "せいきゅうする",
         "romaji": "seikyuusuru"
       },
-      "meaning": "claim; demand",
+      "meaning": "to claim; to demand",
       "conjugations": {
         "polite": "せいきゅうします",
         "negative_plain": "せいきゅうしない",
@@ -24503,7 +23941,7 @@
         "kana": "てつやする",
         "romaji": "tetsuyasuru"
       },
-      "meaning": "staying up all night",
+      "meaning": "to stay up all night working; to pull an all-nighter",
       "conjugations": {
         "polite": "てつやします",
         "negative_plain": "てつやしない",
@@ -24533,7 +23971,7 @@
         "kana": "したくする",
         "romaji": "shitakusuru"
       },
-      "meaning": "preparation; arrangements",
+      "meaning": "to preparation; to arrangements",
       "conjugations": {
         "polite": "したくします",
         "negative_plain": "したくしない",
@@ -24563,7 +24001,7 @@
         "kana": "よそくする",
         "romaji": "yosokusuru"
       },
-      "meaning": "prediction; estimation",
+      "meaning": "to prediction; to estimation",
       "conjugations": {
         "polite": "よそくします",
         "negative_plain": "よそくしない",
@@ -24593,7 +24031,7 @@
         "kana": "けしょうする",
         "romaji": "keshousuru"
       },
-      "meaning": "make-up; makeup",
+      "meaning": "to make-up; to makeup",
       "conjugations": {
         "polite": "けしょうします",
         "negative_plain": "けしょうしない",
@@ -24623,7 +24061,7 @@
         "kana": "きゅうじょする",
         "romaji": "kyuujosuru"
       },
-      "meaning": "relief; aid",
+      "meaning": "to relief; to aid",
       "conjugations": {
         "polite": "きゅうじょします",
         "negative_plain": "きゅうじょしない",
@@ -24653,7 +24091,7 @@
         "kana": "ぜんしんする",
         "romaji": "zenshinsuru"
       },
-      "meaning": "advance; moving forward",
+      "meaning": "to advance; to moving forward",
       "conjugations": {
         "polite": "ぜんしんします",
         "negative_plain": "ぜんしんしない",
@@ -24683,7 +24121,7 @@
         "kana": "がくもんする",
         "romaji": "gakumonsuru"
       },
-      "meaning": "study; scholarship",
+      "meaning": "to study; to scholarship",
       "conjugations": {
         "polite": "がくもんします",
         "negative_plain": "がくもんしない",
@@ -24767,7 +24205,7 @@
         "kana": "はさんする",
         "romaji": "hasansuru"
       },
-      "meaning": "bankruptcy; insolvency",
+      "meaning": "to go bankrupt; to go broke",
       "conjugations": {
         "polite": "はさんします",
         "negative_plain": "はさんしない",
@@ -24821,7 +24259,7 @@
         "kana": "きのうする",
         "romaji": "kinousuru"
       },
-      "meaning": "function; facility",
+      "meaning": "to function; to facility",
       "conjugations": {
         "polite": "きのうします",
         "negative_plain": "きのうしない",
@@ -24899,7 +24337,7 @@
         "kana": "ていこうする",
         "romaji": "teikousuru"
       },
-      "meaning": "resistance; opposition",
+      "meaning": "to resistance; to opposition",
       "conjugations": {
         "polite": "ていこうします",
         "negative_plain": "ていこうしない",
@@ -24929,7 +24367,7 @@
         "kana": "しゅくはくする",
         "romaji": "shukuhakusuru"
       },
-      "meaning": "accommodation; lodging",
+      "meaning": "to accommodation; to lodging",
       "conjugations": {
         "polite": "しゅくはくします",
         "negative_plain": "しゅくはくしない",
@@ -24959,7 +24397,7 @@
         "kana": "れんぞくする",
         "romaji": "renzokusuru"
       },
-      "meaning": "continuation; succession",
+      "meaning": "to continuation; to succession",
       "conjugations": {
         "polite": "れんぞくします",
         "negative_plain": "れんぞくしない",
@@ -25019,7 +24457,7 @@
         "kana": "しどうする",
         "romaji": "shidousuru"
       },
-      "meaning": "guidance; leadership",
+      "meaning": "to guidance; to leadership",
       "conjugations": {
         "polite": "しどうします",
         "negative_plain": "しどうしない",
@@ -25049,7 +24487,7 @@
         "kana": "じっしする",
         "romaji": "jisshisuru"
       },
-      "meaning": "enforcement; implementation",
+      "meaning": "to enforcement; to implementation",
       "conjugations": {
         "polite": "じっしします",
         "negative_plain": "じっししない",
@@ -25079,7 +24517,7 @@
         "kana": "りょうがえする",
         "romaji": "ryougaesuru"
       },
-      "meaning": "change; money exchange",
+      "meaning": "to change; to money exchange",
       "conjugations": {
         "polite": "りょうがえします",
         "negative_plain": "りょうがえしない",
@@ -25109,7 +24547,7 @@
         "kana": "しげきする",
         "romaji": "shigekisuru"
       },
-      "meaning": "stimulus; stimulation",
+      "meaning": "to stimulus; to stimulation",
       "conjugations": {
         "polite": "しげきします",
         "negative_plain": "しげきしない",
@@ -25187,7 +24625,7 @@
         "kana": "そうさする",
         "romaji": "sousasuru"
       },
-      "meaning": "operation; management",
+      "meaning": "to operation; to management",
       "conjugations": {
         "polite": "そうさします",
         "negative_plain": "そうさしない",
@@ -25217,7 +24655,7 @@
         "kana": "ししゅつする",
         "romaji": "shishutsusuru"
       },
-      "meaning": "expenditure; disbursement",
+      "meaning": "to expenditure; to disbursement",
       "conjugations": {
         "polite": "ししゅつします",
         "negative_plain": "ししゅつしない",
@@ -25247,7 +24685,7 @@
         "kana": "にゅうじょうする",
         "romaji": "nyuujousuru"
       },
-      "meaning": "entrance; entering",
+      "meaning": "to entrance; to entering",
       "conjugations": {
         "polite": "にゅうじょうします",
         "negative_plain": "にゅうじょうしない",
@@ -25277,7 +24715,7 @@
         "kana": "しぼうする",
         "romaji": "shibousuru"
       },
-      "meaning": "death; dying",
+      "meaning": "to die; to pass away",
       "conjugations": {
         "polite": "しぼうします",
         "negative_plain": "しぼうしない",
@@ -25307,7 +24745,7 @@
         "kana": "えんぎする",
         "romaji": "engisuru"
       },
-      "meaning": "acting; performance",
+      "meaning": "to acting; to performance",
       "conjugations": {
         "polite": "えんぎします",
         "negative_plain": "えんぎしない",
@@ -25385,7 +24823,7 @@
         "kana": "せっけいする",
         "romaji": "sekkeisuru"
       },
-      "meaning": "plan; design",
+      "meaning": "to plan; to design",
       "conjugations": {
         "polite": "せっけいします",
         "negative_plain": "せっけいしない",
@@ -25415,7 +24853,7 @@
         "kana": "こうさいする",
         "romaji": "kousaisuru"
       },
-      "meaning": "company; friendship",
+      "meaning": "to company; to friendship",
       "conjugations": {
         "polite": "こうさいします",
         "negative_plain": "こうさいしない",
@@ -25469,7 +24907,7 @@
         "kana": "たんとうする",
         "romaji": "tantousuru"
       },
-      "meaning": "being in charge (of an area of responsibility); being responsible (for a work role, etc.)",
+      "meaning": "to being in charge (of an area of responsibility); to being responsible (for a work role, etc.)",
       "conjugations": {
         "polite": "たんとうします",
         "negative_plain": "たんとうしない",
@@ -25523,7 +24961,7 @@
         "kana": "しんがくする",
         "romaji": "shingakusuru"
       },
-      "meaning": "advancing to the next stage of education; going on to (high school, college, etc.)",
+      "meaning": "to advance to the next stage of education; to go on to higher education",
       "conjugations": {
         "polite": "しんがくします",
         "negative_plain": "しんがくしない",
@@ -25553,7 +24991,7 @@
         "kana": "かんりょうする",
         "romaji": "kanryousuru"
       },
-      "meaning": "completion; conclusion",
+      "meaning": "to completion; to conclusion",
       "conjugations": {
         "polite": "かんりょうします",
         "negative_plain": "かんりょうしない",
@@ -25583,7 +25021,7 @@
         "kana": "すいせんする",
         "romaji": "suisensuru"
       },
-      "meaning": "recommendation; referral",
+      "meaning": "to recommendation; to referral",
       "conjugations": {
         "polite": "すいせんします",
         "negative_plain": "すいせんしない",
@@ -25637,7 +25075,7 @@
         "kana": "しんぱんする",
         "romaji": "shinpansuru"
       },
-      "meaning": "judgement; judgment",
+      "meaning": "to judgement; to judgment",
       "conjugations": {
         "polite": "しんぱんします",
         "negative_plain": "しんぱんしない",
@@ -25667,7 +25105,7 @@
         "kana": "いらいする",
         "romaji": "iraisuru"
       },
-      "meaning": "request; commission",
+      "meaning": "to request; to commission",
       "conjugations": {
         "polite": "いらいします",
         "negative_plain": "いらいしない",
@@ -25745,7 +25183,7 @@
         "kana": "しきゅうする",
         "romaji": "shikyuusuru"
       },
-      "meaning": "provision; supply",
+      "meaning": "to provision; to supply",
       "conjugations": {
         "polite": "しきゅうします",
         "negative_plain": "しきゅうしない",
@@ -25775,7 +25213,7 @@
         "kana": "せいりする",
         "romaji": "seirisuru"
       },
-      "meaning": "sorting; arrangement",
+      "meaning": "to sorting; to arrangement",
       "conjugations": {
         "polite": "せいりします",
         "negative_plain": "せいりしない",
@@ -25805,7 +25243,7 @@
         "kana": "かくだいする",
         "romaji": "kakudaisuru"
       },
-      "meaning": "expansion; extension",
+      "meaning": "to expansion; to extension",
       "conjugations": {
         "polite": "かくだいします",
         "negative_plain": "かくだいしない",
@@ -25835,7 +25273,7 @@
         "kana": "そうちする",
         "romaji": "souchisuru"
       },
-      "meaning": "equipment; device",
+      "meaning": "to equipment; to device",
       "conjugations": {
         "polite": "そうちします",
         "negative_plain": "そうちしない",
@@ -25865,7 +25303,7 @@
         "kana": "よきする",
         "romaji": "yokisuru"
       },
-      "meaning": "expectation; anticipation",
+      "meaning": "to expectation; to anticipation",
       "conjugations": {
         "polite": "よきします",
         "negative_plain": "よきしない",
@@ -25925,7 +25363,7 @@
         "kana": "きねんする",
         "romaji": "kinensuru"
       },
-      "meaning": "commemoration; celebration",
+      "meaning": "to commemorate; to celebrate",
       "conjugations": {
         "polite": "きねんします",
         "negative_plain": "きねんしない",
@@ -25955,7 +25393,7 @@
         "kana": "せつびする",
         "romaji": "setsubisuru"
       },
-      "meaning": "equipment; facilities",
+      "meaning": "to equipment; to facilities",
       "conjugations": {
         "polite": "せつびします",
         "negative_plain": "せつびしない",
@@ -25985,7 +25423,7 @@
         "kana": "はっこうする",
         "romaji": "hakkousuru"
       },
-      "meaning": "publication (of a newspaper, magazine, book, etc.); issue",
+      "meaning": "to publish (a newspaper, book, etc.); to issue",
       "conjugations": {
         "polite": "はっこうします",
         "negative_plain": "はっこうしない",
@@ -26087,7 +25525,7 @@
         "kana": "けいじする",
         "romaji": "keijisuru"
       },
-      "meaning": "notice; bulletin",
+      "meaning": "to notice; to bulletin",
       "conjugations": {
         "polite": "けいじします",
         "negative_plain": "けいじしない",
@@ -26117,7 +25555,7 @@
         "kana": "めいわくする",
         "romaji": "meiwakusuru"
       },
-      "meaning": "trouble; bother",
+      "meaning": "to trouble; to bother",
       "conjugations": {
         "polite": "めいわくします",
         "negative_plain": "めいわくしない",
@@ -26171,7 +25609,7 @@
         "kana": "さいばんする",
         "romaji": "saibansuru"
       },
-      "meaning": "trial; judgement",
+      "meaning": "to trial; to judgement",
       "conjugations": {
         "polite": "さいばんします",
         "negative_plain": "さいばんしない",
@@ -26249,7 +25687,7 @@
         "kana": "ひこうする",
         "romaji": "hikousuru"
       },
-      "meaning": "flight; flying",
+      "meaning": "to flight; to flying",
       "conjugations": {
         "polite": "ひこうします",
         "negative_plain": "ひこうしない",
@@ -26279,7 +25717,7 @@
         "kana": "よぼうする",
         "romaji": "yobousuru"
       },
-      "meaning": "prevention; protection (against)",
+      "meaning": "to prevention; to protection (against)",
       "conjugations": {
         "polite": "よぼうします",
         "negative_plain": "よぼうしない",
@@ -26309,7 +25747,7 @@
         "kana": "いはんする",
         "romaji": "ihansuru"
       },
-      "meaning": "violation; offense",
+      "meaning": "to violation; to offense",
       "conjugations": {
         "polite": "いはんします",
         "negative_plain": "いはんしない",
@@ -26363,7 +25801,7 @@
         "kana": "つうしんする",
         "romaji": "tsuushinsuru"
       },
-      "meaning": "correspondence; communication",
+      "meaning": "to communicate; to correspond",
       "conjugations": {
         "polite": "つうしんします",
         "negative_plain": "つうしんしない",
@@ -26393,7 +25831,7 @@
         "kana": "よほうする",
         "romaji": "yohousuru"
       },
-      "meaning": "forecast; prediction",
+      "meaning": "to forecast; to prediction",
       "conjugations": {
         "polite": "よほうします",
         "negative_plain": "よほうしない",
@@ -26423,7 +25861,7 @@
         "kana": "つうこうする",
         "romaji": "tsuukousuru"
       },
-      "meaning": "passage (of people or vehicles); passing (through)",
+      "meaning": "to pass (of people or vehicles); to go through",
       "conjugations": {
         "polite": "つうこうします",
         "negative_plain": "つうこうしない",
@@ -26453,7 +25891,7 @@
         "kana": "てっていする",
         "romaji": "tetteisuru"
       },
-      "meaning": "thoroughness; completeness",
+      "meaning": "to thoroughness; to completeness",
       "conjugations": {
         "polite": "てっていします",
         "negative_plain": "てっていしない",
@@ -26483,7 +25921,7 @@
         "kana": "ちゅうする",
         "romaji": "chuusuru"
       },
-      "meaning": "annotation; explanatory note",
+      "meaning": "to annotation; to explanatory note",
       "conjugations": {
         "polite": "ちゅうします",
         "negative_plain": "ちゅうしない",
@@ -26537,7 +25975,7 @@
         "kana": "かげんする",
         "romaji": "kagensuru"
       },
-      "meaning": "degree; extent",
+      "meaning": "to degree; to extent",
       "conjugations": {
         "polite": "かげんします",
         "negative_plain": "かげんしない",
@@ -26837,30 +26275,6 @@
         "te_form": "うれしくて",
         "conditional_ba": "うれしければ",
         "conditional_tara": "うれしかったら"
-      }
-    },
-    {
-      "id": "na_kanari",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "可也",
-        "kana": "かなり",
-        "romaji": "kanari"
-      },
-      "meaning": "considerably; fairly",
-      "conjugations": {
-        "polite": "かなりです",
-        "negative_plain": "かなりじゃない",
-        "negative_polite": "かなりじゃありません",
-        "past_plain": "かなりだった",
-        "past_polite": "かなりでした",
-        "past_negative_plain": "かなりじゃなかった",
-        "past_negative_polite": "かなりじゃありませんでした",
-        "te_form": "かなりで",
-        "conditional_ba": "かなりであれば",
-        "conditional_tara": "かなりだったら"
       }
     },
     {
@@ -27197,7 +26611,7 @@
         "kana": "ちこくする",
         "romaji": "chikokusuru"
       },
-      "meaning": "lateness; tardiness",
+      "meaning": "to lateness; to tardiness",
       "conjugations": {
         "polite": "ちこくします",
         "negative_plain": "ちこくしない",
@@ -27257,7 +26671,7 @@
         "kana": "けがする",
         "romaji": "kegasuru"
       },
-      "meaning": "injury; wound",
+      "meaning": "to get injured; to hurt oneself",
       "conjugations": {
         "polite": "けがします",
         "negative_plain": "けがしない",
@@ -27458,30 +26872,6 @@
       }
     },
     {
-      "id": "na_nakanaka",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "中々",
-        "kana": "なかなか",
-        "romaji": "nakanaka"
-      },
-      "meaning": "very; considerably",
-      "conjugations": {
-        "polite": "なかなかです",
-        "negative_plain": "なかなかじゃない",
-        "negative_polite": "なかなかじゃありません",
-        "past_plain": "なかなかだった",
-        "past_polite": "なかなかでした",
-        "past_negative_plain": "なかなかじゃなかった",
-        "past_negative_polite": "なかなかじゃありませんでした",
-        "te_form": "なかなかで",
-        "conditional_ba": "なかなかであれば",
-        "conditional_tara": "なかなかだったら"
-      }
-    },
-    {
       "id": "v_sakeru",
       "level": "N3",
       "group": "ichidan",
@@ -27667,34 +27057,8 @@
         "passive": "ことなられる",
         "causative": "ことならせる",
         "causative_passive": "ことならせられる",
-        "imperative": "ことなれ",
-        "volitional": "ことなろう",
         "conditional_ba": "ことなれば",
         "conditional_tara": "ことなったら"
-      }
-    },
-    {
-      "id": "na_zuibun",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "随分",
-        "kana": "ずいぶん",
-        "romaji": "zuibun"
-      },
-      "meaning": "very; extremely",
-      "conjugations": {
-        "polite": "ずいぶんです",
-        "negative_plain": "ずいぶんじゃない",
-        "negative_polite": "ずいぶんじゃありません",
-        "past_plain": "ずいぶんだった",
-        "past_polite": "ずいぶんでした",
-        "past_negative_plain": "ずいぶんじゃなかった",
-        "past_negative_polite": "ずいぶんじゃありませんでした",
-        "te_form": "ずいぶんで",
-        "conditional_ba": "ずいぶんであれば",
-        "conditional_tara": "ずいぶんだったら"
       }
     },
     {
@@ -28001,7 +27365,7 @@
         "kana": "おしゃべりする",
         "romaji": "oshaberisuru"
       },
-      "meaning": "chattering; talk",
+      "meaning": "to chat; to talk idly",
       "conjugations": {
         "polite": "おしゃべりします",
         "negative_plain": "おしゃべりしない",
@@ -28057,11 +27421,11 @@
       "group": "suru",
       "word_type": "verb",
       "dictionary_form": {
-        "kanji": "凝乎とする",
+        "kanji": "じっとする",
         "kana": "じっとする",
         "romaji": "jittosuru"
       },
-      "meaning": "motionlessly (e.g. stand, wait); (be) still",
+      "meaning": "to stay still; to remain motionless",
       "conjugations": {
         "polite": "じっとします",
         "negative_plain": "じっとしない",
@@ -28745,7 +28109,7 @@
         "kana": "きょうちょうする",
         "romaji": "kyouchousuru"
       },
-      "meaning": "emphasis; stress",
+      "meaning": "to emphasis; to stress",
       "conjugations": {
         "polite": "きょうちょうします",
         "negative_plain": "きょうちょうしない",
@@ -28865,7 +28229,7 @@
         "kana": "おとる",
         "romaji": "otoru"
       },
-      "meaning": "to be inferior to; to be less good at",
+      "meaning": "to be inferior; to fall short",
       "conjugations": {
         "polite": "おとります",
         "negative_plain": "おとらない",
@@ -29105,7 +28469,7 @@
         "kana": "いたずらする",
         "romaji": "itazurasuru"
       },
-      "meaning": "mischief; prank",
+      "meaning": "to play a prank; to do mischief",
       "conjugations": {
         "polite": "いたずらします",
         "negative_plain": "いたずらしない",
@@ -29447,7 +28811,7 @@
         "kana": "みちる",
         "romaji": "michiru"
       },
-      "meaning": "to fill; to become full (of)",
+      "meaning": "to be full; to fill up",
       "conjugations": {
         "polite": "みちます",
         "negative_plain": "みちない",
@@ -29477,7 +28841,7 @@
         "kana": "てきする",
         "romaji": "tekisuru"
       },
-      "meaning": "to fit; to suit",
+      "meaning": "to be suitable; to be appropriate",
       "conjugations": {
         "polite": "てきします",
         "negative_plain": "てきしない",
@@ -29639,7 +29003,7 @@
         "kana": "まねする",
         "romaji": "manesuru"
       },
-      "meaning": "imitating; copying",
+      "meaning": "to imitate; to copy; to mimic",
       "conjugations": {
         "polite": "まねします",
         "negative_plain": "まねしない",
@@ -29669,7 +29033,7 @@
         "kana": "ようじんする",
         "romaji": "youjinsuru"
       },
-      "meaning": "care; precaution",
+      "meaning": "to be careful; to take precautions",
       "conjugations": {
         "polite": "ようじんします",
         "negative_plain": "ようじんしない",
@@ -29759,7 +29123,7 @@
         "kana": "ねっちゅうする",
         "romaji": "necchuusuru"
       },
-      "meaning": "being enthusiastic about; being wild about",
+      "meaning": "to be enthusiastic about; to be absorbed in",
       "conjugations": {
         "polite": "ねっちゅうします",
         "negative_plain": "ねっちゅうしない",
@@ -29873,7 +29237,7 @@
         "kana": "じょうたつする",
         "romaji": "joutatsusuru"
       },
-      "meaning": "improvement (e.g. in skill, ability); advance",
+      "meaning": "to improve (in skill, ability); to advance",
       "conjugations": {
         "polite": "じょうたつします",
         "negative_plain": "じょうたつしない",
@@ -30155,7 +29519,7 @@
         "kana": "ちょうだいする",
         "romaji": "choudaisuru"
       },
-      "meaning": "receiving; getting",
+      "meaning": "to receive (humble); to get (humble)",
       "conjugations": {
         "polite": "ちょうだいします",
         "negative_plain": "ちょうだいしない",
@@ -30299,7 +29663,7 @@
         "kana": "いたる",
         "romaji": "itaru"
       },
-      "meaning": "to arrive at (e.g. a decision); to reach (a stage)",
+      "meaning": "to reach; to arrive at",
       "conjugations": {
         "polite": "いたります",
         "negative_plain": "いたらない",
@@ -30329,7 +29693,7 @@
         "kana": "ぜいたくする",
         "romaji": "zeitakusuru"
       },
-      "meaning": "luxury; extravagance",
+      "meaning": "to live in luxury; to be extravagant",
       "conjugations": {
         "polite": "ぜいたくします",
         "negative_plain": "ぜいたくしない",
@@ -30359,7 +29723,7 @@
         "kana": "はっしゃする",
         "romaji": "hasshasuru"
       },
-      "meaning": "departure (of a train, car, etc.); starting",
+      "meaning": "to depart (of a train, car, etc.); to leave",
       "conjugations": {
         "polite": "はっしゃします",
         "negative_plain": "はっしゃしない",
@@ -30389,7 +29753,7 @@
         "kana": "いねむりする",
         "romaji": "inemurisuru"
       },
-      "meaning": "nodding off (while sitting); dozing",
+      "meaning": "to doze off; to nod off",
       "conjugations": {
         "polite": "いねむりします",
         "negative_plain": "いねむりしない",
@@ -30419,7 +29783,7 @@
         "kana": "はんこうする",
         "romaji": "hankousuru"
       },
-      "meaning": "opposition; resistance",
+      "meaning": "to opposition; to resistance",
       "conjugations": {
         "polite": "はんこうします",
         "negative_plain": "はんこうしない",
@@ -30605,7 +29969,7 @@
         "kana": "およぼす",
         "romaji": "oyobosu"
       },
-      "meaning": "to exert (influence); to exercise",
+      "meaning": "to exert; to have an effect on",
       "conjugations": {
         "polite": "およぼします",
         "negative_plain": "およぼさない",
@@ -30851,7 +30215,7 @@
         "kana": "オーバーする",
         "romaji": "オバsuru"
       },
-      "meaning": "overcoat",
+      "meaning": "to wear an overcoat; to put on a coat",
       "conjugations": {
         "polite": "オーバーします",
         "negative_plain": "オーバーしない",
@@ -30879,9 +30243,9 @@
       "dictionary_form": {
         "kanji": "ダンスする",
         "kana": "ダンスする",
-        "romaji": "ダンスsuru"
+        "romaji": "dansusuru"
       },
-      "meaning": "dance; dancing",
+      "meaning": "to dance",
       "conjugations": {
         "polite": "ダンスします",
         "negative_plain": "ダンスしない",
@@ -30909,9 +30273,9 @@
       "dictionary_form": {
         "kanji": "サービスする",
         "kana": "サービスする",
-        "romaji": "サビスsuru"
+        "romaji": "saabisusuru"
       },
-      "meaning": "service; help",
+      "meaning": "to serve; to provide a service",
       "conjugations": {
         "polite": "サービスします",
         "negative_plain": "サービスしない",
@@ -30939,9 +30303,9 @@
       "dictionary_form": {
         "kanji": "デートする",
         "kana": "デートする",
-        "romaji": "デトsuru"
+        "romaji": "deetosuru"
       },
-      "meaning": "date (with someone); (social) outing (for two)",
+      "meaning": "to go on a date",
       "conjugations": {
         "polite": "デートします",
         "negative_plain": "デートしない",
@@ -30969,9 +30333,9 @@
       "dictionary_form": {
         "kanji": "スケートする",
         "kana": "スケートする",
-        "romaji": "スケトsuru"
+        "romaji": "sukeetosuru"
       },
-      "meaning": "skating (esp. ice); skate",
+      "meaning": "to skate; to go skating",
       "conjugations": {
         "polite": "スケートします",
         "negative_plain": "スケートしない",
@@ -30999,9 +30363,9 @@
       "dictionary_form": {
         "kanji": "ドライブする",
         "kana": "ドライブする",
-        "romaji": "ドライブsuru"
+        "romaji": "doraibusuru"
       },
-      "meaning": "drive; trip by car",
+      "meaning": "to go for a drive",
       "conjugations": {
         "polite": "ドライブします",
         "negative_plain": "ドライブしない",
@@ -31029,9 +30393,9 @@
       "dictionary_form": {
         "kanji": "ノックする",
         "kana": "ノックする",
-        "romaji": "ノックsuru"
+        "romaji": "nokkusuru"
       },
-      "meaning": "knock; knocking",
+      "meaning": "to knock",
       "conjugations": {
         "polite": "ノックします",
         "negative_plain": "ノックしない",
@@ -31059,9 +30423,9 @@
       "dictionary_form": {
         "kanji": "キャンプする",
         "kana": "キャンプする",
-        "romaji": "キャンプsuru"
+        "romaji": "kyanpusuru"
       },
-      "meaning": "camp; camping",
+      "meaning": "to camp; to go camping",
       "conjugations": {
         "polite": "キャンプします",
         "negative_plain": "キャンプしない",
@@ -31089,9 +30453,9 @@
       "dictionary_form": {
         "kanji": "トンネルする",
         "kana": "トンネルする",
-        "romaji": "トンネルsuru"
+        "romaji": "tonnerusuru"
       },
-      "meaning": "tunnel",
+      "meaning": "to tunnel; to go through a tunnel",
       "conjugations": {
         "polite": "トンネルします",
         "negative_plain": "トンネルしない",
@@ -31119,9 +30483,9 @@
       "dictionary_form": {
         "kanji": "コーチする",
         "kana": "コーチする",
-        "romaji": "コチsuru"
+        "romaji": "kouchisuru"
       },
-      "meaning": "coach",
+      "meaning": "to coach; to give coaching",
       "conjugations": {
         "polite": "コーチします",
         "negative_plain": "コーチしない",
@@ -31173,9 +30537,9 @@
       "dictionary_form": {
         "kanji": "プラスする",
         "kana": "プラスする",
-        "romaji": "プラスsuru"
+        "romaji": "purasusuru"
       },
-      "meaning": "plus; addition",
+      "meaning": "to add; to put on the plus side",
       "conjugations": {
         "polite": "プラスします",
         "negative_plain": "プラスしない",
@@ -31203,9 +30567,9 @@
       "dictionary_form": {
         "kanji": "マスターする",
         "kana": "マスターする",
-        "romaji": "マスタsuru"
+        "romaji": "masutaasuru"
       },
-      "meaning": "to master (a skill)",
+      "meaning": "to master; to become proficient in",
       "conjugations": {
         "polite": "マスターします",
         "negative_plain": "マスターしない",
@@ -31233,9 +30597,9 @@
       "dictionary_form": {
         "kanji": "パスする",
         "kana": "パスする",
-        "romaji": "パスsuru"
+        "romaji": "pasusuru"
       },
-      "meaning": "passing (an examination, inspection, etc.)",
+      "meaning": "to pass; to go through; to skip",
       "conjugations": {
         "polite": "パスします",
         "negative_plain": "パスしない",
@@ -31263,9 +30627,9 @@
       "dictionary_form": {
         "kanji": "セットする",
         "kana": "セットする",
-        "romaji": "セットsuru"
+        "romaji": "settosuru"
       },
-      "meaning": "set (of things); combo",
+      "meaning": "to set; to set up; to arrange",
       "conjugations": {
         "polite": "セットします",
         "negative_plain": "セットしない",
@@ -31295,7 +30659,7 @@
         "kana": "なんとかする",
         "romaji": "nantokasuru"
       },
-      "meaning": "something; something or other",
+      "meaning": "to manage somehow; to do something about it",
       "conjugations": {
         "polite": "なんとかします",
         "negative_plain": "なんとかしない",
@@ -31349,7 +30713,7 @@
         "kana": "りゅうこうする",
         "romaji": "ryuukousuru"
       },
-      "meaning": "fashion; trend",
+      "meaning": "to fashion; to trend",
       "conjugations": {
         "polite": "りゅうこうします",
         "negative_plain": "りゅうこうしない",
@@ -31571,7 +30935,7 @@
         "kana": "あちこちする",
         "romaji": "achikochisuru"
       },
-      "meaning": "here and there; various places",
+      "meaning": "to do here and there; to go around",
       "conjugations": {
         "polite": "あちこちします",
         "negative_plain": "あちこちしない",
@@ -31601,7 +30965,7 @@
         "kana": "きちんとする",
         "romaji": "kichintosuru"
       },
-      "meaning": "properly; accurately",
+      "meaning": "to do properly; to tidy up",
       "conjugations": {
         "polite": "きちんとします",
         "negative_plain": "きちんとしない",
@@ -31631,7 +30995,7 @@
         "kana": "おぼれる",
         "romaji": "oboreru"
       },
-      "meaning": "to struggle in the water; to sink below the surface and become unable to breathe",
+      "meaning": "to drown; to be addicted to",
       "conjugations": {
         "polite": "おぼれます",
         "negative_plain": "おぼれない",
@@ -31661,7 +31025,7 @@
         "kana": "ちゃんとする",
         "romaji": "chantosuru"
       },
-      "meaning": "diligently; seriously",
+      "meaning": "to do properly; to behave oneself",
       "conjugations": {
         "polite": "ちゃんとします",
         "negative_plain": "ちゃんとしない",
@@ -31715,7 +31079,7 @@
         "kana": "ぴったりする",
         "romaji": "pittarisuru"
       },
-      "meaning": "tightly; closely",
+      "meaning": "to fit perfectly; to match exactly",
       "conjugations": {
         "polite": "ぴったりします",
         "negative_plain": "ぴったりしない",
@@ -31745,7 +31109,7 @@
         "kana": "さっぱりする",
         "romaji": "sapparisuru"
       },
-      "meaning": "feeling refreshed; feeling relieved",
+      "meaning": "to feel refreshed; to be refreshed",
       "conjugations": {
         "polite": "さっぱりします",
         "negative_plain": "さっぱりしない",
@@ -31827,9 +31191,9 @@
       "dictionary_form": {
         "kanji": "メモする",
         "kana": "メモする",
-        "romaji": "メモsuru"
+        "romaji": "memosuru"
       },
-      "meaning": "note; memo",
+      "meaning": "to take notes; to jot down",
       "conjugations": {
         "polite": "メモします",
         "negative_plain": "メモしない",
@@ -31857,9 +31221,9 @@
       "dictionary_form": {
         "kanji": "スイッチする",
         "kana": "スイッチする",
-        "romaji": "スイッチsuru"
+        "romaji": "suitchisuru"
       },
-      "meaning": "switch",
+      "meaning": "to switch; to turn on/off",
       "conjugations": {
         "polite": "スイッチします",
         "negative_plain": "スイッチしない",
@@ -31889,7 +31253,7 @@
         "kana": "たっぷりする",
         "romaji": "tappurisuru"
       },
-      "meaning": "plentifully; amply",
+      "meaning": "to use amply; to take one's time",
       "conjugations": {
         "polite": "たっぷりします",
         "negative_plain": "たっぷりしない",
@@ -31919,7 +31283,7 @@
         "kana": "ぼんやりする",
         "romaji": "bonyarisuru"
       },
-      "meaning": "dimly; faintly",
+      "meaning": "to be spaced out; to daydream; to zone out",
       "conjugations": {
         "polite": "ぼんやりします",
         "negative_plain": "ぼんやりしない",
@@ -31949,7 +31313,7 @@
         "kana": "のんびりする",
         "romaji": "nonbirisuru"
       },
-      "meaning": "at leisure; in a relaxed manner",
+      "meaning": "to take it easy; to relax",
       "conjugations": {
         "polite": "のんびりします",
         "negative_plain": "のんびりしない",
@@ -32057,7 +31421,7 @@
         "kana": "にっこりする",
         "romaji": "nikkorisuru"
       },
-      "meaning": "sweetly (smiling); broadly (grinning)",
+      "meaning": "to smile sweetly; to grin broadly",
       "conjugations": {
         "polite": "にっこりします",
         "negative_plain": "にっこりしない",
@@ -32135,36 +31499,6 @@
         "volitional": "さけぼう",
         "conditional_ba": "さけべば",
         "conditional_tara": "さけんだら"
-      }
-    },
-    {
-      "id": "v_moushiwakesuru",
-      "level": "N3",
-      "group": "suru",
-      "word_type": "verb",
-      "dictionary_form": {
-        "kanji": "申し訳する",
-        "kana": "もうしわけする",
-        "romaji": "moushiwakesuru"
-      },
-      "meaning": "apology; excuse",
-      "conjugations": {
-        "polite": "もうしわけします",
-        "negative_plain": "もうしわけしない",
-        "negative_polite": "もうしわけしません",
-        "past_plain": "もうしわけした",
-        "past_polite": "もうしわけしました",
-        "past_negative_plain": "もうしわけしなかった",
-        "past_negative_polite": "もうしわけしませんでした",
-        "te_form": "もうしわけして",
-        "potential": "もうしわけできる",
-        "passive": "もうしわけされる",
-        "causative": "もうしわけさせる",
-        "causative_passive": "もうしわけさせられる",
-        "imperative": "もうしわけしろ",
-        "volitional": "もうしわけしよう",
-        "conditional_ba": "もうしわけすれば",
-        "conditional_tara": "もうしわけしたら"
       }
     },
     {
@@ -32246,30 +31580,6 @@
       }
     },
     {
-      "id": "na_mottomo",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "尤も",
-        "kana": "もっとも",
-        "romaji": "mottomo"
-      },
-      "meaning": "but then; although",
-      "conjugations": {
-        "polite": "もっともです",
-        "negative_plain": "もっともじゃない",
-        "negative_polite": "もっともじゃありません",
-        "past_plain": "もっともだった",
-        "past_polite": "もっともでした",
-        "past_negative_plain": "もっともじゃなかった",
-        "past_negative_polite": "もっともじゃありませんでした",
-        "te_form": "もっともで",
-        "conditional_ba": "もっともであれば",
-        "conditional_tara": "もっともだったら"
-      }
-    },
-    {
       "id": "ia_tondemonai",
       "level": "N3",
       "group": "i-adj",
@@ -32303,7 +31613,7 @@
         "kana": "うがいする",
         "romaji": "ugaisuru"
       },
-      "meaning": "gargling; rinsing one's mouth",
+      "meaning": "to gargle; to rinse one's mouth",
       "conjugations": {
         "polite": "うがいします",
         "negative_plain": "うがいしない",
@@ -32333,7 +31643,7 @@
         "kana": "たいする",
         "romaji": "taisuru"
       },
-      "meaning": "to face (each other); to be facing",
+      "meaning": "to face; to be facing; to deal with",
       "conjugations": {
         "polite": "たいします",
         "negative_plain": "たいしない",
@@ -32363,7 +31673,7 @@
         "kana": "びっくりする",
         "romaji": "bikkurisuru"
       },
-      "meaning": "to be surprised; to be amazed",
+      "meaning": "to be surprised; to be shocked",
       "conjugations": {
         "polite": "びっくりします",
         "negative_plain": "びっくりしない",
@@ -32415,9 +31725,9 @@
       "dictionary_form": {
         "kanji": "ゴールする",
         "kana": "ゴールする",
-        "romaji": "ゴルsuru"
+        "romaji": "goorusuru"
       },
-      "meaning": "goal (in soccer, hockey, etc.); basket (in basketball)",
+      "meaning": "to score a goal",
       "conjugations": {
         "polite": "ゴールします",
         "negative_plain": "ゴールしない",
@@ -32445,9 +31755,9 @@
       "dictionary_form": {
         "kanji": "サインする",
         "kana": "サインする",
-        "romaji": "サインsuru"
+        "romaji": "sainsuru"
       },
-      "meaning": "autograph; signature",
+      "meaning": "to sign; to autograph",
       "conjugations": {
         "polite": "サインします",
         "negative_plain": "サインしない",
@@ -32475,9 +31785,9 @@
       "dictionary_form": {
         "kanji": "ミスする",
         "kana": "ミスする",
-        "romaji": "ミスsuru"
+        "romaji": "misusuru"
       },
-      "meaning": "mistake; error",
+      "meaning": "to make a mistake; to miss",
       "conjugations": {
         "polite": "ミスします",
         "negative_plain": "ミスしない",
@@ -32495,30 +31805,6 @@
         "volitional": "ミスしよう",
         "conditional_ba": "ミスすれば",
         "conditional_tara": "ミスしたら"
-      }
-    },
-    {
-      "id": "na_nao",
-      "level": "N3",
-      "group": "na-adj",
-      "word_type": "na-adj",
-      "dictionary_form": {
-        "kanji": "直",
-        "kana": "なお",
-        "romaji": "nao"
-      },
-      "meaning": "straight",
-      "conjugations": {
-        "polite": "なおです",
-        "negative_plain": "なおじゃない",
-        "negative_polite": "なおじゃありません",
-        "past_plain": "なおだった",
-        "past_polite": "なおでした",
-        "past_negative_plain": "なおじゃなかった",
-        "past_negative_polite": "なおじゃありませんでした",
-        "te_form": "なおで",
-        "conditional_ba": "なおであれば",
-        "conditional_tara": "なおだったら"
       }
     }
   ]
