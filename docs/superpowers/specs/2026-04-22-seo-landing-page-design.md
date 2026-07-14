@@ -19,13 +19,13 @@
 ### 3.2 Meta 信息
 
 **英文版：**
-- Title: Katachi — Master Japanese Conjugations Through Daily Practice | JLPT N5 & N4
-- Description: A focused Japanese conjugation practice tool built by a learner, for learners. Drill verbs and adjectives with smart distractors and weakness tracking. Covers JLPT N5 & N4 grammar forms.
+- Title: Japanese Conjugation Practice for JLPT | Katachi
+- Description: Practice Japanese verb and adjective conjugations with smart distractors, weakness tracking, and focused daily drills covering JLPT N5 through N3.
 - Canonical: `/learn-japanese-conjugations`
 
 **中文版：**
-- Title: Katachi — 日语变形练习工具 | 专注动词・形容词变形训练 | JLPT N5 & N4
-- Description: 由日语学习者开发的变形练习工具。专注反复训练，智能识别薄弱环节（如て形、被动形），针对性强化。覆盖 JLPT N5 & N4 核心语法。
+- Title: 日语变形练习（JLPT N5–N3） | Katachi
+- Description: 日语动词和形容词变形练习工具，通过智能干扰项、薄弱点追踪和每日专项训练，覆盖 JLPT N5 到 N3。
 - Canonical: `/learn-japanese-conjugations?lang=zh`
 
 ### 3.3 Open Graph / Twitter Card
@@ -43,7 +43,7 @@
   "@type": "WebApplication",
   "name": "Katachi",
   "applicationCategory": "EducationApplication",
-  "description": "A Japanese conjugation practice tool for JLPT N5 & N4 learners",
+  "description": "A Japanese conjugation practice tool for JLPT N5 through N3 learners",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -65,7 +65,7 @@
   "@type": "WebApplication",
   "name": "Katachi — 日语变形练习",
   "applicationCategory": "EducationApplication",
-  "description": "日语 JLPT N5 & N4 变形练习工具，专注动词和形容词的语法变形训练",
+  "description": "日语 JLPT N5 到 N3 变形练习工具，专注动词和形容词的语法变形训练",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -127,13 +127,13 @@
 ### Section 4: Coverage（覆盖范围）
 
 **英文版：**
-- Heading: Every form you need for N5 & N4
+- Heading: Every form you need from N5 through N3
 - List:
   - Verbs: Polite (masu), Plain negative, Past plain/polite, Te-form, Potential, Passive, Causative, Imperative, Volitional, Conditional (ba/tara)
   - Adjectives: i-adjective & na-adjective forms for polite, negative, past, and conditional
 
 **中文版：**
-- Heading: 覆盖 N5 & N4 全部核心变形
+- Heading: 覆盖 N5 到 N3 的核心变形
 - List:
   - 动词：ます形、ない形、た形/ました形、て形、可能形、受身形、使役形、命令形、意向形、条件形（ば/たら）
   - 形容词：い形容词与な形容词的丁宁形、否定形、过去形、条件形
@@ -142,13 +142,13 @@
 
 **英文版：**
 - Heading: Ready to make conjugations automatic?
-- Subtitle: Join thousands of learners drilling Japanese grammar every day. Free. No sign-up required.
+- Subtitle: Practice Japanese conjugations for free, with no sign-up required.
 - CTA: Start Practicing Now →
 - Secondary link: Switch to 中文
 
 **中文版：**
 - Heading: 让变形成为你的本能
-- Subtitle: 和数千名学习者一起，每天进行高效的日语变形训练。免费，无需注册。
+- Subtitle: 免费练习日语变形，无需注册。
 - CTA: 立即开始练习 →
 - Secondary link: Switch to English
 

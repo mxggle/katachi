@@ -94,7 +94,7 @@ Rules:
 
 ## Internationalization
 
-Supported app languages live in `src/lib/i18n.ts`: English, Chinese, Vietnamese, Nepali, and Burmese.
+Supported app languages live in `src/lib/i18n.ts`: English, Chinese, Vietnamese, Nepali, Burmese, and Korean.
 
 Rules:
 
@@ -151,6 +151,7 @@ Expected public env vars:
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 NEXT_PUBLIC_ENABLE_GOOGLE_AUTH=false
+NEXT_PUBLIC_SITE_URL=
 ```
 
 These are public browser env vars. Do not introduce service-role keys or private credentials into client code.

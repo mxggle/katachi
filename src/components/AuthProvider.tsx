@@ -1,11 +1,12 @@
 'use client';
 
-import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
 import type { Database } from '@/lib/supabase/database.types';
 import { clearStudySyncMeta } from '@/lib/supabase/studySync';
 import { useStore } from '@/lib/store';
+import { shouldClearLocalStudyData } from '@/lib/authState';
 
 interface AuthContextValue {
   supabase: SupabaseClient<Database> | null;
@@ -22,7 +23,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(Boolean(supabase));
   const resetStore = useStore((state) => state.resetStore);
-  const explicitSignOutRef = useRef(false);
 
   useEffect(() => {
     if (!supabase) {
@@ -54,8 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
       setIsLoading(false);
-      if (event === 'SIGNED_OUT' && explicitSignOutRef.current) {
-        explicitSignOutRef.current = false;
+      if (shouldClearLocalStudyData(event)) {
         resetStore();
         clearStudySyncMeta();
       }
@@ -75,14 +74,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isConfigured: Boolean(supabase),
       isLoading,
       signOut: async () => {
-        explicitSignOutRef.current = true;
-        try {
-          if (supabase) {
-            await supabase.auth.signOut();
-          }
-        } finally {
+        if (!supabase) {
           resetStore();
           clearStudySyncMeta();
+          return;
+        }
+
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+          throw error;
         }
       },
     }),

@@ -186,8 +186,8 @@ export const translations = {
     heroSubtitle: 'REPS ➔ REFLEX',
 
     // Metadata
-    metaTitle: 'Katachi',
-    metaDescription: 'Practice Japanese conjugations in focused daily sessions.',
+    metaTitle: 'Japanese Conjugation Practice | Katachi',
+    metaDescription: 'Practice Japanese verb and adjective conjugations with focused daily drills, weakness tracking, JLPT N5–N3 coverage, and no sign-up required.',
 
     // Auth
     account: 'Account',

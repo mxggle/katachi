@@ -65,9 +65,9 @@ export default function SplashScreen() {
           <Logo size={120} />
         </div>
         <div className="mt-6 text-center">
-          <h1 className="text-2xl font-bold tracking-tight text-[#1f2937]">
+          <div className="text-2xl font-bold tracking-tight text-[#1f2937]">
             Katachi <span className="text-[#ff6b6b]">✦</span> 形
-          </h1>
+          </div>
           <p className="mt-1 text-sm font-medium text-[#627081] uppercase tracking-[0.2em]">
             REPS ➔ REFLEX
           </p>

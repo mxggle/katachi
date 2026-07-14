@@ -19,7 +19,22 @@ describe('Supabase auth configuration', () => {
     });
   });
 
-  it('treats Google auth as opt-in so email/password remains the universal default', () => {
+  it('fails closed when the configured Supabase URL is invalid', () => {
+    expect(
+      getSupabaseConfig({
+        NEXT_PUBLIC_SUPABASE_URL: 'not a URL',
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
+      })
+    ).toBeNull();
+    expect(
+      getSupabaseConfig({
+        NEXT_PUBLIC_SUPABASE_URL: 'javascript:alert(1)',
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
+      })
+    ).toBeNull();
+  });
+
+  it('treats Google auth as opt-in so email OTP remains the universal default', () => {
     expect(isGoogleAuthEnabled({})).toBe(false);
     expect(isGoogleAuthEnabled({ NEXT_PUBLIC_ENABLE_GOOGLE_AUTH: 'false' })).toBe(false);
     expect(isGoogleAuthEnabled({ NEXT_PUBLIC_ENABLE_GOOGLE_AUTH: 'true' })).toBe(true);

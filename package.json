@@ -1,7 +1,10 @@
 {
   "name": "katachi",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev --webpack -p 4399",
     "build": "next build --webpack",
@@ -13,35 +16,40 @@
     "generate:icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
-    "@serwist/next": "^9.5.7",
-    "@supabase/ssr": "^0.10.2",
-    "@supabase/supabase-js": "^2.104.0",
+    "@serwist/next": "9.5.11",
+    "@supabase/ssr": "0.10.3",
+    "@supabase/supabase-js": "2.110.3",
     "@vercel/analytics": "^2.0.1",
-    "buffer": "^6.0.3",
-    "lucide-react": "^1.11.0",
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "serwist": "^9.5.7",
+    "lucide-react": "1.24.0",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "serwist": "9.5.11",
     "wanakana": "^5.3.1",
-    "zustand": "^5.0.11"
+    "zustand": "5.0.14"
   },
   "devDependencies": {
-    "@serwist/precaching": "^9.5.7",
-    "@serwist/routing": "^9.5.7",
-    "@serwist/strategies": "^9.5.7",
-    "@serwist/sw": "^9.5.7",
-    "@serwist/webpack-plugin": "^9.5.7",
-    "@tailwindcss/postcss": "^4",
+    "@serwist/precaching": "9.5.11",
+    "@serwist/routing": "9.5.11",
+    "@serwist/strategies": "9.5.11",
+    "@serwist/sw": "9.5.11",
+    "@serwist/webpack-plugin": "9.5.11",
+    "@tailwindcss/postcss": "4.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
+    "eslint-config-next": "16.2.10",
+    "tailwindcss": "4.3.2",
     "typescript": "^5",
-    "vite": "^5.4.21",
-    "vitest": "^2"
+    "vite": "8.1.4",
+    "vitest": "4.1.10"
+  },
+  "resolutions": {
+    "postcss": "8.5.19"
+  },
+  "overrides": {
+    "postcss": "8.5.19"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

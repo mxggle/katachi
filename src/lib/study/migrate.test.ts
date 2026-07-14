@@ -162,4 +162,20 @@ describe('migratePersistedStudyState', () => {
     expect(migrated.wordStats).toEqual({});
     expect(migrated.learnerSummary.schemaVersion).toBe(5);
   });
+
+  it('preserves current preference limits and the last session timestamp', () => {
+    const migrated = migratePersistedStudyState({
+      preferences: {
+        dailyQuestionGoal: 30,
+        dailyNewLimit: 7,
+      },
+      learnerSummary: {
+        lastSessionAt: '2026-07-13T04:30:00.000Z',
+      },
+    });
+
+    expect(migrated.preferences.dailyQuestionGoal).toBe(30);
+    expect(migrated.preferences.dailyNewLimit).toBe(7);
+    expect(migrated.learnerSummary.lastSessionAt).toBe('2026-07-13T04:30:00.000Z');
+  });
 });

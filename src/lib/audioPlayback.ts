@@ -8,6 +8,7 @@ export interface TtsAudioElement {
 
 type FetchAudio = (url: string) => Promise<Blob>;
 type CreateObjectUrl = (blob: Blob) => string;
+type RevokeObjectUrl = (url: string) => void;
 
 interface TtsPlaybackControllerOptions {
   audio: TtsAudioElement;
@@ -16,6 +17,7 @@ interface TtsPlaybackControllerOptions {
   buildUrl?: (text: string) => string;
   fetchAudio?: FetchAudio;
   createObjectUrl?: CreateObjectUrl;
+  revokeObjectUrl?: RevokeObjectUrl;
 }
 
 export interface TtsPlaybackController {
@@ -23,6 +25,7 @@ export interface TtsPlaybackController {
   preload: (text: string) => Promise<void>;
   preloadMany: (texts: string[], concurrency?: number) => Promise<void>;
   stop: () => void;
+  dispose: () => void;
 }
 
 const defaultBuildUrl = (text: string) => `/api/tts?text=${encodeURIComponent(text)}`;
@@ -37,6 +40,7 @@ const defaultFetchAudio: FetchAudio = async (url) => {
 };
 
 const defaultCreateObjectUrl: CreateObjectUrl = (blob) => URL.createObjectURL(blob);
+const defaultRevokeObjectUrl: RevokeObjectUrl = (url) => URL.revokeObjectURL(url);
 
 export function createTtsPlaybackController({
   audio,
@@ -45,6 +49,7 @@ export function createTtsPlaybackController({
   buildUrl = defaultBuildUrl,
   fetchAudio = defaultFetchAudio,
   createObjectUrl = defaultCreateObjectUrl,
+  revokeObjectUrl = defaultRevokeObjectUrl,
 }: TtsPlaybackControllerOptions): TtsPlaybackController {
   let requestId = 0;
   const audioUrlCache = new Map<string, string>();
@@ -138,5 +143,13 @@ export function createTtsPlaybackController({
       );
     },
     stop,
+    dispose() {
+      stop();
+      for (const url of audioUrlCache.values()) {
+        revokeObjectUrl(url);
+      }
+      audioUrlCache.clear();
+      pendingAudioUrlCache.clear();
+    },
   };
 }

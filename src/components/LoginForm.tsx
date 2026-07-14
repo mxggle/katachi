@@ -28,7 +28,7 @@ export default function LoginForm() {
     });
 
     if (result.error) {
-      setError(result.error.message);
+      setError(t('authUnexpectedError'));
       return;
     }
 
@@ -70,8 +70,8 @@ export default function LoginForm() {
       } else {
         await handleOtpVerify();
       }
-    } catch (authError) {
-      setError(authError instanceof Error ? authError.message : t('authUnexpectedError'));
+    } catch {
+      setError(t('authUnexpectedError'));
     } finally {
       setIsSubmitting(false);
     }
@@ -93,10 +93,10 @@ export default function LoginForm() {
       });
 
       if (oauthResult.error) {
-        setError(oauthResult.error.message);
+        setError(t('authUnexpectedError'));
       }
-    } catch (authError) {
-      setError(authError instanceof Error ? authError.message : t('authUnexpectedError'));
+    } catch {
+      setError(t('authUnexpectedError'));
     } finally {
       setIsSubmitting(false);
     }

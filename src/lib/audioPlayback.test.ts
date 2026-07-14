@@ -164,4 +164,21 @@ describe('createTtsPlaybackController', () => {
 
     expect(audio.src).toBe('/api/tts?text=%E9%A3%9F%E3%81%B9%E3%82%8B');
   });
+
+  it('revokes preloaded object URLs when disposed', async () => {
+    const { audio } = createAudio();
+    const revokeObjectUrl = vi.fn();
+    const controller = createTtsPlaybackController({
+      audio,
+      fallback: vi.fn(),
+      fetchAudio: vi.fn(async () => new Blob(['audio'])),
+      createObjectUrl: vi.fn(() => 'blob:taberu'),
+      revokeObjectUrl,
+    });
+
+    await controller.preload('食べる');
+    controller.dispose();
+
+    expect(revokeObjectUrl).toHaveBeenCalledWith('blob:taberu');
+  });
 });

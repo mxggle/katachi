@@ -25,6 +25,7 @@ export default function AuthStatus() {
   const { t } = useTranslation(language);
   const [isOpen, setIsOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [accountError, setAccountError] = useState<string | null>(null);
   const prevUserRef = useRef(user);
   const hasMounted = useSyncExternalStore(subscribeToClientSnapshot, getClientSnapshot, getServerSnapshot);
 
@@ -49,6 +50,16 @@ export default function AuthStatus() {
     }
   }, [user, isOpen]);
 
+  const handleSignOut = async () => {
+    setAccountError(null);
+    try {
+      await signOut();
+      setIsOpen(false);
+    } catch {
+      setAccountError(t('authUnexpectedError'));
+    }
+  };
+
   if (!hasMounted || isLoading) {
     return (
       <div className="flex h-11 shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full border-2 border-[color:var(--ink)]/10 px-3 opacity-50 sm:px-4">
@@ -63,6 +74,8 @@ export default function AuthStatus() {
       <div className="relative shrink-0">
         <button
           type="button"
+          aria-label={t('account')}
+          aria-expanded={isOpen}
           onClick={() => setIsOpen((v) => !v)}
           className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[3px] border-[color:var(--ink)] bg-white transition-all ${
             isOpen 
@@ -97,12 +110,14 @@ export default function AuthStatus() {
                 <p className="truncate text-xs font-black text-[color:var(--ink)]">{user.email}</p>
               </div>
               <div className="mb-3 h-px bg-[color:var(--ink)]/10" />
+              {accountError && (
+                <p className="mb-3 rounded-lg bg-[#fff1f2] px-2 py-2 text-xs font-bold text-[#b42318]">
+                  {accountError}
+                </p>
+              )}
               <button
                 type="button"
-                onClick={() => {
-                  signOut();
-                  setIsOpen(false);
-                }}
+                onClick={() => void handleSignOut()}
                 className="flex w-full items-center justify-center rounded-xl border-2 border-[color:var(--ink)] bg-[#fff1f2] py-2 text-[10px] font-black uppercase tracking-widest text-[#b42318] transition-all hover:bg-[#ffe4e6]"
               >
                 {t('signOut')}

@@ -4,6 +4,8 @@ import { ConjugationType, WordEntry, WordType } from './distractorEngine';
 import type { Language } from './i18n';
 import {
   DEFAULT_STUDY_STATE,
+  MAX_ATTEMPT_HISTORY,
+  MAX_SESSION_HISTORY,
   computeMasteryLevel,
   createEmptyFormStats,
   createEmptyPatternStats,
@@ -554,7 +556,7 @@ export const useStore = create<AppState>()(
                   answeredAt: now,
                   // Diagnostic fields
                   practiceType,
-                  scopeType: practiceType === 'free' ? 'user-selected' : 'curriculum',
+                  scopeType: practiceType === 'free' ? ('user-selected' as const) : ('curriculum' as const),
                   wordType: currentItem.word.word_type,
                   group: currentItem.word.group,
                   rulePattern,
@@ -564,7 +566,7 @@ export const useStore = create<AppState>()(
                   countsTowardDailyGoal,
                   countsTowardStreak,
                 },
-              ],
+              ].slice(-MAX_ATTEMPT_HISTORY),
               sessionHistory: completed && affectsMastery
                 ? [
                     ...state.studyState.sessionHistory,
@@ -577,7 +579,7 @@ export const useStore = create<AppState>()(
                       totalAnswered: nextWords.length,
                       totalCorrect: nextSessionCorrect,
                     },
-                  ]
+                  ].slice(-MAX_SESSION_HISTORY)
                 : state.studyState.sessionHistory,
             };
 

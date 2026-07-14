@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
-import { headers } from "next/headers";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { translations, type Language } from "@/lib/i18n";
+import { translations } from "@/lib/i18n";
 import { AuthProvider } from "@/components/AuthProvider";
 import StudySync from "@/components/StudySync";
 import IOSInstallPrompt from "@/components/IOSInstallPrompt";
 import SplashScreen from "@/components/SplashScreen";
+import { getSiteUrl } from "@/lib/siteUrl";
 
 const font = Outfit({
   variable: "--font-outfit",
@@ -15,19 +15,22 @@ const font = Outfit({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const headersList = await headers();
-  const acceptLang = headersList.get('accept-language') || '';
-  const lang: Language = acceptLang.includes('zh') ? 'zh' : 
-                         acceptLang.includes('ko') ? 'ko' : 
-                         acceptLang.includes('vi') ? 'vi' : 
-                         acceptLang.includes('ne') ? 'ne' : 
-                         acceptLang.includes('my') ? 'my' : 'en';
-  const t = translations[lang];
+const defaultMetadataCopy = translations.en;
+const metadataBase = getSiteUrl();
 
-  return {
-    title: t.metaTitle,
-    description: t.metaDescription,
+export const metadata: Metadata = {
+    metadataBase,
+    title: defaultMetadataCopy.metaTitle,
+    description: defaultMetadataCopy.metaDescription,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+      },
+    },
     manifest: '/manifest.json',
     icons: {
       icon: [
@@ -47,24 +50,22 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: '/',
     },
     openGraph: {
-      title: t.metaTitle,
-      description: t.metaDescription,
+      title: defaultMetadataCopy.metaTitle,
+      description: defaultMetadataCopy.metaDescription,
       url: '/',
       type: 'website',
-      locale: lang === 'zh' ? 'zh_CN' : lang === 'ko' ? 'ko_KR' : lang === 'vi' ? 'vi_VN' : lang === 'ne' ? 'ne_NP' : lang === 'my' ? 'my_MM' : 'en_US',
+      locale: 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
-      title: t.metaTitle,
-      description: t.metaDescription,
+      title: defaultMetadataCopy.metaTitle,
+      description: defaultMetadataCopy.metaDescription,
     },
-  };
-}
+};
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
   viewportFit: "cover",
   themeColor: "#f4f4ea",
 };
@@ -77,12 +78,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-title" content="Katachi" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png?v=20260425" />
         <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20260425" />
         <script
           dangerouslySetInnerHTML={{

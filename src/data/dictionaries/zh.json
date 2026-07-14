@@ -298,7 +298,6 @@
   "v_taoreru": "倒下",
   "na_anzen": "安全",
   "na_hen": "奇怪",
-  "v_ren連絡suru": "联络",
   "v_renrakusuru": "联络",
   "na_daiji": "重要",
   "v_sagaru": "下降",
@@ -600,8 +599,6 @@
   "na_dame": "不行",
   "v_uketoru": "收下",
   "v_sonkeisuru": "尊敬",
-  "v_hantaisuru_2": "反对",
-  "v_hageshii": "激烈",
   "v_junbisuru": "准备",
   "v_taizaisuru": "逗留",
   "v_atsukau": "对待",
@@ -1116,5 +1113,6 @@
   "na_ケチ": "吝啬",
   "v_ゴルsuru": "进球",
   "v_サインsuru": "签名",
-  "v_ミスsuru": "犯错"
+  "v_ミスsuru": "犯错",
+  "ia_hageshii": "激烈"
 }

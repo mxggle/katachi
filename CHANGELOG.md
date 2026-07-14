@@ -5,6 +5,37 @@ All notable changes to Katachi will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-07-14
+
+### Added
+
+- Added production-ready search metadata with canonical URLs, a generated Open Graph image, `robots.txt`, a multilingual sitemap, and language alternates for English, Chinese, Vietnamese, Nepali, Burmese, and Korean.
+- Added an offline navigation fallback so the installed PWA can reopen the cached practice screen when the network is unavailable.
+- Added automated dictionary verification covering schema integrity, conjugation correctness, cross-file alignment, and translation completeness for all 1,116 words.
+
+### Improved
+
+- Follow-up weakness drills now focus on the first form and word missed in the completed session instead of starting a generic weakness session.
+- Daily progress and streak views now roll over automatically at local midnight without requiring the app to be reloaded.
+- Practice dialogs, progress indicators, audio controls, setup toggles, and quit confirmation now provide clearer keyboard and screen-reader behavior.
+- Updated localized landing-page copy to accurately describe JLPT N5–N3 coverage and completed Korean search metadata and dictionary wording corrections.
+- Updated Next.js, React, Supabase, Serwist, Tailwind CSS, Vite, Vitest, and related production dependencies.
+
+### Fixed
+
+- Prevented repeated Next-button taps from advancing multiple questions and cleaned up pending timers when a practice session closes.
+- Released cached audio object URLs after a session to prevent memory growth during long study sessions.
+- Merged the latest remote study state before each cloud save so progress from another device is not silently overwritten.
+- Repaired incomplete legacy or remote study data safely and capped local and synced history to the most recent 5,000 attempts and 1,000 sessions.
+- Made sign-out cleanup consistent and kept the account menu open with a localized error when sign-out fails.
+- Corrected additional Korean, Chinese, and Nepali dictionary meanings and kept all localization files aligned.
+
+### Security
+
+- Hardened the text-to-speech endpoint with input limits, request throttling, bounded response streaming, upstream timeouts, content-type validation, cache limits, and sanitized errors.
+- Added Content Security Policy, HSTS, clickjacking, MIME-sniffing, permissions, and referrer protections.
+- Validated public site and Supabase URLs before use and stopped exposing raw authentication-provider errors in the interface.
+
 ## [0.2.1] - 2026-06-06
 
 ### Fixed

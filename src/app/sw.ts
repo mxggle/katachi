@@ -20,10 +20,8 @@ const serwist = new Serwist({
 
 serwist.setCatchHandler(async ({ request }) => {
   if (request.mode === 'navigate') {
-    const fallback = await serwist.matchPrecache('/');
+    const fallback = await serwist.matchPrecache('/') ?? await caches.match('/');
     if (fallback) return fallback;
-    const indexFallback = await serwist.matchPrecache('index.html');
-    if (indexFallback) return indexFallback;
   }
   return Response.error();
 });

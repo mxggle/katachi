@@ -3,7 +3,12 @@ import type { Database } from './database.types';
 import type { Json } from './json';
 import type { TranslationKey } from '@/lib/i18n';
 import type { AttemptRecord, FormStats, PatternStats, SessionRecord, StudyState, UnitProgress, WordStats } from '@/lib/study/types';
-import { DEFAULT_STUDY_STATE, computeMasteryLevel } from '@/lib/study/types';
+import {
+  DEFAULT_STUDY_STATE,
+  MAX_ATTEMPT_HISTORY,
+  MAX_SESSION_HISTORY,
+  computeMasteryLevel,
+} from '@/lib/study/types';
 
 export const SYNC_META_STORAGE_KEY = 'katachi-sync-meta';
 
@@ -132,7 +137,7 @@ function mergeSessionHistory(local: SessionRecord[], remote: SessionRecord[]): S
     remote,
     (session) => session.sessionId,
     (session) => session.endedAt ?? session.startedAt
-  );
+  ).slice(-MAX_SESSION_HISTORY);
 }
 
 function mergeAttemptHistory(local: AttemptRecord[], remote: AttemptRecord[]): AttemptRecord[] {
@@ -141,7 +146,7 @@ function mergeAttemptHistory(local: AttemptRecord[], remote: AttemptRecord[]): A
     remote,
     (attempt) => attempt.attemptId,
     (attempt) => attempt.answeredAt
-  );
+  ).slice(-MAX_ATTEMPT_HISTORY);
 }
 
 export function mergeStudyStates(local: StudyState, remote: StudyState | null): StudyState {
@@ -254,6 +259,7 @@ function mergeWordStatsEntry(local: WordStats, remote: WordStats): WordStats {
 export function repairStudyState(state: StudyState): StudyState {
   const base = DEFAULT_STUDY_STATE(state.preferences?.language ?? 'en');
   return {
+    ...base,
     ...state,
     preferences: {
       ...base.preferences,
@@ -276,6 +282,12 @@ export function repairStudyState(state: StudyState): StudyState {
       ...state.learnerSummary,
       schemaVersion: 5,
     },
+    unitProgress: state.unitProgress ?? base.unitProgress,
+    formStats: state.formStats ?? base.formStats,
+    patternStats: state.patternStats ?? base.patternStats,
+    wordStats: state.wordStats ?? base.wordStats,
+    sessionHistory: Array.isArray(state.sessionHistory) ? state.sessionHistory : base.sessionHistory,
+    attemptHistory: Array.isArray(state.attemptHistory) ? state.attemptHistory : base.attemptHistory,
   };
 }
 

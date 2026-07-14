@@ -3,6 +3,7 @@ import { DEFAULT_STUDY_STATE, type StudyState } from '@/lib/study/types';
 import {
   getStudySyncErrorMessageKey,
   mergeStudyStates,
+  repairStudyState,
   resolveStudyStateForHydration,
   stringifyStudyState,
 } from './studySync';
@@ -15,6 +16,22 @@ function makeState(overrides: Partial<StudyState>): StudyState {
 }
 
 describe('Supabase study state merge', () => {
+  it('repairs missing collection fields in older remote snapshots', () => {
+    const incomplete = {
+      preferences: DEFAULT_STUDY_STATE('en').preferences,
+      learnerSummary: DEFAULT_STUDY_STATE('en').learnerSummary,
+    } as StudyState;
+
+    expect(repairStudyState(incomplete)).toMatchObject({
+      unitProgress: {},
+      formStats: {},
+      patternStats: {},
+      wordStats: {},
+      sessionHistory: [],
+      attemptHistory: [],
+    });
+  });
+
   it('keeps the richer local guest state when no remote snapshot exists', () => {
     const local = makeState({
       learnerSummary: {

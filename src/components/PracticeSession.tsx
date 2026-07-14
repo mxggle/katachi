@@ -61,6 +61,8 @@ export default function PracticeSession() {
 
     const inputRef = useRef<HTMLInputElement>(null);
     const shouldEndSessionOnUnmountRef = useRef(false);
+    const isAdvancingRef = useRef(false);
+    const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const currentIdx = activeSession?.currentIndex ?? 0;
     const totalWords = activeSession?.words.length ?? 0;
@@ -71,6 +73,7 @@ export default function PracticeSession() {
     const type = currentItem?.type;
     const choices = currentItem?.choices || [];
     const correctAnswer = (word && type) ? word.conjugations[type] : '';
+    const firstWrongItem = activeSession?.words.find((_, index) => activeSession.results[index] === false);
 
     const audioControllerRef = useRef<TtsPlaybackController | null>(null);
 
@@ -96,7 +99,10 @@ export default function PracticeSession() {
         }
 
         return () => {
-            audioControllerRef.current?.stop();
+            audioControllerRef.current?.dispose();
+            if (advanceTimerRef.current) {
+                clearTimeout(advanceTimerRef.current);
+            }
         };
     }, []);
 
@@ -113,6 +119,15 @@ export default function PracticeSession() {
             inputRef.current.focus();
         }
     }, [config.mode, currentIdx, showFeedback]);
+
+    useEffect(() => {
+        if (!showConfirm) return;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') setShowConfirm(false);
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [showConfirm]);
 
     const playAudio = useCallback((text: string) => {
         void audioControllerRef.current?.play(text);
@@ -213,15 +228,19 @@ export default function PracticeSession() {
     };
 
     const handleNext = () => {
+        if (isAdvancingRef.current) return;
+        isAdvancingRef.current = true;
         setIsAnimatingNext(true);
         // Wait for fade-out to complete before updating state
-        setTimeout(() => {
+        advanceTimerRef.current = setTimeout(() => {
             audioControllerRef.current?.stop();
             submitAnswer(isCorrect);
             setInputValue('');
             setShowFeedback(false);
             setLastSelected(null);
             setIsAnimatingNext(false);
+            isAdvancingRef.current = false;
+            advanceTimerRef.current = null;
         }, 250); // Match the 0.25s duration of animate-katachi-exit
     };
 
@@ -232,9 +251,16 @@ export default function PracticeSession() {
 
     const handleStartWeaknessDrill = () => {
         audioControllerRef.current?.stop();
-        const nextConfig = { ...config, practiceType: 'weakness' as const, questionCount: 5 };
+        const nextConfig = {
+            ...config,
+            practiceType: 'weakness' as const,
+            questionCount: 5,
+            forms: firstWrongItem ? [firstWrongItem.type] : config.forms,
+        };
         updateConfig(nextConfig);
-        const result = buildPracticeSession(nextConfig, studyState, language);
+        const result = buildPracticeSession(nextConfig, studyState, language, {
+            focusUnitKey: firstWrongItem?.unitKey,
+        });
 
         if ('error' in result) {
             setShowTodayEnd(true);
@@ -275,7 +301,6 @@ export default function PracticeSession() {
         ? Math.round((masteredCount / activeSession.results.length) * 100) 
         : 0;
     const message = pct >= 80 ? 'すごい！' : pct >= 50 ? 'いい調子！' : 'がんばって！';
-    const firstWrongItem = activeSession.words.find((_, index) => activeSession.results[index] === false);
     const hasWeakness = Boolean(firstWrongItem);
     const weaknessType = firstWrongItem?.type ?? activeSession.words[0]?.type;
     const weaknessWordType = firstWrongItem?.word.word_type ?? activeSession.words[0]?.word.word_type;
@@ -461,6 +486,7 @@ export default function PracticeSession() {
                 {/* Compact Session Header */}
                 <div className="flex items-center gap-3">
                     <button
+                        aria-label={t('quitSession')}
                         onClick={() => {
                             audioControllerRef.current?.stop();
                             setShowConfirm(true);
@@ -472,7 +498,7 @@ export default function PracticeSession() {
                         </svg>
                     </button>
 
-                    <div className="flex-1 h-4 rounded-full border-[2px] border-[color:var(--ink)] bg-white shadow-[2px_2px_0px_0px_var(--ink)] overflow-hidden relative progress-glow">
+                    <div role="progressbar" aria-label={t('viewProgress')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress)} className="flex-1 h-4 rounded-full border-[2px] border-[color:var(--ink)] bg-white shadow-[2px_2px_0px_0px_var(--ink)] overflow-hidden relative progress-glow">
                         <div
                             className="absolute inset-y-0 left-0 bg-[color:var(--primary-green)] border-r-[2px] border-[color:var(--ink)] progress-spring"
                             style={{ width: `${progress}%` }}
@@ -512,6 +538,7 @@ export default function PracticeSession() {
                                 </h2>
                                 <button
                                     onClick={() => playAudio(word?.dictionary_form.kanji || '')}
+                                    aria-label={`${t('correctAnswer')}: ${word?.dictionary_form.kanji || ''}`}
                                     className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] flex items-center justify-center shadow-[2.5px_2.5px_0px_0px_var(--ink)] active:translate-x-[1.5px] active:translate-y-[1.5px] active:shadow-none transition-all shrink-0 rebound-sm hover-icon-bounce"
                                 >
                                     <SpeakerIcon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -576,6 +603,7 @@ export default function PracticeSession() {
                                     {showFeedback && (
                                         <button
                                             onClick={handleNext}
+                                            disabled={isAnimatingNext}
                                             className="w-full py-3.5 sm:py-4 rounded-xl border-[3px] border-[color:var(--ink)] bg-[color:var(--ink)] text-white text-base sm:text-xl font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] rebound-md flex items-center justify-center gap-2 animate-pop-in"
                                         >
                                             <span>{t('nextQuestion')}</span>
@@ -618,6 +646,7 @@ export default function PracticeSession() {
                                                 <button 
                                                     type="button"
                                                     onClick={() => playAudio(correctAnswer)}
+                                                    aria-label={`${t('correctAnswer')}: ${correctAnswer}`}
                                                     className="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center shrink-0 ml-2"
                                                 >
                                                     <SpeakerIcon className="w-4 h-4" />
@@ -627,6 +656,7 @@ export default function PracticeSession() {
                                     </form>
                                     <button
                                         onClick={showFeedback ? handleNext : handleInputSubmit}
+                                        disabled={showFeedback && isAnimatingNext}
                                         className={`w-full py-3.5 sm:py-4 rounded-xl border-[3px] border-[color:var(--ink)] font-bold text-base sm:text-xl shadow-[4px_4px_0px_0px_var(--ink)] rebound-md flex items-center justify-center gap-2 animate-fade-in stagger-7 ${
                                             showFeedback ? 'bg-[color:var(--ink)] text-white' : 'bg-[color:var(--accent)] text-white'
                                         }`}
@@ -650,10 +680,10 @@ export default function PracticeSession() {
                 <Portal>
                     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                         <div className="absolute inset-0 bg-black/40 animate-backdrop" onClick={() => setShowConfirm(false)} />
-                        <div className="relative w-full max-w-[300px] rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-8 space-y-6 text-center shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)] animate-modal-enter">
+                        <div role="dialog" aria-modal="true" aria-labelledby="quit-session-title" className="relative w-full max-w-[300px] rounded-[2rem] border-[3px] border-[color:var(--ink)] bg-white p-8 space-y-6 text-center shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)] animate-modal-enter">
                             <div className="text-5xl animate-bounce">😿</div>
                             <div className="space-y-2">
-                                <h3 className="text-2xl font-black text-[color:var(--ink)]">{t('quit')}</h3>
+                                <h3 id="quit-session-title" className="text-2xl font-black text-[color:var(--ink)]">{t('quit')}</h3>
                                 <p className="text-sm font-bold text-[color:var(--muted)] leading-relaxed">{t('quitMessage')}</p>
                             </div>
                             <div className="grid grid-cols-1 gap-3 pt-2">

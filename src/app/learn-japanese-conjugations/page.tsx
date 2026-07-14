@@ -4,13 +4,28 @@ import LandingLanguageSwitcher from '@/components/LandingLanguageSwitcher';
 import Logo from '@/components/Logo';
 import DynamicStatusBar from '@/components/DynamicStatusBar';
 import { getLandingCopy, type LandingLanguage } from '@/lib/landing-i18n';
+import { getSiteUrl } from '@/lib/siteUrl';
 
 interface PageProps {
   searchParams: Promise<{ lang?: string }>;
 }
 
 function resolveLandingLanguage(lang?: string): LandingLanguage {
-  return lang === 'zh' ? 'zh' : lang === 'vi' ? 'vi' : lang === 'ne' ? 'ne' : lang === 'my' ? 'my' : 'en';
+  return lang === 'zh' || lang === 'vi' || lang === 'ne' || lang === 'my' || lang === 'ko' ? lang : 'en';
+}
+
+const htmlLanguage: Record<LandingLanguage, string> = {
+  en: 'en', zh: 'zh-CN', vi: 'vi', ne: 'ne', my: 'my', ko: 'ko',
+};
+
+const openGraphLocale: Record<LandingLanguage, string> = {
+  en: 'en_US', zh: 'zh_CN', vi: 'vi_VN', ne: 'ne_NP', my: 'my_MM', ko: 'ko_KR',
+};
+
+function canonicalForLanguage(lang: LandingLanguage) {
+  return lang === 'en'
+    ? '/learn-japanese-conjugations'
+    : `/learn-japanese-conjugations?lang=${lang}`;
 }
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
@@ -18,9 +33,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   const lang = resolveLandingLanguage(params.lang);
   const copy = getLandingCopy(lang);
 
-  const canonical = lang === 'en'
-    ? '/learn-japanese-conjugations'
-    : `/learn-japanese-conjugations?lang=${lang}`;
+  const canonical = canonicalForLanguage(lang);
 
   return {
     title: copy.meta.title,
@@ -28,11 +41,13 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
     alternates: {
       canonical,
       languages: {
+        'x-default': '/learn-japanese-conjugations',
         en: '/learn-japanese-conjugations',
         zh: '/learn-japanese-conjugations?lang=zh',
         vi: '/learn-japanese-conjugations?lang=vi',
         ne: '/learn-japanese-conjugations?lang=ne',
         my: '/learn-japanese-conjugations?lang=my',
+        ko: '/learn-japanese-conjugations?lang=ko',
       },
     },
     openGraph: {
@@ -40,7 +55,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       description: copy.meta.description,
       url: canonical,
       type: 'website',
-      locale: lang === 'zh' ? 'zh_CN' : lang === 'ne' ? 'ne_NP' : lang === 'my' ? 'my_MM' : 'en_US',
+      locale: openGraphLocale[lang],
     },
     twitter: {
       card: 'summary_large_image',
@@ -58,29 +73,33 @@ export default async function LandingPage({ searchParams }: PageProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: lang === 'zh' ? 'Katachi — 日语变形练习' : (lang === 'ne' ? 'काटाची — जापानी रूपान्तरण अभ्यास' : (lang === 'my' ? 'Katachi — ဂျပန်ဘာသာ အသုံးအနှုန်း လေ့ကျင့်ခန်း' : 'Katachi')),
+    name: `Katachi — ${copy.hero.eyebrow}`,
+    url: new URL(canonicalForLanguage(lang), getSiteUrl()).toString(),
     applicationCategory: 'EducationApplication',
+    isAccessibleForFree: true,
     description: copy.meta.description,
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
     },
-    inLanguage: lang === 'zh' ? ['zh', 'en'] : (lang === 'ne' ? ['ne', 'en'] : (lang === 'my' ? ['my', 'en'] : ['en', 'zh'])),
-    educationalLevel: lang === 'zh' ? '初级到中级' : (lang === 'ne' ? 'प्रारम्भिक देखि माध्यमिक' : (lang === 'my' ? 'အခြေခံမှ အလယ်အလတ်အဆင့်' : 'Beginner to Intermediate')),
+    inLanguage: lang === 'en' ? ['en'] : [lang, 'en'],
+    educationalLevel: 'JLPT N5–N3',
     about: {
       '@type': 'Thing',
-      name: lang === 'zh' ? '日语语法' : (lang === 'ne' ? 'जापानी भाषा व्याकरण' : (lang === 'my' ? 'ဂျပန်ဘာသာ သဒ္ဒါ' : 'Japanese Language Grammar')),
+      name: 'Japanese language grammar',
     },
   };
+  const serializedJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializedJsonLd }}
       />
       <main
+        lang={htmlLanguage[lang]}
         aria-label="Conjugation Lab landing"
         className="min-h-dvh overflow-x-hidden bg-[#f7f2e8] text-[#20242b] selection:bg-[#ffd7cc] selection:text-[#20242b]"
       >

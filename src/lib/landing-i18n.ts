@@ -85,8 +85,8 @@ export type LandingLanguage = 'en' | 'zh' | 'vi' | 'ne' | 'my' | 'ko';
 export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   en: {
     meta: {
-      title: 'Katachi — Master Japanese Conjugations Through Daily Practice | JLPT N5 & N4',
-      description: 'A focused Japanese conjugation practice tool built by a learner, for learners. Drill verbs and adjectives with smart distractors and weakness tracking. Covers JLPT N5 & N4 grammar forms.',
+      title: 'Japanese Conjugation Practice for JLPT | Katachi',
+      description: 'Practice Japanese verb and adjective conjugations with smart distractors, weakness tracking, and focused daily drills covering JLPT N5 through N3.',
     },
     hero: {
       eyebrow: 'Conjugation Lab',
@@ -167,7 +167,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     coverage: {
-      heading: 'Every form you need for N5 & N4',
+      heading: 'Every form you need from N5 through N3',
       verbs: {
         label: 'Verbs',
         list: 'Polite (masu), Plain negative, Past plain/polite, Te-form, Potential, Passive, Causative, Imperative, Volitional, Conditional (ba/tara)',
@@ -184,7 +184,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     finalCta: {
       heading: 'Ready to build conjugations into muscle memory?',
-      subtitle: 'Join thousands of learners drilling Japanese grammar every day. Free. No sign-up required.',
+      subtitle: 'Practice Japanese conjugations for free, with no sign-up required.',
       cta: 'Start Practicing Now',
     },
     footer: {
@@ -194,8 +194,8 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   },
   zh: {
     meta: {
-      title: 'Katachi — 日语变形练习工具 | 专注动词・形容词变形训练 | JLPT N5 & N4',
-      description: '由日语学习者开发的变形练习工具。专注反复训练，智能识别薄弱环节（如て形、被动形），针对性强化。覆盖 JLPT N5 & N4 核心语法。',
+      title: '日语变形练习（JLPT N5–N3） | Katachi',
+      description: '日语动词和形容词变形练习工具，通过智能干扰项、薄弱点追踪和每日专项训练，覆盖 JLPT N5 到 N3。',
     },
     hero: {
       eyebrow: 'Conjugation Lab',
@@ -276,7 +276,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     coverage: {
-      heading: '覆盖 N5 & N4 全部核心变形',
+      heading: '覆盖 N5 到 N3 的核心变形',
       verbs: {
         label: '动词',
         list: 'ます形、ない形、た形/ました形、て形、可能形、受身形、使役形、命令形、意向形、条件形（ば/たら）',
@@ -293,7 +293,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     finalCta: {
       heading: '把日语变形练成肌肉记忆',
-      subtitle: '和数千名学习者一起，每天进行高效的日语变形训练。免费，无需注册。',
+      subtitle: '免费练习日语变形，无需注册。',
       cta: '立即开始练习',
     },
     footer: {
@@ -303,8 +303,8 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   },
   vi: {
     meta: {
-      title: 'Katachi — Nắm vững chia động từ tiếng Nhật qua luyện tập hằng ngày | JLPT N5 & N4',
-      description: 'Công cụ luyện tập chia động từ tiếng Nhật được tạo ra bởi người học, dành cho người học. Luyện tập động từ và tính từ với phân tích điểm yếu thông minh. Bao gồm các dạng ngữ pháp JLPT N5 & N4.',
+      title: 'Luyện chia tiếng Nhật JLPT N5–N3 | Katachi',
+      description: 'Luyện chia động từ và tính từ tiếng Nhật với đáp án gây nhiễu thông minh, theo dõi điểm yếu và bài luyện hằng ngày từ JLPT N5 đến N3.',
     },
     hero: {
       eyebrow: 'Conjugation Lab',
@@ -385,7 +385,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     coverage: {
-      heading: 'Mọi dạng chia bạn cần cho N5 & N4',
+      heading: 'Mọi dạng chia bạn cần từ N5 đến N3',
       verbs: {
         label: 'Động từ',
         list: 'Lịch sự (masu), Thông thường phủ định, Quá khứ thông thường/lịch sự, Thể te, Khả năng, Bị động, Sai khiến, Mệnh lệnh, Ý chí, Điều kiện (ba/tara)',
@@ -402,7 +402,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     finalCta: {
       heading: 'Sẵn sàng luyện chia động từ thành phản xạ?',
-      subtitle: 'Tham gia cùng hàng ngàn người học luyện ngữ pháp tiếng Nhật mỗi ngày. Miễn phí. Không cần đăng ký.',
+      subtitle: 'Luyện chia tiếng Nhật miễn phí, không cần đăng ký.',
       cta: 'Bắt đầu luyện tập ngay',
     },
     footer: {
@@ -412,8 +412,8 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   },
   ne: {
     meta: {
-      title: 'काटाची — दैनिक अभ्यास मार्फत जापानी रूपान्तरणहरूमा महारत हासिल गर्नुहोस् | JLPT N5 र N4',
-      description: 'एक विद्यार्थीद्वारा विद्यार्थीहरूका लागि बनाइएको जापानी रूपान्तरण अभ्यास उपकरण। स्मार्ट डिस्ट्याक्टर्स र कमजोरी ट्र्याकिङको साथ क्रिया र विशेषणहरूको अभ्यास गर्नुहोस्। JLPT N5 र N4 व्याकरण फारमहरू समावेश गर्दछ।',
+      title: 'जापानी रूपान्तरण अभ्यास JLPT N5–N3 | Katachi',
+      description: 'स्मार्ट विकल्प, कमजोरी ट्र्याकिङ र दैनिक अभ्याससहित जापानी क्रिया र विशेषणका JLPT N5 देखि N3 सम्मका रूपान्तरण अभ्यास गर्नुहोस्।',
     },
     hero: {
       eyebrow: 'कन्जुगेसन ल्याब',
@@ -494,7 +494,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     coverage: {
-      heading: 'N5 र N4 का लागि तपाईंलाई चाहिने हरेक फारम',
+      heading: 'N5 देखि N3 सम्म तपाईंलाई चाहिने हरेक फारम',
       verbs: {
         label: 'क्रियाहरू',
         list: 'सभ्य (masu), सामान्य नकारात्मक (nai), सामान्य/सभ्य भूतकाल, ते-फारम (te), सम्भावित (potential), निष्क्रिय (passive), कारक (causative), आदेशात्मक (imperative), स्वैच्छिक (volitional), ससर्त (ba/tara)',
@@ -511,7 +511,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     finalCta: {
       heading: 'रूपान्तरणहरूलाई मांसपेशी स्मृतिमा निर्माण गर्न तयार हुनुहुन्छ?',
-      subtitle: 'हरेक दिन जापानी व्याकरण ड्रिल गर्ने हजारौं विद्यार्थीहरूसँग सामेल हुनुहोस्। नि:शुल्क। कुनै साइन-अप आवश्यक छैन।',
+      subtitle: 'जापानी रूपान्तरणको निःशुल्क अभ्यास गर्नुहोस्—साइन-अप आवश्यक छैन।',
       cta: 'अहिले अभ्यास सुरु गर्नुहोस्',
     },
     footer: {
@@ -521,8 +521,8 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   },
   my: {
     meta: {
-      title: 'Katachi — နေ့စဉ်လေ့ကျင့်မှုဖြင့် ဂျပန်ဘာသာ အသုံးအနှုန်းများကို ကျွမ်းကျင်အောင် လုပ်ဆောင်ပါ | JLPT N5 & N4',
-      description: 'ဂျပန်စာလေ့လာသူများအတွက် အထူးရည်ရွယ်ပြီး ပြုလုပ်ထားသော ဂျပန်ဘာသာ အသုံးအနှုန်း လေ့ကျင့်ရေးကိရိယာ။ ကြိယာများနှင့် နာမဝိသေသနများကို အာရုံစိုက်လေ့ကျင့်နိုင်ပြီး သင်၏အားနည်းချက်များကို ခြေရာခံပေးပါသည်။ JLPT N5 & N4 အဆင့်များအတွက် အကျုံးဝင်ပါသည်။',
+      title: 'ဂျပန်စာ ပုံစံပြောင်းလဲမှု JLPT N5–N3 | Katachi',
+      description: 'စမတ်အဖြေရွေးချယ်မှု၊ အားနည်းချက်ခြေရာခံမှုနှင့် နေ့စဉ်လေ့ကျင့်မှုဖြင့် JLPT N5 မှ N3 အထိ ကြိယာနှင့် နာမဝိသေသန ပုံစံများကို လေ့ကျင့်ပါ။',
     },
     hero: {
       eyebrow: 'Conjugation Lab',
@@ -603,7 +603,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     coverage: {
-      heading: 'N5 & N4 အတွက် လိုအပ်သော ပုံစံအားလုံး',
+      heading: 'N5 မှ N3 အထိ လိုအပ်သော ပုံစံအားလုံး',
       verbs: {
         label: 'ကြိယာများ',
         list: 'Polite (masu), Plain negative, Past plain/polite, Te-form, Potential, Passive, Causative, Imperative, Volitional, Conditional (ba/tara)',
@@ -620,7 +620,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     finalCta: {
       heading: 'ဂျပန်ဘာသာ အသုံးအနှုန်းများကို အလိုအလျောက် မှတ်မိစေရန် အဆင်သင့်ဖြစ်ပြီလား?',
-      subtitle: 'နေ့စဉ် လေ့ကျင့်နေသော သင်ယူသူ ထောင်ပေါင်းများစွာနှင့် ပူးပေါင်းလိုက်ပါ။ အခမဲ့ဖြစ်ပြီး အကောင့်ဖွင့်ရန် မလိုပါ။',
+      subtitle: 'ဂျပန်စာ ပုံစံပြောင်းလဲမှုများကို အခမဲ့ လေ့ကျင့်ပါ။ အကောင့်ဖွင့်ရန် မလိုပါ။',
       cta: 'ယခုပင် လေ့ကျင့်မှုစတင်ပါ',
     },
     footer: {
@@ -630,8 +630,8 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
   },
   ko: {
     meta: {
-      title: 'Katachi — 일본어 변형 마스터 | 매일 연습으로 JLPT N5 & N4 정복',
-      description: '일본어 학습자를 위한 집중 변형 연습 도구. 동사와 형용사 변형을 스마트 오답 추출과 약점 분석으로 효과적으로 학습하세요. JLPT N5 & N4 문법 형태를 전부 다룹니다.',
+      title: '일본어 활용 연습 JLPT N5–N3 | Katachi',
+      description: '스마트 오답, 약점 추적, 집중 일일 훈련으로 JLPT N5부터 N3까지 일본어 동사와 형용사 활용을 연습하세요.',
     },
     hero: {
       eyebrow: '변형 연구소',
@@ -712,7 +712,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
       ],
     },
     coverage: {
-      heading: 'N5 & N4에 필요한 모든 변형',
+      heading: 'N5부터 N3까지 필요한 모든 변형',
       verbs: {
         label: '동사',
         list: 'ます형, ない형, た형/ました형, て형, 가능형, 수동형, 사역형, 명령형, 의지형, 조건형(ば/たら)',
@@ -729,7 +729,7 @@ export const landingCopy: Record<LandingLanguage, LandingCopy> = {
     },
     finalCta: {
       heading: '일본어 변형을 근육 기억으로 만들 준비가 되셨나요?',
-      subtitle: '매일 일본어 문법을 연습하는 수천 명의 학습자와 함께하세요. 무료입니다. 회원가입이 필요 없습니다.',
+      subtitle: '회원가입 없이 일본어 활용을 무료로 연습하세요.',
       cta: '지금 바로 연습 시작',
     },
     footer: {

@@ -5,6 +5,9 @@ export type PracticeMode = 'choice' | 'input';
 export type PracticeType = 'daily' | 'weakness' | 'free';
 export type MasteryLevel = 'undiagnosed' | 'weak' | 'unstable' | 'stable' | 'mastered';
 
+export const MAX_ATTEMPT_HISTORY = 5_000;
+export const MAX_SESSION_HISTORY = 1_000;
+
 export interface StudySessionConfig {
   levels: ('N5' | 'N4' | 'N3')[];
   wordTypes: WordType[];

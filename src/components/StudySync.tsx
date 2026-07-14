@@ -8,6 +8,7 @@ import type { StudyState } from '@/lib/study/types';
 import {
   fetchRemoteStudySnapshot,
   getStudySyncErrorMessageKey,
+  mergeStudyStates,
   readStudySyncMeta,
   resolveStudyStateForHydration,
   saveRemoteStudyState,
@@ -103,10 +104,17 @@ export default function StudySync() {
     }
 
     const timeout = window.setTimeout(() => {
-      saveRemoteStudyState(supabase, user, studyState)
+      fetchRemoteStudySnapshot(supabase, user)
+        .then((remoteSnapshot) => {
+          const mergedState = mergeStudyStates(studyState, remoteSnapshot?.studyState ?? null);
+          return saveRemoteStudyState(supabase, user, mergedState);
+        })
         .then((savedSnapshot) => {
           writeStudySyncMeta(user.id, savedSnapshot);
           lastSavedJsonRef.current = stringifyStudyState(savedSnapshot.studyState);
+          if (stringifyStudyState(studyState) !== lastSavedJsonRef.current) {
+            setStudyState(savedSnapshot.studyState);
+          }
         })
         .catch((error) => {
           console.error('Failed to save Supabase study state', error);
@@ -115,7 +123,7 @@ export default function StudySync() {
     }, 1200);
 
     return () => window.clearTimeout(timeout);
-  }, [isReady, studyState, supabase, user]);
+  }, [isReady, setStudyState, studyState, supabase, user]);
 
   if (!syncErrorKey || !user) {
     return null;

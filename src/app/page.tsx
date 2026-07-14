@@ -20,7 +20,8 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { HtmlLangSync } from '@/components/HtmlLangSync';
 import AuthStatus from '@/components/AuthStatus';
 import { buildPracticeSession } from '@/lib/sessionBuilder';
-import { getLocalDateString, useStore } from '@/lib/store';
+import { useStore } from '@/lib/store';
+import { useLocalDate } from '@/lib/useLocalDate';
 import { useTranslation } from '@/lib/i18n';
 import { APP_VERSION } from '@/lib/appVersion';
 import DynamicStatusBar from '@/components/DynamicStatusBar';
@@ -77,7 +78,7 @@ function HomeContent() {
     [dictionaryWords, dailySessionConfig]
   );
 
-  const today = useMemo(() => getLocalDateString(), []);
+  const today = useLocalDate();
   const dashboard = useMemo(
     () => getDiagnosticDashboard(studyState, availableWords, dailySessionConfig, today),
     [studyState, availableWords, dailySessionConfig, today]

@@ -13,7 +13,8 @@ import { loadDictionary } from '@/lib/dictionaryLoader';
 import { getConjugationLabel, getPracticeModeLabel, getWordDisplayText } from '@/lib/displayText';
 import { useTranslation } from '@/lib/i18n';
 import { buildPracticeSession } from '@/lib/sessionBuilder';
-import { getLocalDateString, useStore } from '@/lib/store';
+import { useStore } from '@/lib/store';
+import { useLocalDate } from '@/lib/useLocalDate';
 import type { ConjugationType } from '@/lib/distractorEngine';
 import {
   getModeBreakdown,
@@ -33,7 +34,7 @@ export default function ProgressPage() {
   const updateConfig = useStore((state) => state.updateConfig);
   const { t } = useTranslation(language);
   const [error, setError] = useState<string | null>(null);
-  const today = useMemo(() => getLocalDateString(), []);
+  const today = useLocalDate();
   const overview = useMemo(() => getOverviewStats(studyState, today), [studyState, today]);
   const weakestConjugations = useMemo(() => getWeakestConjugations(studyState, 4), [studyState]);
   const weakestItems = useMemo(() => getWeakestItems(studyState, 4), [studyState]);

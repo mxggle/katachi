@@ -1,7 +1,7 @@
 'use client';
 
 import { X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useTranslation } from '@/lib/i18n';
 import type { Language } from '@/lib/i18n';
 import Portal from '@/components/Portal';
@@ -22,31 +22,43 @@ export default function PracticeCountDialog({
   onClose,
   onConfirm,
   language,
+  title,
   defaultCount = 10,
 }: PracticeCountDialogProps) {
   const { t } = useTranslation(language);
   const [selected, setSelected] = useState(defaultCount);
-  const [prevOpen, setPrevOpen] = useState(open);
+  const titleId = useId();
 
-  if (open !== prevOpen) {
-    setPrevOpen(open);
-    if (open) {
-      setSelected(defaultCount);
-    }
-  }
+  const closeDialog = () => {
+    setSelected(defaultCount);
+    onClose();
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setSelected(defaultCount);
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [defaultCount, onClose, open]);
 
   if (!open) return null;
 
   return (
     <Portal>
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-black/40 animate-backdrop" onClick={onClose} />
-        <div className="relative w-full max-w-sm rounded-[2rem] border-[4px] border-[color:var(--ink)] bg-white p-6 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)] sm:p-8 animate-modal-enter">
+        <div className="absolute inset-0 bg-black/40 animate-backdrop" onClick={closeDialog} />
+        <div role="dialog" aria-modal="true" aria-labelledby={titleId} className="relative w-full max-w-sm rounded-[2rem] border-[4px] border-[color:var(--ink)] bg-white p-6 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.5)] sm:p-8 animate-modal-enter">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-black text-[color:var(--ink)]">{t('selectQuestionCount')}</h3>
+            <h3 id={titleId} className="text-xl font-black text-[color:var(--ink)]">{title ?? t('selectQuestionCount')}</h3>
             <button
               type="button"
-              onClick={onClose}
+              onClick={closeDialog}
+              aria-label={t('dismiss')}
               className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-[color:var(--ink)] bg-[#f4f4ea] text-[color:var(--ink)] transition-all hover:bg-[color:var(--accent-soft)] rebound-sm"
             >
               <X className="h-5 w-5" strokeWidth={3} />
@@ -59,6 +71,7 @@ export default function PracticeCountDialog({
                 key={count}
                 type="button"
                 onClick={() => setSelected(count)}
+                aria-pressed={selected === count}
                 style={{ animationDelay: `${i * 40}ms` }}
                 className={`inline-flex min-h-[3rem] min-w-[3.5rem] items-center justify-center rounded-xl border-[2.5px] border-[color:var(--ink)] px-5 py-1.5 text-base font-bold transition-all rebound-sm animate-pop-in ${
                   selected === count
@@ -75,7 +88,7 @@ export default function PracticeCountDialog({
             type="button"
             onClick={() => {
               onConfirm(selected);
-              onClose();
+              closeDialog();
             }}
             className="mt-8 inline-flex w-full items-center justify-center rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[color:var(--accent)] px-6 py-4 text-xl font-black text-white shadow-[6px_6px_0px_0px_var(--ink)] rebound-md"
           >

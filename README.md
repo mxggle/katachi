@@ -29,7 +29,7 @@ Katachi runs as a Next.js App Router application, can be installed as a PWA, and
 - Tracks streaks, daily goals, unit progress, form mastery, pattern mastery, word stats, session history, and attempt history locally.
 - Provides a progress dashboard with weakest forms, weakest items, recent activity, and drill shortcuts.
 - Plays Japanese audio with browser TTS fallback and keeps audio failures non-blocking.
-- Supports English, Chinese, Vietnamese, Nepali, and Burmese UI/localized meanings.
+- Supports English, Chinese, Vietnamese, Nepali, Burmese, and Korean UI/localized meanings.
 - Works in guest mode by default and can sync progress after Supabase sign-in.
 - Ships PWA metadata, icons, iOS install guidance, a splash overlay, and a Serwist service worker for production builds.
 
@@ -47,13 +47,13 @@ Katachi runs as a Next.js App Router application, can be installed as a PWA, and
 
 ### Prerequisites
 
-- Node.js 20 or newer is recommended.
-- npm is supported by the documented scripts. The repository also contains a Yarn lockfile, but project commands below use npm.
+- Node.js 20.9 or newer is required by Next.js 16.
+- Yarn 1.22.22 is the canonical installer because `yarn.lock` is the committed lockfile. Project scripts are still invoked through npm below.
 
 ### Install
 
 ```bash
-npm install
+yarn install --frozen-lockfile
 ```
 
 ### Run Locally
@@ -83,7 +83,10 @@ Create a local `.env.local` when you want sync:
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 NEXT_PUBLIC_ENABLE_GOOGLE_AUTH=false
+NEXT_PUBLIC_SITE_URL=https://your-production-domain.example
 ```
+
+`NEXT_PUBLIC_SITE_URL` supplies canonical, Open Graph, robots, sitemap, and structured-data URLs. Vercel's production URL is used as a fallback, but an explicit custom-domain value is recommended.
 
 `NEXT_PUBLIC_ENABLE_GOOGLE_AUTH=true` enables Google OAuth in addition to email OTP sign-in. Keep these as public browser keys only; do not add service-role credentials to client code.
 
@@ -104,6 +107,13 @@ npm run check:supabase
 ```
 
 The app stores progress locally first. When a user signs in, `src/lib/supabase/studySync.ts` merges local and remote `StudyState` conservatively so remote data does not erase guest progress.
+
+Before enabling auth in production:
+
+- Set Supabase **Site URL** to the exact production origin.
+- Allowlist the exact `https://your-production-domain.example/auth/callback` redirect. Use wildcards only for preview deployments.
+- Configure the email OTP template to show `{{ .Token }}` because the UI asks users to enter the code.
+- Configure production SMTP and review Supabase Auth rate limits before onboarding real users.
 
 ## Project Structure
 
@@ -202,6 +212,13 @@ npm run build
 ```
 
 Set the Supabase public env vars only if online sync is desired. Without them, the app hides account controls and continues in local mode.
+
+For a production release:
+
+- Set `NEXT_PUBLIC_SITE_URL` to the final HTTPS origin.
+- Run `yarn install --frozen-lockfile`, `npm run lint`, `npm run test`, and `npm run build`.
+- If sync is enabled, apply the migration, run `npm run check:supabase`, and verify the production auth redirect and OTP email template.
+- Add platform-level rate limiting for `/api/tts`; the in-process limiter is a best-effort safeguard and is not shared between server instances.
 
 ## Changelog
 

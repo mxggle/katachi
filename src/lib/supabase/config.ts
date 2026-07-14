@@ -21,6 +21,15 @@ export function getSupabaseConfig(env: EnvLike = getPublicEnv()): SupabaseConfig
     return null;
   }
 
+  try {
+    const parsedUrl = new URL(url);
+    if (parsedUrl.protocol !== 'https:' && parsedUrl.protocol !== 'http:') {
+      return null;
+    }
+  } catch {
+    return null;
+  }
+
   return { url, anonKey };
 }
 

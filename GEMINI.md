@@ -1,6 +1,6 @@
 # Katachi (形) - Project Context
 
-Katachi is a modern, localized web application designed for mastering Japanese conjugations (JLPT N5 & N4). It features a robust distractor engine that mimics common learner errors and provides a "Zen" inspired study experience.
+Katachi is a modern, localized web application designed for mastering Japanese conjugations (JLPT N5–N3). It features a robust distractor engine that mimics common learner errors and provides a "Zen" inspired study experience.
 
 ## Project Overview
 
@@ -14,7 +14,7 @@ Katachi is a modern, localized web application designed for mastering Japanese c
 - **Architecture:**
     - **Local-First:** Core practice logic and progress tracking work offline via `localStorage`.
     - **Modular Logic:** Distractor generation and session building are decoupled from UI components.
-    - **i18n:** Multi-language support (English, Chinese, Vietnamese, Nepali, Burmese) handled via a custom hook and translation objects.
+    - **i18n:** Multi-language support (English, Chinese, Vietnamese, Nepali, Burmese, Korean) handled via a custom hook and translation objects.
 
 ## Building and Running
 

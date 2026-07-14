@@ -190,6 +190,8 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
     preferences: {
       ...base.preferences,
       language,
+      dailyQuestionGoal: legacy?.preferences?.dailyQuestionGoal ?? base.preferences.dailyQuestionGoal,
+      dailyNewLimit: legacy?.preferences?.dailyNewLimit ?? base.preferences.dailyNewLimit,
       defaultSessionConfig: {
         ...DEFAULT_STUDY_SESSION_CONFIG,
         levels: legacyConfig?.levels ?? legacyConfig?.leves ?? DEFAULT_STUDY_SESSION_CONFIG.levels,
@@ -224,6 +226,7 @@ export function migratePersistedStudyState(legacy: LegacyPersistedState | undefi
       lastPracticeDate: legacy?.lastPracticeDate ?? legacy?.lastLoginDate ?? legacy?.learnerSummary?.lastPracticeDate ?? null,
       totalAnswered: progress?.totalAnswered ?? legacy?.learnerSummary?.totalAnswered ?? 0,
       totalCorrect: progress?.totalCorrect ?? legacy?.learnerSummary?.totalCorrect ?? 0,
+      lastSessionAt: legacy?.learnerSummary?.lastSessionAt ?? null,
       schemaVersion: 5,
     },
     unitProgress: migratedUnitProgress,

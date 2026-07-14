@@ -515,3 +515,8 @@ button:active:not(:disabled), .clickable:active {
     transition-delay: 0s !important;
   }
 }
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
