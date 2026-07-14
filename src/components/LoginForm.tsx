@@ -104,8 +104,13 @@ export default function LoginForm() {
 
   if (!isConfigured) {
     return (
-      <div className="rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-white px-5 py-4 text-sm font-bold text-[color:var(--muted)] shadow-[4px_4px_0px_0px_var(--ink)]">
-        {t('localMode')}
+      <div className="rounded-[1.5rem] border-[3px] border-[color:var(--ink)] bg-white px-5 py-4 shadow-[4px_4px_0px_0px_var(--ink)]">
+        <p className="text-xs font-black uppercase tracking-[0.2em] text-[color:var(--ink)]">
+          {t('localMode')}
+        </p>
+        <p className="mt-2 text-sm font-bold leading-relaxed text-[color:var(--muted)]">
+          {t('authUnavailable')}
+        </p>
       </div>
     );
   }

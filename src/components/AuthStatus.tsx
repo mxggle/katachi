@@ -20,7 +20,7 @@ function getServerSnapshot() {
 }
 
 export default function AuthStatus() {
-  const { user, isConfigured, isLoading, signOut } = useAuth();
+  const { user, isLoading, signOut } = useAuth();
   const language = useStore((state) => state.language);
   const { t } = useTranslation(language);
   const [isOpen, setIsOpen] = useState(false);
@@ -128,8 +128,6 @@ export default function AuthStatus() {
       </div>
     );
   }
-
-  if (!isConfigured) return null;
 
   return (
     <div className="relative shrink-0">

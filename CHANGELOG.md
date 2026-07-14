@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Kept the guide header menu inside narrow viewports by opening it downward and right-aligned while preserving the upward-opening homepage footer menu.
 - Added regression coverage for rule completeness, dictionary alignment, multilingual content, safe formation anchors, guide integration, and language-menu placement.
 
+### Fixed
+
+- Kept the homepage login entry visible when Supabase is unavailable so preview and local builds explain local-only mode instead of leaving an empty header.
+
 ## [0.3.0] - 2026-07-14
 
 ### Added

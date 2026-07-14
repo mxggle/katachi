@@ -43,4 +43,11 @@ describe('auth integration source wiring', () => {
     expect(authStatusSource).toContain('h-11 shrink-0');
     expect(authStatusSource).toContain('whitespace-nowrap');
   });
+
+  it('keeps the login entry visible when online auth is not configured', () => {
+    expect(authStatusSource).not.toContain('if (!isConfigured) return null');
+    expect(authStatusSource).toContain("t('saveProgressOnline')");
+    expect(loginFormSource).toContain("t('localMode')");
+    expect(loginFormSource).toContain("t('authUnavailable')");
+  });
 });
