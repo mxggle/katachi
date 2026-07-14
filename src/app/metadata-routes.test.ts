@@ -27,6 +27,7 @@ describe('production metadata routes', () => {
     expect(entries.map((entry) => entry.url)).toEqual([
       'https://katachi.example/',
       'https://katachi.example/learn-japanese-conjugations',
+      'https://katachi.example/conjugation-guide',
     ]);
     expect(entries[1].alternates?.languages).toEqual({
       'x-default': 'https://katachi.example/learn-japanese-conjugations',

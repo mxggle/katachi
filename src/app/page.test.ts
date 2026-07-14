@@ -65,4 +65,10 @@ describe('homepage entry layout', () => {
     expect(pageSource).toContain("import { APP_VERSION } from '@/lib/appVersion'");
     expect(pageSource).toContain('v{APP_VERSION}');
   });
+
+  it('links the practice home to the standalone conjugation guide', () => {
+    expect(pageSource).toContain('href="/conjugation-guide"');
+    expect(pageSource).toContain('guideCopy.homeCardTitle');
+    expect(pageSource).toContain('guideCopy.homeCardDescription');
+  });
 });

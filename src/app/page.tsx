@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {
   ArrowRight,
   BarChart3,
+  BookOpen,
   CalendarCheck,
   Dumbbell,
   Flame,
@@ -28,6 +29,7 @@ import DynamicStatusBar from '@/components/DynamicStatusBar';
 import { loadDictionary } from '@/lib/dictionaryLoader';
 import { getDiagnosticDashboard } from '@/lib/study/statistics';
 import type { PracticeType } from '@/lib/study/types';
+import { getConjugationGuideCopy } from '@/lib/conjugationGuideI18n';
 
 import Logo from '@/components/Logo';
 
@@ -53,6 +55,7 @@ function HomeContent() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [pendingPracticeType, setPendingPracticeType] = useState<PracticeType | null>(null);
   const { t } = useTranslation(language);
+  const guideCopy = getConjugationGuideCopy(language);
   const authError = searchParams.get('error');
   const authErrorMessage =
     authError === 'auth_failed'
@@ -278,6 +281,23 @@ function HomeContent() {
                       <div className="min-w-0">
                         <p className="text-[15px] font-black text-[color:var(--ink)] sm:text-base">{t('progressSnapshot')}</p>
                         <p className="truncate text-[11px] font-bold text-[color:var(--muted)] sm:text-xs">{t('progressPageTitle')}</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="h-6 w-6 shrink-0 text-[color:var(--ink)] transition-transform group-hover:translate-x-1" strokeWidth={3} aria-hidden="true" />
+                  </Link>
+
+                  <Link
+                    href="/conjugation-guide"
+                    className="group flex w-full items-center justify-between gap-4 rounded-[1.25rem] border-[3px] border-[color:var(--ink)] bg-[#fffbeb] px-5 py-4 text-left shadow-[4px_4px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-white hover:shadow-none rebound-sm animate-fade-in"
+                    style={{ animationDelay: '350ms' }}
+                  >
+                    <div className="flex min-w-0 items-center gap-4">
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[0.85rem] border-[3px] border-[color:var(--ink)] bg-[#fde68a]">
+                        <BookOpen className="h-6 w-6 text-[color:var(--ink)]" strokeWidth={2.5} aria-hidden="true" />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-[15px] font-black text-[color:var(--ink)] sm:text-base">{guideCopy.homeCardTitle}</p>
+                        <p className="truncate text-[11px] font-bold text-[color:var(--muted)] sm:text-xs">{guideCopy.homeCardDescription}</p>
                       </div>
                     </div>
                     <ArrowRight className="h-6 w-6 shrink-0 text-[color:var(--ink)] transition-transform group-hover:translate-x-1" strokeWidth={3} aria-hidden="true" />

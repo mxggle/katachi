@@ -5,6 +5,20 @@ All notable changes to Katachi will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-07-14
+
+### Added
+
+- Added an in-practice conjugation rule dialog that opens from the formation badge, highlights the current word class, and compares the applicable rules for Godan, Ichidan, `する`, `来る`, い-adjectives, and な-adjectives.
+- Added a standalone conjugation guide covering all 16 practiced formations with deep links, dictionary-verified examples, and localized teaching copy for English, Chinese, Vietnamese, Nepali, Burmese, and Korean.
+- Added a homepage entry, canonical metadata, structured learning-resource data, and sitemap coverage for the new guide.
+
+### Improved
+
+- Made the shared language selector support context-aware menu placement with accessible menu semantics.
+- Kept the guide header menu inside narrow viewports by opening it downward and right-aligned while preserving the upward-opening homepage footer menu.
+- Added regression coverage for rule completeness, dictionary alignment, multilingual content, safe formation anchors, guide integration, and language-menu placement.
+
 ## [0.3.0] - 2026-07-14
 
 ### Added
