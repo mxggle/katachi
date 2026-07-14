@@ -106,7 +106,9 @@ export default function StudySync() {
     const timeout = window.setTimeout(() => {
       fetchRemoteStudySnapshot(supabase, user)
         .then((remoteSnapshot) => {
-          const mergedState = mergeStudyStates(studyState, remoteSnapshot?.studyState ?? null);
+          const mergedState = mergeStudyStates(studyState, remoteSnapshot?.studyState ?? null, {
+            preferenceSource: 'local',
+          });
           return saveRemoteStudyState(supabase, user, mergedState);
         })
         .then((savedSnapshot) => {

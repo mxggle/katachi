@@ -16,6 +16,7 @@ export interface StudySyncMeta {
   userId: string;
   remoteUpdatedAt?: string;
   syncedStateJson: string;
+  syncedPreferencesJson?: string;
 }
 
 export interface RemoteStudySnapshot {
@@ -149,10 +150,18 @@ function mergeAttemptHistory(local: AttemptRecord[], remote: AttemptRecord[]): A
   ).slice(-MAX_ATTEMPT_HISTORY);
 }
 
-export function mergeStudyStates(local: StudyState, remote: StudyState | null): StudyState {
+export function mergeStudyStates(
+  local: StudyState,
+  remote: StudyState | null,
+  options: { preferenceSource?: 'local' | 'remote' } = {},
+): StudyState {
   if (!remote) {
     return local;
   }
+
+  const preferenceSource = options.preferenceSource ?? 'remote';
+  const primaryPreferences = preferenceSource === 'local' ? local.preferences : remote.preferences;
+  const fallbackPreferences = preferenceSource === 'local' ? remote.preferences : local.preferences;
 
   const unitProgress = { ...remote.unitProgress };
 
@@ -189,11 +198,14 @@ export function mergeStudyStates(local: StudyState, remote: StudyState | null): 
   return {
     ...remote,
     preferences: {
-      ...local.preferences,
-      ...remote.preferences,
-      defaultSessionConfig: remote.preferences?.defaultSessionConfig ?? local.preferences.defaultSessionConfig,
-      dailySessionConfig: remote.preferences?.dailySessionConfig ?? local.preferences.dailySessionConfig,
-      freeSessionConfig: remote.preferences?.freeSessionConfig ?? local.preferences.freeSessionConfig,
+      ...fallbackPreferences,
+      ...primaryPreferences,
+      defaultSessionConfig:
+        primaryPreferences?.defaultSessionConfig ?? fallbackPreferences.defaultSessionConfig,
+      dailySessionConfig:
+        primaryPreferences?.dailySessionConfig ?? fallbackPreferences.dailySessionConfig,
+      freeSessionConfig:
+        primaryPreferences?.freeSessionConfig ?? fallbackPreferences.freeSessionConfig,
     },
     learnerSummary: {
       ...remote.learnerSummary,
@@ -309,7 +321,42 @@ export function resolveStudyStateForHydration(
     return repairStudyState(remoteState);
   }
 
-  return repairStudyState(mergeStudyStates(localState, remoteState));
+  const syncedPreferencesJson = getSyncedPreferencesJson(syncMeta);
+  const localPreferencesChanged =
+    syncedPreferencesJson !== null &&
+    syncedPreferencesJson !== stableStringify(localState.preferences);
+
+  return repairStudyState(
+    mergeStudyStates(localState, remoteState, {
+      preferenceSource: localPreferencesChanged ? 'local' : 'remote',
+    }),
+  );
+}
+
+function getSyncedPreferencesJson(syncMeta: StudySyncMeta | null): string | null {
+  if (!syncMeta) {
+    return null;
+  }
+
+  if (syncMeta.syncedPreferencesJson) {
+    return syncMeta.syncedPreferencesJson;
+  }
+
+  try {
+    const syncedState = JSON.parse(syncMeta.syncedStateJson) as unknown;
+    if (!syncedState || typeof syncedState !== 'object') {
+      return null;
+    }
+
+    const preferences = (syncedState as { preferences?: unknown }).preferences;
+    if (!preferences || typeof preferences !== 'object' || Array.isArray(preferences)) {
+      return null;
+    }
+
+    return stableStringify(preferences);
+  } catch {
+    return null;
+  }
 }
 
 export async function fetchRemoteStudyState(
@@ -398,6 +445,7 @@ export function writeStudySyncMeta(userId: string, snapshot: RemoteStudySnapshot
       userId,
       remoteUpdatedAt: snapshot.updatedAt ?? undefined,
       syncedStateJson: stringifyStudyState(snapshot.studyState),
+      syncedPreferencesJson: stableStringify(snapshot.studyState.preferences),
     } satisfies StudySyncMeta)
   );
 }

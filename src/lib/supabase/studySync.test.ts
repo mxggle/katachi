@@ -211,6 +211,69 @@ describe('Supabase study state merge', () => {
     expect(resolved).toEqual(remote);
   });
 
+  it('keeps a locally changed language when saving over an older remote snapshot', () => {
+    const local = makeState({
+      preferences: DEFAULT_STUDY_STATE('zh').preferences,
+    });
+    const remote = makeState({
+      preferences: DEFAULT_STUDY_STATE('en').preferences,
+    });
+
+    const merged = mergeStudyStates(local, remote, { preferenceSource: 'local' });
+
+    expect(merged.preferences.language).toBe('zh');
+  });
+
+  it('keeps a locally changed language during hydration when the sync baseline was English', () => {
+    const previouslySynced = makeState({
+      preferences: DEFAULT_STUDY_STATE('en').preferences,
+    });
+    const local = makeState({
+      preferences: DEFAULT_STUDY_STATE('zh').preferences,
+    });
+    const remote = makeState({
+      preferences: DEFAULT_STUDY_STATE('en').preferences,
+    });
+
+    const resolved = resolveStudyStateForHydration(local, {
+      userId: 'user-1',
+      remoteState: remote,
+      syncMeta: {
+        userId: 'user-1',
+        syncedStateJson: stringifyStudyState(previouslySynced),
+      },
+    });
+
+    expect(resolved.preferences.language).toBe('zh');
+  });
+
+  it('accepts a remote language change when local preferences match the sync baseline', () => {
+    const previouslySynced = makeState({
+      preferences: DEFAULT_STUDY_STATE('en').preferences,
+    });
+    const local = makeState({
+      preferences: DEFAULT_STUDY_STATE('en').preferences,
+      learnerSummary: {
+        ...DEFAULT_STUDY_STATE('en').learnerSummary,
+        totalAnswered: 1,
+      },
+    });
+    const remote = makeState({
+      preferences: DEFAULT_STUDY_STATE('zh').preferences,
+    });
+
+    const resolved = resolveStudyStateForHydration(local, {
+      userId: 'user-1',
+      remoteState: remote,
+      syncMeta: {
+        userId: 'user-1',
+        syncedStateJson: stringifyStudyState(previouslySynced),
+      },
+    });
+
+    expect(resolved.preferences.language).toBe('zh');
+  });
+
   it('merges guest local state into remote when there is no synced snapshot marker', () => {
     const local = makeState({
       learnerSummary: {
