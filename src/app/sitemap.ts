@@ -4,6 +4,7 @@ import { getSiteUrl } from '@/lib/siteUrl';
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const landingUrl = new URL('/learn-japanese-conjugations', siteUrl);
+  const guideUrl = new URL('/conjugation-guide', siteUrl);
 
   return [
     {
@@ -26,6 +27,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
           ko: `${landingUrl}?lang=ko`,
         },
       },
+    },
+    {
+      url: guideUrl.toString(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
     },
   ];
 }

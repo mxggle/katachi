@@ -14,7 +14,28 @@ const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'ko', label: '한국어' },
 ];
 
-export default function LanguageSwitcher() {
+export type LanguageMenuPlacement = 'up' | 'down';
+
+interface LanguageSwitcherProps {
+  placement?: LanguageMenuPlacement;
+  align?: 'center' | 'end';
+}
+
+export function getLanguageMenuPosition(
+  placement: LanguageMenuPlacement,
+  align: NonNullable<LanguageSwitcherProps['align']>
+): string {
+  const vertical = placement === 'down'
+    ? 'top-full mt-3 origin-top'
+    : 'bottom-full mb-3 origin-bottom';
+  const horizontal = align === 'end' ? 'right-0' : 'left-1/2 -translate-x-1/2';
+  return `${vertical} ${horizontal}`;
+}
+
+export default function LanguageSwitcher({
+  placement = 'up',
+  align = 'center',
+}: LanguageSwitcherProps) {
   const { language, setLanguage } = useStore();
   const { t } = useTranslation(language);
   const [isOpen, setIsOpen] = useState(false);
@@ -35,9 +56,11 @@ export default function LanguageSwitcher() {
   return (
     <div className="relative inline-flex flex-col items-center" ref={dropdownRef}>
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 rounded-2xl border-[3px] border-[color:var(--ink)] bg-white px-4 py-2 text-sm font-bold text-[color:var(--ink)] shadow-[3px_3px_0px_0px_var(--ink)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--ink)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
         aria-label={t('language')}
+        aria-haspopup="menu"
         aria-expanded={isOpen}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,15 +73,22 @@ export default function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute bottom-full mb-3 w-full min-w-[120px] animate-pop-in flex flex-col overflow-hidden rounded-2xl border-[3px] border-[color:var(--ink)] bg-white shadow-[3px_3px_0px_0px_var(--ink)] origin-bottom z-50">
+        <div
+          role="menu"
+          aria-label={t('language')}
+          className={`absolute z-50 flex w-max min-w-full max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border-[3px] border-[color:var(--ink)] bg-white shadow-[3px_3px_0px_0px_var(--ink)] ${getLanguageMenuPosition(placement, align)}`}
+        >
           {LANGUAGES.map((lang) => (
             <button
+              type="button"
+              role="menuitemradio"
+              aria-checked={language === lang.code}
               key={lang.code}
               onClick={() => {
                 setLanguage(lang.code);
                 setIsOpen(false);
               }}
-              className={`flex items-center px-4 py-3 text-sm font-bold transition-colors hover:bg-[color:var(--accent-soft)] hover:text-[color:var(--ink)] text-left ${
+              className={`flex items-center whitespace-nowrap px-4 py-3 text-left text-sm font-bold transition-colors hover:bg-[color:var(--accent-soft)] hover:text-[color:var(--ink)] ${
                 language === lang.code 
                   ? 'bg-[color:var(--accent)] text-white hover:bg-[color:var(--accent)] hover:text-white' 
                   : 'text-[color:var(--muted)]'

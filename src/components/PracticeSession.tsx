@@ -15,6 +15,8 @@ import Logo from '@/components/Logo';
 import DynamicStatusBar from '@/components/DynamicStatusBar';
 import Portal from '@/components/Portal';
 import { feedbackSounds } from '@/lib/feedbackSounds';
+import FormationRuleDialog from '@/components/FormationRuleDialog';
+import { getConjugationGuideCopy } from '@/lib/conjugationGuideI18n';
 
 const SpeakerIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -58,6 +60,7 @@ export default function PracticeSession() {
     const [isAnimatingNext, setIsAnimatingNext] = useState(false);
     const [justCorrect, setJustCorrect] = useState(false);
     const [justWrong, setJustWrong] = useState(false);
+    const [showFormationRules, setShowFormationRules] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const shouldEndSessionOnUnmountRef = useRef(false);
@@ -74,6 +77,7 @@ export default function PracticeSession() {
     const choices = currentItem?.choices || [];
     const correctAnswer = (word && type) ? word.conjugations[type] : '';
     const firstWrongItem = activeSession?.words.find((_, index) => activeSession.results[index] === false);
+    const guideCopy = getConjugationGuideCopy(language);
 
     const audioControllerRef = useRef<TtsPlaybackController | null>(null);
 
@@ -548,9 +552,18 @@ export default function PracticeSession() {
 
                             <div className="mt-4 sm:mt-6 flex flex-col items-center gap-1.5 shrink-0 animate-fade-in stagger-5">
                                 <span className="text-[8px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-[color:var(--muted)]">{t('question')}</span>
-                                <div className="px-4 py-1.5 rounded-lg border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] shadow-[3px_3px_0px_0px_var(--ink)] text-sm sm:text-lg font-black motion-prompt-pop">
+                                <button
+                                    type="button"
+                                    aria-haspopup="dialog"
+                                    aria-expanded={showFormationRules}
+                                    aria-label={guideCopy.tapForRules}
+                                    title={guideCopy.tapForRules}
+                                    onClick={() => setShowFormationRules(true)}
+                                    className="group flex items-center gap-1.5 rounded-lg border-[2.5px] border-[color:var(--ink)] bg-[#fde68a] px-4 py-1.5 text-sm font-black shadow-[3px_3px_0px_0px_var(--ink)] motion-prompt-pop transition-all hover:-translate-y-0.5 hover:shadow-[3px_5px_0px_0px_var(--ink)] sm:text-lg"
+                                >
                                     {type && word ? getConjugationLabel(type, word.word_type, language) : '---'}
-                                </div>
+                                    <span aria-hidden="true" className="flex h-4 w-4 items-center justify-center rounded-full border border-[color:var(--ink)] text-[10px] font-black opacity-60 transition group-hover:opacity-100 sm:h-5 sm:w-5 sm:text-xs">?</span>
+                                </button>
                             </div>
                         </div>
 
@@ -703,6 +716,15 @@ export default function PracticeSession() {
                         </div>
                     </div>
                 </Portal>
+            )}
+            {type && word && (
+                <FormationRuleDialog
+                    open={showFormationRules}
+                    type={type}
+                    word={word}
+                    language={language}
+                    onClose={() => setShowFormationRules(false)}
+                />
             )}
         </div>
     );
